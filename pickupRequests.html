@@ -1,0 +1,1746 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Covai Scrap Hub | Admin Panel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --green:#149447;
+    --dark-green:#087536;
+    --light-green:#eaf8ef;
+    --text:#15231b;
+    --muted:#748078;
+    --border:#e1e9e4;
+    --bg:#f5f8f6;
+    --white:#fff;
+    --red:#dc2626;
+    --orange:#f59e0b;
+    --blue:#2563eb;
+}
+
+body{
+    font-family:'DM Sans',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+/* HEADER */
+
+.header{
+    height:72px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.logo{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    overflow:hidden;
+    border:3px solid var(--light-green);
+}
+
+.logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.brand h2{
+    font-family:'Manrope',sans-serif;
+    font-size:19px;
+    font-weight:800;
+}
+
+.brand h2 span{
+    color:var(--green);
+}
+
+.brand small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    letter-spacing:1.4px;
+    margin-top:2px;
+}
+
+.admin-badge{
+    background:var(--light-green);
+    color:var(--dark-green);
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:800;
+}
+
+/* PAGE */
+
+.page{
+    max-width:1400px;
+    margin:auto;
+    padding:28px;
+}
+
+.page-heading{
+    margin-bottom:22px;
+}
+
+.page-heading h1{
+    font-family:'Manrope',sans-serif;
+    font-size:29px;
+}
+
+.page-heading p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.stat{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:19px;
+    box-shadow:0 8px 25px rgba(20,60,35,.05);
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.stat-icon{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--light-green);
+    font-size:19px;
+}
+
+.stat-value{
+    margin-top:13px;
+    font-family:'Manrope',sans-serif;
+    font-size:25px;
+    font-weight:800;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:3px;
+}
+
+/* TOOLBAR */
+
+.toolbar{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:14px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.search{
+    flex:1;
+    position:relative;
+}
+
+.search input{
+    width:100%;
+    height:43px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0 14px 0 40px;
+    outline:none;
+    font-family:inherit;
+}
+
+.search input:focus{
+    border-color:var(--green);
+}
+
+.search span{
+    position:absolute;
+    left:14px;
+    top:12px;
+}
+
+select{
+    height:43px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0 12px;
+    outline:none;
+    background:#fff;
+    font-family:inherit;
+    font-size:11px;
+}
+
+.refresh-btn{
+    height:43px;
+    border:0;
+    border-radius:10px;
+    background:var(--green);
+    color:#fff;
+    padding:0 16px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* CUSTOMER LIST */
+
+.customer-list{
+    display:grid;
+    gap:15px;
+}
+
+.customer-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 8px 25px rgba(20,60,35,.05);
+}
+
+.customer-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+    border-bottom:1px solid #edf1ee;
+    padding-bottom:15px;
+}
+
+.customer-main{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.avatar{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:var(--light-green);
+    color:var(--green);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:18px;
+}
+
+.customer-name{
+    font-family:'Manrope',sans-serif;
+    font-size:16px;
+    font-weight:800;
+}
+
+.customer-id{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.status{
+    padding:7px 11px;
+    border-radius:20px;
+    font-size:9px;
+    font-weight:800;
+}
+
+.status.new{
+    background:#fff7df;
+    color:#a16207;
+}
+
+.status.progress{
+    background:#eff6ff;
+    color:#1d4ed8;
+}
+
+.status.completed{
+    background:var(--light-green);
+    color:var(--dark-green);
+}
+
+/* DETAILS */
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    padding:16px 0;
+}
+
+.detail{
+    background:#f8faf9;
+    border-radius:11px;
+    padding:12px;
+}
+
+.detail-label{
+    color:var(--muted);
+    font-size:8px;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+    font-weight:700;
+}
+
+.detail-value{
+    margin-top:5px;
+    font-size:11px;
+    font-weight:700;
+    word-break:break-word;
+}
+
+/* ITEMS */
+
+.items-box{
+    border-top:1px solid #edf1ee;
+    padding-top:15px;
+}
+
+.items-title{
+    font-size:11px;
+    font-weight:800;
+    margin-bottom:9px;
+}
+
+.items{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.item{
+    background:var(--light-green);
+    border:1px solid #d5eddd;
+    border-radius:9px;
+    padding:8px 10px;
+    font-size:9px;
+}
+
+.item strong{
+    display:block;
+    color:var(--dark-green);
+}
+
+.item span{
+    color:var(--muted);
+}
+
+/* LOCATION */
+
+.location-box{
+    margin-top:14px;
+    background:#f8faf9;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:13px;
+}
+
+.location-title{
+    font-size:10px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.location-address{
+    font-size:10px;
+    color:var(--muted);
+    line-height:1.5;
+}
+
+.location-buttons{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+
+.location-btn{
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 11px;
+    border-radius:8px;
+    font-size:9px;
+    font-weight:800;
+}
+
+.map-btn{
+    background:var(--green);
+    color:#fff;
+}
+
+.call-btn{
+    background:#eef2ef;
+    color:var(--text);
+}
+
+/* FOOTER ACTIONS */
+
+.card-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:15px;
+    padding-top:14px;
+    border-top:1px solid #edf1ee;
+}
+
+.action-btn{
+    border:0;
+    padding:9px 13px;
+    border-radius:9px;
+    font-family:inherit;
+    font-size:9px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.complete-btn{
+    background:var(--green);
+    color:#fff;
+}
+
+.progress-btn{
+    background:#eff6ff;
+    color:#1d4ed8;
+}
+
+.delete-btn{
+    background:#fff1f1;
+    color:var(--red);
+}
+
+/* EMPTY */
+
+.empty{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:60px 20px;
+    text-align:center;
+}
+
+.empty-icon{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.empty h3{
+    font-family:'Manrope',sans-serif;
+}
+
+.empty p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:5px;
+}
+
+/* LOADING */
+
+.loading{
+    text-align:center;
+    padding:50px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#15231b;
+    color:#fff;
+    padding:13px 17px;
+    border-radius:10px;
+    font-size:10px;
+    font-weight:700;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.25s;
+    z-index:5000;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .details-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:650px){
+
+    .header{
+        height:64px;
+        padding:0 12px;
+    }
+
+    .logo{
+        width:37px;
+        height:37px;
+    }
+
+    .brand h2{
+        font-size:15px;
+    }
+
+    .brand small{
+        font-size:6px;
+    }
+
+    .admin-badge{
+        font-size:8px;
+        padding:7px 9px;
+    }
+
+    .page{
+        padding:18px 10px 40px;
+    }
+
+    .page-heading h1{
+        font-size:23px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+        gap:9px;
+    }
+
+    .stat{
+        padding:14px;
+    }
+
+    .stat-value{
+        font-size:20px;
+    }
+
+    .toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .customer-card{
+        padding:14px;
+    }
+
+    .customer-header{
+        align-items:flex-start;
+    }
+
+    .customer-name{
+        font-size:14px;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+
+    .detail{
+        padding:10px;
+    }
+
+    .card-actions{
+        flex-wrap:wrap;
+        justify-content:stretch;
+    }
+
+    .action-btn{
+        flex:1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            <img src="logo.jpeg" alt="Covai Scrap Hub">
+        </div>
+
+        <div>
+            <h2>Covai <span>Scrap Hub</span></h2>
+            <small>ADMIN MANAGEMENT PANEL</small>
+        </div>
+
+    </div>
+
+    <div class="admin-badge">
+        🔐 ADMIN
+    </div>
+
+</header>
+
+
+<main class="page">
+
+    <section class="page-heading">
+
+        <h1>Customer Pickup Requests</h1>
+
+        <p>
+            Manage customer details, scrap items, estimated bills and pickup locations.
+        </p>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-top">
+                <div class="stat-icon">👥</div>
+            </div>
+
+            <div class="stat-value" id="totalCustomers">
+                0
+            </div>
+
+            <div class="stat-label">
+                Total Requests
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+                <div class="stat-icon">🆕</div>
+            </div>
+
+            <div class="stat-value" id="newCustomers">
+                0
+            </div>
+
+            <div class="stat-label">
+                New Requests
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+                <div class="stat-icon">⚖️</div>
+            </div>
+
+            <div class="stat-value" id="totalWeight">
+                0 KG
+            </div>
+
+            <div class="stat-label">
+                Total Scrap Weight
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+                <div class="stat-icon">💰</div>
+            </div>
+
+            <div class="stat-value" id="totalAmount">
+                ₹0
+            </div>
+
+            <div class="stat-label">
+                Estimated Value
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+
+    <section class="toolbar">
+
+        <div class="search">
+
+            <span>🔎</span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search customer name, phone or ID..."
+                oninput="renderCustomers()"
+            >
+
+        </div>
+
+
+        <select
+            id="statusFilter"
+            onchange="renderCustomers()">
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="New">
+                New
+            </option>
+
+            <option value="Pickup Scheduled">
+                Pickup Scheduled
+            </option>
+
+            <option value="Completed">
+                Completed
+            </option>
+
+        </select>
+
+
+        <button
+            class="refresh-btn"
+            onclick="loadRequests()">
+
+            ↻ Refresh
+
+        </button>
+
+    </section>
+
+
+    <!-- CUSTOMER LIST -->
+
+    <section id="customerList">
+
+        <div class="loading">
+            🔄 Loading Firebase customer data...
+        </div>
+
+    </section>
+
+</main>
+
+
+<div
+    id="toast"
+    class="toast">
+</div>
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    update,
+    remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+
+    authDomain:
+        "covai-scrap-hub.firebaseapp.com",
+
+    databaseURL:
+        "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+
+    projectId:
+        "covai-scrap-hub",
+
+    storageBucket:
+        "covai-scrap-hub.firebasestorage.app",
+
+    messagingSenderId:
+        "979133721874",
+
+    appId:
+        "1:979133721874:web:c5829bb8dbf5270c0917cb",
+
+    measurementId:
+        "G-P3PTSBHWMF"
+};
+
+
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const database =
+    getDatabase(app);
+
+
+/* =====================================================
+   DATABASE PATH
+===================================================== */
+
+const requestsRef =
+    ref(database, "pickupRequests");
+
+
+let requests = {};
+
+
+/* =====================================================
+   REAL-TIME LISTENER
+===================================================== */
+
+onValue(
+    requestsRef,
+    function(snapshot){
+
+        requests =
+            snapshot.val() || {};
+
+        renderCustomers();
+
+        updateStats();
+
+    },
+    function(error){
+
+        console.error(error);
+
+        document.getElementById(
+            "customerList"
+        ).innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Firebase Connection Error
+                </h3>
+
+                <p>
+                    ${escapeHTML(error.message)}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+);
+
+
+/* =====================================================
+   LOAD REQUESTS
+===================================================== */
+
+window.loadRequests = function(){
+
+    showToast(
+        "✓ Firebase data is live and updating automatically."
+    );
+
+};
+
+
+/* =====================================================
+   RENDER CUSTOMERS
+===================================================== */
+
+window.renderCustomers = function(){
+
+    const list =
+        document.getElementById(
+            "customerList"
+        );
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .toLowerCase()
+        .trim();
+
+    const filter =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    let data =
+        Object.entries(requests);
+
+
+    data.sort(function(a,b){
+
+        const aTime =
+            a[1].createdAt ||
+            a[1].submittedAt ||
+            0;
+
+        const bTime =
+            b[1].createdAt ||
+            b[1].submittedAt ||
+            0;
+
+        return String(bTime)
+            .localeCompare(
+                String(aTime)
+            );
+
+    });
+
+
+    data =
+        data.filter(function([id,item]){
+
+            const name =
+                String(
+                    item.customerName ||
+                    item.name ||
+                    ""
+                ).toLowerCase();
+
+            const phone =
+                String(
+                    item.phone ||
+                    ""
+                ).toLowerCase();
+
+            const bookingId =
+                String(id)
+                    .toLowerCase();
+
+            const matchesSearch =
+                !search ||
+                name.includes(search) ||
+                phone.includes(search) ||
+                bookingId.includes(search);
+
+
+            const status =
+                item.status ||
+                "New";
+
+            const matchesStatus =
+                filter === "all" ||
+                status === filter;
+
+
+            return (
+                matchesSearch &&
+                matchesStatus
+            );
+
+        });
+
+
+    if(!data.length){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No Customer Requests
+                </h3>
+
+                <p>
+                    New pickup requests will appear here automatically.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        data.map(function([id,item]){
+
+            return createCustomerCard(
+                id,
+                item
+            );
+
+        }).join("");
+
+};
+
+
+/* =====================================================
+   CREATE CUSTOMER CARD
+===================================================== */
+
+function createCustomerCard(id,item){
+
+    const name =
+        item.customerName ||
+        item.name ||
+        "Unknown Customer";
+
+    const phone =
+        item.phone ||
+        "";
+
+    const email =
+        item.email ||
+        "Not provided";
+
+    const whatsapp =
+        item.whatsapp ||
+        phone;
+
+    const address =
+        item.address ||
+        "Address not provided";
+
+    const status =
+        item.status ||
+        "New";
+
+    const totalWeight =
+        Number(
+            item.totalWeightKg ||
+            item.totalWeight ||
+            0
+        );
+
+    const totalAmount =
+        Number(
+            item.totalAmount ||
+            item.estimatedValue ||
+            0
+        );
+
+    const items =
+        Array.isArray(item.items)
+            ? item.items
+            : [];
+
+
+    const lat =
+        item.latitude ??
+        item.lat ??
+        item.location?.latitude ??
+        item.location?.lat ??
+        null;
+
+    const lon =
+        item.longitude ??
+        item.lng ??
+        item.location?.longitude ??
+        item.location?.lng ??
+        null;
+
+
+    const initial =
+        name
+            .charAt(0)
+            .toUpperCase();
+
+
+    let statusClass =
+        "new";
+
+    if(status === "Pickup Scheduled"){
+        statusClass = "progress";
+    }
+
+    if(status === "Completed"){
+        statusClass = "completed";
+    }
+
+
+    let itemsHTML = "";
+
+    if(items.length){
+
+        itemsHTML =
+            items.map(function(item){
+
+                const product =
+                    item.product ||
+                    item.material ||
+                    item.name ||
+                    "Scrap";
+
+                const weight =
+                    Number(
+                        item.weightKg ||
+                        item.weight ||
+                        0
+                    );
+
+                const unit =
+                    item.unit ||
+                    "kg";
+
+                const rate =
+                    Number(
+                        item.rate ||
+                        0
+                    );
+
+                const amount =
+                    Number(
+                        item.amount ||
+                        weight * rate
+                    );
+
+
+                return `
+
+                    <div class="item">
+
+                        <strong>
+                            ${escapeHTML(product)}
+                        </strong>
+
+                        <span>
+                            ${weight}
+                            ${unit.toUpperCase()}
+                            × ₹${rate}/KG
+                            = ₹${amount.toFixed(2)}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }).join("");
+
+    }
+    else{
+
+        itemsHTML = `
+
+            <div class="item">
+
+                <strong>
+                    Scrap Items
+                </strong>
+
+                <span>
+                    ${escapeHTML(
+                        item.product || "Not available"
+                    )}
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+
+    let locationHTML = "";
+
+    if(lat !== null && lon !== null){
+
+        const mapsURL =
+            "https://www.google.com/maps?q=" +
+            encodeURIComponent(
+                lat + "," + lon
+            );
+
+        locationHTML = `
+
+            <div class="location-box">
+
+                <div class="location-title">
+                    📍 Customer Location
+                </div>
+
+                <div class="location-address">
+                    ${escapeHTML(address)}
+                    <br>
+                    Coordinates:
+                    ${escapeHTML(lat)}
+                    ,
+                    ${escapeHTML(lon)}
+                </div>
+
+                <div class="location-buttons">
+
+                    <a
+                        class="location-btn map-btn"
+                        href="${mapsURL}"
+                        target="_blank">
+
+                        📍 Open Google Maps
+
+                    </a>
+
+                    <a
+                        class="location-btn call-btn"
+                        href="tel:${escapeHTML(phone)}">
+
+                        📞 Call Customer
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+    else{
+
+        locationHTML = `
+
+            <div class="location-box">
+
+                <div class="location-title">
+                    📍 Pickup Address
+                </div>
+
+                <div class="location-address">
+                    ${escapeHTML(address)}
+                </div>
+
+                <div class="location-buttons">
+
+                    <a
+                        class="location-btn call-btn"
+                        href="tel:${escapeHTML(phone)}">
+
+                        📞 Call Customer
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    return `
+
+        <article
+            class="customer-card"
+            data-id="${escapeHTML(id)}">
+
+            <div class="customer-header">
+
+                <div class="customer-main">
+
+                    <div class="avatar">
+                        ${escapeHTML(initial)}
+                    </div>
+
+                    <div>
+
+                        <div class="customer-name">
+                            ${escapeHTML(name)}
+                        </div>
+
+                        <div class="customer-id">
+                            Request ID:
+                            ${escapeHTML(id)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="status ${statusClass}">
+
+                    ${escapeHTML(status)}
+
+                </div>
+
+            </div>
+
+
+            <div class="details-grid">
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Phone
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(phone)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        WhatsApp
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(whatsapp)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Email
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(email)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Submitted
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            item.submittedAt ||
+                            item.createdAt ||
+                            "Recently"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Total Items
+                    </div>
+
+                    <div class="detail-value">
+                        ${items.length ||
+                          item.totalItems ||
+                          0}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Total Weight
+                    </div>
+
+                    <div class="detail-value">
+                        ${totalWeight.toFixed(2)} KG
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Estimated Bill
+                    </div>
+
+                    <div class="detail-value">
+                        ₹${totalAmount.toFixed(2)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Disclaimer
+                    </div>
+
+                    <div class="detail-value">
+                        ${item.disclaimerAccepted
+                            ? "✓ Accepted"
+                            : "Not recorded"}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="items-box">
+
+                <div class="items-title">
+                    📦 Scrap Materials
+                </div>
+
+                <div class="items">
+
+                    ${itemsHTML}
+
+                </div>
+
+            </div>
+
+
+            ${locationHTML}
+
+
+            <div class="card-actions">
+
+                ${
+                    status !== "Pickup Scheduled" &&
+                    status !== "Completed"
+                    ? `
+                        <button
+                            class="action-btn progress-btn"
+                            onclick="setStatus('${escapeJS(id)}','Pickup Scheduled')">
+
+                            📅 Schedule Pickup
+
+                        </button>
+                    `
+                    : ""
+                }
+
+
+                ${
+                    status !== "Completed"
+                    ? `
+                        <button
+                            class="action-btn complete-btn"
+                            onclick="setStatus('${escapeJS(id)}','Completed')">
+
+                            ✓ Mark Completed
+
+                        </button>
+                    `
+                    : ""
+                }
+
+
+                <button
+                    class="action-btn delete-btn"
+                    onclick="deleteRequest('${escapeJS(id)}')">
+
+                    🗑 Delete
+
+                </button>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =====================================================
+   UPDATE STATUS
+===================================================== */
+
+window.setStatus = async function(
+    id,
+    status
+){
+
+    try{
+
+        await update(
+            ref(
+                database,
+                "pickupRequests/" + id
+            ),
+            {
+                status:status,
+                statusUpdatedAt:
+                    new Date().toISOString()
+            }
+        );
+
+        showToast(
+            "✓ Status updated to " + status
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "❌ Failed to update status"
+        );
+
+    }
+
+};
+
+
+/* =====================================================
+   DELETE REQUEST
+===================================================== */
+
+window.deleteRequest = async function(id){
+
+    const confirmed =
+        confirm(
+            "Delete this customer pickup request permanently?"
+        );
+
+    if(!confirmed){
+        return;
+    }
+
+
+    try{
+
+        await remove(
+            ref(
+                database,
+                "pickupRequests/" + id
+            )
+        );
+
+        showToast(
+            "✓ Customer request deleted"
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "❌ Delete failed"
+        );
+
+    }
+
+};
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+function updateStats(){
+
+    const data =
+        Object.values(requests);
+
+
+    let newCount = 0;
+
+    let weight = 0;
+
+    let amount = 0;
+
+
+    data.forEach(function(item){
+
+        const status =
+            item.status ||
+            "New";
+
+        if(status === "New"){
+            newCount++;
+        }
+
+
+        weight += Number(
+            item.totalWeightKg ||
+            item.totalWeight ||
+            0
+        );
+
+
+        amount += Number(
+            item.totalAmount ||
+            item.estimatedValue ||
+            0
+        );
+
+    });
+
+
+    document.getElementById(
+        "totalCustomers"
+    ).textContent =
+        data.length;
+
+
+    document.getElementById(
+        "newCustomers"
+    ).textContent =
+        newCount;
+
+
+    document.getElementById(
+        "totalWeight"
+    ).textContent =
+        weight.toFixed(2) + " KG";
+
+
+    document.getElementById(
+        "totalAmount"
+    ).textContent =
+        "₹" +
+        amount.toFixed(0);
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeJS(value){
+
+    return String(value ?? "")
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'")
+        .replace(/"/g,'\\"');
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+    setTimeout(function(){
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+window.showToast =
+    showToast;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
+
+<title>Notifications | COVAI SCRAP HUB</title>
+
+<meta name="theme-color" content="#087c4d">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            rgba(3,10,6,.94),
+            rgba(3,10,6,.98)
+        ),
+        url("lap.jpeg")
+        center/cover fixed;
+}
+
+.page{
+
+    width:100%;
+
+    max-width:850px;
+
+    margin:auto;
+
+    padding:
+        25px
+        16px
+        60px;
+
+}
+
+/* HEADER */
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+}
+
+.brand img{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid #22c55e;
+
+}
+
+.brand h1{
+
+    font-size:20px;
+
+}
+
+.brand p{
+
+    color:#77837b;
+
+    font-size:10px;
+
+    margin-top:3px;
+
+}
+
+/* BACK */
+
+.back-btn{
+
+    text-decoration:none;
+
+    color:#fff;
+
+    padding:9px 13px;
+
+    border-radius:9px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    font-size:11px;
+
+    transition:.2s;
+
+}
+
+.back-btn:hover{
+
+    border-color:#22c55e;
+
+    color:#86efac;
+
+}
+
+/* CONNECTION */
+
+.connection{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-bottom:14px;
+
+    padding:9px 11px;
+
+    border-radius:9px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:#8c9991;
+
+    font-size:10px;
+
+}
+
+.connection-dot{
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:#f59e0b;
+
+}
+
+.connection.online .connection-dot{
+
+    background:#22c55e;
+
+    box-shadow:
+        0 0 9px
+        rgba(34,197,94,.7);
+
+}
+
+.connection.offline .connection-dot{
+
+    background:#ef4444;
+
+    box-shadow:
+        0 0 9px
+        rgba(239,68,68,.6);
+
+}
+
+/* BELL */
+
+.bell-card{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:20px;
+
+    margin-bottom:16px;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.12),
+            rgba(255,255,255,.04)
+        );
+
+    border:
+        1px solid
+        rgba(34,197,94,.18);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.3);
+
+}
+
+.bell{
+
+    position:relative;
+
+    width:55px;
+
+    height:55px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:15px;
+
+    background:
+        rgba(34,197,94,.12);
+
+    font-size:27px;
+
+}
+
+.badge{
+
+    position:absolute;
+
+    top:-5px;
+
+    right:-5px;
+
+    min-width:20px;
+
+    height:20px;
+
+    padding:0 5px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50px;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    border:2px solid #07110b;
+
+}
+
+.bell-text h2{
+
+    font-size:17px;
+
+}
+
+.bell-text p{
+
+    color:#819087;
+
+    font-size:10px;
+
+    margin-top:4px;
+
+}
+
+/* ACTIONS */
+
+.actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:8px;
+
+    margin-bottom:12px;
+
+}
+
+.action-btn{
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    background:
+        rgba(255,255,255,.05);
+
+    color:#cbd5cf;
+
+    border-radius:8px;
+
+    padding:8px 11px;
+
+    font-size:9px;
+
+    cursor:pointer;
+
+}
+
+.action-btn:hover{
+
+    border-color:#22c55e;
+
+    color:#86efac;
+
+}
+
+/* LIST */
+
+.list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+/* NOTIFICATION */
+
+.notification{
+
+    position:relative;
+
+    display:flex;
+
+    gap:13px;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    transition:.2s;
+
+}
+
+.notification.unread{
+
+    background:
+        rgba(34,197,94,.075);
+
+    border-color:
+        rgba(34,197,94,.22);
+
+}
+
+.notification:hover{
+
+    transform:translateY(-1px);
+
+}
+
+.notification-icon{
+
+    width:42px;
+
+    height:42px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:
+        rgba(34,197,94,.1);
+
+    font-size:18px;
+
+}
+
+.notification-content{
+
+    flex:1;
+
+    min-width:0;
+
+    padding-right:45px;
+
+}
+
+.notification-title{
+
+    display:flex;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    font-size:13px;
+
+    font-weight:800;
+
+}
+
+.new-dot{
+
+    width:6px;
+
+    height:6px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+}
+
+.notification-message{
+
+    color:#a4afa8;
+
+    font-size:11px;
+
+    line-height:1.65;
+
+    margin-top:5px;
+
+    word-break:break-word;
+
+}
+
+.notification-time{
+
+    color:#68736d;
+
+    font-size:9px;
+
+    margin-top:8px;
+
+}
+
+.read-btn{
+
+    position:absolute;
+
+    right:10px;
+
+    bottom:10px;
+
+    border:0;
+
+    background:transparent;
+
+    color:#6f7c74;
+
+    cursor:pointer;
+
+    font-size:9px;
+
+}
+
+.read-btn:hover{
+
+    color:#86efac;
+
+}
+
+/* EMPTY */
+
+.empty{
+
+    text-align:center;
+
+    padding:55px 20px;
+
+    color:#66726a;
+
+}
+
+.empty-icon{
+
+    font-size:35px;
+
+    margin-bottom:10px;
+
+}
+
+.empty h3{
+
+    color:#9aa59e;
+
+    font-size:14px;
+
+}
+
+.empty p{
+
+    font-size:10px;
+
+    margin-top:5px;
+
+}
+
+/* ERROR */
+
+.error-box{
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:
+        rgba(239,68,68,.08);
+
+    border:
+        1px solid
+        rgba(239,68,68,.2);
+
+    color:#fca5a5;
+
+    font-size:11px;
+
+    line-height:1.6;
+
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .page{
+
+        padding:
+            17px
+            12px
+            40px;
+
+    }
+
+    .brand h1{
+
+        font-size:16px;
+
+    }
+
+    .brand img{
+
+        width:40px;
+        height:40px;
+
+    }
+
+    .back-btn{
+
+        font-size:9px;
+
+        padding:
+            8px
+            9px;
+
+    }
+
+    .bell-card{
+
+        padding:15px;
+
+    }
+
+    .bell{
+
+        width:46px;
+        height:46px;
+
+        font-size:22px;
+
+    }
+
+    .bell-text h2{
+
+        font-size:15px;
+
+    }
+
+    .notification{
+
+        padding:13px;
+
+    }
+
+    .notification-icon{
+
+        width:37px;
+        height:37px;
+
+        font-size:16px;
+
+    }
+
+    .notification-title{
+
+        font-size:12px;
+
+    }
+
+    .notification-message{
+
+        font-size:10px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="brand">
+
+            <img
+                src="logo.jpeg"
+                alt="COVAI SCRAP HUB"
+            >
+
+            <div>
+
+                <h1>Notifications</h1>
+
+                <p>
+                    COVAI SCRAP HUB Customer Updates
+                </p>
+
+            </div>
+
+        </div>
+
+        <a
+            href="track.html"
+            class="back-btn"
+        >
+            ← Back
+        </a>
+
+    </div>
+
+
+    <!-- CONNECTION -->
+
+    <div
+        class="connection"
+        id="connectionBox"
+    >
+
+        <span
+            class="connection-dot"
+        ></span>
+
+        <span id="connectionText">
+            Connecting to Firebase...
+        </span>
+
+    </div>
+
+
+    <!-- BELL -->
+
+    <div class="bell-card">
+
+        <div class="bell">
+
+            🔔
+
+            <span
+                class="badge"
+                id="unreadBadge"
+                style="display:none;"
+            >
+                0
+            </span>
+
+        </div>
+
+        <div class="bell-text">
+
+            <h2>
+                Your Notifications
+            </h2>
+
+            <p>
+                Important updates from COVAI SCRAP HUB
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+        <button
+            type="button"
+            class="action-btn"
+            id="readAllBtn"
+        >
+            ✓ Mark all as read
+        </button>
+
+    </div>
+
+
+    <!-- LIST -->
+
+    <div
+        class="list"
+        id="notificationList"
+    >
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🔔
+            </div>
+
+            <h3>
+                Loading notifications...
+            </h3>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+
+    authDomain:
+        "covai-scrap-hub.firebaseapp.com",
+
+    databaseURL:
+        "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+
+    projectId:
+        "covai-scrap-hub",
+
+    storageBucket:
+        "covai-scrap-hub.firebasestorage.app",
+
+    messagingSenderId:
+        "979133721874",
+
+    appId:
+        "1:979133721874:web:c5829bb8dbf5270c0917cb",
+
+    measurementId:
+        "G-P3PTSBHWMF"
+
+};
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+let app;
+let db;
+
+try{
+
+    app =
+        initializeApp(
+            firebaseConfig
+        );
+
+    db =
+        getDatabase(app);
+
+}
+catch(error){
+
+    console.error(
+        "Firebase initialization error:",
+        error
+    );
+
+}
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const list =
+    document.getElementById(
+        "notificationList"
+    );
+
+const badge =
+    document.getElementById(
+        "unreadBadge"
+    );
+
+const readAllBtn =
+    document.getElementById(
+        "readAllBtn"
+    );
+
+const connectionBox =
+    document.getElementById(
+        "connectionBox"
+    );
+
+const connectionText =
+    document.getElementById(
+        "connectionText"
+    );
+
+
+/* =====================================================
+   CUSTOMER ID
+===================================================== */
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+/*
+ * Priority:
+ *
+ * 1. URL ?id=
+ * 2. sessionStorage
+ * 3. localStorage
+ * 4. guest
+ */
+
+const customerId =
+    urlParams.get("id") ||
+
+    sessionStorage.getItem(
+        "customerId"
+    ) ||
+
+    sessionStorage.getItem(
+        "scrapCustomer"
+    ) ||
+
+    localStorage.getItem(
+        "customerId"
+    ) ||
+
+    localStorage.getItem(
+        "scrapCustomer"
+    ) ||
+
+    "guest";
+
+
+console.log(
+    "Customer ID:",
+    customerId
+);
+
+
+/* =====================================================
+   LOCAL READ STATE
+===================================================== */
+
+const readStorageKey =
+    "csh_read_notifications_" +
+    customerId;
+
+
+let readNotifications =
+    getReadNotifications();
+
+
+function getReadNotifications(){
+
+    try{
+
+        const saved =
+            localStorage.getItem(
+                readStorageKey
+            );
+
+        if(!saved){
+
+            return [];
+
+        }
+
+        const parsed =
+            JSON.parse(saved);
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+
+    }
+    catch(error){
+
+        console.warn(
+            "Unable to read notification state:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function saveReadNotifications(){
+
+    try{
+
+        localStorage.setItem(
+            readStorageKey,
+            JSON.stringify(
+                readNotifications
+            )
+        );
+
+    }
+    catch(error){
+
+        console.warn(
+            "Unable to save read state:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ICON
+===================================================== */
+
+function getIcon(type){
+
+    switch(
+        String(type || "")
+            .toLowerCase()
+    ){
+
+        case "pickup":
+            return "📦";
+
+        case "payment":
+            return "💰";
+
+        case "important":
+            return "⚠️";
+
+        case "success":
+            return "✅";
+
+        case "general":
+        default:
+            return "ℹ️";
+
+    }
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(timestamp){
+
+    if(
+        !timestamp
+    ){
+
+        return "Just now";
+
+    }
+
+
+    let date;
+
+
+    if(
+        typeof timestamp === "number"
+    ){
+
+        date =
+            new Date(timestamp);
+
+    }
+    else if(
+        typeof timestamp === "object" &&
+        timestamp !== null &&
+        typeof timestamp.toDate === "function"
+    ){
+
+        date =
+            timestamp.toDate();
+
+    }
+    else{
+
+        return "Just now";
+
+    }
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "Just now";
+
+    }
+
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(
+        value ?? ""
+    )
+
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   CURRENT NOTIFICATIONS
+===================================================== */
+
+let currentNotifications = [];
+
+
+/* =====================================================
+   MARK AS READ
+===================================================== */
+
+function markAsRead(id){
+
+    if(
+        !readNotifications.includes(id)
+    ){
+
+        readNotifications.push(id);
+
+        saveReadNotifications();
+
+        renderNotifications();
+
+    }
+
+}
+
+
+/* =====================================================
+   MARK ALL AS READ
+===================================================== */
+
+readAllBtn.addEventListener(
+    "click",
+    function(){
+
+        currentNotifications.forEach(
+            function(item){
+
+                if(
+                    !readNotifications
+                        .includes(item.id)
+                ){
+
+                    readNotifications.push(
+                        item.id
+                    );
+
+                }
+
+            }
+        );
+
+
+        saveReadNotifications();
+
+        renderNotifications();
+
+    }
+);
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderNotifications(){
+
+    if(
+        currentNotifications.length === 0
+    ){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🔕
+                </div>
+
+                <h3>
+                    No notifications
+                </h3>
+
+                <p>
+                    You don't have any notifications yet.
+                </p>
+
+            </div>
+
+        `;
+
+
+        badge.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    let unreadCount = 0;
+
+
+    list.innerHTML = "";
+
+
+    currentNotifications.forEach(
+        function(item){
+
+            const data =
+                item.data;
+
+
+            const isRead =
+                readNotifications
+                    .includes(item.id);
+
+
+            if(!isRead){
+
+                unreadCount++;
+
+            }
+
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "notification" +
+                (
+                    isRead
+                    ? ""
+                    : " unread"
+                );
+
+
+            element.dataset.id =
+                item.id;
+
+
+            const icon =
+                getIcon(
+                    data.type
+                );
+
+
+            element.innerHTML = `
+
+                <div class="notification-icon">
+                    ${icon}
+                </div>
+
+                <div class="notification-content">
+
+                    <div class="notification-title">
+
+                        ${escapeHTML(
+                            data.title ||
+                            "Notification"
+                        )}
+
+                        ${
+                            !isRead
+                            ?
+                            `<span class="new-dot"></span>`
+                            :
+                            ""
+                        }
+
+                    </div>
+
+                    <div class="notification-message">
+
+                        ${escapeHTML(
+                            data.message ||
+                            ""
+                        )}
+
+                    </div>
+
+                    <div class="notification-time">
+
+                        ${escapeHTML(
+                            formatDate(
+                                data.createdAt
+                            )
+                        )}
+
+                    </div>
+
+                </div>
+
+                ${
+                    !isRead
+                    ?
+                    `
+                    <button
+                        type="button"
+                        class="read-btn"
+                        data-read-id="${escapeHTML(item.id)}"
+                    >
+                        Mark read
+                    </button>
+                    `
+                    :
+                    ""
+                }
+
+            `;
+
+
+            const readButton =
+                element.querySelector(
+                    "[data-read-id]"
+                );
+
+
+            if(readButton){
+
+                readButton.addEventListener(
+                    "click",
+                    function(){
+
+                        markAsRead(
+                            item.id
+                        );
+
+                    }
+                );
+
+            }
+
+
+            list.appendChild(
+                element
+            );
+
+        }
+    );
+
+
+    if(unreadCount > 0){
+
+        badge.textContent =
+            unreadCount > 99
+            ? "99+"
+            : String(unreadCount);
+
+        badge.style.display =
+            "flex";
+
+    }
+    else{
+
+        badge.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD REALTIME DATABASE
+===================================================== */
+
+if(!db){
+
+    connectionBox.classList.add(
+        "offline"
+    );
+
+    connectionText.textContent =
+        "Firebase initialization failed";
+
+    list.innerHTML = `
+
+        <div class="error-box">
+
+            Firebase could not be initialized.
+            Please check your Firebase configuration.
+
+        </div>
+
+    `;
+
+}
+else{
+
+    const notificationsRef =
+        ref(
+            db,
+            "customerNotifications"
+        );
+
+
+    onValue(
+
+        notificationsRef,
+
+        function(snapshot){
+
+            connectionBox.classList.remove(
+                "offline"
+            );
+
+            connectionBox.classList.add(
+                "online"
+            );
+
+            connectionText.textContent =
+                "Connected • Live notifications";
+
+
+            currentNotifications = [];
+
+
+            if(
+                !snapshot.exists()
+            ){
+
+                renderNotifications();
+
+                return;
+
+            }
+
+
+            const data =
+                snapshot.val();
+
+
+            Object.entries(data)
+                .forEach(
+                    function([
+                        id,
+                        notification
+                    ]){
+
+                        /*
+                         * The admin page currently creates
+                         * general customer notifications.
+                         *
+                         * Therefore active=true notifications
+                         * are displayed to customers.
+                         */
+
+                        if(
+                            notification &&
+                            notification.active !== false
+                        ){
+
+                            currentNotifications.push({
+
+                                id:id,
+
+                                data:notification
+
+                            });
+
+                        }
+
+                    }
+                );
+
+
+            /*
+             * Newest first
+             */
+
+            currentNotifications.sort(
+                function(a,b){
+
+                    return Number(
+                        b.data.createdAt || 0
+                    )
+                    -
+                    Number(
+                        a.data.createdAt || 0
+                    );
+
+                }
+            );
+
+
+            renderNotifications();
+
+        },
+
+        function(error){
+
+            console.error(
+                "Realtime Database notification error:",
+                error
+            );
+
+
+            connectionBox.classList.remove(
+                "online"
+            );
+
+            connectionBox.classList.add(
+                "offline"
+            );
+
+            connectionText.textContent =
+                "Unable to connect to Firebase";
+
+
+            list.innerHTML = `
+
+                <div class="error-box">
+
+                    <strong>
+                        Unable to load notifications
+                    </strong>
+
+                    <br><br>
+
+                    ${escapeHTML(
+                        error.message ||
+                        "Firebase Database error."
+                    )}
+
+                </div>
+
+            `;
+
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   TAB VISIBILITY
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
+
+            /*
+             * Re-render when the customer returns
+             * to the notification page.
+             */
+
+            renderNotifications();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+# Capacitor
+android/app/build
+android/app/capacitor-cordova-android-plugins
+android/app/src/main/assets/public
+android/.gradle
+android/build
+android/.idea
+android/local.properties
+android/*.iml
+android/.DS_Store
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build outputs
+dist/
+build/
+*.apk
+*.aab
+
+# OS
+.DS_Store
+Thumbs.db

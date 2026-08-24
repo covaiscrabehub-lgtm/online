@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Test Tracking - COVAI SCRAP HUB</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Arial,sans-serif;
+background:#f8faf9;
+padding:20px;
+}
+.container{
+max-width:800px;
+margin:auto;
+}
+h1{
+font-size:24px;
+margin-bottom:20px;
+}
+.card{
+background:#fff;
+border-radius:16px;
+padding:16px;
+margin-bottom:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+cursor:pointer;
+transition:.2s;
+}
+.card:hover{
+box-shadow:0 4px 16px rgba(0,0,0,0.15);
+transform:translateY(-2px);
+}
+.pickup-id{
+font-weight:bold;
+font-size:14px;
+color:#10b981;
+margin-bottom:8px;
+}
+.customer-name{
+font-size:16px;
+font-weight:600;
+margin-bottom:4px;
+}
+.status{
+display:inline-block;
+padding:4px 10px;
+border-radius:12px;
+font-size:11px;
+font-weight:600;
+background:#e5e7eb;
+color:#6b7280;
+}
+.loading{
+text-align:center;
+padding:40px;
+color:#6b7280;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>📦 Available Pickups for Testing</h1>
+
+<div id="pickups" class="loading">
+Loading pickups from Firebase...
+</div>
+
+</div>
+
+<script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+onValue
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
+authDomain:"covai-scrap-hub.firebaseapp.com",
+databaseURL:"https://covai-scrap-hub-default-rtdb.firebaseio.com",
+projectId:"covai-scrap-hub",
+storageBucket:"covai-scrap-hub.firebasestorage.app",
+messagingSenderId:"979133721874",
+appId:"1:979133721874:web:c5829bb8dbf5270c0917cb",
+measurementId:"G-P3PTSBHWMF"
+};
+
+const db=getDatabase(initializeApp(firebaseConfig));
+
+onValue(
+ref(db,"pickupRequests"),
+snap=>{
+
+const data=snap.val()||{};
+
+const pickups=Object.entries(data).map(
+([id,r])=>({...r,id})
+);
+
+if(!pickups.length){
+
+document.getElementById("pickups").innerHTML=`
+<div class="loading">
+<h3>No pickups found</h3>
+<p style="margin-top:12px;font-size:14px">
+Create a pickup first using customer.html
+</p>
+</div>
+`;
+
+return;
+
+}
+
+document.getElementById("pickups").innerHTML=
+pickups.map(p=>`
+
+<div class="card" onclick="openTracking('${p.id}')">
+
+<div class="pickup-id">
+ID: ${p.id}
+</div>
+
+<div class="customer-name">
+${p.customerName||p.customer||"Customer"}
+</div>
+
+<div style="
+font-size:12px;
+color:#6b7280;
+margin:8px 0">
+${p.address||p.pickupAddress||"No address"}
+</div>
+
+<span class="status">
+${p.status||"New"}
+</span>
+
+</div>
+
+`).join("");
+
+},
+error=>{
+
+console.error(error);
+
+document.getElementById("pickups").innerHTML=`
+<div class="loading" style="color:#ef4444">
+<h3>⚠️ Firebase Error</h3>
+<p style="margin-top:12px">${error.message}</p>
+</div>
+`;
+
+}
+);
+
+window.openTracking=function(id){
+window.open("track.html?id="+encodeURIComponent(id),"_blank");
+};
+
+</script>
+
+</body>
+</html>

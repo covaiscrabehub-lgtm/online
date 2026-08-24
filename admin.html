@@ -1,0 +1,1264 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+
+>
+
+<title>Admin Panel | Covai Scrap Hub</title>
+
+
+<!-- =====================================================
+     GOOGLE FONTS
+===================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    background:#f4f8f5;
+
+    color:#17231b;
+
+    -webkit-font-smoothing:antialiased;
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+
+    width:100%;
+
+    background:#ffffff;
+
+    border-bottom:1px solid #e1e9e3;
+
+    padding:13px 5%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+}
+
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    min-width:0;
+}
+
+
+.logo{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid #dff2e5;
+
+    background:#fff;
+
+    box-shadow:
+        0 3px 12px rgba(8,117,54,.12);
+
+    flex-shrink:0;
+}
+
+
+.brand-text{
+
+    min-width:0;
+}
+
+
+.brand-name{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:21px;
+
+    line-height:1;
+
+    font-weight:800;
+
+    letter-spacing:.2px;
+
+    color:#087536;
+
+    white-space:nowrap;
+}
+
+
+.brand-sub{
+
+    margin-top:4px;
+
+    font-size:9px;
+
+    color:#77827b;
+
+    font-weight:500;
+
+    letter-spacing:.4px;
+
+    white-space:nowrap;
+}
+
+
+.admin-badge{
+
+    background:#eaf8ef;
+
+    color:#087536;
+
+    border:1px solid #ccebd6;
+
+    border-radius:20px;
+
+    padding:7px 11px;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+
+    width:100%;
+
+    max-width:1100px;
+
+    margin:0 auto;
+
+    padding:30px 20px 55px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    margin-bottom:22px;
+}
+
+
+.hero h1{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:30px;
+
+    line-height:1.2;
+
+    margin-bottom:5px;
+
+    color:#17231b;
+}
+
+
+.hero h1 span{
+
+    color:#149447;
+}
+
+
+.hero p{
+
+    color:#748078;
+
+    font-size:11px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:13px;
+}
+
+
+/* =========================================================
+   ADMIN CARD
+========================================================= */
+
+.admin-card{
+
+    position:relative;
+
+    min-height:155px;
+
+    background:#fff;
+
+    border:1px solid #dfe8e2;
+
+    border-radius:15px;
+
+    padding:16px;
+
+    text-decoration:none;
+
+    color:#17231b;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 5px 20px rgba(20,60,35,.055);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+}
+
+
+.admin-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:3px;
+
+    background:#149447;
+
+    transform:scaleX(0);
+
+    transform-origin:left;
+
+    transition:.25s;
+}
+
+
+.admin-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#a9dbb9;
+
+    box-shadow:
+        0 12px 30px rgba(20,60,35,.11);
+}
+
+
+.admin-card:hover::before{
+
+    transform:scaleX(1);
+}
+
+
+.admin-card:active{
+
+    transform:scale(.98);
+}
+
+
+/* =========================================================
+   CARD ICONS
+========================================================= */
+
+.card-icon{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:11px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:19px;
+
+    margin-bottom:12px;
+
+    flex-shrink:0;
+}
+
+
+.green{
+
+    background:#eaf8ef;
+}
+
+
+.blue{
+
+    background:#eef5ff;
+}
+
+
+.orange{
+
+    background:#fff4e8;
+}
+
+
+.purple{
+
+    background:#f3efff;
+}
+
+
+/* =========================================================
+   CARD TEXT
+========================================================= */
+
+.admin-card h2{
+
+    font-size:14px;
+
+    line-height:1.25;
+
+    font-weight:800;
+
+    margin-bottom:5px;
+}
+
+
+.admin-card p{
+
+    font-size:9px;
+
+    line-height:1.5;
+
+    color:#7b857f;
+
+    max-width:210px;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.card-footer{
+
+    margin-top:auto;
+
+    padding-top:12px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+
+/* =========================================================
+   COUNT BADGE
+========================================================= */
+
+.count-badge{
+
+    position:absolute;
+
+    top:12px;
+
+    right:12px;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    padding:4px 9px;
+
+    border-radius:20px;
+
+    min-width:24px;
+
+    text-align:center;
+
+    box-shadow:0 2px 8px rgba(239,68,68,0.3);
+
+    animation:pulse-badge 2s infinite;
+}
+
+
+.count-badge.zero{
+
+    display:none;
+}
+
+
+@keyframes pulse-badge{
+
+    0%,100%{
+
+        transform:scale(1);
+    }
+
+    50%{
+
+        transform:scale(1.05);
+    }
+}
+
+
+.open-text{
+
+    color:#149447;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    line-height:1.3;
+}
+
+
+.arrow{
+
+    width:24px;
+
+    height:24px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    background:#f1f6f3;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#087536;
+
+    font-size:12px;
+
+    transition:.2s;
+}
+
+
+.admin-card:hover .arrow{
+
+    background:#149447;
+
+    color:white;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    text-align:center;
+
+    margin-top:35px;
+
+    color:#8a948e;
+
+    font-size:9px;
+}
+
+
+.footer strong{
+
+    color:#149447;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:950px){
+
+    .dashboard{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:550px){
+
+    .header{
+
+        padding:10px 12px;
+
+        gap:8px;
+    }
+
+
+    .logo{
+
+        width:40px;
+
+        height:40px;
+    }
+
+
+    .brand{
+
+        gap:8px;
+    }
+
+
+    .brand-name{
+
+        font-size:17px;
+    }
+
+
+    .brand-sub{
+
+        font-size:7px;
+
+        letter-spacing:.25px;
+    }
+
+
+    .admin-badge{
+
+        padding:6px 8px;
+
+        font-size:8px;
+    }
+
+
+    .main{
+
+        padding:22px 11px 40px;
+    }
+
+
+    .hero{
+
+        margin-bottom:15px;
+    }
+
+
+    .hero h1{
+
+        font-size:24px;
+    }
+
+
+    .hero p{
+
+        font-size:9px;
+    }
+
+
+    .dashboard{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:9px;
+    }
+
+
+    .admin-card{
+
+        min-height:145px;
+
+        padding:12px;
+
+        border-radius:12px;
+    }
+
+
+    .card-icon{
+
+        width:34px;
+
+        height:34px;
+
+        border-radius:9px;
+
+        font-size:16px;
+
+        margin-bottom:9px;
+    }
+
+
+    .admin-card h2{
+
+        font-size:12px;
+
+        margin-bottom:4px;
+    }
+
+
+    .admin-card p{
+
+        font-size:8px;
+
+        line-height:1.45;
+    }
+
+
+    .card-footer{
+
+        padding-top:9px;
+    }
+
+
+    .open-text{
+
+        font-size:8px;
+    }
+
+
+    .arrow{
+
+        width:21px;
+
+        height:21px;
+
+        font-size:10px;
+    }
+
+
+    .footer{
+
+        margin-top:25px;
+
+        font-size:8px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media(max-width:350px){
+
+    .brand-name{
+
+        font-size:15px;
+    }
+
+
+    .brand-sub{
+
+        display:none;
+    }
+
+
+    .admin-badge{
+
+        display:none;
+    }
+
+
+    .dashboard{
+
+        grid-template-columns:1fr;
+
+        gap:9px;
+    }
+
+
+    .admin-card{
+
+        min-height:125px;
+
+        padding:13px;
+    }
+
+
+    .admin-card h2{
+
+        font-size:13px;
+    }
+
+
+    .admin-card p{
+
+        font-size:9px;
+
+        max-width:250px;
+    }
+
+
+    .open-text{
+
+        font-size:8px;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none!important;
+
+        transition:none!important;
+
+        scroll-behavior:auto!important;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+
+    <div class="brand">
+
+
+        <img
+            src="logo.jpeg"
+            class="logo"
+            alt="Covai Scrap Hub Logo"
+            onerror="this.style.display='none'"
+        >
+
+
+        <div class="brand-text">
+
+
+            <div class="brand-name">
+                Covai Scrap Hub
+            </div>
+
+
+            <div class="brand-sub">
+                SCRAP COLLECTION & RECYCLING
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="admin-badge">
+        ADMIN PANEL
+    </div>
+
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- PAGE TITLE -->
+
+    <section class="hero">
+
+        <h1>
+            Welcome to <span>Admin</span>
+        </h1>
+
+        <p>
+            Manage rates, requests, partners and billing from one place.
+        </p>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         DASHBOARD CARDS
+    ===================================================== -->
+
+    <section class="dashboard">
+
+
+        <!-- =================================================
+             RATE CHANGE
+        ================================================== -->
+
+        <a
+            href="admin-rate.html"
+            class="admin-card"
+        >
+
+            <div class="card-icon green">
+                💰
+            </div>
+
+
+            <h2>
+                Rate Change
+            </h2>
+
+
+            <p>
+                Update scrap item prices and manage current rates.
+            </p>
+
+
+            <div class="card-footer">
+
+                <span class="open-text">
+                    Open Rate Manager
+                </span>
+
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </div>
+
+        </a>
+
+
+
+        <!-- =================================================
+             CUSTOMER REQUESTS
+        ================================================== -->
+
+        <a
+            href="data-received.html"
+            class="admin-card"
+        >
+
+            <span class="count-badge" id="customerCount">0</span>
+
+            <div class="card-icon blue">
+                👤
+            </div>
+
+
+            <h2>
+                Customer Requests
+            </h2>
+
+
+            <p>
+                View and manage customer pickup requests.
+            </p>
+
+
+            <div class="card-footer">
+
+                <span class="open-text">
+                    View Requests
+                </span>
+
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </div>
+
+        </a>
+
+
+
+        <!-- =================================================
+             BUSINESS REQUESTS
+        ================================================== -->
+
+        <a
+            href="business-requests.html"
+            class="admin-card"
+        >
+
+            <span class="count-badge" id="businessCount">0</span>
+
+            <div class="card-icon orange">
+                🏢
+            </div>
+
+
+            <h2>
+                Business Requests
+            </h2>
+
+
+            <p>
+                Manage business enquiries and pickup requirements.
+            </p>
+
+
+            <div class="card-footer">
+
+                <span class="open-text">
+                    View Businesses
+                </span>
+
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </div>
+
+        </a>
+
+
+
+        <!-- =================================================
+             PARTNER PANEL
+        ================================================== -->
+
+        <a
+            href="patner.html"
+            class="admin-card"
+        >
+
+            <div class="card-icon green">
+                🚚
+            </div>
+
+
+            <h2>
+                Partner Panel
+            </h2>
+
+
+            <p>
+                Manage pickup partners, live tracking and assigned requests.
+            </p>
+
+
+            <div class="card-footer">
+
+                <span class="open-text">
+                    Open Partner Panel
+                </span>
+
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </div>
+
+        </a>
+
+
+<!-- =================================================
+     NOTIFICATIONS
+================================================== -->
+
+<a 
+    href="notificationadmin.html"
+    class="admin-card"
+>
+
+    <div class="card-icon green">
+        🔔
+    </div>
+
+    <h2>
+        Notifications
+    </h2>
+
+    <p>
+        Send important updates, alerts and messages to customers.
+    </p>
+
+    <div class="card-footer">
+
+        <span class="open-text">
+            Open Notifications
+        </span>
+
+        <span class="arrow">
+            →
+        </span>
+
+    </div>
+
+</a>
+        <!-- =================================================
+             BILL GENERATE
+        ================================================== -->
+
+        <a
+            href="billing.html"
+            class="admin-card"
+        >
+
+            <div class="card-icon purple">
+                🧾
+            </div>
+
+
+            <h2>
+                Bill Generate
+            </h2>
+
+
+            <p>
+                Create professional purchase bills for customers.
+            </p>
+
+
+            <div class="card-footer">
+
+                <span class="open-text">
+                    Open Billing
+                </span>
+
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </div>
+
+        </a>
+
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <strong>COVAI SCRAP HUB</strong>
+
+        • Admin Management System
+
+    </div>
+
+
+</main>
+
+
+<script type="module">
+
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig={
+    apiKey:"AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+    authDomain:"covai-scrap-hub.firebaseapp.com",
+    databaseURL:"https://covai-scrap-hub-default-rtdb.firebaseio.com",
+    projectId:"covai-scrap-hub",
+    storageBucket:"covai-scrap-hub.firebasestorage.app",
+    messagingSenderId:"979133721874",
+    appId:"1:979133721874:web:c5829bb8dbf5270c0917cb"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+
+console.log('Firebase initialized - counting requests...');
+
+// Count customer requests (exclude completed)
+onValue(ref(db,'pickupRequests'),snapshot=>{
+
+    const badge=document.getElementById('customerCount');
+
+    if(!snapshot.exists()){
+        badge.textContent='0';
+        badge.classList.add('zero');
+        return;
+    }
+
+    const data=snapshot.val();
+
+    // Count only non-completed orders
+    const count=Object.values(data).filter(req=>{
+        const status=req.status||'';
+        const trackingStatus=req.trackingStatus||'';
+        return status!=='Completed'&&trackingStatus!=='completed';
+    }).length;
+
+    console.log('Customer requests (pending):',count);
+
+    badge.textContent=count;
+
+    if(count===0){
+        badge.classList.add('zero');
+    }else{
+        badge.classList.remove('zero');
+    }
+
+});
+
+// Count business requests (exclude completed)
+onValue(ref(db,'businessRequests'),snapshot=>{
+
+    const badge=document.getElementById('businessCount');
+
+    if(!snapshot.exists()){
+        badge.textContent='0';
+        badge.classList.add('zero');
+        return;
+    }
+
+    const data=snapshot.val();
+
+    // Count only non-completed requests
+    const count=Object.values(data).filter(req=>{
+        const status=req.status||'';
+        return status!=='Completed';
+    }).length;
+
+    console.log('Business requests (pending):',count);
+
+    badge.textContent=count;
+
+    if(count===0){
+        badge.classList.add('zero');
+    }else{
+        badge.classList.remove('zero');
+    }
+
+});
+
+</script>
+
+
+</body>
+
+</html>

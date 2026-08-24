@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Notifications | Covai Scrap Hub</title>
+
+<meta name="theme-color" content="#087c4d">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        linear-gradient(rgba(3,10,6,.94),rgba(3,10,6,.98)),
+        url("lap.jpeg") center/cover fixed;
+    color:#fff;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:25px 16px 60px;
+}
+
+/* HEADER */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:25px;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #22c55e;
+    background:#111;
+}
+
+.header h1{
+    font-size:22px;
+    line-height:1.2;
+}
+
+.header p{
+    margin-top:4px;
+    font-size:11px;
+    color:#8b9690;
+}
+
+/* CONNECTION */
+
+.connection{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:18px;
+    padding:10px 12px;
+    border-radius:10px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    font-size:11px;
+    color:#aeb8b2;
+}
+
+.connection-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#f59e0b;
+    box-shadow:0 0 10px rgba(245,158,11,.5);
+}
+
+.connection.online .connection-dot{
+    background:#22c55e;
+    box-shadow:0 0 10px rgba(34,197,94,.6);
+}
+
+.connection.offline .connection-dot{
+    background:#ef4444;
+    box-shadow:0 0 10px rgba(239,68,68,.6);
+}
+
+/* CARD */
+
+.card{
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;
+    padding:22px;
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+
+.card-title{
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+/* INPUT */
+
+.group{
+    margin-bottom:16px;
+}
+
+label{
+    display:block;
+    color:#cbd5d0;
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    border:1px solid rgba(255,255,255,.14);
+    outline:none;
+    border-radius:10px;
+    background:rgba(0,0,0,.35);
+    color:#fff;
+    padding:12px;
+    font-size:13px;
+    font-family:inherit;
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+select{
+    cursor:pointer;
+}
+
+select option{
+    background:#111827;
+    color:#fff;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#69756f;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:#22c55e;
+    box-shadow:0 0 0 3px rgba(34,197,94,.08);
+}
+
+/* BUTTON */
+
+.send-btn{
+    width:100%;
+    border:0;
+    border-radius:10px;
+    padding:13px;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:#fff;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.send-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 10px 25px rgba(34,197,94,.2);
+}
+
+.send-btn:active{
+    transform:scale(.99);
+}
+
+.send-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+}
+
+/* STATUS */
+
+.status{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:9px;
+    font-size:11px;
+    line-height:1.6;
+    word-break:break-word;
+}
+
+.status.success{
+    display:block;
+    background:rgba(34,197,94,.10);
+    border:1px solid rgba(34,197,94,.25);
+    color:#86efac;
+}
+
+.status.error{
+    display:block;
+    background:rgba(239,68,68,.10);
+    border:1px solid rgba(239,68,68,.25);
+    color:#fca5a5;
+}
+
+.status.info{
+    display:block;
+    background:rgba(59,130,246,.10);
+    border:1px solid rgba(59,130,246,.25);
+    color:#93c5fd;
+}
+
+/* LIST */
+
+.list-title{
+    margin-top:30px;
+    margin-bottom:12px;
+    font-size:15px;
+    font-weight:700;
+}
+
+.notification{
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:12px;
+    background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,255,255,.09);
+}
+
+.notification-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.notification-title{
+    font-size:13px;
+    font-weight:700;
+    line-height:1.4;
+}
+
+.notification-type{
+    flex-shrink:0;
+    font-size:9px;
+    color:#86efac;
+    text-transform:uppercase;
+    padding:4px 7px;
+    border-radius:20px;
+    background:rgba(34,197,94,.08);
+}
+
+.notification-message{
+    color:#aeb8b2;
+    font-size:11px;
+    line-height:1.6;
+    margin-top:7px;
+}
+
+.notification-date{
+    color:#65716a;
+    font-size:9px;
+    margin-top:8px;
+}
+
+.empty{
+    padding:30px;
+    text-align:center;
+    color:#68736d;
+    font-size:12px;
+}
+
+/* DEBUG */
+
+.debug{
+    display:none;
+    margin-top:10px;
+    padding:10px;
+    border-radius:8px;
+    background:#050806;
+    border:1px solid rgba(239,68,68,.25);
+    color:#fca5a5;
+    font-family:monospace;
+    font-size:10px;
+    line-height:1.5;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .container{
+        padding:18px 12px 40px;
+    }
+
+    .header h1{
+        font-size:18px;
+    }
+
+    .header p{
+        font-size:9px;
+    }
+
+    .logo{
+        width:44px;
+        height:44px;
+    }
+
+    .card{
+        padding:17px;
+        border-radius:15px;
+    }
+
+    .notification-top{
+        flex-direction:column;
+    }
+
+    .notification-type{
+        align-self:flex-start;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="header-left">
+
+            <img
+                src="logo.jpeg"
+                class="logo"
+                alt="Covai Scrap Hub"
+                onerror="this.style.display='none';"
+            >
+
+            <div>
+
+                <h1>Notification Center</h1>
+
+                <p>
+                    COVAI SCRAP HUB • ADMIN
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONNECTION STATUS -->
+
+    <div
+        class="connection"
+        id="connectionBox"
+    >
+
+        <span
+            class="connection-dot"
+            id="connectionDot"
+        ></span>
+
+        <span id="connectionText">
+            Connecting to Firebase...
+        </span>
+
+    </div>
+
+
+    <!-- CREATE NOTIFICATION -->
+
+    <div class="card">
+
+        <div class="card-title">
+            Create Customer Notification
+        </div>
+
+
+        <div class="group">
+
+            <label for="title">
+                Notification Title
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                maxlength="100"
+                autocomplete="off"
+                placeholder="Example: Pickup Confirmed"
+            >
+
+        </div>
+
+
+        <div class="group">
+
+            <label for="type">
+                Notification Type
+            </label>
+
+            <select id="type">
+
+                <option value="general">
+                    General
+                </option>
+
+                <option value="pickup">
+                    Pickup Update
+                </option>
+
+                <option value="payment">
+                    Payment Update
+                </option>
+
+                <option value="important">
+                    Important
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="group">
+
+            <label for="message">
+                Message
+            </label>
+
+            <textarea
+                id="message"
+                maxlength="1000"
+                placeholder="Write notification message..."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="send-btn"
+            id="sendBtn"
+        >
+            Send Notification
+        </button>
+
+
+        <div
+            class="status"
+            id="status"
+        ></div>
+
+
+        <div
+            class="debug"
+            id="debug"
+        ></div>
+
+    </div>
+
+
+    <!-- EXISTING NOTIFICATIONS -->
+
+    <div class="list-title">
+        Sent Notifications
+    </div>
+
+
+    <div id="notificationList">
+
+        <div class="empty">
+            Loading notifications...
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+   FIREBASE IMPORTS
+========================================================= */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    push,
+    set,
+    onValue,
+    onDisconnect,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+
+    authDomain:
+        "covai-scrap-hub.firebaseapp.com",
+
+    databaseURL:
+        "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+
+    projectId:
+        "covai-scrap-hub",
+
+    storageBucket:
+        "covai-scrap-hub.firebasestorage.app",
+
+    messagingSenderId:
+        "979133721874",
+
+    appId:
+        "1:979133721874:web:c5829bb8dbf5270c0917cb",
+
+    measurementId:
+        "G-P3PTSBHWMF"
+};
+
+
+/* =========================================================
+   INITIALIZE FIREBASE
+========================================================= */
+
+let app;
+let db;
+
+try{
+
+    app = initializeApp(firebaseConfig);
+
+    db = getDatabase(app);
+
+    setConnection(
+        "Connecting to Firebase...",
+        "connecting"
+    );
+
+}
+catch(error){
+
+    console.error(
+        "Firebase initialization error:",
+        error
+    );
+
+    setConnection(
+        "Firebase initialization failed",
+        "offline"
+    );
+
+    showStatus(
+        getFirebaseError(error),
+        "error"
+    );
+
+}
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const title =
+    document.getElementById("title");
+
+const type =
+    document.getElementById("type");
+
+const message =
+    document.getElementById("message");
+
+const sendBtn =
+    document.getElementById("sendBtn");
+
+const status =
+    document.getElementById("status");
+
+const debug =
+    document.getElementById("debug");
+
+const notificationList =
+    document.getElementById("notificationList");
+
+const connectionBox =
+    document.getElementById("connectionBox");
+
+const connectionText =
+    document.getElementById("connectionText");
+
+
+/* =========================================================
+   CONNECTION MONITOR
+========================================================= */
+
+if(db){
+
+    const connectedRef =
+        ref(
+            db,
+            ".info/connected"
+        );
+
+    onValue(
+        connectedRef,
+        function(snapshot){
+
+            if(snapshot.val() === true){
+
+                setConnection(
+                    "Firebase connected",
+                    "online"
+                );
+
+            }
+            else{
+
+                setConnection(
+                    "Firebase disconnected",
+                    "offline"
+                );
+
+            }
+
+        },
+
+        function(error){
+
+            console.error(
+                "Connection monitor error:",
+                error
+            );
+
+            setConnection(
+                "Unable to check Firebase connection",
+                "offline"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SEND NOTIFICATION
+========================================================= */
+
+sendBtn.addEventListener(
+    "click",
+    sendNotification
+);
+
+
+async function sendNotification(){
+
+    if(!db){
+
+        showStatus(
+            "Firebase is not initialized. Check your Firebase configuration.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const notificationTitle =
+        title.value.trim();
+
+    const notificationMessage =
+        message.value.trim();
+
+    const notificationType =
+        type.value;
+
+
+    /* VALIDATION */
+
+    if(!notificationTitle){
+
+        showStatus(
+            "Please enter notification title.",
+            "error"
+        );
+
+        title.focus();
+
+        return;
+    }
+
+
+    if(!notificationMessage){
+
+        showStatus(
+            "Please enter notification message.",
+            "error"
+        );
+
+        message.focus();
+
+        return;
+    }
+
+
+    /* BUTTON LOCK */
+
+    sendBtn.disabled = true;
+
+    sendBtn.textContent =
+        "Sending...";
+
+    hideDebug();
+
+
+    try{
+
+        /*
+         * Create a new notification ID.
+         */
+
+        const notificationRef =
+            push(
+                ref(
+                    db,
+                    "customerNotifications"
+                )
+            );
+
+
+        /*
+         * Save notification.
+         *
+         * serverTimestamp() is Firebase's
+         * server-side timestamp.
+         */
+
+        const notificationData = {
+
+            title:
+                notificationTitle,
+
+            message:
+                notificationMessage,
+
+            type:
+                notificationType,
+
+            createdAt:
+                serverTimestamp(),
+
+            active:
+                true,
+
+            source:
+                "admin",
+
+            platform:
+                "web"
+
+        };
+
+
+        await set(
+            notificationRef,
+            notificationData
+        );
+
+
+        /* SUCCESS */
+
+        title.value = "";
+
+        message.value = "";
+
+        type.value =
+            "general";
+
+
+        showStatus(
+            "✓ Notification created successfully. Customers connected to your notification listener can receive this update.",
+            "success"
+        );
+
+
+        console.log(
+            "Notification created:",
+            notificationRef.key
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            "NOTIFICATION ERROR:",
+            error
+        );
+
+        const readableError =
+            getFirebaseError(error);
+
+
+        showStatus(
+            readableError,
+            "error"
+        );
+
+
+        showDebug(
+            "Firebase error details:\n\n" +
+            "Code: " +
+            (error?.code || "unknown") +
+            "\n\nMessage: " +
+            (error?.message || "Unknown Firebase error")
+        );
+
+    }
+
+
+    /* UNLOCK */
+
+    sendBtn.disabled = false;
+
+    sendBtn.textContent =
+        "Send Notification";
+
+}
+
+
+/* =========================================================
+   REAL-TIME NOTIFICATION LIST
+========================================================= */
+
+if(db){
+
+    const notificationsRef =
+        ref(
+            db,
+            "customerNotifications"
+        );
+
+
+    onValue(
+
+        notificationsRef,
+
+        function(snapshot){
+
+            notificationList.innerHTML = "";
+
+
+            if(!snapshot.exists()){
+
+                notificationList.innerHTML =
+                    `
+                    <div class="empty">
+                        No notifications sent yet.
+                    </div>
+                    `;
+
+                return;
+            }
+
+
+            const data =
+                snapshot.val();
+
+
+            const items =
+                Object.entries(data)
+                .sort(
+                    function(a,b){
+
+                        const timeA =
+                            Number(
+                                a[1]?.createdAt || 0
+                            );
+
+                        const timeB =
+                            Number(
+                                b[1]?.createdAt || 0
+                            );
+
+                        return timeB - timeA;
+
+                    }
+                );
+
+
+            items.forEach(
+                function([id,n]){
+
+                    const div =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    div.className =
+                        "notification";
+
+
+                    let date = "";
+
+
+                    if(
+                        typeof n.createdAt === "number"
+                    ){
+
+                        date =
+                            new Date(
+                                n.createdAt
+                            ).toLocaleString();
+
+                    }
+                    else{
+
+                        date =
+                            "Just now";
+
+                    }
+
+
+                    div.innerHTML = `
+
+                        <div class="notification-top">
+
+                            <div class="notification-title">
+                                ${escapeHTML(
+                                    n.title || ""
+                                )}
+                            </div>
+
+                            <div class="notification-type">
+                                ${escapeHTML(
+                                    n.type || "general"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="notification-message">
+                            ${escapeHTML(
+                                n.message || ""
+                            )}
+                        </div>
+
+
+                        <div class="notification-date">
+                            ${escapeHTML(date)}
+                        </div>
+
+                    `;
+
+
+                    notificationList.appendChild(
+                        div
+                    );
+
+                }
+            );
+
+        },
+
+        function(error){
+
+            console.error(
+                "Firebase read error:",
+                error
+            );
+
+
+            notificationList.innerHTML =
+                `
+                <div class="empty">
+                    Unable to load notifications.
+                </div>
+                `;
+
+
+            showDebug(
+                "Firebase read error:\n\n" +
+                getFirebaseError(error)
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function showStatus(
+    text,
+    className
+){
+
+    status.textContent =
+        text;
+
+    status.className =
+        "status " +
+        className;
+
+}
+
+
+function hideStatus(){
+
+    status.className =
+        "status";
+
+    status.textContent =
+        "";
+
+}
+
+
+/* =========================================================
+   DEBUG
+========================================================= */
+
+function showDebug(text){
+
+    debug.textContent =
+        text;
+
+    debug.style.display =
+        "block";
+
+}
+
+
+function hideDebug(){
+
+    debug.textContent =
+        "";
+
+    debug.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   CONNECTION
+========================================================= */
+
+function setConnection(
+    text,
+    state
+){
+
+    connectionText.textContent =
+        text;
+
+    connectionBox.className =
+        "connection";
+
+
+    if(state === "online"){
+
+        connectionBox.classList.add(
+            "online"
+        );
+
+    }
+
+
+    if(state === "offline"){
+
+        connectionBox.classList.add(
+            "offline"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FIREBASE ERROR HANDLER
+========================================================= */
+
+function getFirebaseError(error){
+
+    if(!error){
+
+        return "Unknown Firebase error.";
+
+    }
+
+
+    const code =
+        error.code || "";
+
+
+    const message =
+        error.message || "";
+
+
+    if(
+        code.includes(
+            "PERMISSION_DENIED"
+        ) ||
+        code.includes(
+            "permission-denied"
+        ) ||
+        message.toLowerCase().includes(
+            "permission denied"
+        )
+    ){
+
+        return (
+            "Firebase Database permission denied. " +
+            "Your Realtime Database Rules are blocking this operation."
+        );
+
+    }
+
+
+    if(
+        code.includes(
+            "NETWORK"
+        )
+    ){
+
+        return (
+            "Network error. Check your internet connection and Firebase Database URL."
+        );
+
+    }
+
+
+    if(
+        code.includes(
+            "INVALID_ARGUMENT"
+        )
+    ){
+
+        return (
+            "Firebase received invalid data. Check the notification fields."
+        );
+
+    }
+
+
+    if(
+        message.toLowerCase().includes(
+            "database"
+        )
+    ){
+
+        return (
+            "Firebase Realtime Database error: " +
+            message
+        );
+
+    }
+
+
+    return (
+        "Firebase error: " +
+        (code ? code + " — " : "") +
+        message
+    );
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+</script>
+
+</body>
+</html>

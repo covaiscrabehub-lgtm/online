@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>AI Support | COVAI SCRAP HUB</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --green:#149447;
+    --dark-green:#087536;
+    --light-green:#eaf8ef;
+    --text:#15231b;
+    --muted:#748078;
+    --border:#e2ebe5;
+    --bg:#f5f8f6;
+}
+
+body.dark-mode{
+    --green:#34d399;
+    --dark-green:#10b981;
+    --light-green:#1f2937;
+    --text:#f1f5f9;
+    --muted:#9ca3af;
+    --border:#374151;
+    --bg:#111827;
+    background:#111827;
+    color:#e0e6ed;
+}
+
+body.dark-mode .chat-container{
+    background:#111827;
+}
+
+body.dark-mode .chat-content{
+    background:#111827;
+}
+
+body.dark-mode .topbar{
+    background:#1a1f2e;
+    border-bottom:1px solid #374151;
+}
+
+body.dark-mode .brand{
+    color:#e0e6ed;
+}
+
+body.dark-mode .brand h2 span{
+    color:#34d399;
+}
+
+body.dark-mode .lang-toggle,
+body.dark-mode .header-btn{
+    background:#1e2433;
+    border:1px solid #374151;
+    color:#9ca3af;
+}
+
+body.dark-mode .lang-toggle:hover,
+body.dark-mode .header-btn:hover{
+    background:#1a7f4e;
+    color:#fff;
+}
+
+body.dark-mode .bot .message-avatar{
+    background:linear-gradient(135deg,#1a7f4e,#16a34a);
+    color:#fff;
+}
+
+body.dark-mode .user .message-avatar{
+    background:#1e2433;
+    border:1px solid #374151;
+}
+
+body.dark-mode .bot .bubble{
+    background:#1e2433;
+    border:1px solid #374151;
+    color:#e0e6ed;
+}
+
+body.dark-mode .user .bubble{
+    background:linear-gradient(135deg,#1a7f4e,#16a34a);
+    color:#fff;
+}
+
+body.dark-mode .bubble{
+    color:#e0e6ed;
+}
+
+body.dark-mode .bot .bubble{
+    color:#e0e6ed;
+}
+
+body.dark-mode .bubble strong{
+    color:#34d399;
+}
+
+body.dark-mode .bubble br{
+    display:block;
+}
+
+body.dark-mode .bubble a{
+    color:#60a5fa;
+}
+
+body.dark-mode .bubble a:hover{
+    color:#93c5fd;
+}
+
+body.dark-mode .typing{
+    background:#1e2433;
+    border:1px solid #374151;
+}
+
+body.dark-mode .typing span{
+    background:#6b7280;
+}
+
+body.dark-mode .quick-btn{
+    background:#1e2433;
+    border:1px solid #374151;
+    color:#9ca3af;
+}
+
+body.dark-mode .quick-btn:hover{
+    background:#1a7f4e;
+    border-color:#1a7f4e;
+    color:#fff;
+}
+
+body.dark-mode .input-area{
+    background:#1a1f2e;
+    border-top:1px solid #374151;
+}
+
+body.dark-mode .input-box{
+    background:#1e2433;
+    border:1px solid #374151;
+}
+
+body.dark-mode .input-box textarea,
+body.dark-mode #userInput{
+    background:transparent;
+    color:#e0e6ed;
+}
+
+body.dark-mode .input-box textarea::placeholder,
+body.dark-mode #userInput::placeholder{
+    color:#6b7280;
+}
+
+body.dark-mode .send-btn{
+    background:linear-gradient(135deg,#1a7f4e,#16a34a);
+    color:#fff;
+}
+
+body.dark-mode .send-btn:hover:not(:disabled){
+    background:linear-gradient(135deg,#16a34a,#059669);
+}
+
+body.dark-mode .send-btn:disabled{
+    background:#374151;
+    color:#6b7280;
+}
+
+body.dark-mode .input-note{
+    color:#9ca3af;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4{
+    color:#e0e6ed;
+}
+
+body.dark-mode p{
+    color:#d1d5db;
+}
+
+body.dark-mode .message{
+    color:#e0e6ed;
+}
+
+body.dark-mode .bot{
+    color:#e0e6ed;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    transition:background .3s ease,color .3s ease;
+}
+
+/* ================= HEADER ================= */
+
+.topbar{
+    height:65px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    flex-shrink:0;
+    box-shadow:0 2px 8px rgba(20,50,30,.04);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:var(--text);
+}
+
+.brand-logo{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--green);
+}
+
+.brand h2{
+    font-family:"Manrope",sans-serif;
+    font-size:17px;
+    font-weight:800;
+}
+
+.brand h2 span{
+    color:var(--green);
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.lang-toggle{
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text);
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:700;
+}
+
+.lang-toggle:hover{
+    background:var(--light-green);
+    color:var(--green);
+}
+
+.header-btn{
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text);
+    width:38px;
+    height:38px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.header-btn:hover{
+    background:var(--light-green);
+    color:var(--green);
+}
+
+/* ================= CHAT CONTAINER ================= */
+
+.chat-container{
+    flex:1;
+    overflow-y:auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+}
+
+.chat-content{
+    width:100%;
+    max-width:800px;
+    margin:0 auto;
+    padding:20px;
+}
+
+/* ================= MESSAGES ================= */
+
+.message{
+    display:flex;
+    margin-bottom:20px;
+    animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.message.user{
+    justify-content:flex-end;
+}
+
+.message-inner{
+    display:flex;
+    gap:10px;
+    max-width:85%;
+}
+
+.user .message-inner{
+    flex-direction:row-reverse;
+}
+
+.message-avatar{
+    width:32px;
+    height:32px;
+    min-width:32px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    flex-shrink:0;
+}
+
+.bot .message-avatar{
+    background:linear-gradient(135deg,#149447,#087536);
+    color:#fff;
+}
+
+.user .message-avatar{
+    background:#e8e8e8;
+}
+
+.bubble{
+    padding:12px 16px;
+    border-radius:16px;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.bot .bubble{
+    background:#fff;
+    border:1px solid var(--border);
+    box-shadow:0 2px 8px rgba(20,50,30,.04);
+}
+
+.user .bubble{
+    background:var(--green);
+    color:#fff;
+}
+
+.bubble strong{
+    font-weight:700;
+}
+
+.bubble br{
+    display:block;
+    margin:4px 0;
+}
+
+/* ================= TYPING ================= */
+
+.typing{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    padding:12px 16px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+}
+
+.typing span{
+    width:6px;
+    height:6px;
+    background:#9ca9a1;
+    border-radius:50%;
+    animation:typing 1s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typing{
+    0%,60%,100%{
+        transform:translateY(0);
+        opacity:.4;
+    }
+    30%{
+        transform:translateY(-5px);
+        opacity:1;
+    }
+}
+
+/* ================= QUICK ACTIONS ================= */
+
+.quick-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:15px 0;
+}
+
+.quick-btn{
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text);
+    border-radius:20px;
+    padding:8px 14px;
+    font-family:inherit;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.quick-btn:hover{
+    background:var(--green);
+    color:#fff;
+    border-color:var(--green);
+}
+
+/* ================= INPUT AREA ================= */
+
+.input-area{
+    background:#fff;
+    border-top:1px solid var(--border);
+    padding:15px 20px;
+    flex-shrink:0;
+}
+
+.input-wrapper{
+    width:100%;
+    max-width:800px;
+    margin:0 auto;
+}
+
+.input-box{
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:8px;
+}
+
+.input-box textarea{
+    flex:1;
+    border:0;
+    outline:0;
+    background:transparent;
+    font-family:inherit;
+    font-size:14px;
+    color:var(--text);
+    padding:8px;
+    resize:none;
+    max-height:120px;
+    min-height:40px;
+}
+
+.input-box textarea::placeholder{
+    color:#9aa59f;
+}
+
+.send-btn{
+    width:42px;
+    height:42px;
+    min-width:42px;
+    border:0;
+    border-radius:8px;
+    background:var(--green);
+    color:#fff;
+    cursor:pointer;
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s;
+}
+
+.send-btn:hover{
+    background:var(--dark-green);
+}
+
+.send-btn:disabled{
+    background:#ccc;
+    cursor:not-allowed;
+}
+
+.input-note{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:8px;
+    text-align:center;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+    .topbar{
+        height:60px;
+        padding:0 12px;
+    }
+
+    .brand-logo{
+        width:35px;
+        height:35px;
+    }
+
+    .brand h2{
+        font-size:15px;
+    }
+
+    .header-btn{
+        width:35px;
+        height:35px;
+        font-size:15px;
+    }
+
+    .lang-toggle{
+        font-size:9px;
+        padding:7px 10px;
+    }
+
+    .chat-content{
+        padding:15px 12px;
+    }
+
+    .message-inner{
+        max-width:90%;
+    }
+
+    .message-avatar{
+        width:28px;
+        height:28px;
+        min-width:28px;
+        font-size:14px;
+    }
+
+    .bubble{
+        font-size:13px;
+        padding:10px 14px;
+    }
+
+    .quick-btn{
+        font-size:11px;
+        padding:7px 12px;
+    }
+
+    .input-area{
+        padding:12px;
+    }
+
+    .input-box textarea{
+        font-size:13px;
+    }
+
+    .send-btn{
+        width:38px;
+        height:38px;
+        min-width:38px;
+    }
+
+
+}
+
+/* =========================================
+   DARK THEME
+========================================= */
+
+body.dark-theme{
+    background:#0f1419;
+    color:#e0e6ed;
+}
+
+body.dark-theme .header{
+    background:linear-gradient(
+        135deg,
+        #1a7f4e,
+        #0d5a35
+    );
+}
+
+body.dark-theme .chat-container{
+    background:#1a1f2e;
+    border:1px solid #374151;
+}
+
+body.dark-theme .chat-box{
+    background:#0f1419;
+}
+
+body.dark-theme .bot-msg{
+    background:#1e2433;
+    color:#e0e6ed;
+}
+
+body.dark-theme .user-msg{
+    background:#1a7f4e;
+    color:#fff;
+}
+
+body.dark-theme .suggestion{
+    background:#1e2433;
+    border:1px solid #374151;
+    color:#9ca3af;
+}
+
+body.dark-theme .suggestion:hover{
+    background:#1a2e23;
+    border-color:#34d399;
+    color:#34d399;
+}
+
+body.dark-theme .input-box{
+    background:#1e2433;
+    border:1px solid #374151;
+}
+
+body.dark-theme .input-box input,
+body.dark-theme .input-box textarea{
+    background:transparent;
+    color:#e0e6ed;
+}
+
+body.dark-theme .input-box input::placeholder,
+body.dark-theme .input-box textarea::placeholder{
+    color:#6b7280;
+}
+
+body.dark-theme .send-btn{
+    background:#1a7f4e;
+}
+
+body.dark-theme .send-btn:hover{
+    background:#16a34a;
+}
+
+body.dark-theme .typing{
+    color:#9ca3af;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <a class="brand" href="index.html">
+
+        <img
+            src="logo.jpeg"
+            class="brand-logo"
+            alt="COVAI SCRAP HUB"
+            onerror="this.src='logo.jpeg'"
+        >
+
+        <div>
+            <h2>COVAI <span>Support</span></h2>
+        </div>
+
+    </a>
+
+    <div class="header-actions">
+
+        <button
+            class="lang-toggle"
+            onclick="toggleLanguage()"
+            id="langBtn">
+            🇬🇧 EN
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="window.location.href='index.html'"
+            title="Home">
+            🏠
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="chat-container" id="chatContainer">
+
+    <div class="chat-content" id="chatContent">
+        <!-- Messages appear here -->
+    </div>
+
+</div>
+
+
+<div class="input-area">
+
+    <div class="input-wrapper">
+
+        <div class="input-box">
+
+            <textarea
+                id="questionInput"
+                placeholder="Ask anything about scrap collection..."
+                rows="1"
+                onkeydown="handleKey(event)"
+                oninput="autoResize(this)"
+            ></textarea>
+
+            <button
+                id="sendBtn"
+                class="send-btn"
+                onclick="sendQuestion()">
+                ➤
+            </button>
+
+        </div>
+
+        <div class="input-note">
+            Smart bot • English • Tamil • No signup needed
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   FAQ DATABASE
+===================================================== */
+
+const faq = {
+
+"what is covai scrap hub": {
+    en: "♻️ <strong>COVAI SCRAP HUB</strong> is a professional scrap collection service in Coimbatore. We provide doorstep pickup, transparent rates, and reliable service for recyclable materials.",
+    ta: "♻️ <strong>கோவை ஸ்கிராப் ஹப்</strong> கோவையில் இயங்கும் தொழில்முறை ஸ்கிராப் சேகரிப்பு சேவை. வீட்டு வாசலில் எடுப்பு, நேர்மையான விலை, நம்பகமான சேவை வழங்குகிறோம்."
+},
+
+"what services do you provide": {
+    en: "🚚 We provide:<br>• Doorstep scrap pickup<br>• Online booking system<br>• Real-time rate updates<br>• Pickup tracking<br>• Transparent weighing<br>• Multiple payment options",
+    ta: "🚚 நாங்கள் வழங்கும் சேவைகள்:<br>• வீட்டு வாசல் ஸ்கிராப் எடுப்பு<br>• ஆன்லைன் புக்கிங்<br>• நேரடி விலை புதுப்பிப்பு<br>• பிக்கப் ட்ராக்கிங்<br>• வெளிப்படையான எடை<br>• பல பேமென்ட் முறைகள்"
+},
+
+"contact number phone": {
+    en: "📞 <strong>Phone:</strong> +91 95142 52104<br>📧 <strong>Email:</strong> covaiscraphubsupport@gmail.com<br><br>24/7 support available",
+    ta: "📞 <strong>தொலைபேசி:</strong> +91 95142 52104<br>📧 <strong>மின்னஞ்சல்:</strong> covaiscraphubsupport@gmail.com<br><br>24/7 உதவி கிடைக்கும்"
+},
+
+"where do you serve areas location": {
+    en: "📍 We primarily serve <strong>Coimbatore</strong> and surrounding areas in Tamil Nadu. Enter your address during booking to check if we serve your location.",
+    ta: "📍 நாங்கள் முக்கியமாக <strong>கோவை</strong> மற்றும் தமிழ்நாட்டின் சுற்றுப்புற பகுதிகளில் சேவை செய்கிறோம். உங்கள் இடத்தில் சேவை உள்ளதா என புக்கிங்கின் போது முகவரி கொடுத்து சரிபார்க்கவும்."
+},
+
+"what materials scrap collect": {
+    en: "♻️ <strong>We collect:</strong><br>📰 Paper (newspapers, books, cardboard)<br>🔩 Steel & Iron scrap<br>🥫 Aluminium scrap<br>🔶 Copper (wires, cables)<br>🔋 Batteries<br>💻 E-waste (computers, laptops, TVs)<br>🛞 Tyres<br>📦 Plastic<br>🚗 Vehicle scrap<br>♻️ Mixed recyclables",
+    ta: "♻️ <strong>நாங்கள் சேகரிக்கும் பொருட்கள்:</strong><br>📰 காகிதம் (செய்தித்தாள், புத்தகம், அட்டைப்பெட்டி)<br>🔩 எஃகு மற்றும் இரும்பு<br>🥫 அலுமினியம்<br>🔶 செம்பு (கம்பி, கேபிள்)<br>🔋 பேட்டரி<br>💻 மின்னணு கழிவு (கம்ப்யூட்டர், லேப்டாப், டிவி)<br>🛞 டயர்கள்<br>📦 பிளாஸ்டிக்<br>🚗 வாகன ஸ்கிராப்<br>♻️ கலப்பு ஸ்கிராப்"
+},
+
+"paper newspaper cardboard": {
+    en: "📰 Yes! We collect:<br>• Newspapers<br>• Office paper<br>• Books & magazines<br>• Cardboard boxes<br>Current rate shown on website",
+    ta: "📰 ஆம்! நாங்கள் சேகரிக்கிறோம்:<br>• செய்தித்தாள்<br>• அலுவலக காகிதம்<br>• புத்தகங்கள் மற்றும் பத்திரிகைகள்<br>• அட்டைப்பெட்டிகள்<br>தற்போதைய விலை இணையதளத்தில்"
+},
+
+"steel iron metal": {
+    en: "🔩 Yes, we collect steel and iron scrap including utensils, sheets, frames, and metal materials. Check today's rate on our website.",
+    ta: "🔩 ஆம், எங்களிடம் எஃகு மற்றும் இரும்பு பாத்திரங்கள், தகடுகள், சட்டங்கள் மற்றும் உலோக பொருட்கள் சேகரிக்கிறோம். இன்றைய விலையை எங்கள் இணையதளத்தில் பாருங்கள்."
+},
+
+"copper wire cable": {
+    en: "🔶 Yes, we collect copper scrap including wires, cables, pipes and copper materials. Copper has good value - check current rates on our site.",
+    ta: "🔶 ஆம், நாங்கள் செம்பு கம்பிகள், கேபிள்கள், குழாய்கள் மற்றும் செம்பு பொருட்களை சேகரிக்கிறோம். செம்புக்கு நல்ல விலை - இணையதளத்தில் தற்போதைய விலையை பாருங்கள்."
+},
+
+"aluminium aluminum": {
+    en: "🥫 Yes, we collect aluminium scrap including utensils, frames, sheets and aluminium waste. Rate updated daily on website.",
+    ta: "🥫 ஆம், அலுமினியம் பாத்திரங்கள், சட்டங்கள், தகடுகள் மற்றும் கழிவுகளை சேகரிக்கிறோம். விலை தினசரி இணையதளத்தில் புதுப்பிக்கப்படும்."
+},
+
+"plastic bottle container": {
+    en: "📦 Yes, we collect recyclable plastic bottles, containers and plastic materials. Make sure they are clean and recyclable.",
+    ta: "📦 ஆம், மறுசுழற்சி செய்யக்கூடிய பிளாஸ்டிக் பாட்டில்கள், கொள்கலன்கள் மற்றும் பிளாஸ்டிக் பொருட்களை சேகரிக்கிறோம். சுத்தமாகவும் மறுசுழற்சி செய்யக்கூடியதாகவும் இருப்பதை உறுதிப்படுத்தவும்."
+},
+
+"battery old used": {
+    en: "🔋 Yes, we collect used vehicle batteries and recyclable battery waste. Proper recycling of batteries is important for environment.",
+    ta: "🔋 ஆம், பயன்படுத்திய வாகன பேட்டரிகள் மற்றும் மறுசுழற்சி செய்யக்கூடிய பேட்டரி கழிவுகளை சேகரிக்கிறோம். சுற்றுச்சூழலுக்கு பேட்டரி மறுசுழற்சி முக்கியம்."
+},
+
+"electronics computer laptop tv mobile phone": {
+    en: "💻 Yes! We collect e-waste:<br>• Old computers & laptops<br>• TVs & monitors<br>• Mobile phones<br>• Printers<br>• Electronic cables & parts<br>Proper e-waste disposal helps environment",
+    ta: "💻 ஆம்! மின்னணு கழிவு சேகரிக்கிறோம்:<br>• பழைய கம்ப்யூட்டர் மற்றும் லேப்டாப்<br>• டிவி மற்றும் மானிட்டர்<br>• மொபைல் போன்<br>• பிரிண்டர்<br>• மின்னணு கேபிள் மற்றும் பாகங்கள்<br>சரியான மின்னணு கழிவு அகற்றல் சுற்றுச்சூழலுக்கு உதவுகிறது"
+},
+
+"vehicle car bike scrap": {
+    en: "🚗 Yes, we collect vehicle scrap including old vehicle parts, metal components and automobile scrap materials.",
+    ta: "🚗 ஆம், பழைய வாகன பாகங்கள், உலோக கூறுகள் மற்றும் வாகன ஸ்கிராப் பொருட்களை சேகரிக்கிறோம்."
+},
+
+"tyre tire wheel": {
+    en: "🛞 Yes, we collect used tyres from cars, bikes, trucks and other vehicles for proper recycling.",
+    ta: "🛞 ஆம், கார்கள், பைக்குகள், லாரிகள் மற்றும் பிற வாகனங்களில் இருந்து பயன்படுத்திய டயர்களை சரியான மறுசுழற்சிக்காக சேகரிக்கிறோம்."
+},
+
+"price rate today current": {
+    en: "💰 <strong>Today's rates</strong> are shown on each material card on the <strong>Sell Scrap page</strong> (customer.html).<br><br>Rates update daily based on market conditions. Always check latest rate before booking.",
+    ta: "💰 <strong>இன்றைய விலைகள்</strong> <strong>ஸ்கிராப் விற்பனை பக்கத்தில்</strong> (customer.html) ஒவ்வொரு பொருள் அட்டையிலும் காட்டப்படும்.<br><br>சந்தை நிலைமைகளின் அடிப்படையில் விலைகள் தினசரி புதுப்பிக்கப்படும். புக்கிங் செய்வதற்கு முன் சமீபத்திய விலையை பாருங்கள்."
+},
+
+"how calculate price amount": {
+    en: "💰 <strong>Price calculation:</strong><br><br>Final Amount = Rate per KG × Actual Weight<br><br>• Rate: Shown on website (updated daily)<br>• Weight: Measured at pickup location<br>• You can verify weight before confirming",
+    ta: "💰 <strong>விலை கணக்கீடு:</strong><br><br>இறுதி தொகை = கிலோ விலை × உண்மையான எடை<br><br>• விலை: இணையதளத்தில் (தினசரி புதுப்பிக்கப்படும்)<br>• எடை: பிக்கப் இடத்தில் அளவிடப்படும்<br>• உறுதிப்படுத்தும் முன் எடையை சரிபார்க்கலாம்"
+},
+
+"payment method upi cash bank": {
+    en: "💳 <strong>Payment options:</strong><br>• Cash payment<br>• UPI payment<br>• Bank transfer<br><br>Payment after pickup, weighing and amount confirmation. Ask pickup team for available methods.",
+    ta: "💳 <strong>பேமென்ட் முறைகள்:</strong><br>• கேஷ் பேமென்ட்<br>• UPI பேமென்ட்<br>• வங்கி பரிமாற்றம்<br><br>பிக்கப், எடை மற்றும் தொகை உறுதிப்படுத்திய பிறகு பேமென்ட். கிடைக்கும் முறைகளுக்கு பிக்கப் டீமிடம் கேளுங்கள்."
+},
+
+"minimum quantity weight": {
+    en: "⚖️ No strict minimum quantity for most materials. However, for very small quantities, contact us first at <strong>+91 95142 52104</strong> to confirm pickup availability.",
+    ta: "⚖️ பெரும்பாலான பொருட்களுக்கு கண்டிப்பான குறைந்தபட்ச அளவு இல்லை. ஆனால், மிக சிறிய அளவுகளுக்கு, பிக்கப் கிடைக்குமா என உறுதிப்படுத்த முதலில் <strong>+91 95142 52104</strong> இல் தொடர்பு கொள்ளவும்."
+},
+
+"weighing scale accurate honest": {
+    en: "⚖️ <strong>சரியான எடை, நேர்மையான விலை</strong><br><br>• Proper weighing equipment used<br>• You can see the weight display<br>• You can verify before confirming<br>• Transparent process<br>• No hidden charges",
+    ta: "⚖️ <strong>சரியான எடை, நேர்மையான விலை</strong><br><br>• சரியான எடை கருவிகள் பயன்படுத்தப்படும்<br>• எடை காட்சியை பார்க்கலாம்<br>• உறுதிப்படுத்தும் முன் சரிபார்க்கலாம்<br>• வெளிப்படையான செயல்முறை<br>• மறைக்கப்பட்ட கட்டணங்கள் இல்லை"
+},
+
+"how to book pickup": {
+    en: "📦 <strong>Booking steps:</strong><br>1. Visit <strong>customer.html</strong> page<br>2. Browse scrap materials<br>3. Add items to cart<br>4. Enter pickup details (name, phone, address)<br>5. Select date & time<br>6. Confirm booking<br>7. Track your pickup",
+    ta: "📦 <strong>புக்கிங் படிகள்:</strong><br>1. <strong>customer.html</strong> பக்கத்திற்கு செல்லவும்<br>2. ஸ்கிராப் பொருட்களை உலாவவும்<br>3. பொருட்களை கார்ட்டில் சேர்க்கவும்<br>4. பிக்கப் விவரங்களை உள்ளிடவும் (பெயர், போன், முகவரி)<br>5. தேதி மற்றும் நேரத்தை தேர்ந்தெடுக்கவும்<br>6. புக்கிங்கை உறுதிப்படுத்தவும்<br>7. உங்கள் பிக்கப்பை ட்ராக் செய்யவும்"
+},
+
+"doorstep pickup home": {
+    en: "🚚 Yes! We provide <strong>doorstep pickup</strong> at your location. No need to transport scrap yourself - our team comes to your home or business.",
+    ta: "🚚 ஆம்! உங்கள் இடத்தில் <strong>வீட்டு வாசல் பிக்கப்</strong> வழங்குகிறோம். ஸ்கிராப்பை நீங்களே எடுத்துச் செல்ல வேண்டியதில்லை - எங்கள் குழு உங்கள் வீடு அல்லது வணிகத்திற்கு வரும்."
+},
+
+"track status pickup": {
+    en: "📍 Track your pickup on the <strong>Track page</strong>. You can see:<br>• Booking status<br>• Scheduled time<br>• Latest updates<br><br>Pickup team may call you before arrival.",
+    ta: "📍 <strong>ட்ராக் பக்கத்தில்</strong> உங்கள் பிக்கப்பை கண்காணிக்கவும். நீங்கள் பார்க்கலாம்:<br>• புக்கிங் நிலை<br>• திட்டமிடப்பட்ட நேரம்<br>• சமீபத்திய புதுப்பிப்புகள்<br><br>வரும் முன் பிக்கப் குழு உங்களை அழைக்கலாம்."
+},
+
+"same day today urgent": {
+    en: "⏰ Same-day pickup may be available depending on:<br>• Your location<br>• Current time<br>• Available slots<br><br>Check available dates during booking. For urgent needs, call <strong>+91 95142 52104</strong>",
+    ta: "⏰ அதே நாள் பிக்கப் பின்வருவனவற்றை பொறுத்து கிடைக்கலாம்:<br>• உங்கள் இடம்<br>• தற்போதைய நேரம்<br>• கிடைக்கும் ஸ்லாட்கள்<br><br>புக்கிங்கின் போது கிடைக்கும் தேதிகளை பாருங்கள். அவசர தேவைகளுக்கு, <strong>+91 95142 52104</strong> இல் அழைக்கவும்"
+},
+
+"cancel reschedule change booking": {
+    en: "📅 <strong>To cancel or reschedule:</strong><br>• Contact support: +91 95142 52104<br>• Provide your booking ID<br>• Request changes as soon as possible<br><br>Changes depend on pickup status and schedule.",
+    ta: "📅 <strong>ரத்து அல்லது மாற்ற:</strong><br>• சப்போர்ட் தொடர்பு கொள்ளவும்: +91 95142 52104<br>• உங்கள் புக்கிங் ஐடியை கொடுக்கவும்<br>• விரைவில் மாற்றங்களை கோரவும்<br><br>மாற்றங்கள் பிக்கப் நிலை மற்றும் அட்டவணையை பொறுத்தது."
+},
+
+"pickup delayed late problem": {
+    en: "⏰ If pickup is delayed:<br>1. Check <strong>Track page</strong> for latest status<br>2. Keep your phone available<br>3. If significantly delayed, call <strong>+91 95142 52104</strong><br><br>We apologize for any delays and will assist you.",
+    ta: "⏰ பிக்கப் தாமதமானால்:<br>1. சமீபத்திய நிலைக்கு <strong>ட்ராக் பக்கத்தை</strong> பாருங்கள்<br>2. உங்கள் போனை கிடைக்கச் செய்யுங்கள்<br>3. கணிசமாக தாமதமானால், <strong>+91 95142 52104</strong> இல் அழைக்கவும்<br><br>எந்த தாமதத்திற்கும் வருந்துகிறோம் மற்றும் உங்களுக்கு உதவுவோம்."
+},
+
+"gps location address": {
+    en: "📍 During booking, you can:<br>• Enter address manually<br>• Use GPS location (if enabled)<br>• Add landmark for easy finding<br><br>Accurate address helps pickup team reach you quickly.",
+    ta: "📍 புக்கிங்கின் போது, நீங்கள் செய்யலாம்:<br>• முகவரியை கைமுறையாக உள்ளிடவும்<br>• GPS இருப்பிடத்தைப் பயன்படுத்தவும் (இயக்கப்பட்டிருந்தால்)<br>• எளிதாகக் கண்டுபிடிக்க லேண்ட்மார்க் சேர்க்கவும்<br><br>துல்லியமான முகவரி பிக்கப் குழு விரைவாக உங்களை அடைய உதவுகிறது."
+},
+
+"customer support help": {
+    en: "💬 <strong>Get help:</strong><br>• Use this chatbot<br>• Call: +91 95142 52104<br>• Email: covaiscraphubsupport@gmail.com<br>• Visit website: customer.html<br><br>24/7 support available",
+    ta: "💬 <strong>உதவி பெறவும்:</strong><br>• இந்த சாட்பாட்டைப் பயன்படுத்தவும்<br>• அழைக்கவும்: +91 95142 52104<br>• மின்னஞ்சல்: covaiscraphubsupport@gmail.com<br>• இணையதளம்: customer.html<br><br>24/7 உதவி கிடைக்கும்"
+},
+
+"call phone number": {
+    en: "📞 <strong>Call us:</strong><br>+91 95142 52104<br><br>Available for:<br>• Booking assistance<br>• Pickup queries<br>• Rate information<br>• Technical support<br>• Any other help",
+    ta: "📞 <strong>எங்களை அழைக்கவும்:</strong><br>+91 95142 52104<br><br>கிடைக்கும்:<br>• புக்கிங் உதவி<br>• பிக்கப் கேள்விகள்<br>• விலை தகவல்<br>• தொழில்நுட்ப ஆதரவு<br>• வேறு எந்த உதவி"
+},
+
+"email mail contact": {
+    en: "📧 <strong>Email us:</strong><br>covaiscrabehub@gmail.com<br><br>For:<br>• Written queries<br>• Complaints<br>• Feedback<br>• Business enquiries<br><br>We'll respond within 24 hours",
+    ta: "📧 <strong>எங்களுக்கு மின்னஞ்சல் அனுப்பவும்:</strong><br>covaiscraphubsupport@gmail.com<br><br>இவற்றிற்காக:<br>• எழுத்துப்பூர்வ கேள்விகள்<br>• புகார்கள்<br>• கருத்து<br>• வணிக விசாரணைகள்<br><br>24 மணி நேரத்திற்குள் பதிலளிப்போம்"
+},
+
+"business bulk commercial": {
+    en: "💼 <strong>Business enquiries:</strong><br>For regular collection, bulk scrap or business partnerships:<br><br>• Call: +91 95142 52104<br>• Email: covaiscrabehub@gmail.com<br>• Visit: buiss.html<br><br>Special rates available for businesses",
+    ta: "💼 <strong>வணிக விசாரணைகள்:</strong><br>வழக்கமான சேகரிப்பு, மொத்த ஸ்கிராப் அல்லது வணிக கூட்டாண்மைக்கு:<br><br>• அழைக்கவும்: +91 95142 52104<br>• மின்னஞ்சல்: covaiscrabehub@gmail.com<br>• பார்வையிடவும்: buiss.html<br><br>வணிகங்களுக்கு சிறப்பு விலைகள் கிடைக்கும்"
+},
+
+"how use website": {
+    en: "🌐 <strong>Website features:</strong><br>• <strong>Index.html</strong>: Home page<br>• <strong>customer.html</strong>: Browse materials & book<br>• <strong>cart.html</strong>: View cart & checkout<br>• <strong>Track page</strong>: Monitor pickup status<br>• <strong>support.html</strong>: This chatbot<br><br>Mobile friendly design",
+    ta: "🌐 <strong>இணையதள அம்சங்கள்:</strong><br>• <strong>Index.html</strong>: முகப்பு பக்கம்<br>• <strong>customer.html</strong>: பொருட்களை உலாவவும் & புக் செய்யவும்<br>• <strong>cart.html</strong>: கார்ட்டைப் பார்க்கவும் & செக்கவுட் செய்யவும்<br>• <strong>ட்ராக் பக்கம்</strong>: பிக்கப் நிலையைக் கண்காணிக்கவும்<br>• <strong>support.html</strong>: இந்த சாட்பாட்<br><br>மொபைல் நட்பு வடிவமைப்பு"
+},
+
+"tamil english language": {
+    en: "🇬🇧🇮🇳 Our service supports:<br>• English<br>• Tamil (தமிழ்)<br>• Tanglish (Tamil + English mix)<br><br>Website has bilingual content. Ask questions in any language you're comfortable with.",
+    ta: "🇬🇧🇮🇳 எங்கள் சேவை ஆதரிக்கிறது:<br>• English<br>• தமிழ்<br>• Tanglish (தமிழ் + English கலவை)<br><br>இணையதளத்தில் இருமொழி உள்ளடக்கம் உள்ளது. உங்களுக்கு வசதியான மொழியில் கேள்விகளைக் கேளுங்கள்."
+},
+
+"what happens after booking": {
+    en: "✅ <strong>After booking:</strong><br>1. You receive <strong>Booking ID</strong><br>2. Confirmation on screen + SMS (if provided)<br>3. Pickup scheduled for selected date/time<br>4. Track status on <strong>Track page</strong><br>5. Partner assigned before pickup<br>6. Partner may call before arrival<br>7. Pickup completed & payment done",
+    ta: "✅ <strong>புக்கிங் பின்:</strong><br>1. <strong>புக்கிங் ஐடி</strong> கிடைக்கும்<br>2. திரையில் உறுதிப்படுத்தல் + SMS (கொடுத்திருந்தால்)<br>3. தேர்ந்தெடுத்த தேதி/நேரத்திற்கு பிக்கப் திட்டமிடப்பட்டது<br>4. <strong>ட்ராக் பக்கத்தில்</strong> நிலையைக் கண்காணிக்கவும்<br>5. பிக்கப்பிற்கு முன் பார்ட்னர் ஒதுக்கப்படுவார்<br>6. வரும் முன் பார்ட்னர் அழைக்கலாம்<br>7. பிக்கப் முடிந்து பேமென்ட் செய்யப்படும்"
+},
+
+"how track pickup status": {
+    en: "📍 <strong>Track your pickup:</strong><br>1. Go to <strong>Track page</strong> (track.html)<br>2. Enter your <strong>Booking ID</strong> or <strong>Phone number</strong><br>3. See:<br>   • Current status<br>   • Scheduled time<br>   • Partner details (if assigned)<br>   • Live GPS location (when active)<br>   • Status history<br>4. Receive updates via SMS",
+    ta: "📍 <strong>உங்கள் பிக்கப்பைக் கண்காணிக்கவும்:</strong><br>1. <strong>ட்ராக் பக்கத்திற்கு</strong> செல்லவும் (track.html)<br>2. உங்கள் <strong>புக்கிங் ஐடி</strong> அல்லது <strong>போன் எண்</strong> உள்ளிடவும்<br>3. பாருங்கள்:<br>   • தற்போதைய நிலை<br>   • திட்டமிடப்பட்ட நேரம்<br>   • பார்ட்னர் விவரங்கள் (ஒதுக்கப்பட்டிருந்தால்)<br>   • நேரடி GPS இருப்பிடம் (செயல்படும் போது)<br>   • நிலை வரலாறு<br>4. SMS வழியாக புதுப்பிப்புகள் கிடைக்கும்"
+},
+
+"what is booking id where find": {
+    en: "🔢 <strong>Booking ID:</strong><br>• Unique number for your pickup<br>• Shown after booking confirmation<br>• Saved in browser (if cookies enabled)<br>• Sent via SMS (if phone provided)<br><br>Lost ID? Use <strong>Track by Phone</strong> option - enter your registered phone number to find all bookings.",
+    ta: "🔢 <strong>புக்கிங் ஐடி:</strong><br>• உங்கள் பிக்கப்பிற்கான தனித்துவ எண்<br>• புக்கிங் உறுதிப்படுத்திய பிறகு காட்டப்படும்<br>• பிரௌசரில் சேமிக்கப்படும் (குக்கீஸ் இயக்கப்பட்டிருந்தால்)<br>• SMS வழியாக அனுப்பப்படும் (போன் கொடுத்திருந்தால்)<br><br>ஐடி தொலைந்ததா? <strong>போன் மூலம் ட்ராக்</strong> விருப்பத்தைப் பயன்படுத்தவும் - பதிவு செய்யப்பட்ட போன் எண்ணை உள்ளிட்டு அனைத்து புக்கிங்குகளையும் கண்டறியவும்."
+},
+
+"what happens at pickup location": {
+    en: "🚚 <strong>At pickup location:</strong><br>1. Partner arrives with weighing scale<br>2. You show scrap materials<br>3. Materials weighed item by item<br>4. You verify weight on scale display<br>5. Final amount calculated:<br>   <strong>Rate × Actual Weight</strong><br>6. You confirm amount<br>7. Payment made (Cash/UPI)<br>8. Pickup completed",
+    ta: "🚚 <strong>பிக்கப் இடத்தில்:</strong><br>1. பார்ட்னர் எடை அளவுடன் வருவார்<br>2. நீங்கள் ஸ்கிராப் பொருட்களைக் காட்டுங்கள்<br>3. பொருட்கள் ஒவ்வொன்றாக எடை போடப்படும்<br>4. அளவுக் காட்சியில் எடையை சரிபார்க்கவும்<br>5. இறுதி தொகை கணக்கிடப்படும்:<br>   <strong>விலை × உண்மையான எடை</strong><br>6. நீங்கள் தொகையை உறுதிப்படுத்தவும்<br>7. பேமென்ட் செய்யப்படும் (கேஷ்/UPI)<br>8. பிக்கப் முடிந்தது"
+},
+
+"live gps tracking partner location": {
+    en: "🗺️ <strong>Live GPS tracking:</strong><br>• Available when partner starts journey<br>• See partner's real-time location on map<br>• Estimated arrival time shown<br>• Distance from your location<br>• Auto-updates every few seconds<br><br>Access via <strong>Track page</strong> using Booking ID",
+    ta: "🗺️ <strong>நேரடி GPS கண்காணிப்பு:</strong><br>• பார்ட்னர் பயணம் தொடங்கும் போது கிடைக்கும்<br>• வரைபடத்தில் பார்ட்னரின் நிகழ்நேர இருப்பிடத்தைப் பாருங்கள்<br>• மதிப்பிடப்பட்ட வருகை நேரம் காட்டப்படும்<br>• உங்கள் இடத்திலிருந்து தூரம்<br>• சில வினாடிகளுக்கு ஒரு முறை தானாக புதுப்பிக்கப்படும்<br><br>புக்கிங் ஐடி பயன்படுத்தி <strong>ட்ராக் பக்கம்</strong> வழியாக அணுகவும்"
+},
+
+"pickup status meaning pending confirmed": {
+    en: "📊 <strong>Status meanings:</strong><br>• <strong>Pending:</strong> Booking received, processing<br>• <strong>Confirmed:</strong> Pickup scheduled<br>• <strong>Partner Assigned:</strong> Pickup person allocated<br>• <strong>En Route:</strong> Partner traveling to you<br>• <strong>Arrived:</strong> Partner at your location<br>• <strong>In Progress:</strong> Weighing/collection ongoing<br>• <strong>Completed:</strong> Payment done, pickup finished",
+    ta: "📊 <strong>நிலை அர்த்தங்கள்:</strong><br>• <strong>நிலுவையில்:</strong> புக்கிங் பெறப்பட்டது, செயலாக்கம்<br>• <strong>உறுதிப்படுத்தப்பட்டது:</strong> பிக்கப் திட்டமிடப்பட்டது<br>• <strong>பார்ட்னர் ஒதுக்கப்பட்டது:</strong> பிக்கப் நபர் ஒதுக்கப்பட்டார்<br>• <strong>பயணத்தில்:</strong> பார்ட்னர் உங்களிடம் பயணிக்கிறார்<br>• <strong>வந்துவிட்டார்:</strong> உங்கள் இடத்தில் பார்ட்னர்<br>• <strong>செயலில்:</strong> எடை/சேகரிப்பு நடக்கிறது<br>• <strong>முடிந்தது:</strong> பேமென்ட் செய்யப்பட்டது, பிக்கப் முடிந்தது"
+},
+
+"prepare scrap before pickup": {
+    en: "📦 <strong>Prepare before pickup:</strong><br>• Separate different materials if possible<br>• Clean items (remove dust, dirt)<br>• Bundle newspapers/cardboard neatly<br>• Keep small items together<br>• Remove personal items/documents<br>• Have materials accessible at pickup spot<br>• Keep space for weighing<br><br>Clean, sorted scrap = faster pickup!",
+    ta: "📦 <strong>பிக்கப்பிற்கு முன் தயார் செய்யவும்:</strong><br>• முடிந்தால் வெவ்வேறு பொருட்களைப் பிரிக்கவும்<br>• பொருட்களை சுத்தம் செய்யவும் (தூசி, அழுக்கு நீக்கவும்)<br>• செய்தித்தாள்கள்/அட்டைப்பெட்டிகளை நேர்த்தியாக கட்டவும்<br>• சிறிய பொருட்களை ஒன்றாக வைக்கவும்<br>• தனிப்பட்ட பொருட்கள்/ஆவணங்களை அகற்றவும்<br>• பிக்கப் இடத்தில் பொருட்களை அணுகக்கூடியதாக வைக்கவும்<br>• எடைக்கு இடம் வைக்கவும்<br><br>சுத்தமான, வரிசைப்படுத்தப்பட்ட ஸ்கிராப் = வேகமான பிக்கப்!"
+},
+
+"photo upload why need": {
+    en: "📸 <strong>Photo upload (optional):</strong><br>• Helps estimate quantity better<br>• Faster processing of booking<br>• Partner knows what to expect<br>• Useful for large/mixed items<br>• Not mandatory but recommended<br><br>Upload during checkout in cart page",
+    ta: "📸 <strong>புகைப்படம் பதிவேற்றம் (விருப்பத்தேர்வு):</strong><br>• அளவை சிறப்பாக மதிப்பிட உதவுகிறது<br>• புக்கிங்கை வேகமாக செயலாக்குகிறது<br>• என்ன எதிர்பார்க்க வேண்டும் என்று பார்ட்னர் அறிவார்<br>• பெரிய/கலப்பு பொருட்களுக்கு பயனுள்ளது<br>• கட்டாயம் இல்லை ஆனால் பரிந்துரைக்கப்படுகிறது<br><br>கார்ட் பக்கத்தில் செக்கவுட் போது பதிவேற்றவும்"
+},
+
+"do need register account profile": {
+    en: "👤 <strong>Registration:</strong><br>• No account registration required!<br>• Book as guest anytime<br>• Optional: Setup profile for faster future bookings<br>• Profile saves: Name, Phone, Address<br>• Access profile.html to setup<br><br>Easy booking - no complex signup!",
+    ta: "👤 <strong>பதிவு:</strong><br>• கணக்கு பதிவு தேவையில்லை!<br>• எப்போது வேண்டுமானாலும் விருந்தினராக புக் செய்யவும்<br>• விருப்பத்தேர்வு: எதிர்கால புக்கிங்குகளை வேகமாக செய்ய சுயவிவரத்தை அமைக்கவும்<br>• சுயவிவரம் சேமிக்கும்: பெயர், போன், முகவரி<br>• அமைக்க profile.html ஐ அணுகவும்<br><br>எளிதான புக்கிங் - சிக்கலான பதிவு இல்லை!"
+},
+
+"time slot when available": {
+    en: "⏰ <strong>Pickup time slots:</strong><br>• Morning: 9 AM - 12 PM<br>• Afternoon: 12 PM - 3 PM<br>• Evening: 3 PM - 6 PM<br><br>Availability depends on:<br>• Your location<br>• Selected date<br>• Current bookings<br><br>Choose during booking - available slots highlighted",
+    ta: "⏰ <strong>பிக்கப் நேர ஸ்லாட்கள்:</strong><br>• காலை: 9 AM - 12 PM<br>• மதியம்: 12 PM - 3 PM<br>• மாலை: 3 PM - 6 PM<br><br>கிடைக்கும் தன்மை சார்ந்தது:<br>• உங்கள் இடம்<br>• தேர்ந்தெடுத்த தேதி<br>• தற்போதைய புக்கிங்குகள்<br><br>புக்கிங்கின் போது தேர்வு செய்யவும் - கிடைக்கும் ஸ்லாட்கள் ஹைலைட் செய்யப்பட்டுள்ளன"
+},
+
+"receipt bill invoice get": {
+    en: "🧾 <strong>Receipt/Bill:</strong><br>• Digital receipt provided after pickup<br>• Shows: Items, Weight, Rate, Total amount<br>• SMS confirmation sent<br>• Email receipt (if email provided)<br>• Access completed pickups history<br><br>For printed bill, request partner at pickup time",
+    ta: "🧾 <strong>ரசீது/பில்:</strong><br>• பிக்கப் பிறகு டிஜிட்டல் ரசீது வழங்கப்படும்<br>• காட்டும்: பொருட்கள், எடை, விலை, மொத்த தொகை<br>• SMS உறுதிப்படுத்தல் அனுப்பப்படும்<br>• மின்னஞ்சல் ரசீது (மின்னஞ்சல் கொடுத்திருந்தால்)<br>• முடிக்கப்பட்ட பிக்கப்கள் வரலாற்றை அணுகவும்<br><br>அச்சிடப்பட்ட பில்லுக்கு, பிக்கப் நேரத்தில் பார்ட்னரிடம் கோரவும்"
+},
+
+"multiple pickup same time": {
+    en: "📦 <strong>Multiple pickups:</strong><br>• Book separate pickup for each location<br>• Different dates/times possible<br>• Different materials in same booking OK<br>• Mix materials in one cart<br><br>For multiple locations at same time, call <strong>+91 95142 52104</strong> for special arrangement",
+    ta: "📦 <strong>பல பிக்கப்கள்:</strong><br>• ஒவ்வொரு இடத்திற்கும் தனி பிக்கப் புக் செய்யவும்<br>• வெவ்வேறு தேதிகள்/நேரங்கள் சாத்தியம்<br>• ஒரே புக்கிங்கில் வெவ்வேறு பொருட்கள் சரி<br>• ஒரு கார்ட்டில் பொருட்களை கலக்கவும்<br><br>ஒரே நேரத்தில் பல இடங்களுக்கு, சிறப்பு ஏற்பாட்டிற்கு <strong>+91 95142 52104</strong> இல் அழைக்கவும்"
+},
+
+"partner not arrive what do": {
+    en: "⚠️ <strong>If partner doesn't arrive:</strong><br>1. Check <strong>Track page</strong> for updates<br>2. Verify scheduled date/time<br>3. Ensure phone number correct<br>4. Wait 15 minutes past scheduled time<br>5. Call support: <strong>+91 95142 52104</strong><br>6. Provide Booking ID<br><br>We'll immediately check and assist you",
+    ta: "⚠️ <strong>பார்ட்னர் வரவில்லை எனில்:</strong><br>1. புதுப்பிப்புகளுக்கு <strong>ட்ராக் பக்கத்தை</strong> பாருங்கள்<br>2. திட்டமிடப்பட்ட தேதி/நேரத்தை சரிபார்க்கவும்<br>3. போன் எண் சரியானது என உறுதிப்படுத்தவும்<br>4. திட்டமிடப்பட்ட நேரத்திற்கு பிறகு 15 நிமிடங்கள் காத்திருக்கவும்<br>5. சப்போர்ட் அழைக்கவும்: <strong>+91 95142 52104</strong><br>6. புக்கிங் ஐடி கொடுக்கவும்<br><br>நாங்கள் உடனடியாக சரிபார்த்து உங்களுக்கு உதவுவோம்"
+},
+
+"how long pickup take": {
+    en: "⏱️ <strong>Pickup duration:</strong><br>Typically <strong>10-20 minutes</strong> depending on:<br>• Quantity of scrap<br>• Number of different materials<br>• Weighing time<br>• Location accessibility<br>• Payment method chosen<br><br>Large quantities may take longer. Partner will inform estimated time on arrival.",
+    ta: "⏱️ <strong>பிக்கப் கால அளவு:</strong><br>பொதுவாக <strong>10-20 நிமிடங்கள்</strong> சார்ந்தது:<br>• ஸ்கிராப் அளவு<br>• வெவ்வேறு பொருட்களின் எண்ணிக்கை<br>• எடை போடும் நேரம்<br>• இட அணுகல்<br>• தேர்ந்தெடுக்கப்பட்ட பேமென்ட் முறை<br><br>பெரிய அளவுகளுக்கு அதிக நேரம் ஆகலாம். வந்தவுடன் மதிப்பிடப்பட்ட நேரத்தை பார்ட்னர் தெரிவிப்பார்."
+},
+
+"how navigate website pages work": {
+    en: "🌐 <strong>Website Navigation:</strong><br><br>📱 <strong>Main Pages:</strong><br>• <strong>customer.html</strong> - Browse materials & see rates<br>• <strong>cart.html</strong> - Review cart & checkout<br>• <strong>track.html</strong> - Track your pickup<br>• <strong>rates.html</strong> - Check all rates<br>• <strong>profile.html</strong> - Save your info<br>• <strong>contact.html</strong> - Reach us<br>• <strong>support.html</strong> - This chatbot<br><br>🔽 <strong>Bottom Bar:</strong> Profile | Cart | Sell | Track | History<br>☰ <strong>Menu:</strong> All pages & settings",
+    ta: "🌐 <strong>இணையதள வழிசெலுத்தல்:</strong><br><br>📱 <strong>முக்கிய பக்கங்கள்:</strong><br>• <strong>customer.html</strong> - பொருட்கள் & விலைகள்<br>• <strong>cart.html</strong> - கார்ட் & செக்கவுட்<br>• <strong>track.html</strong> - பிக்கப் கண்காணிக்கவும்<br>• <strong>rates.html</strong> - அனைத்து விலைகள்<br>• <strong>profile.html</strong> - தகவல் சேமிக்கவும்<br>• <strong>contact.html</strong> - எங்களை தொடர்பு கொள்ளவும்<br>• <strong>support.html</strong> - இந்த சாட்பாட்<br><br>🔽 <strong>கீழ் பார்:</strong> சுயவிவரம் | வண்டி | விற்க | ட்ராக் | வரலாறு<br>☰ <strong>மெனு:</strong> பக்கங்கள் & அமைப்புகள்"
+},
+
+"complete process step by step": {
+    en: "🔄 <strong>COMPLETE PROCESS:</strong><br><br><strong>1. Browse:</strong> customer.html → See materials & today's rates<br><strong>2. Add:</strong> Click material → Enter weight → Add to Sell<br><strong>3. Cart:</strong> Review items → Upload photos → Continue<br><strong>4. Details:</strong> Name, Phone, Address → Confirm<br><strong>5. Booked:</strong> Get Booking ID → SMS sent<br><strong>6. Track:</strong> Enter Booking ID → See live status & GPS<br><strong>7. Pickup:</strong> Partner arrives → Weighs → Verify → Payment → Done!<br><strong>8. After:</strong> Receipt → SMS → View in history<br><br>✅ <strong>Simple & Transparent!</strong><br>Help: <strong>+91 95142 52104</strong>",
+    ta: "🔄 <strong>முழுமையான செயல்முறை:</strong><br><br><strong>1. உலாவவும்:</strong> customer.html → பொருட்கள் & விலைகள்<br><strong>2. சேர்:</strong> பொருள் கிளிக் → எடை → விற்க சேர்<br><strong>3. கார்ட்:</strong> பொருட்கள் → புகைப்படம் → தொடரவும்<br><strong>4. விவரங்கள்:</strong> பெயர், போன், முகவரி → உறுதி<br><strong>5. புக்:</strong> புக்கிங் ஐடி → SMS<br><strong>6. ட்ராக்:</strong> ஐடி உள்ளிடவும் → நிலை & GPS<br><strong>7. பிக்கப்:</strong> பார்ட்னர் → எடை → சரிபார் → பேமென்ட் → முடிந்தது!<br><strong>8. பிறகு:</strong> ரசீது → SMS → வரலாற்றில்<br><br>✅ <strong>எளிமை & வெளிப்படைத்தன்மை!</strong><br>உதவி: <strong>+91 95142 52104</strong>"
+},
+
+"beginner first time how start": {
+    en: "🚀 <strong>FIRST TIME USER - QUICK START:</strong><br><br>1️⃣ <strong>Language:</strong> Click த/EN (top right) - Choose தமிழ் or English<br>2️⃣ <strong>Check Rates:</strong> Go to customer.html → See today's rates on each material<br>3️⃣ <strong>Select Items:</strong> Click material → Enter weight → Click 'Add to Sell'<br>4️⃣ <strong>Cart:</strong> Click Cart icon → Review items<br>5️⃣ <strong>Book:</strong> Enter Name, Phone, Address → Confirm<br>6️⃣ <strong>Track:</strong> Save Booking ID → Use Track page<br>7️⃣ <strong>Pickup Day:</strong> Partner comes → Get paid!<br><br>⚡ <strong>Just 7 steps!</strong> Need help: <strong>+91 95142 52104</strong>",
+    ta: "🚀 <strong>முதல் முறை பயனர் - விரைவு தொடக்கம்:</strong><br><br>1️⃣ <strong>மொழி:</strong> த/EN கிளிக் (மேல் வலது) - தமிழ் அல்லது English<br>2️⃣ <strong>விலைகள்:</strong> customer.html → ஒவ்வொரு பொருளின் இன்றைய விலை<br>3️⃣ <strong>பொருட்கள்:</strong> பொருள் கிளிக் → எடை → 'விற்க சேர்'<br>4️⃣ <strong>கார்ட்:</strong> கார்ட் ஐகான் → பொருட்கள் மதிப்பாய்வு<br>5️⃣ <strong>புக்:</strong> பெயர், போன், முகவரி → உறுதி<br>6️⃣ <strong>ட்ராக்:</strong> புக்கிங் ஐடி சேமிக்கவும் → ட்ராக் பக்கம்<br>7️⃣ <strong>பிக்கப் நாள்:</strong> பார்ட்னர் → பணம் கிடைக்கும்!<br><br>⚡ <strong>வெறும் 7 படிகள்!</strong> உதவி: <strong>+91 95142 52104</strong>"
+},
+
+"default": {
+    en: "🤔 I couldn't find an exact answer. But I can help with:<br><br>• Scrap materials we collect<br>• Today's rates<br>• Booking process<br>• Pickup service<br>• Payment methods<br>• Contact information<br><br>Please try asking in different words or call us at <strong>+91 95142 52104</strong>",
+    ta: "🤔 சரியான பதில் கிடைக்கவில்லை. ஆனால் நான் இவற்றில் உதவ முடியும்:<br><br>• நாங்கள் சேகரிக்கும் ஸ்கிராப் பொருட்கள்<br>• இன்றைய விலைகள்<br>• புக்கிங் செயல்முறை<br>• பிக்கப் சேவை<br>• பேமென்ட் முறைகள்<br>• தொடர்பு தகவல்<br><br>வேறு வார்த்தைகளில் கேட்க முயற்சிக்கவும் அல்லது எங்களை <strong>+91 95142 52104</strong> இல் அழைக்கவும்"
+}
+
+};
+
+
+/* =====================================================
+   QUICK SUGGESTIONS
+===================================================== */
+
+const quickSuggestions = {
+
+english: [
+    "Complete process start to end?",
+    "How to use website?",
+    "First time user guide?",
+    "How do I book pickup?",
+    "What happens after booking?",
+    "How to track my pickup?",
+    "What materials do you collect?",
+    "What are today's rates?",
+    "Your contact number?",
+    "What happens at pickup?",
+    "What is booking ID?",
+    "Live GPS tracking?"
+],
+
+tamil: [
+    "முழு செயல்முறை தொடக்கம் முதல் முடிவு?",
+    "இணையதளம் எப்படி பயன்படுத்துவது?",
+    "முதல் முறை வழிகாட்டி?",
+    "பிக்கப் எப்படி புக் செய்வது?",
+    "புக்கிங் பின் என்ன நடக்கும்?",
+    "பிக்கப் எப்படி ட்ராக் செய்வது?",
+    "என்னென்ன பொருட்கள் சேகரிக்கிறீர்கள்?",
+    "இன்றைய விலை என்ன?",
+    "உங்கள் தொடர்பு எண்?",
+    "பிக்கப் இடத்தில் என்ன நடக்கும்?",
+    "புக்கிங் ஐடி என்றால் என்ன?",
+    "நேரடி GPS?"
+]
+
+};
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let currentLang = "english";
+
+
+/* =====================================================
+   TOGGLE LANGUAGE
+===================================================== */
+
+function toggleLanguage(){
+
+    currentLang = currentLang === "english" ? "tamil" : "english";
+
+    const btn = document.getElementById("langBtn");
+
+    btn.textContent = currentLang === "tamil" ? "🇮🇳 தமிழ்" : "🇬🇧 EN";
+
+    const msg = currentLang === "tamil"
+        ? "தமிழ் மொழி தேர்வு செய்யப்பட்டது"
+        : "English selected";
+
+    addBotMessage(msg, false);
+
+}
+
+
+/* =====================================================
+   SEARCH FAQ
+===================================================== */
+
+function searchFAQ(input){
+
+    const text = input.toLowerCase().trim();
+
+    if(!text) return null;
+
+    let bestMatch = null;
+    let bestScore = 0;
+
+    for(const key in faq){
+
+        if(key === "default") continue;
+
+        const keywords = key.split(" ");
+
+        let score = 0;
+
+        keywords.forEach(keyword => {
+            if(text.includes(keyword)){
+                score += keyword.length;
+            }
+        });
+
+        const words = text.split(/\s+/);
+
+        words.forEach(word => {
+            if(word.length >= 3 && key.includes(word)){
+                score += 2;
+            }
+        });
+
+        if(score > bestScore){
+            bestScore = score;
+            bestMatch = key;
+        }
+
+    }
+
+    return bestScore >= 3 ? bestMatch : null;
+
+}
+
+
+/* =====================================================
+   WELCOME
+===================================================== */
+
+function welcomeMessage(){
+
+    addBotMessage(
+        "👋 <strong>Welcome to COVAI SCRAP HUB!</strong><br><br>" +
+        "I'm your AI support assistant. Ask me anything about our scrap collection service.<br><br>" +
+        "🇬🇧 English • 🇮🇳 தமிழ் supported",
+        false
+    );
+
+    showQuickActions();
+
+}
+
+
+/* =====================================================
+   ADD MESSAGES
+===================================================== */
+
+function addBotMessage(text, showQuick = true){
+
+    const content = document.getElementById("chatContent");
+
+    const msg = document.createElement("div");
+
+    msg.className = "message bot";
+
+    msg.innerHTML = `
+        <div class="message-inner">
+            <div class="message-avatar">🤖</div>
+            <div class="bubble">${text}</div>
+        </div>
+    `;
+
+    content.appendChild(msg);
+
+    scrollToBottom();
+
+    if(showQuick){
+        showQuickActions();
+    }
+
+}
+
+
+function addUserMessage(text){
+
+    const content = document.getElementById("chatContent");
+
+    const msg = document.createElement("div");
+
+    msg.className = "message user";
+
+    msg.innerHTML = `
+        <div class="message-inner">
+            <div class="message-avatar">👤</div>
+            <div class="bubble">${escapeHTML(text)}</div>
+        </div>
+    `;
+
+    content.appendChild(msg);
+
+    scrollToBottom();
+
+}
+
+
+/* =====================================================
+   TYPING
+===================================================== */
+
+function showTyping(){
+
+    const content = document.getElementById("chatContent");
+
+    const msg = document.createElement("div");
+
+    msg.className = "message bot";
+    msg.id = "typingMsg";
+
+    msg.innerHTML = `
+        <div class="message-inner">
+            <div class="message-avatar">🤖</div>
+            <div class="typing">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    `;
+
+    content.appendChild(msg);
+
+    scrollToBottom();
+
+}
+
+
+function removeTyping(){
+
+    const typing = document.getElementById("typingMsg");
+
+    if(typing){
+        typing.remove();
+    }
+
+}
+
+
+/* =====================================================
+   QUICK ACTIONS
+===================================================== */
+
+function showQuickActions(){
+
+    const existing = document.querySelector(".quick-actions");
+
+    if(existing){
+        existing.remove();
+    }
+
+    const content = document.getElementById("chatContent");
+
+    const actions = document.createElement("div");
+
+    actions.className = "quick-actions";
+
+    const suggestions = quickSuggestions[currentLang] || quickSuggestions.english;
+
+    suggestions.forEach(q => {
+
+        const btn = document.createElement("button");
+
+        btn.className = "quick-btn";
+
+        btn.textContent = q;
+
+        btn.onclick = () => {
+            document.getElementById("questionInput").value = q;
+            sendQuestion();
+        };
+
+        actions.appendChild(btn);
+
+    });
+
+    content.appendChild(actions);
+
+    scrollToBottom();
+
+}
+
+
+/* =====================================================
+   SEND QUESTION
+===================================================== */
+
+function sendQuestion(){
+
+    const input = document.getElementById("questionInput");
+
+    const text = input.value.trim();
+
+    if(!text) return;
+
+    addUserMessage(text);
+
+    input.value = "";
+    input.style.height = "auto";
+
+    showTyping();
+
+    setTimeout(() => {
+
+        removeTyping();
+
+        const matchKey = searchFAQ(text);
+
+        if(matchKey && faq[matchKey]){
+
+            const answer = faq[matchKey][currentLang === "tamil" ? "ta" : "en"];
+
+            addBotMessage(answer);
+
+        }
+        else{
+
+            const defaultAnswer = faq.default[currentLang === "tamil" ? "ta" : "en"];
+
+            addBotMessage(defaultAnswer);
+
+        }
+
+    }, 600);
+
+}
+
+
+/* =====================================================
+   INPUT HANDLERS
+===================================================== */
+
+function handleKey(e){
+
+    if(e.key === "Enter" && !e.shiftKey){
+        e.preventDefault();
+        sendQuestion();
+    }
+
+}
+
+
+function autoResize(textarea){
+
+    textarea.style.height = "auto";
+    textarea.style.height = Math.min(textarea.scrollHeight, 120) + "px";
+
+}
+
+
+/* =====================================================
+   UTILS
+===================================================== */
+
+function escapeHTML(str){
+
+    return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function scrollToBottom(){
+
+    const container = document.getElementById("chatContainer");
+
+    setTimeout(() => {
+        container.scrollTop = container.scrollHeight;
+    }, 50);
+
+}
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+welcomeMessage();
+
+document.getElementById("questionInput").focus();
+
+</script>
+
+<script>
+// Apply saved theme
+function applySavedTheme(){
+    const theme = localStorage.getItem("covaiTheme") || "light";
+    if(theme === "dark"){
+        document.body.classList.add("dark-mode");
+    } else {
+        document.body.classList.remove("dark-mode");
+    }
+}
+
+// Apply theme on load
+if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', applySavedTheme);
+} else {
+    applySavedTheme();
+}
+</script>
+
+</body>
+</html>

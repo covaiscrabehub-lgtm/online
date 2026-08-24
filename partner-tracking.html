@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Tracking - Covai Scrap Hub</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Segoe UI',sans-serif;
+            background:linear-gradient(135deg,#0f1419,#1a1f26);
+            color:#e0e6ed;
+            padding:20px;
+            min-height:100vh;
+        }
+
+        .container{
+            max-width:800px;
+            margin:0 auto;
+        }
+
+        .header{
+            background:rgba(26,31,46,0.95);
+            padding:20px;
+            border-radius:15px;
+            margin-bottom:20px;
+            border:1px solid #374151;
+        }
+
+        .header h1{
+            color:#34d399;
+            margin-bottom:5px;
+        }
+
+        .header p{
+            color:#9ca3af;
+            font-size:14px;
+        }
+
+        .order-card{
+            background:rgba(26,31,46,0.95);
+            border:1px solid #374151;
+            border-radius:15px;
+            padding:20px;
+            margin-bottom:15px;
+            cursor:pointer;
+            transition:all 0.3s;
+        }
+
+        .order-card:hover{
+            border-color:#34d399;
+            transform:translateY(-2px);
+        }
+
+        .order-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:10px;
+        }
+
+        .order-id{
+            font-weight:700;
+            color:#34d399;
+            font-size:16px;
+        }
+
+        .order-status{
+            padding:6px 12px;
+            border-radius:20px;
+            font-size:12px;
+            font-weight:600;
+        }
+
+        .status-pending{
+            background:rgba(251,146,60,0.2);
+            color:#fb923c;
+        }
+
+        .status-confirmed{
+            background:rgba(59,130,246,0.2);
+            color:#60a5fa;
+        }
+
+        .status-pickup{
+            background:rgba(168,85,247,0.2);
+            color:#a78bfa;
+        }
+
+        .status-completed{
+            background:rgba(52,211,153,0.2);
+            color:#34d399;
+        }
+
+        .order-details{
+            color:#9ca3af;
+            font-size:14px;
+        }
+
+        .tracking-modal{
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background:rgba(0,0,0,0.85);
+            z-index:1000;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+        }
+
+        .tracking-modal.show{
+            display:flex;
+        }
+
+        .modal-content{
+            background:rgba(26,31,46,0.98);
+            border:1px solid #374151;
+            border-radius:20px;
+            padding:30px;
+            max-width:600px;
+            width:100%;
+            max-height:90vh;
+            overflow-y:auto;
+        }
+
+        .modal-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        .modal-title{
+            color:#34d399;
+            font-size:20px;
+            font-weight:700;
+        }
+
+        .close-btn{
+            background:transparent;
+            border:none;
+            color:#9ca3af;
+            font-size:28px;
+            cursor:pointer;
+            line-height:1;
+        }
+
+        .close-btn:hover{
+            color:#ef4444;
+        }
+
+        .tracking-stages{
+            display:flex;
+            flex-direction:column;
+            gap:15px;
+        }
+
+        .stage-btn{
+            background:rgba(55,65,81,0.5);
+            border:2px solid #374151;
+            padding:20px;
+            border-radius:12px;
+            text-align:left;
+            cursor:pointer;
+            transition:all 0.3s;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .stage-btn:hover{
+            border-color:#34d399;
+            transform:translateX(5px);
+        }
+
+        .stage-btn.completed{
+            background:rgba(52,211,153,0.15);
+            border-color:#34d399;
+        }
+
+        .stage-btn.completed::after{
+            content:'✓';
+            position:absolute;
+            top:50%;
+            right:20px;
+            transform:translateY(-50%);
+            color:#34d399;
+            font-size:24px;
+            font-weight:bold;
+        }
+
+        .stage-btn.active{
+            border-color:#60a5fa;
+            background:rgba(59,130,246,0.15);
+            animation:pulse 2s infinite;
+        }
+
+        @keyframes pulse{
+            0%,100%{
+                box-shadow:0 0 0 0 rgba(96,165,250,0.4);
+            }
+            50%{
+                box-shadow:0 0 0 10px rgba(96,165,250,0);
+            }
+        }
+
+        .stage-title{
+            font-size:16px;
+            font-weight:700;
+            color:#e0e6ed;
+            margin-bottom:5px;
+        }
+
+        .stage-desc{
+            font-size:13px;
+            color:#9ca3af;
+        }
+
+        .stage-time{
+            font-size:11px;
+            color:#6b7280;
+            margin-top:8px;
+        }
+
+        .success-message{
+            display:none;
+            position:fixed;
+            top:20px;
+            right:20px;
+            background:rgba(52,211,153,0.95);
+            color:#0f1419;
+            padding:15px 20px;
+            border-radius:10px;
+            font-weight:600;
+            z-index:2000;
+            animation:slideIn 0.3s;
+        }
+
+        .success-message.show{
+            display:block;
+        }
+
+        @keyframes slideIn{
+            from{
+                transform:translateX(400px);
+                opacity:0;
+            }
+            to{
+                transform:translateX(0);
+                opacity:1;
+            }
+        }
+
+        .loading{
+            text-align:center;
+            padding:40px;
+            color:#9ca3af;
+        }
+
+        .empty{
+            text-align:center;
+            padding:60px 20px;
+            color:#6b7280;
+        }
+
+        .empty-icon{
+            font-size:48px;
+            margin-bottom:15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🚛 Partner Tracking Dashboard</h1>
+        <p>Update pickup status for customers</p>
+    </div>
+
+    <div id="ordersList" class="loading">
+        Loading orders...
+    </div>
+</div>
+
+<!-- Tracking Modal -->
+<div id="trackingModal" class="tracking-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="modalTitle">Order #XXXX</div>
+            <button class="close-btn" onclick="closeModal()">×</button>
+        </div>
+
+        <div class="tracking-stages" id="trackingStages">
+            <!-- Stages will be added here -->
+        </div>
+    </div>
+</div>
+
+<!-- Success Message -->
+<div id="successMessage" class="success-message">
+    ✓ Status updated successfully!
+</div>
+
+<script type="module">
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    update,
+    set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+    authDomain: "covai-scrap-hub.firebaseapp.com",
+    databaseURL: "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+    projectId: "covai-scrap-hub",
+    storageBucket: "covai-scrap-hub.firebasestorage.app",
+    messagingSenderId: "979133721874",
+    appId: "1:979133721874:web:c5829bb8dbf5270c0917cb"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Tracking stages
+const stages = [
+    {
+        id: 'pending',
+        title: '📝 Order Pending',
+        desc: 'Order received, awaiting confirmation'
+    },
+    {
+        id: 'confirmed',
+        title: '✅ Order Confirmed',
+        desc: 'Order confirmed, preparing for pickup'
+    },
+    {
+        id: 'on_the_way',
+        title: '🚛 On The Way',
+        desc: 'Partner is on the way to pickup location'
+    },
+    {
+        id: 'picked_up',
+        title: '📦 Picked Up',
+        desc: 'Scrap collected successfully'
+    },
+    {
+        id: 'completed',
+        title: '🎉 Completed',
+        desc: 'Order completed and payment processed'
+    }
+];
+
+let currentOrderId = null;
+
+// Load orders
+function loadOrders(){
+    const ordersRef = ref(db, 'pickupRequests');
+
+    onValue(ordersRef, (snapshot) => {
+        const ordersList = document.getElementById('ordersList');
+
+        if(!snapshot.exists()){
+            ordersList.innerHTML = `
+                <div class="empty">
+                    <div class="empty-icon">📦</div>
+                    <div>No orders found</div>
+                </div>
+            `;
+            return;
+        }
+
+        const orders = snapshot.val();
+        let html = '';
+
+        Object.keys(orders).forEach(orderId => {
+            const order = orders[orderId];
+            const status = order.trackingStatus || 'pending';
+            const statusClass = `status-${status.replace('_', '-')}`;
+
+            html += `
+                <div class="order-card" onclick="openTracking('${orderId}')">
+                    <div class="order-header">
+                        <div class="order-id">Order #${orderId.substring(0, 8)}</div>
+                        <div class="order-status ${statusClass}">
+                            ${formatStatus(status)}
+                        </div>
+                    </div>
+                    <div class="order-details">
+                        Customer: ${order.name || 'N/A'}<br>
+                        Phone: ${order.mobile || 'N/A'}<br>
+                        Location: ${order.address ? order.address.substring(0, 50) + '...' : 'N/A'}
+                    </div>
+                </div>
+            `;
+        });
+
+        ordersList.innerHTML = html;
+    });
+}
+
+function formatStatus(status){
+    return status.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+}
+
+// Open tracking modal
+window.openTracking = function(orderId){
+    currentOrderId = orderId;
+
+    document.getElementById('modalTitle').textContent = `Order #${orderId.substring(0, 8)}`;
+
+    // Load current status
+    const orderRef = ref(db, `pickupRequests/${orderId}`);
+
+    onValue(orderRef, (snapshot) => {
+        if(!snapshot.exists()) return;
+
+        const order = snapshot.val();
+        const currentStatus = order.trackingStatus || 'pending';
+        const tracking = order.tracking || {};
+
+        const stagesHtml = stages.map(stage => {
+            const isCompleted = tracking[stage.id]?.completed || false;
+            const isCurrent = currentStatus === stage.id;
+            const completedTime = tracking[stage.id]?.time || '';
+
+            let classes = 'stage-btn';
+            if(isCompleted) classes += ' completed';
+            if(isCurrent) classes += ' active';
+
+            return `
+                <button class="${classes}" onclick="updateStage('${stage.id}')">
+                    <div class="stage-title">${stage.title}</div>
+                    <div class="stage-desc">${stage.desc}</div>
+                    ${completedTime ? `<div class="stage-time">✓ ${new Date(completedTime).toLocaleString()}</div>` : ''}
+                </button>
+            `;
+        }).join('');
+
+        document.getElementById('trackingStages').innerHTML = stagesHtml;
+    }, { onlyOnce: true });
+
+    document.getElementById('trackingModal').classList.add('show');
+};
+
+// Update stage
+window.updateStage = async function(stageId){
+    if(!currentOrderId) return;
+
+    const updates = {};
+    const now = Date.now();
+
+    // Update current status
+    updates[`pickupRequests/${currentOrderId}/trackingStatus`] = stageId;
+
+    // Mark this stage as completed
+    updates[`pickupRequests/${currentOrderId}/tracking/${stageId}/completed`] = true;
+    updates[`pickupRequests/${currentOrderId}/tracking/${stageId}/time`] = now;
+
+    // Mark all previous stages as completed
+    const currentIndex = stages.findIndex(s => s.id === stageId);
+    for(let i = 0; i <= currentIndex; i++){
+        const prevStage = stages[i];
+        updates[`pickupRequests/${currentOrderId}/tracking/${prevStage.id}/completed`] = true;
+        if(!updates[`pickupRequests/${currentOrderId}/tracking/${prevStage.id}/time`]){
+            updates[`pickupRequests/${currentOrderId}/tracking/${prevStage.id}/time`] = now;
+        }
+    }
+
+    try {
+        await update(ref(db), updates);
+
+        // Show success message
+        const successMsg = document.getElementById('successMessage');
+        successMsg.classList.add('show');
+
+        setTimeout(() => {
+            successMsg.classList.remove('show');
+        }, 2000);
+
+        // Reload modal to show updated status
+        setTimeout(() => {
+            openTracking(currentOrderId);
+        }, 500);
+
+    } catch(error){
+        console.error('Error updating status:', error);
+        alert('Error updating status. Please try again.');
+    }
+};
+
+// Close modal
+window.closeModal = function(){
+    document.getElementById('trackingModal').classList.remove('show');
+    currentOrderId = null;
+};
+
+// Init
+loadOrders();
+</script>
+
+</body>
+</html>

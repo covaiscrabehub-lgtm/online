@@ -1,0 +1,6418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#00a86b">
+
+<title>Track Your Pickup - COVAI SCRAP HUB</title>
+
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --green:#00a86b;
+    --green-dark:#008653;
+    --green-light:#e9fff6;
+    --green-soft:#f5fffb;
+    --dark:#111827;
+    --text:#27332e;
+    --muted:#718078;
+    --border:#e5ebe8;
+    --bg:#f5f8f7;
+    --white:#fff;
+    --red:#ef4444;
+    --orange:#f59e0b;
+    --blue:#3b82f6;
+    --shadow:0 12px 35px rgba(15,23,42,.08);
+}
+
+body.dark-mode{
+    --green:#34d399;
+    --green-dark:#10b981;
+    --green-light:#1f2937;
+    --green-soft:#14251c;
+    --dark:#0a0f0d;
+    --text:#f1f5f9;
+    --muted:#9ca3af;
+    --border:#374151;
+    --bg:#111827;
+    --white:#1f2937;
+    --red:#ef4444;
+    --orange:#fb923c;
+    --blue:#60a5fa;
+    --shadow:0 12px 35px rgba(0,0,0,.25);
+}
+
+body.dark-mode{
+    background:linear-gradient(135deg,#0f1419,#1a1f26);
+    color:#e0e6ed;
+}
+
+body.dark-mode .search-page{
+    background:linear-gradient(135deg,#0f1419,#1a1f26);
+}
+
+body.dark-mode .search-header{
+    background:rgba(26,31,46,.95);
+    border-bottom:1px solid #374151;
+}
+
+body.dark-mode .brand{
+    color:#e0e6ed;
+}
+
+body.dark-mode .brand-name{
+    color:#e0e6ed;
+}
+
+body.dark-mode .brand-sub{
+    color:#9ca3af;
+}
+
+body.dark-mode .brand-logo{
+    background:#1e2433;
+    border:3px solid #34d399;
+}
+
+body.dark-mode .back-btn{
+    background:#1e2433;
+    border:1px solid #374151;
+    color:#34d399;
+}
+
+body.dark-mode .back-btn:hover{
+    background:#1a7f4e;
+    color:#fff;
+}
+
+body.dark-mode .pickup-form{
+    background:#1a1f2e;
+    border:1px solid #374151;
+}
+
+body.dark-mode .form-logo{
+    background:#1e2433;
+    border:3px solid #34d399;
+}
+
+body.dark-mode .pickup-form h1{
+    color:#e0e6ed;
+}
+
+body.dark-mode .form-description{
+    color:#9ca3af;
+}
+
+body.dark-mode .input-label{
+    color:#d1d5db;
+}
+
+body.dark-mode .phone-wrapper{
+    background:#1e2433;
+    border:1px solid #374151;
+}
+
+body.dark-mode .phone-icon{
+    color:#9ca3af;
+}
+
+body.dark-mode .phone-input{
+    background:transparent;
+    color:#e0e6ed;
+}
+
+body.dark-mode .phone-input::placeholder{
+    color:#6b7280;
+}
+
+body.dark-mode .phone-input:focus{
+    border-color:#34d399;
+}
+
+body.dark-mode .main-btn{
+    background:linear-gradient(135deg,#1a7f4e,#16a34a);
+}
+
+body.dark-mode .main-btn:hover{
+    background:linear-gradient(135deg,#16a34a,#059669);
+}
+
+body.dark-mode .or-divider::before,
+body.dark-mode .or-divider::after{
+    border-bottom-color:#374151;
+}
+
+body.dark-mode .or-divider span{
+    color:#9ca3af;
+}
+
+body.dark-mode .secondary-btn{
+    background:#1a1f2e;
+    border-color:#34d399;
+    color:#34d399;
+}
+
+body.dark-mode .secondary-btn:hover{
+    background:#1e2936;
+}
+
+body.dark-mode .phone-note{
+    background:rgba(26,127,78,.1);
+    border:1px solid rgba(52,211,153,.2);
+    color:#9ca3af;
+}
+
+body.dark-mode .phone-note-icon{
+    color:#34d399;
+}
+
+body.dark-mode .how-title{
+    color:#e0e6ed;
+}
+
+body.dark-mode .step{
+    background:#1a1f2e;
+    border:1px solid #374151;
+}
+
+body.dark-mode .step-icon{
+    background:rgba(26,127,78,.2);
+    color:#34d399;
+}
+
+body.dark-mode .step-title{
+    color:#e0e6ed;
+}
+
+body.dark-mode .step-content{
+    color:#9ca3af;
+}
+
+body.dark-mode .message-box{
+    background:#1e2433;
+    border:1px solid #374151;
+}
+
+body.dark-mode .message-error{
+    background:rgba(239,68,68,.1);
+    border:1px solid rgba(239,68,68,.3);
+    color:#fca5a5;
+}
+
+body.dark-mode .message-info{
+    background:rgba(96,165,250,.1);
+    border:1px solid rgba(96,165,250,.3);
+    color:#93c5fd;
+}
+
+body.dark-mode .tracking-page{
+    background:linear-gradient(135deg,#0f1419,#1a1f26);
+}
+
+body.dark-mode .tracking-header{
+    background:#1a1f2e;
+    border-bottom:1px solid #374151;
+}
+
+body.dark-mode .pickup-id{
+    color:#e0e6ed;
+}
+
+body.dark-mode .pickup-date{
+    color:#9ca3af;
+}
+
+body.dark-mode .status-badge{
+    background:#1e2433;
+    border:1px solid #374151;
+    color:#9ca3af;
+}
+
+body.dark-mode .status-badge.processing{
+    background:rgba(251,146,60,.1);
+    color:#fb923c;
+    border:1px solid rgba(251,146,60,.3);
+}
+
+body.dark-mode .status-badge.completed{
+    background:rgba(52,211,153,.1);
+    color:#34d399;
+    border:1px solid rgba(52,211,153,.3);
+}
+
+body.dark-mode .progress-container{
+    background:#1a1f2e;
+    border:1px solid #374151;
+}
+
+body.dark-mode .progress-step{
+    background:#1e2433;
+    border:1px solid #374151;
+}
+
+body.dark-mode .progress-step.completed{
+    background:rgba(26,127,78,.2);
+    border:1px solid #34d399;
+}
+
+body.dark-mode .progress-step-icon{
+    background:#374151;
+    color:#6b7280;
+}
+
+body.dark-mode .progress-step.completed .progress-step-icon{
+    background:#1a7f4e;
+    color:#fff;
+}
+
+body.dark-mode .progress-step-title{
+    color:#e0e6ed;
+}
+
+body.dark-mode .progress-step-time{
+    color:#9ca3af;
+}
+
+body.dark-mode .details-card{
+    background:#1a1f2e;
+    border:1px solid #374151;
+}
+
+body.dark-mode .details-card h3{
+    color:#e0e6ed;
+}
+
+body.dark-mode .detail-row{
+    border-bottom:1px solid #374151;
+}
+
+body.dark-mode .detail-label{
+    color:#9ca3af;
+}
+
+body.dark-mode .detail-value{
+    color:#e0e6ed;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+    transition:background .3s ease,color .3s ease;
+}
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    -webkit-tap-highlight-color:transparent;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    background:
+    radial-gradient(circle at top,#e9fff6,transparent 40%),
+    #f7faf9;
+}
+
+.spinner{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    border:4px solid #d9eee6;
+    border-top-color:var(--green);
+    animation:spin .8s linear infinite;
+}
+
+.loading-text{
+    font-size:13px;
+    color:var(--muted);
+    font-weight:600;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================================================
+   SEARCH PAGE
+========================================================= */
+
+.search-page{
+    min-height:100vh;
+    padding:25px 18px 50px;
+
+    background:
+    radial-gradient(
+        circle at 10% 0%,
+        rgba(0,168,107,.12),
+        transparent 28%
+    ),
+    radial-gradient(
+        circle at 90% 20%,
+        rgba(0,168,107,.08),
+        transparent 25%
+    ),
+    #f5f8f7;
+}
+
+/* =========================================================
+   SEARCH HEADER
+========================================================= */
+
+.search-header{
+    max-width:1100px;
+    margin:0 auto 22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.brand-logo{
+    width:46px;
+    height:46px;
+    border-radius:14px;
+    overflow:hidden;
+    background:#fff;
+    border:1px solid #e5ece9;
+    box-shadow:0 5px 18px rgba(0,0,0,.07);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.brand-logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.brand-name{
+    font-size:16px;
+    font-weight:900;
+    color:#111827;
+    letter-spacing:.2px;
+}
+
+.brand-sub{
+    margin-top:2px;
+    font-size:10px;
+    color:#7b8782;
+}
+
+.back-btn{
+    height:40px;
+    padding:0 14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#fff;
+    color:#374151;
+    font-size:12px;
+    font-weight:750;
+    cursor:pointer;
+}
+
+/* =========================================================
+   SEARCH GRID
+========================================================= */
+
+.search-container{
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:
+    minmax(330px,440px)
+    minmax(0,1fr);
+
+    gap:22px;
+    align-items:stretch;
+}
+
+/* =========================================================
+   MAIN TRACK CARD
+========================================================= */
+
+.pickup-form{
+    background:#fff;
+    border:1px solid #e6ece9;
+    border-radius:26px;
+    padding:28px;
+    box-shadow:var(--shadow);
+    animation:formIn .45s ease;
+}
+
+@keyframes formIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.form-logo{
+    width:72px;
+    height:72px;
+    border-radius:21px;
+    overflow:hidden;
+    margin:0 auto 17px;
+
+    background:#fff;
+    border:1px solid #e5ece9;
+
+    box-shadow:
+    0 10px 28px rgba(0,168,107,.15);
+}
+
+.form-logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.pickup-form h1{
+    text-align:center;
+    font-size:25px;
+    line-height:1.2;
+    font-weight:900;
+    color:#111827;
+}
+
+.form-description{
+    text-align:center;
+    color:#718078;
+    font-size:13px;
+    line-height:1.6;
+    margin:9px auto 23px;
+    max-width:330px;
+}
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+.message-box{
+    margin-bottom:15px;
+    padding:12px 13px;
+    border-radius:13px;
+    font-size:11px;
+    line-height:1.5;
+    display:none;
+}
+
+.message-box.show{
+    display:block;
+}
+
+.message-error{
+    background:#fff2f2;
+    border:1px solid #fecaca;
+    color:#991b1b;
+}
+
+.message-info{
+    background:#effcf7;
+    border:1px solid #c9f2df;
+    color:#08754d;
+}
+
+/* =========================================================
+   PHONE FIELD
+========================================================= */
+
+.input-label{
+    display:block;
+    margin-bottom:7px;
+
+    font-size:10px;
+    font-weight:850;
+    color:#374151;
+    letter-spacing:.4px;
+}
+
+.phone-wrapper{
+    position:relative;
+    margin-bottom:12px;
+}
+
+.phone-icon{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:17px;
+    pointer-events:none;
+}
+
+.phone-input{
+    width:100%;
+    height:52px;
+
+    padding:0 14px 0 42px;
+
+    border:1.5px solid #dfe6e2;
+    border-radius:14px;
+
+    background:#fbfdfc;
+
+    outline:none;
+
+    color:#111827;
+    font-size:15px;
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.phone-input:focus{
+    border-color:var(--green);
+    background:#fff;
+    box-shadow:
+    0 0 0 4px rgba(0,168,107,.09);
+}
+
+.phone-input::placeholder{
+    color:#a0aaa5;
+    font-weight:400;
+}
+
+/* =========================================================
+   TRACK BUTTON
+========================================================= */
+
+.main-btn{
+    width:100%;
+    height:52px;
+
+    border:0;
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00b878,
+        #008f5b
+    );
+
+    color:#fff;
+
+    font-size:14px;
+    font-weight:850;
+
+    cursor:pointer;
+
+    box-shadow:
+    0 8px 20px rgba(0,168,107,.2);
+
+    transition:.2s;
+}
+
+.main-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:
+    0 11px 24px rgba(0,168,107,.26);
+}
+
+.main-btn:active{
+    transform:scale(.98);
+}
+
+.main-btn.loading-btn{
+    opacity:.75;
+    pointer-events:none;
+}
+
+/* =========================================================
+   SECONDARY BUTTON & DIVIDER
+========================================================= */
+
+.or-divider{
+    display:flex;
+    align-items:center;
+    margin:15px 0;
+    text-align:center;
+}
+
+.or-divider::before,
+.or-divider::after{
+    content:'';
+    flex:1;
+    border-bottom:1px solid #e0e0e0;
+}
+
+.or-divider span{
+    padding:0 10px;
+    color:#888;
+    font-size:11px;
+    font-weight:600;
+}
+
+.secondary-btn{
+    width:100%;
+    height:48px;
+    border:2px solid #10b981;
+    border-radius:14px;
+    background:#fff;
+    color:#10b981;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.secondary-btn:hover{
+    background:#f0fdf4;
+    transform:translateY(-1px);
+}
+
+.secondary-btn:active{
+    transform:scale(.98);
+}
+
+/* =========================================================
+   PHONE NOTE
+========================================================= */
+
+.phone-note{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    margin-top:11px;
+
+    color:#84908b;
+    font-size:10px;
+    line-height:1.4;
+}
+
+.phone-note-icon{
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    background:#eafff5;
+    color:#008f5b;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+    font-size:10px;
+}
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.how-title{
+    margin-top:26px;
+    padding-top:21px;
+    border-top:1px solid #edf1ef;
+
+    font-size:12px;
+    font-weight:850;
+    color:#111827;
+}
+
+.steps{
+    margin-top:15px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.step{
+    display:flex;
+    gap:11px;
+    align-items:flex-start;
+}
+
+.step-icon{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#eafff5;
+    color:#008f5b;
+
+    font-size:15px;
+}
+
+.step-content{
+    padding-top:1px;
+}
+
+.step-title{
+    font-size:11px;
+    font-weight:800;
+    color:#27332e;
+}
+
+.step-text{
+    margin-top:2px;
+    font-size:10px;
+    color:#8a958f;
+    line-height:1.4;
+}
+
+/* =========================================================
+   RIGHT INFORMATION CARD
+========================================================= */
+
+.info-card{
+    min-height:100%;
+    background:
+    linear-gradient(
+        145deg,
+        #ffffff,
+        #f5fffb
+    );
+
+    border:1px solid #e3eee9;
+    border-radius:26px;
+
+    padding:28px;
+
+    box-shadow:var(--shadow);
+
+    position:relative;
+    overflow:hidden;
+}
+
+.info-card::before{
+    content:"";
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    border-radius:50%;
+
+    background:rgba(0,168,107,.08);
+
+    right:-80px;
+    top:-90px;
+}
+
+.info-card-header{
+    position:relative;
+    z-index:2;
+}
+
+.info-small{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    padding:6px 9px;
+    border-radius:20px;
+
+    background:#e9fff6;
+    color:#008653;
+
+    font-size:9px;
+    font-weight:850;
+    letter-spacing:.4px;
+}
+
+.live-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#00a86b;
+    animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+    0%{
+        transform:scale(1);
+        opacity:1;
+    }
+    50%{
+        transform:scale(1.4);
+        opacity:.45;
+    }
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.info-card h2{
+    margin-top:15px;
+
+    font-size:27px;
+    line-height:1.18;
+    font-weight:900;
+
+    color:#111827;
+    max-width:500px;
+}
+
+.info-card-description{
+    margin-top:9px;
+
+    font-size:13px;
+    line-height:1.65;
+    color:#718078;
+
+    max-width:520px;
+}
+
+/* =========================================================
+   TRACKING PREVIEW
+========================================================= */
+
+.tracking-preview{
+    margin-top:25px;
+
+    background:#fff;
+
+    border:1px solid #e6eeea;
+    border-radius:19px;
+
+    padding:17px;
+
+    position:relative;
+    z-index:2;
+}
+
+.preview-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:17px;
+}
+
+.preview-title{
+    font-size:12px;
+    font-weight:850;
+}
+
+.preview-live{
+    font-size:9px;
+    color:#008653;
+    font-weight:850;
+}
+
+.preview-line{
+    position:relative;
+    padding-left:39px;
+}
+
+.preview-item{
+    position:relative;
+    min-height:57px;
+}
+
+.preview-item:last-child{
+    min-height:35px;
+}
+
+.preview-item::before{
+    content:"";
+    position:absolute;
+    left:-24px;
+    top:26px;
+    width:2px;
+    height:43px;
+    background:#dce7e2;
+}
+
+.preview-item:last-child::before{
+    display:none;
+}
+
+.preview-dot{
+    position:absolute;
+    left:-39px;
+    top:0;
+
+    width:30px;
+    height:30px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#eafff5;
+    color:#008f5b;
+
+    font-size:13px;
+
+    border:2px solid #c9f2df;
+}
+
+.preview-item.active .preview-dot{
+    background:#00a86b;
+    color:#fff;
+    border-color:#00a86b;
+    box-shadow:0 0 0 5px #e0faf0;
+}
+
+.preview-text{
+    font-size:11px;
+    font-weight:800;
+    color:#27332e;
+}
+
+.preview-sub{
+    margin-top:3px;
+    font-size:9px;
+    color:#89948f;
+}
+
+/* =========================================================
+   BENEFITS
+========================================================= */
+
+.benefits{
+    margin-top:20px;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+
+    position:relative;
+    z-index:2;
+}
+
+.benefit{
+    background:#fff;
+    border:1px solid #e7eeeb;
+    border-radius:14px;
+    padding:12px 9px;
+    text-align:center;
+}
+
+.benefit-icon{
+    font-size:17px;
+}
+
+.benefit-title{
+    margin-top:5px;
+    font-size:9px;
+    font-weight:850;
+}
+
+.benefit-text{
+    margin-top:2px;
+    font-size:8px;
+    color:#8b9691;
+}
+
+/* =========================================================
+   PICKUP LIST
+========================================================= */
+
+.pickup-list-page{
+    min-height:100vh;
+    padding:25px 15px 50px;
+    background:#f5f8f7;
+}
+
+.pickup-list-container{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+}
+
+.list-header{
+    background:#fff;
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+
+.list-header-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.list-logo{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+.list-logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.list-header h2{
+    font-size:20px;
+    font-weight:900;
+}
+
+.list-header p{
+    color:#6b7280;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.pickup-card{
+    background:#fff;
+    border:1px solid #e8edeb;
+    border-radius:19px;
+    padding:17px;
+    margin-bottom:12px;
+    cursor:pointer;
+    transition:.2s;
+    box-shadow:0 4px 15px rgba(0,0,0,.035);
+}
+
+.pickup-card:hover{
+    border-color:#00a86b;
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,168,107,.09);
+}
+
+.pickup-card-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.pickup-id{
+    color:#00a86b;
+    font-size:12px;
+    font-weight:850;
+}
+
+.pickup-date{
+    color:#9ca3af;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.pickup-status{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:800;
+    background:#e8fff5;
+    color:#008f5b;
+    white-space:nowrap;
+}
+
+.pickup-address{
+    margin-top:13px;
+    padding-top:13px;
+    border-top:1px solid #f0f2f1;
+    font-size:12px;
+    color:#4b5563;
+    line-height:1.5;
+}
+
+.partner-row{
+    margin-top:10px;
+    color:#00a86b;
+    font-size:11px;
+    font-weight:750;
+}
+
+/* =========================================================
+   TRACKING PAGE
+========================================================= */
+
+.tracking-page{
+    min-height:100vh;
+    background:#f5f7f8;
+}
+
+.top-header{
+    height:66px;
+    background:#fff;
+    border-bottom:1px solid #e8ecea;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 22px;
+
+    position:relative;
+    z-index:2000;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.header-btn{
+    border:1px solid #e5e7eb;
+    background:#fff;
+    height:38px;
+    padding:0 13px;
+    border-radius:11px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+    color:#374151;
+}
+
+.desktop-layout{
+    max-width:1400px;
+    margin:auto;
+    padding:16px;
+
+    display:grid;
+
+    grid-template-columns:
+    minmax(0,1.45fr)
+    minmax(320px,.65fr);
+
+    gap:16px;
+}
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.map-card{
+    position:relative;
+
+    height:calc(100vh - 98px);
+    min-height:500px;
+
+    border-radius:20px;
+    overflow:hidden;
+
+    background:#dfe9e5;
+    box-shadow:var(--shadow);
+}
+
+#map{
+    width:100%;
+    height:100%;
+    position:relative;
+    z-index:1;
+}
+
+.map-top-overlay{
+    position:absolute;
+    top:13px;
+    left:13px;
+    right:13px;
+    z-index:1000;
+    pointer-events:none;
+}
+
+.live-status-card{
+    max-width:510px;
+
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,.8);
+
+    border-radius:15px;
+
+    padding:9px;
+
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.12);
+
+    pointer-events:auto;
+}
+
+.partner-avatar{
+    width:43px;
+    height:43px;
+
+    border-radius:13px;
+
+    flex-shrink:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00b976,
+        #008f5b
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#fff;
+    font-size:20px;
+}
+
+.status-info{
+    min-width:0;
+    flex:1;
+}
+
+.partner-name{
+    font-size:13px;
+    font-weight:850;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.partner-phone{
+    font-size:9px;
+    color:#7b8581;
+    margin-top:2px;
+}
+
+.status-badge{
+    display:flex;
+    align-items:center;
+    gap:5px;
+
+    margin-top:3px;
+
+    font-size:9px;
+    color:#008f5b;
+    font-weight:800;
+}
+
+.pulse{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#00b976;
+    animation:pulse 1.7s infinite;
+}
+
+.eta-box{
+    min-width:70px;
+
+    padding:8px 8px;
+
+    text-align:center;
+
+    background:#eafff5;
+    border:1px solid #cdf6e5;
+
+    border-radius:11px;
+}
+
+.eta-time{
+    color:#006f48;
+    font-size:15px;
+    line-height:1.1;
+    font-weight:900;
+}
+
+.eta-label{
+    color:#00a86b;
+    font-size:8px;
+    text-transform:uppercase;
+    font-weight:850;
+    letter-spacing:.6px;
+    margin-top:2px;
+}
+
+.locate-btn{
+    position:absolute;
+    right:13px;
+    bottom:100px;
+
+    z-index:1000;
+
+    width:40px;
+    height:40px;
+
+    border:0;
+    border-radius:12px;
+
+    background:#fff;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.15);
+
+    cursor:pointer;
+    font-size:17px;
+}
+
+.distance-badge{
+    position:absolute;
+    left:50%;
+    bottom:15px;
+
+    transform:translateX(-50%);
+
+    z-index:1000;
+
+    background:#111827;
+    color:#fff;
+
+    padding:8px 14px;
+    border-radius:25px;
+
+    font-size:10px;
+    font-weight:800;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+
+    white-space:nowrap;
+}
+
+.map-float-label{
+    position:absolute;
+    top:75px;
+    left:13px;
+
+    z-index:999;
+
+    background:rgba(17,24,39,.9);
+    color:#fff;
+
+    padding:6px 9px;
+    border-radius:8px;
+
+    font-size:8px;
+    font-weight:800;
+}
+
+/* =========================================================
+   SIDE PANEL
+========================================================= */
+
+.side-panel{
+    min-width:0;
+
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+
+    overflow:auto;
+}
+
+.panel-card{
+    background:#fff;
+    border-radius:17px;
+    padding:15px;
+
+    box-shadow:0 5px 20px rgba(15,23,42,.05);
+
+    border:1px solid #edf0ef;
+}
+
+.panel-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:12px;
+}
+
+.panel-title h2{
+    font-size:14px;
+    font-weight:850;
+}
+
+.panel-title span{
+    font-size:9px;
+    color:#9ca3af;
+}
+
+.status-large{
+    padding:12px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ecfff7,
+        #f8fffc
+    );
+
+    border:1px solid #d5f6e7;
+    border-radius:13px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.status-large-icon{
+    width:37px;
+    height:37px;
+
+    border-radius:11px;
+
+    background:#00a86b;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#fff;
+    font-size:18px;
+}
+
+.status-large-title{
+    font-size:12px;
+    font-weight:850;
+}
+
+.status-large-sub{
+    font-size:9px;
+    color:#6b7280;
+    margin-top:2px;
+}
+
+.order-summary{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.summary-box{
+    padding:10px;
+    background:#f8faf9;
+    border-radius:11px;
+}
+
+.summary-label{
+    font-size:8px;
+    color:#8a938f;
+    margin-bottom:4px;
+    font-weight:650;
+}
+
+.summary-value{
+    font-size:11px;
+    color:#111827;
+    font-weight:750;
+    word-break:break-word;
+}
+
+.timeline{
+    margin-top:0;
+}
+
+.timeline-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:13px;
+}
+
+.timeline-header h3{
+    font-size:12px;
+    font-weight:850;
+}
+
+.timeline-header span{
+    font-size:8px;
+    color:#9ca3af;
+}
+
+.timeline-item{
+    display:flex;
+    position:relative;
+    gap:10px;
+    min-height:49px;
+}
+
+.timeline-marker{
+    width:27px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+    flex-shrink:0;
+}
+
+.timeline-dot{
+    width:24px;
+    height:24px;
+
+    border-radius:50%;
+
+    background:#f0f2f3;
+    border:2px solid #e3e7e5;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:10px;
+
+    z-index:2;
+}
+
+.timeline-line{
+    position:absolute;
+
+    top:24px;
+    bottom:-2px;
+
+    width:2px;
+
+    background:#e5e7eb;
+}
+
+.timeline-item.active .timeline-dot{
+    background:#00a86b;
+    border-color:#00a86b;
+    color:#fff;
+
+    box-shadow:0 0 0 4px #dffbef;
+}
+
+.timeline-item.active .timeline-line{
+    background:#b7ecd8;
+}
+
+.timeline-item.current .timeline-dot{
+    animation:currentPulse 1.7s infinite;
+}
+
+@keyframes currentPulse{
+    0%,100%{
+        box-shadow:0 0 0 4px #dffbef;
+    }
+
+    50%{
+        box-shadow:
+        0 0 0 7px rgba(0,168,107,.08);
+    }
+}
+
+.timeline-content{
+    padding:1px 0 13px;
+    flex:1;
+}
+
+.timeline-text{
+    font-size:10px;
+    font-weight:700;
+    color:#9ca3af;
+}
+
+.timeline-item.active .timeline-text{
+    color:#111827;
+}
+
+.timeline-time{
+    margin-top:2px;
+    font-size:8px;
+    color:#a1a7ad;
+}
+
+.timeline-item.current .timeline-text{
+    color:#00a86b;
+}
+
+.action-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.action-btn{
+    height:40px;
+    border:0;
+    border-radius:11px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:800;
+}
+
+.action-primary{
+    background:#00a86b;
+    color:#fff;
+}
+
+.action-secondary{
+    background:#f3f5f5;
+    color:#374151;
+}
+
+/* =========================================================
+   MOBILE SHEET
+========================================================= */
+
+.mobile-sheet{
+    display:none;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:#f5f8f7;
+}
+
+.error-card{
+    width:100%;
+    max-width:430px;
+
+    background:#fff;
+    padding:28px;
+
+    border-radius:22px;
+    text-align:center;
+
+    box-shadow:var(--shadow);
+}
+
+.error-logo{
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    overflow:hidden;
+    margin:0 auto 15px;
+}
+
+.error-logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.error-icon{
+    font-size:40px;
+    margin-bottom:12px;
+}
+
+.error-card h2{
+    font-size:19px;
+    margin-bottom:7px;
+}
+
+.error-card p{
+    font-size:12px;
+    color:#6b7280;
+    line-height:1.5;
+}
+
+/* =========================================================
+   LEAFLET
+========================================================= */
+
+.leaflet-control-zoom{
+    border:0!important;
+    box-shadow:0 5px 18px rgba(0,0,0,.12)!important;
+}
+
+.leaflet-control-zoom a{
+    border:0!important;
+    color:#374151!important;
+}
+
+.leaflet-control-attribution{
+    font-size:7px!important;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:1050px){
+
+.search-container{
+    grid-template-columns:1fr;
+    max-width:600px;
+}
+
+.info-card{
+    min-height:auto;
+}
+
+.desktop-layout{
+    grid-template-columns:1fr;
+}
+
+.map-card{
+    height:58vh;
+    min-height:470px;
+}
+
+.side-panel{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+.side-panel .timeline-card{
+    grid-column:span 2;
+}
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:768px){
+
+.search-page{
+    padding:
+    12px
+    11px
+    35px;
+}
+
+.search-header{
+    margin-bottom:12px;
+}
+
+.brand-logo{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+}
+
+.brand-name{
+    font-size:13px;
+}
+
+.brand-sub{
+    font-size:8px;
+}
+
+.back-btn{
+    height:34px;
+    padding:0 9px;
+    font-size:10px;
+}
+
+.pickup-form{
+    padding:22px 17px;
+    border-radius:21px;
+}
+
+.form-logo{
+    width:62px;
+    height:62px;
+    border-radius:18px;
+    margin-bottom:14px;
+}
+
+.pickup-form h1{
+    font-size:22px;
+}
+
+.form-description{
+    font-size:11px;
+    margin-bottom:20px;
+}
+
+.phone-input{
+    height:49px;
+    font-size:14px;
+}
+
+.main-btn{
+    height:49px;
+    font-size:13px;
+}
+
+.info-card{
+    display:none;
+}
+
+/* tracking */
+
+.top-header{
+    height:58px;
+    padding:0 12px;
+}
+
+.desktop-layout{
+    display:block;
+    padding:0;
+}
+
+.map-card{
+    height:52vh;
+    min-height:350px;
+    border-radius:0;
+    box-shadow:none;
+}
+
+.map-top-overlay{
+    top:8px;
+    left:8px;
+    right:8px;
+}
+
+.live-status-card{
+    border-radius:14px;
+    padding:8px;
+}
+
+.partner-avatar{
+    width:39px;
+    height:39px;
+    border-radius:11px;
+    font-size:18px;
+}
+
+.partner-name{
+    font-size:11px;
+}
+
+.partner-phone{
+    font-size:8px;
+}
+
+.status-badge{
+    font-size:8px;
+}
+
+.eta-box{
+    min-width:64px;
+    padding:7px;
+}
+
+.eta-time{
+    font-size:13px;
+}
+
+.eta-label{
+    font-size:7px;
+}
+
+.map-float-label{
+    display:none;
+}
+
+.locate-btn{
+    right:10px;
+    bottom:65px;
+    width:38px;
+    height:38px;
+}
+
+.distance-badge{
+    bottom:10px;
+    font-size:9px;
+}
+
+.side-panel{
+    display:none;
+}
+
+.mobile-sheet{
+    display:block;
+
+    background:#fff;
+
+    border-radius:
+    21px
+    21px
+    0
+    0;
+
+    margin-top:-15px;
+
+    position:relative;
+    z-index:100;
+
+    box-shadow:
+    0 -8px 25px
+    rgba(0,0,0,.08);
+
+    padding:
+    8px
+    13px
+    25px;
+}
+
+.sheet-handle{
+    width:35px;
+    height:4px;
+
+    background:#d9dedc;
+    border-radius:5px;
+
+    margin:
+    2px auto
+    13px;
+}
+
+.mobile-summary{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-bottom:13px;
+}
+
+.mobile-summary-box{
+    background:#f7f9f8;
+    border-radius:11px;
+    padding:9px;
+}
+
+.mobile-summary-label{
+    font-size:8px;
+    color:#8b9490;
+    margin-bottom:3px;
+}
+
+.mobile-summary-value{
+    font-size:10px;
+    font-weight:750;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.mobile-status{
+    padding:10px;
+    border-radius:12px;
+    background:#edfff7;
+    border:1px solid #d5f6e7;
+
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    margin-bottom:15px;
+}
+
+.mobile-status-icon{
+    width:34px;
+    height:34px;
+
+    border-radius:10px;
+    background:#00a86b;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#fff;
+}
+
+.mobile-status-title{
+    font-size:11px;
+    font-weight:850;
+}
+
+.mobile-status-sub{
+    font-size:8px;
+    color:#6b7280;
+    margin-top:2px;
+}
+
+/* =========================================================
+   PARTNER ASSIGNED CARD
+========================================================= */
+
+.partner-assigned-card{
+    background:linear-gradient(135deg,#10b981,#059669);
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:20px;
+    box-shadow:0 4px 12px rgba(16,185,129,0.2);
+}
+
+.partner-card-header{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:12px;
+}
+
+.partner-icon{
+    font-size:20px;
+}
+
+.partner-title{
+    font-size:13px;
+    font-weight:700;
+    color:#fff;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+}
+
+.partner-card-body{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.partner-card-name{
+    font-size:16px;
+    font-weight:700;
+    color:#fff;
+    flex:1;
+}
+
+.partner-call-btn{
+    background:#fff;
+    color:#10b981;
+    border:none;
+    border-radius:10px;
+    padding:10px 16px;
+    font-size:13px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    transition:all 0.2s;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.partner-call-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.partner-call-btn:active{
+    transform:translateY(0);
+}
+
+.call-icon{
+    font-size:16px;
+}
+
+/* =========================================================
+   PARTNER DESKTOP CARD
+========================================================= */
+
+.partner-card-desktop{
+    background:linear-gradient(135deg,#10b981,#059669);
+    border:none;
+}
+
+.partner-card-desktop .panel-title h2{
+    color:#fff;
+}
+
+.partner-desktop-body{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    margin-top:16px;
+}
+
+.partner-desktop-info{
+    flex:1;
+}
+
+.partner-desktop-label{
+    font-size:11px;
+    font-weight:600;
+    color:rgba(255,255,255,0.8);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    margin-bottom:6px;
+}
+
+.partner-desktop-name{
+    font-size:18px;
+    font-weight:700;
+    color:#fff;
+}
+
+.partner-call-btn-desktop{
+    background:#fff;
+    color:#10b981;
+    border:none;
+    border-radius:12px;
+    padding:12px 20px;
+    font-size:14px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:all 0.2s;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.partner-call-btn-desktop:hover{
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.partner-call-btn-desktop:active{
+    transform:translateY(0);
+}
+
+.mobile-timeline-title{
+    font-size:12px;
+    font-weight:850;
+    margin-bottom:13px;
+}
+
+.mobile-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:5px;
+}
+
+.mobile-action{
+    height:40px;
+    border:0;
+    border-radius:11px;
+    font-size:10px;
+    font-weight:800;
+}
+
+.mobile-action.primary{
+    background:#00a86b;
+    color:#fff;
+}
+
+.mobile-action.secondary{
+    background:#f1f3f3;
+    color:#374151;
+}
+
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media(max-width:390px){
+
+.brand-sub{
+    display:none;
+}
+
+.brand-name{
+    font-size:12px;
+}
+
+.back-btn{
+    font-size:9px;
+}
+
+.pickup-form{
+    padding:20px 14px;
+}
+
+.pickup-form h1{
+    font-size:20px;
+}
+
+.form-description{
+    font-size:10px;
+}
+
+.map-card{
+    height:49vh;
+    min-height:330px;
+}
+
+.live-status-card{
+    gap:6px;
+}
+
+.partner-avatar{
+    width:36px;
+    height:36px;
+}
+
+.eta-box{
+    min-width:58px;
+}
+
+.eta-time{
+    font-size:12px;
+}
+
+}
+
+/* =========================================
+   DARK THEME
+========================================= */
+
+body.dark-theme{
+    background:#0f1419;
+    color:#e0e6ed;
+}
+
+body.dark-theme .header{
+    background:linear-gradient(
+        135deg,
+        #1a7f4e,
+        #0d5a35
+    );
+}
+
+body.dark-theme .timeline{
+    background:#1a1f2e;
+    border:1px solid #374151;
+}
+
+body.dark-theme .step{
+    border-left:2px solid #374151;
+}
+
+body.dark-theme .step.active{
+    border-left-color:#34d399;
+}
+
+body.dark-theme .step.completed{
+    border-left-color:#34d399;
+}
+
+body.dark-theme .dot{
+    background:#374151;
+    border:3px solid #1a1f2e;
+}
+
+body.dark-theme .step.active .dot{
+    background:#34d399;
+}
+
+body.dark-theme .step.completed .dot{
+    background:#34d399;
+}
+
+body.dark-theme .step-label{
+    color:#9ca3af;
+}
+
+body.dark-theme .step.active .step-label,
+body.dark-theme .step.completed .step-label{
+    color:#e0e6ed;
+}
+
+body.dark-theme .step-date{
+    color:#6b7280;
+}
+
+body.dark-theme .step.active .step-date,
+body.dark-theme .step.completed .step-date{
+    color:#9ca3af;
+}
+
+body.dark-theme .details{
+    background:#1a1f2e;
+    border:1px solid #374151;
+}
+
+body.dark-theme .details h3{
+    color:#e0e6ed;
+}
+
+body.dark-theme .info-row span:first-child{
+    color:#9ca3af;
+}
+
+body.dark-theme .info-row span:last-child{
+    color:#e0e6ed;
+}
+
+body.dark-theme .status-badge{
+    background:#1a2e23;
+    border:1px solid #1a7f4e;
+    color:#34d399;
+}
+
+body.dark-theme .map-box{
+    background:#1e2433;
+    border:1px solid #374151;
+}
+
+body.dark-theme .map-placeholder{
+    background:#1a1f2e;
+    color:#9ca3af;
+}
+
+body.dark-theme .eta-box{
+    background:#1a2e23;
+    border:1px solid #1a7f4e;
+}
+
+body.dark-theme .eta-label{
+    color:#9ca3af;
+}
+
+body.dark-theme .eta-time{
+    color:#34d399;
+}
+
+body.dark-theme .partner-card{
+    background:#1a1f2e;
+    border:1px solid #374151;
+}
+
+body.dark-theme .partner-card h4{
+    color:#e0e6ed;
+}
+
+body.dark-theme .partner-card p{
+    color:#9ca3af;
+}
+
+body.dark-theme .call-btn{
+    background:#1a7f4e;
+}
+
+body.dark-theme .call-btn:hover{
+    background:#16a34a;
+}
+
+body.dark-theme .help-btn{
+    background:#1e2433;
+    border:1px solid #374151;
+    color:#9ca3af;
+}
+
+body.dark-theme .help-btn:hover{
+    background:#1a1f2e;
+    color:#e0e6ed;
+}
+
+/* =========================================================
+   COMPLETION MODAL
+========================================================= */
+
+.completion-modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    padding:20px;
+}
+
+.completion-modal-content{
+    background:#fff;
+    border-radius:20px;
+    max-width:600px;
+    width:100%;
+    max-height:90vh;
+    overflow:hidden;
+    box-shadow:0 25px 50px rgba(0,0,0,0.3);
+}
+
+.completion-modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 25px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.completion-modal-header h3{
+    margin:0;
+    font-size:20px;
+    font-weight:700;
+    color:#111827;
+}
+
+.close-modal{
+    background:none;
+    border:none;
+    font-size:24px;
+    cursor:pointer;
+    color:#6b7280;
+    width:32px;
+    height:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    transition:.2s;
+}
+
+.close-modal:hover{
+    background:#f3f4f6;
+    color:#111827;
+}
+
+.completion-modal-body{
+    padding:25px;
+    overflow-y:auto;
+    max-height:calc(90vh - 80px);
+}
+
+.loading-spinner{
+    text-align:center;
+    padding:40px;
+    font-size:18px;
+    color:#6b7280;
+}
+
+.order-list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.order-card{
+    background:#f9fafb;
+    border:2px solid #e5e7eb;
+    border-radius:16px;
+    padding:20px;
+    transition:.2s;
+}
+
+.order-card:hover{
+    border-color:#10b981;
+    box-shadow:0 4px 12px rgba(16,185,129,0.1);
+}
+
+.order-card.completed{
+    background:linear-gradient(135deg,#ecfdf5,#f0fdf4);
+    border-color:#10b981;
+}
+
+.order-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.order-id{
+    font-size:14px;
+    font-weight:700;
+    color:#111827;
+}
+
+.order-status{
+    padding:6px 12px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.order-details{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.order-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+}
+
+.order-row span{
+    color:#6b7280;
+}
+
+.order-row strong{
+    color:#111827;
+}
+
+.order-row.completion-saved{
+    background:#ecfdf5;
+    padding:8px 12px;
+    border-radius:8px;
+    border:1px solid #10b981;
+    font-size:11px;
+}
+
+.order-row.completion-saved span{
+    color:#059669;
+}
+
+.order-row.completion-saved strong{
+    color:#047857;
+}
+
+.order-actions{
+    display:flex;
+    gap:10px;
+}
+
+.view-btn{
+    flex:1;
+    padding:10px;
+    background:#10b981;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.view-btn:hover{
+    background:#059669;
+    transform:translateY(-1px);
+}
+
+.no-orders,
+.error-message{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.no-orders-icon,
+.error-icon{
+    font-size:64px;
+    margin-bottom:20px;
+}
+
+.no-orders p,
+.error-message p{
+    font-size:18px;
+    font-weight:600;
+    color:#111827;
+    margin:0 0 10px 0;
+}
+
+.error-message small{
+    font-size:13px;
+    color:#6b7280;
+}
+
+/* Dark Mode - Modal */
+
+body.dark-mode .completion-modal-content{
+    background:#111827;
+}
+
+body.dark-mode .completion-modal-header{
+    border-bottom-color:#374151;
+}
+
+body.dark-mode .completion-modal-header h3{
+    color:#f9fafb;
+}
+
+body.dark-mode .close-modal{
+    color:#9ca3af;
+}
+
+body.dark-mode .close-modal:hover{
+    background:#1f2937;
+    color:#f9fafb;
+}
+
+body.dark-mode .loading-spinner{
+    color:#9ca3af;
+}
+
+body.dark-mode .order-card{
+    background:#1f2937;
+    border-color:#374151;
+}
+
+body.dark-mode .order-card:hover{
+    border-color:#34d399;
+    box-shadow:0 4px 12px rgba(52,211,153,0.2);
+}
+
+body.dark-mode .order-card.completed{
+    background:linear-gradient(135deg,#064e3b,#065f46);
+    border-color:#34d399;
+}
+
+body.dark-mode .order-id{
+    color:#f9fafb;
+}
+
+body.dark-mode .order-row span{
+    color:#9ca3af;
+}
+
+body.dark-mode .order-row strong{
+    color:#f9fafb;
+}
+
+body.dark-mode .order-row.completion-saved{
+    background:rgba(52,211,153,0.1);
+    border-color:#34d399;
+}
+
+body.dark-mode .order-row.completion-saved span{
+    color:#6ee7b7;
+}
+
+body.dark-mode .order-row.completion-saved strong{
+    color:#34d399;
+}
+
+body.dark-mode .view-btn{
+    background:#10b981;
+}
+
+body.dark-mode .view-btn:hover{
+    background:#059669;
+}
+
+body.dark-mode .no-orders p,
+body.dark-mode .error-message p{
+    color:#f9fafb;
+}
+
+body.dark-mode .error-message small{
+    color:#9ca3af;
+}
+
+body.dark-mode .partner-assigned-card{
+    background:linear-gradient(135deg,#065f46,#047857);
+}
+
+body.dark-mode .partner-call-btn{
+    background:#1f2937;
+    color:#34d399;
+}
+
+body.dark-mode .partner-call-btn:hover{
+    background:#111827;
+}
+
+body.dark-mode .partner-card-desktop{
+    background:linear-gradient(135deg,#065f46,#047857);
+}
+
+body.dark-mode .partner-call-btn-desktop{
+    background:#1f2937;
+    color:#34d399;
+}
+
+body.dark-mode .partner-call-btn-desktop:hover{
+    background:#111827;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+<div class="loading">
+
+<div class="spinner"></div>
+
+<div class="loading-text" data-i18n="loadingTracking">
+Loading tracking...
+</div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+   FIREBASE
+   ORIGINAL CONNECTION - NOT CHANGED
+========================================================= */
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+onValue,
+get
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig={
+
+apiKey:"AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
+
+authDomain:
+"covai-scrap-hub.firebaseapp.com",
+
+databaseURL:
+"https://covai-scrap-hub-default-rtdb.firebaseio.com",
+
+projectId:
+"covai-scrap-hub",
+
+storageBucket:
+"covai-scrap-hub.firebasestorage.app",
+
+messagingSenderId:
+"979133721874",
+
+appId:
+"1:979133721874:web:c5829bb8dbf5270c0917cb",
+
+measurementId:
+"G-P3PTSBHWMF"
+
+};
+
+
+const app=initializeApp(
+firebaseConfig
+);
+
+const db=getDatabase(app);
+
+// Expose Firebase functions globally for track-realtime-update.js
+window.db = db;
+window.ref = ref;
+window.onValue = onValue;
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+const params=
+new URLSearchParams(
+location.search
+);
+
+let pickupId=
+params.get("id");
+
+const phoneParam=
+params.get("phone");
+
+let map=null;
+
+let customerMarker=null;
+
+let partnerMarker=null;
+
+let routeLine=null;
+
+let pickup=null;
+
+
+/* =========================================================
+   START
+========================================================= */
+
+if(phoneParam){
+
+searchByPhone(phoneParam);
+
+}else if(pickupId){
+
+loadPickup();
+
+}else{
+
+showInputForm();
+
+}
+
+
+/* =========================================================
+   PHONE NORMALIZATION
+   FIX +91 ISSUE
+========================================================= */
+
+function normalizePhone(value){
+
+if(value===null||
+value===undefined){
+
+return "";
+
+}
+
+
+/*
+Remove:
+
++
+spaces
+-
+brackets
+letters
+etc.
+*/
+
+let digits=
+String(value)
+.replace(/\D/g,"");
+
+
+/*
+India +91 handling.
+
+Examples:
+
++91 9876543210
+919876543210
+09876543210
+9876543210
+
+All become:
+
+9876543210
+*/
+
+if(digits.startsWith("0091")){
+
+digits=
+digits.substring(4);
+
+}
+
+if(digits.startsWith("91")&&
+digits.length===12){
+
+digits=
+digits.substring(2);
+
+}
+
+if(digits.startsWith("0")&&
+digits.length===11){
+
+digits=
+digits.substring(1);
+
+}
+
+
+/*
+Return last 10 digits for Indian numbers.
+*/
+
+if(digits.length>10){
+
+digits=
+digits.slice(-10);
+
+}
+
+return digits;
+
+}
+
+
+/* =========================================================
+   PHONE MATCH
+========================================================= */
+
+function phonesMatch(
+phone1,
+phone2
+){
+
+const a=
+normalizePhone(phone1);
+
+const b=
+normalizePhone(phone2);
+
+
+if(!a||!b)
+return false;
+
+
+return a===b;
+
+}
+
+
+/* =========================================================
+   SEARCH BY PHONE
+========================================================= */
+
+async function searchByPhone(
+searchPhone
+){
+
+showSearching();
+
+
+try{
+
+const snap=
+await get(
+ref(
+db,
+"pickupRequests"
+)
+);
+
+
+if(!snap.exists()){
+
+showInputForm(
+"No pickup requests are available yet."
+);
+
+return;
+
+}
+
+
+const data=
+snap.val();
+
+
+const normalizedSearch=
+normalizePhone(
+searchPhone
+);
+
+
+if(
+!normalizedSearch||
+normalizedSearch.length<10
+){
+
+showInputForm(
+"Please enter a valid 10-digit mobile number."
+);
+
+return;
+
+}
+
+
+/*
+Search every pickup.
+
+This supports fields:
+
+phone
+mobile
+customerPhone
+customerMobile
+
+and formats such as:
+
++91 9876543210
+919876543210
+09876543210
+9876543210
+*/
+
+const matches=
+Object.entries(data)
+
+.filter(
+([id,p])=>{
+
+if(!p)
+return false;
+
+
+const possiblePhones=[
+
+p.phone,
+
+p.mobile,
+
+p.customerPhone,
+
+p.customerMobile,
+
+p.phoneNumber,
+
+p.customer?.phone,
+
+p.customer?.mobile
+
+];
+
+
+return possiblePhones.some(
+phone=>
+phonesMatch(
+phone,
+normalizedSearch
+)
+);
+
+}
+)
+
+.map(
+([id,p])=>({
+
+...p,
+
+id
+
+})
+)
+
+.sort(
+(a,b)=>{
+
+const aTime=
+getTimestamp(
+a.createdAt||
+a.submittedAt||
+a.timestamp||
+0
+);
+
+const bTime=
+getTimestamp(
+b.createdAt||
+b.submittedAt||
+b.timestamp||
+0
+);
+
+return bTime-aTime;
+
+}
+);
+
+
+console.log(
+"Phone searched:",
+normalizedSearch
+);
+
+console.log(
+"Matching pickups:",
+matches
+);
+
+
+if(!matches.length){
+
+showInputForm(
+"No pickup found for this mobile number."
+);
+
+return;
+
+}
+
+
+/*
+One pickup
+*/
+
+if(matches.length===1){
+
+pickupId=
+matches[0].id;
+
+loadPickup();
+
+return;
+
+}
+
+
+/*
+Multiple pickups
+*/
+
+showPickupList(
+matches
+);
+
+
+}catch(error){
+
+console.error(
+"Tracking search error:",
+error
+);
+
+showInputForm(
+"Unable to search right now. Please check your internet connection and try again."
+);
+
+}
+
+}
+
+
+/* =========================================================
+   SEARCHING SCREEN
+========================================================= */
+
+function showSearching(){
+
+document.getElementById(
+"app"
+).innerHTML=`
+
+<div class="loading">
+
+<div class="brand-logo"
+style="
+width:62px;
+height:62px;
+border-radius:18px;
+">
+
+<img
+src="logo.jpeg"
+alt="Covai Scrap Hub"
+onerror="this.style.display='none'"
+>
+
+</div>
+
+<div class="spinner"></div>
+
+<div class="loading-text">
+Finding your pickup...
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   INPUT FORM
+========================================================= */
+
+function showInputForm(
+msg=""
+){
+
+document.getElementById(
+"app"
+).innerHTML=`
+
+<div class="search-page">
+
+
+<header class="search-header">
+
+<div class="brand">
+
+<div class="brand-logo">
+
+<img
+src="logo.jpeg"
+alt="COVAI SCRAP HUB"
+>
+
+</div>
+
+<div>
+
+<div class="brand-name">
+COVAI SCRAP HUB
+</div>
+
+<div class="brand-sub" data-i18n="smartScrapPickupTracking">
+Smart Scrap Pickup Tracking
+</div>
+
+</div>
+
+</div>
+
+<button
+class="back-btn"
+onclick="window.history.back()"
+data-i18n="goBack">
+
+← Back
+
+</button>
+
+</header>
+
+
+<div class="search-container">
+
+
+<!-- =====================================================
+     SEARCH CARD
+===================================================== -->
+
+<div class="pickup-form">
+
+
+<div class="form-logo">
+
+<img
+src="logo.jpeg"
+alt="Covai Scrap Hub"
+>
+
+</div>
+
+
+<h1 data-i18n="trackYourPickup">
+Track Your Pickup
+</h1>
+
+
+<p class="form-description" data-i18n="trackYourPickupDesc">
+Track your Covai Scrap Hub pickup
+and see the latest live status.
+</p>
+
+
+<div
+id="messageBox"
+class="message-box
+${msg?'show':''}
+message-error">
+
+${esc(msg)}
+
+</div>
+
+
+<label class="input-label" data-i18n="phoneNumber">
+
+PHONE NUMBER
+
+</label>
+
+
+<div class="phone-wrapper">
+
+<div class="phone-icon">
+📱
+</div>
+
+<input
+
+class="phone-input"
+
+type="tel"
+
+id="phoneInput"
+
+data-i18n-placeholder="enterPhonePlaceholder"
+
+placeholder="Enter your 10-digit mobile number"
+
+maxlength="14"
+
+autocomplete="tel"
+
+inputmode="tel"
+
+>
+
+</div>
+
+
+<button
+id="trackButton"
+class="main-btn"
+onclick="trackByPhone()"
+data-i18n="trackMyPickup">
+
+📍 Track My Pickup
+
+</button>
+
+
+<div class="or-divider">
+<span>OR</span>
+</div>
+
+
+<button
+class="secondary-btn"
+onclick="checkCompletedOrders()"
+data-i18n="checkCompleted">
+
+✓ Check Completed Orders
+
+</button>
+
+
+<div class="phone-note">
+
+<div class="phone-note-icon">
+✓
+</div>
+
+<span data-i18n="phoneNoteText">Use the same mobile number you used
+when booking your scrap pickup.</span>
+
+</div>
+
+
+<div class="how-title" data-i18n="howTrackingWorks">
+
+How tracking works
+
+</div>
+
+
+<div class="steps">
+
+
+<div class="step">
+
+<div class="step-icon">
+📱
+</div>
+
+<div class="step-content">
+
+<div class="step-title" data-i18n="step1Title">
+1. Enter your mobile number
+</div>
+
+<div class="step-text" data-i18n="step1Text">
+Use the number registered during pickup booking.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-icon">
+🔎
+</div>
+
+<div class="step-content">
+
+<div class="step-title" data-i18n="step2Title">
+2. We find your pickup
+</div>
+
+<div class="step-text" data-i18n="step2Text">
+Your pickup details are securely checked from our system.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-icon">
+🚚
+</div>
+
+<div class="step-content">
+
+<div class="step-title" data-i18n="step3Title">
+3. See pickup progress
+</div>
+
+<div class="step-text" data-i18n="step3Text">
+Check whether your pickup is processing, assigned or on the way.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-icon">
+📍
+</div>
+
+<div class="step-content">
+
+<div class="step-title" data-i18n="step4Title">
+4. Track live location
+</div>
+
+<div class="step-text" data-i18n="step4Text">
+When partner GPS is available, see the vehicle on the live map.
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     INFORMATION
+===================================================== -->
+
+<div class="info-card">
+
+
+<div class="info-card-header">
+
+<div class="info-small">
+
+<span class="live-dot"></span>
+
+LIVE PICKUP TRACKING
+
+</div>
+
+
+<h2>
+Know exactly where
+your scrap pickup is.
+</h2>
+
+
+<p class="info-card-description">
+
+No need to call and ask for updates.
+Enter your mobile number and follow
+your pickup progress from booking
+to completion.
+
+</p>
+
+
+<div class="tracking-preview">
+
+
+<div class="preview-header">
+
+<div class="preview-title">
+Pickup Journey
+</div>
+
+<div class="preview-live">
+● LIVE
+
+</div>
+
+</div>
+
+
+<div class="preview-line">
+
+
+<div class="preview-item active">
+
+<div class="preview-dot">
+✓
+</div>
+
+<div class="preview-text">
+Pickup Created
+</div>
+
+<div class="preview-sub">
+Your request has been received.
+</div>
+
+</div>
+
+
+<div class="preview-item active">
+
+<div class="preview-dot">
+⚙
+</div>
+
+<div class="preview-text">
+Processing
+</div>
+
+<div class="preview-sub">
+Our team is preparing your pickup.
+</div>
+
+</div>
+
+
+<div class="preview-item active">
+
+<div class="preview-dot">
+🚚
+</div>
+
+<div class="preview-text">
+Partner On The Way
+</div>
+
+<div class="preview-sub">
+See live vehicle location when available.
+</div>
+
+</div>
+
+
+<div class="preview-item">
+
+<div class="preview-dot">
+♻
+</div>
+
+<div class="preview-text">
+Pickup Completed
+</div>
+
+<div class="preview-sub">
+Your scrap pickup is completed.
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="benefits">
+
+
+<div class="benefit">
+
+<div class="benefit-icon">
+⚡
+</div>
+
+<div class="benefit-title">
+Fast
+
+</div>
+
+<div class="benefit-text">
+Quick tracking
+
+</div>
+
+</div>
+
+
+<div class="benefit">
+
+<div class="benefit-icon">
+📍
+</div>
+
+<div class="benefit-title">
+Live
+
+</div>
+
+<div class="benefit-text">
+GPS updates
+
+</div>
+
+</div>
+
+
+<div class="benefit">
+
+<div class="benefit-icon">
+🔒
+</div>
+
+<div class="benefit-title">
+Secure
+
+</div>
+
+<div class="benefit-text">
+Private details
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+`;
+
+
+window.trackByPhone=function(){
+
+const input=
+document.getElementById(
+"phoneInput"
+);
+
+const button=
+document.getElementById(
+"trackButton"
+);
+
+
+const phone=
+input.value.trim();
+
+
+const normalized=
+normalizePhone(phone);
+
+
+if(
+!normalized||
+normalized.length!==10
+){
+
+showMessage(
+"Please enter a valid 10-digit mobile number.",
+"error"
+);
+
+input.focus();
+
+return;
+
+}
+
+
+/*
+Show loading.
+*/
+
+button.textContent=
+"🔎 Finding pickup...";
+
+button.classList.add(
+"loading-btn"
+);
+
+
+/*
+IMPORTANT:
+
+Use normalized phone in URL.
+
+This means:
+
++91 9876543210
+
+becomes:
+
+9876543210
+
+*/
+
+location.href=
+"track.html?phone="+
+encodeURIComponent(
+normalized
+);
+
+};
+
+
+/*
+Allow Enter key.
+*/
+
+document.getElementById(
+"phoneInput"
+).addEventListener(
+"keydown",
+function(e){
+
+if(e.key==="Enter"){
+
+trackByPhone();
+
+}
+
+}
+);
+
+}
+
+
+/* =========================================================
+   CHECK COMPLETED ORDERS
+========================================================= */
+
+window.checkCompletedOrders=async function(){
+
+const input=document.getElementById("phoneInput");
+const phone=input.value.trim();
+const normalized=normalizePhone(phone);
+
+if(!normalized || normalized.length!==10){
+showMessage("Please enter a valid 10-digit mobile number.","error");
+input.focus();
+return;
+}
+
+// Show loading modal
+const modal=document.createElement('div');
+modal.className='completion-modal';
+modal.innerHTML=`
+<div class="completion-modal-content">
+<div class="completion-modal-header">
+<h3>📋 Order History</h3>
+<button class="close-modal" onclick="this.closest('.completion-modal').remove()">✕</button>
+</div>
+<div class="completion-modal-body">
+<div class="loading-spinner">🔄 Loading...</div>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+
+try{
+// Check Firebase for orders
+const pickupsRef=ref(db,'pickupRequests');
+const snapshot=await get(pickupsRef);
+
+if(!snapshot.exists()){
+modal.querySelector('.completion-modal-body').innerHTML=`
+<div class="no-orders">
+<div class="no-orders-icon">📦</div>
+<p>No orders found for this number</p>
+</div>
+`;
+return;
+}
+
+const allPickups=snapshot.val();
+const userOrders=Object.entries(allPickups).filter(([id,p])=>{
+const pPhone=normalizePhone(p.mobile||p.phone||'');
+return pPhone===normalized;
+});
+
+if(userOrders.length===0){
+modal.querySelector('.completion-modal-body').innerHTML=`
+<div class="no-orders">
+<div class="no-orders-icon">📦</div>
+<p>No orders found for this number</p>
+</div>
+`;
+return;
+}
+
+// Check localStorage for completion data
+const completedOrders=JSON.parse(localStorage.getItem('completedOrders')||'{}');
+
+// Build order list
+let html='<div class="order-list">';
+userOrders.forEach(([id,order])=>{
+const status=order.trackingStatus||'pending';
+const isCompleted=status==='completed';
+const completionData=completedOrders[id];
+
+const statusColors={
+pending:'#fbbf24',
+confirmed:'#3b82f6',
+on_the_way:'#8b5cf6',
+picked_up:'#10b981',
+completed:'#059669'
+};
+
+const statusLabels={
+pending:'📝 Pending',
+confirmed:'✅ Confirmed',
+on_the_way:'🚛 On the Way',
+picked_up:'📦 Picked Up',
+completed:'🎉 Completed'
+};
+
+html+=`
+<div class="order-card ${isCompleted?'completed':''}">
+<div class="order-header">
+<div class="order-id">Order #${id.slice(-6)}</div>
+<div class="order-status" style="background:${statusColors[status]}20;color:${statusColors[status]}">
+${statusLabels[status]||status}
+</div>
+</div>
+<div class="order-details">
+<div class="order-row">
+<span>Name:</span>
+<strong>${order.name||order.customerName||'N/A'}</strong>
+</div>
+<div class="order-row">
+<span>Amount:</span>
+<strong>₹${order.totalAmount||0}</strong>
+</div>
+${completionData?`
+<div class="order-row completion-saved">
+<span>✓ Saved to device:</span>
+<strong>${new Date(completionData.completedAt).toLocaleString()}</strong>
+</div>
+`:''}
+</div>
+<div class="order-actions">
+<button onclick="window.location.href='track.html?id=${id}'" class="view-btn">
+View Details
+</button>
+</div>
+</div>
+`;
+});
+html+='</div>';
+
+modal.querySelector('.completion-modal-body').innerHTML=html;
+
+}catch(error){
+console.error('Error fetching orders:',error);
+modal.querySelector('.completion-modal-body').innerHTML=`
+<div class="error-message">
+<div class="error-icon">⚠️</div>
+<p>Failed to load orders</p>
+<small>${error.message}</small>
+</div>
+`;
+}
+
+};
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(
+message,
+type="error"
+){
+
+const box=
+document.getElementById(
+"messageBox"
+);
+
+if(!box)
+return;
+
+
+box.textContent=
+message;
+
+box.className=
+"message-box show "+
+(
+type==="info"
+?
+"message-info"
+:
+"message-error"
+);
+
+}
+
+
+/* =========================================================
+   PICKUP LIST
+========================================================= */
+
+function showPickupList(
+pickups
+){
+
+document.getElementById(
+"app"
+).innerHTML=`
+
+<div class="pickup-list-page">
+
+<div class="pickup-list-container">
+
+
+<div class="list-header">
+
+<div class="list-header-top">
+
+<div class="list-logo">
+
+<img
+src="logo.jpeg"
+alt="Covai Scrap Hub"
+>
+
+</div>
+
+<div>
+
+<h2>
+Your Pickups
+</h2>
+
+<p>
+Found ${pickups.length}
+pickup${pickups.length>1?"s":""}
+for this mobile number.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+${pickups.map(
+p=>`
+
+<div
+class="pickup-card"
+onclick="selectPickup('${escAttr(p.id)}')">
+
+<div class="pickup-card-top">
+
+<div>
+
+<div class="pickup-id">
+
+Pickup #${esc(
+String(p.id).substring(0,12)
+)}...
+
+</div>
+
+<div class="pickup-date">
+
+${formatDate(
+p.createdAt||
+p.submittedAt||
+p.timestamp
+)}
+
+</div>
+
+</div>
+
+
+<span class="pickup-status">
+
+${esc(
+p.status||
+"New"
+)}
+
+</span>
+
+</div>
+
+
+<div class="pickup-address">
+
+📍
+${esc(
+p.address||
+p.pickupAddress||
+"Address not provided"
+)}
+
+</div>
+
+
+${
+p.partnerName
+?
+`
+
+<div class="partner-row">
+
+🚚 Partner:
+${esc(p.partnerName)}
+
+</div>
+
+`
+:
+""
+}
+
+</div>
+
+`
+).join("")}
+
+
+</div>
+
+</div>
+
+`;
+
+
+window.selectPickup=
+function(id){
+
+location.href=
+"track.html?id="+
+encodeURIComponent(id);
+
+};
+
+}
+
+
+/* =========================================================
+   LOAD PICKUP
+========================================================= */
+
+function loadPickup(){
+
+onValue(
+
+ref(
+db,
+"pickupRequests/"+pickupId
+),
+
+snap=>{
+
+if(!snap.exists()){
+
+showError(
+"Location Not Available",
+"Your pickup could not be found. Please check the mobile number and try again."
+);
+
+return;
+
+}
+
+
+pickup={
+
+...snap.val(),
+
+id:pickupId
+
+};
+
+
+render();
+
+},
+
+error=>{
+
+console.error(error);
+
+showError(
+"Tracking Error",
+"Unable to load your pickup. Please check your internet connection and try again."
+);
+
+}
+
+);
+
+}
+
+
+/* =========================================================
+   ERROR PAGE
+========================================================= */
+
+function showError(
+title,
+message
+){
+
+document.getElementById(
+"app"
+).innerHTML=`
+
+<div class="error-page">
+
+<div class="error-card">
+
+<div class="error-logo">
+
+<img
+src="logo.jpeg"
+alt="Covai Scrap Hub"
+>
+
+</div>
+
+<div class="error-icon">
+⚠️
+</div>
+
+<h2>
+${esc(title)}
+</h2>
+
+<p>
+${esc(message)}
+</p>
+
+<br>
+
+<button
+class="main-btn"
+onclick="location.href='track.html'">
+
+← Track Again
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function esc(v){
+
+return String(v??"")
+.replace(
+/[&<>"']/g,
+m=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[m])
+);
+
+}
+
+
+function escAttr(v){
+
+return String(v??"")
+.replace(
+/'/g,
+"\\'"
+);
+
+}
+
+
+/* =========================================================
+   TIMESTAMP
+========================================================= */
+
+function getTimestamp(value){
+
+if(!value)
+return 0;
+
+
+/*
+Firebase timestamp number
+*/
+
+if(typeof value==="number")
+return value;
+
+
+/*
+Firebase timestamp object
+*/
+
+if(
+typeof value==="object"&&
+value.seconds
+){
+
+return Number(value.seconds)*1000;
+
+}
+
+
+const date=
+new Date(value);
+
+const time=
+date.getTime();
+
+return isNaN(time)
+?
+0
+:
+time;
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(value){
+
+const time=
+getTimestamp(value);
+
+if(!time)
+return"Date unknown";
+
+
+return new Date(time)
+.toLocaleString(
+"en-IN",
+{
+day:"2-digit",
+month:"short",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit",
+hour12:true
+}
+);
+
+}
+
+
+/* =========================================================
+   CUSTOMER GPS
+========================================================= */
+
+function getCustomerGPS(r){
+
+const lat=
+
+r.latitude||
+
+r.pickupLatitude||
+
+r.customerLatitude||
+
+(
+r.customerGPS&&
+r.customerGPS.latitude
+);
+
+
+const lng=
+
+r.longitude||
+
+r.pickupLongitude||
+
+r.customerLongitude||
+
+(
+r.customerGPS&&
+r.customerGPS.longitude
+);
+
+
+if(
+lat!=null&&
+lng!=null
+){
+
+return{
+
+lat:Number(lat),
+
+lng:Number(lng)
+
+};
+
+}
+
+
+return null;
+
+}
+
+
+/* =========================================================
+   PARTNER GPS
+========================================================= */
+
+function getPartnerGPS(r){
+
+const gps=
+r.partnerGPS||
+r.partnerLocation;
+
+
+if(
+
+gps&&
+
+gps.latitude!=null&&
+
+gps.longitude!=null
+
+){
+
+return{
+
+lat:Number(
+gps.latitude
+),
+
+lng:Number(
+gps.longitude
+),
+
+enabled:
+gps.enabled===true
+
+};
+
+}
+
+
+return null;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function getCurrentStatus(){
+
+if(!pickup)
+return"Preparing";
+
+
+const status=
+String(
+pickup.status||
+""
+).toLowerCase();
+
+
+if(
+pickup.completedAt||
+status.includes("completed")
+)
+return"Completed";
+
+
+if(
+pickup.pickupStartedAt||
+status.includes("pickup started")
+)
+return"Pickup Started";
+
+
+if(
+pickup.arrivedAt||
+status.includes("arrived")
+)
+return"Arrived";
+
+
+if(
+pickup.goingToPickupAt||
+pickup.onTheWayAt||
+status.includes("way")||
+status.includes("going")
+)
+return"On The Way";
+
+
+if(
+pickup.partnerAssignedAt||
+pickup.partnerName||
+status.includes("assigned")
+)
+return"Partner Assigned";
+
+
+if(
+pickup.processingAt||
+status.includes("processing")
+)
+return"Processing";
+
+
+return"Pickup Created";
+
+}
+
+
+/* =========================================================
+   STATUS ICON
+========================================================= */
+
+function getStatusIcon(){
+
+const status=
+getCurrentStatus();
+
+
+const icons={
+
+"Pickup Created":"📝",
+
+"Processing":"⚙️",
+
+"Partner Assigned":"👷",
+
+"On The Way":"🚚",
+
+"Arrived":"📍",
+
+"Pickup Started":"♻️",
+
+"Completed":"✅"
+
+};
+
+
+return icons[status]||
+"📦";
+
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+function initMap(
+custLat,
+custLng
+){
+
+map=
+L.map(
+"map",
+{
+zoomControl:false,
+attributionControl:true
+}
+)
+.setView(
+[custLat,custLng],
+14
+);
+
+
+L.tileLayer(
+
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+
+{
+maxZoom:19
+}
+
+).addTo(map);
+
+
+L.control.zoom({
+
+position:"bottomright"
+
+}).addTo(map);
+
+
+/* customer */
+
+const customerIcon=
+L.divIcon({
+
+className:"",
+
+html:`
+
+<div style="
+width:32px;
+height:32px;
+border-radius:50%;
+background:rgba(59,130,246,.16);
+display:flex;
+align-items:center;
+justify-content:center;
+">
+
+<div style="
+width:17px;
+height:17px;
+background:#3b82f6;
+border:3px solid #fff;
+border-radius:50%;
+box-shadow:0 3px 10px rgba(0,0,0,.3);
+"></div>
+
+</div>
+
+`,
+
+iconSize:[32,32],
+iconAnchor:[16,16]
+
+});
+
+
+customerMarker=
+L.marker(
+[custLat,custLng],
+{
+icon:customerIcon,
+title:"Your Pickup Location"
+}
+)
+.addTo(map);
+
+
+routeLine=
+L.polyline(
+[],
+{
+color:"#00a86b",
+weight:4,
+opacity:.72,
+lineCap:"round",
+lineJoin:"round",
+dashArray:"9 7"
+}
+)
+.addTo(map);
+
+
+customerMarker.bindPopup(`
+
+<div style="
+font-family:Arial;
+font-size:11px;
+">
+
+<strong>
+📍 Pickup Location
+</strong>
+
+<br>
+
+${esc(
+pickup?.customerName||
+"Customer"
+)}
+
+</div>
+
+`);
+
+
+setTimeout(
+()=>{
+map.invalidateSize();
+},
+300
+);
+
+}
+
+
+/* =========================================================
+   PARTNER MARKER
+========================================================= */
+
+function updatePartnerMarker(
+lat,
+lng
+){
+
+if(!map)
+return;
+
+
+if(!partnerMarker){
+
+const partnerIcon=
+L.divIcon({
+
+className:"",
+
+html:`
+
+<div style="
+position:relative;
+width:45px;
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+
+<div style="
+position:absolute;
+width:45px;
+height:45px;
+border-radius:50%;
+background:rgba(0,168,107,.16);
+animation:partnerPulse 1.8s infinite;
+"></div>
+
+<div style="
+position:relative;
+width:35px;
+height:35px;
+border-radius:50%;
+background:#00a86b;
+border:4px solid #fff;
+box-shadow:0 4px 15px rgba(0,0,0,.3);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:16px;
+">
+
+🚚
+
+</div>
+
+</div>
+
+
+<style>
+
+@keyframes partnerPulse{
+
+0%{
+transform:scale(.75);
+opacity:.9;
+}
+
+70%{
+transform:scale(1.25);
+opacity:0;
+}
+
+100%{
+transform:scale(1.25);
+opacity:0;
+}
+
+}
+
+</style>
+
+`,
+
+iconSize:[45,45],
+iconAnchor:[22,22]
+
+});
+
+
+partnerMarker=
+L.marker(
+[lat,lng],
+{
+icon:partnerIcon,
+title:"Pickup Partner"
+}
+)
+.addTo(map);
+
+
+partnerMarker.bindPopup(`
+
+<div style="
+font-family:Arial;
+font-size:11px;
+">
+
+<strong>
+🚚 Pickup Partner
+</strong>
+
+<br>
+
+${esc(
+pickup?.partnerName||
+"Partner"
+)}
+
+</div>
+
+`);
+
+}else{
+
+partnerMarker.setLatLng(
+[lat,lng]
+);
+
+}
+
+
+/* route */
+
+if(customerMarker){
+
+routeLine.setLatLngs([
+
+customerMarker.getLatLng(),
+
+[lat,lng]
+
+]);
+
+
+const bounds=
+L.latLngBounds([
+
+customerMarker.getLatLng(),
+
+[lat,lng]
+
+]);
+
+
+map.fitBounds(
+bounds,
+{
+padding:[55,55],
+maxZoom:16,
+animate:true
+}
+);
+
+}
+
+}
+
+
+/* =========================================================
+   DISTANCE
+========================================================= */
+
+function calculateDistance(
+lat1,
+lng1,
+lat2,
+lng2
+){
+
+const R=6371;
+
+const dLat=
+(lat2-lat1)*
+Math.PI/180;
+
+const dLng=
+(lng2-lng1)*
+Math.PI/180;
+
+
+const a=
+
+Math.sin(dLat/2)*
+Math.sin(dLat/2)
+
++
+
+Math.cos(
+lat1*Math.PI/180
+)*
+
+Math.cos(
+lat2*Math.PI/180
+)*
+
+Math.sin(dLng/2)*
+Math.sin(dLng/2);
+
+
+const c=
+2*
+Math.atan2(
+Math.sqrt(a),
+Math.sqrt(1-a)
+);
+
+
+return R*c;
+
+}
+
+
+function formatDistance(km){
+
+if(km<1){
+
+return Math.round(
+km*1000
+)+" m away";
+
+}
+
+return km.toFixed(1)+
+" km away";
+
+}
+
+
+function calculateETA(
+distanceKm
+){
+
+const avgSpeed=30;
+
+const minutes=
+Math.ceil(
+(distanceKm/avgSpeed)*60
+);
+
+
+if(minutes<1)
+return"Arriving";
+
+if(minutes===1)
+return"1 min";
+
+if(minutes<60)
+return minutes+" mins";
+
+
+const hrs=
+Math.floor(minutes/60);
+
+const mins=
+minutes%60;
+
+
+return hrs+"h "+
+mins+"m";
+
+}
+
+
+/* =========================================================
+   RENDER TRACKING
+========================================================= */
+
+function render(){
+
+if(!pickup)
+return;
+
+
+const custGPS=
+getCustomerGPS(pickup);
+
+const partGPS=
+getPartnerGPS(pickup);
+
+
+if(!custGPS){
+
+showMissingGPS();
+
+return;
+
+}
+
+
+/*
+Create UI once
+*/
+
+if(!map){
+
+document.getElementById(
+"app"
+).innerHTML=`
+
+<div class="tracking-page">
+
+
+<header class="top-header">
+
+<div class="brand">
+
+<div class="brand-logo">
+
+<img
+src="logo.jpeg"
+alt="COVAI SCRAP HUB"
+>
+
+</div>
+
+<div>
+
+<div class="brand-name">
+COVAI SCRAP HUB
+</div>
+
+<div class="brand-sub">
+Smart Scrap Pickup Tracking
+</div>
+
+</div>
+
+</div>
+
+
+<div class="header-actions">
+
+<button
+class="header-btn"
+onclick="location.href='track.html'">
+
+← Track Another
+
+</button>
+
+</div>
+
+</header>
+
+
+<main class="desktop-layout">
+
+
+<section class="map-card">
+
+
+<div id="map"></div>
+
+
+<div class="map-top-overlay">
+
+<div class="live-status-card">
+
+<div class="partner-avatar">
+🚚
+</div>
+
+
+<div class="status-info">
+
+<div
+class="partner-name"
+id="partnerName">
+
+Pickup Partner
+
+</div>
+
+<div
+class="partner-phone"
+id="partnerPhone">
+</div>
+
+<div class="status-badge">
+
+<span
+class="pulse"
+id="livePulse"
+style="display:none">
+</span>
+
+<span id="statusText">
+Preparing
+</span>
+
+</div>
+
+</div>
+
+
+<div class="eta-box">
+
+<div
+class="eta-time"
+id="etaTime">
+
+--
+
+</div>
+
+<div class="eta-label">
+ETA
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="map-float-label">
+
+● LIVE PICKUP TRACKING
+
+</div>
+
+
+<button
+class="locate-btn"
+onclick="fitTracking()"
+title="View route">
+
+⌖
+
+</button>
+
+
+<div
+class="distance-badge"
+id="distanceBadge"
+style="display:none">
+</div>
+
+
+</section>
+
+
+<aside class="side-panel">
+
+
+<div class="panel-card">
+
+<div class="panel-title">
+
+<h2>
+Pickup Overview
+</h2>
+
+<span id="desktopStatus">
+LIVE
+</span>
+
+</div>
+
+
+<div class="status-large">
+
+<div
+class="status-large-icon"
+id="desktopStatusIcon">
+
+🚚
+
+</div>
+
+<div>
+
+<div
+class="status-large-title"
+id="desktopStatusTitle">
+
+Preparing
+
+</div>
+
+<div class="status-large-sub">
+
+Your pickup is updated automatically
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel-card partner-card-desktop" id="partnerCardDesktop" style="display:none;">
+
+<div class="panel-title">
+
+<h2>
+👤 Partner Assigned
+</h2>
+
+</div>
+
+<div class="partner-desktop-body">
+
+<div class="partner-desktop-info">
+<div class="partner-desktop-label">Partner Name</div>
+<div class="partner-desktop-name" id="partnerDesktopName">--</div>
+</div>
+
+<button class="partner-call-btn-desktop" id="partnerCallBtnDesktop" onclick="callPartner()">
+<span class="call-icon">📞</span>
+<span>Call Partner</span>
+</button>
+
+</div>
+
+</div>
+
+
+<div class="panel-card">
+
+<div class="panel-title">
+
+<h2>
+Pickup Details
+</h2>
+
+</div>
+
+
+<div class="order-summary">
+
+
+<div class="summary-box">
+
+<div class="summary-label">
+PICKUP ID
+</div>
+
+<div
+class="summary-value"
+id="pickupIdVal">
+
+--
+
+</div>
+
+</div>
+
+
+<div class="summary-box">
+
+<div class="summary-label">
+CUSTOMER
+</div>
+
+<div
+class="summary-value"
+id="customerVal">
+
+--
+
+</div>
+
+</div>
+
+
+<div class="summary-box">
+
+<div class="summary-label">
+PHONE
+</div>
+
+<div
+class="summary-value"
+id="customerPhoneVal">
+
+--
+
+</div>
+
+</div>
+
+
+<div class="summary-box">
+
+<div class="summary-label">
+STATUS
+</div>
+
+<div
+class="summary-value"
+id="statusVal">
+
+--
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="summary-box"
+style="margin-top:8px">
+
+<div class="summary-label">
+PICKUP ADDRESS
+</div>
+
+<div
+class="summary-value"
+id="addressVal">
+
+--
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel-card timeline-card">
+
+<div class="timeline">
+
+<div class="timeline-header">
+
+<h3>
+📦 Pickup Progress
+</h3>
+
+<span>
+LIVE STATUS
+</span>
+
+</div>
+
+<div id="timelineContainer">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel-card">
+
+<div class="action-grid">
+
+<button
+class="action-btn action-primary"
+onclick="fitTracking()">
+
+📍 View Route
+
+</button>
+
+<button
+class="action-btn action-secondary"
+onclick="location.reload()">
+
+↻ Refresh
+
+</button>
+
+</div>
+
+</div>
+
+
+</aside>
+
+
+</main>
+
+
+<section class="mobile-sheet">
+
+<div class="sheet-handle"></div>
+
+
+<div class="mobile-summary">
+
+
+<div class="mobile-summary-box">
+
+<div class="mobile-summary-label">
+PICKUP ID
+</div>
+
+<div
+class="mobile-summary-value"
+id="mobilePickupId">
+
+--
+
+</div>
+
+</div>
+
+
+<div class="mobile-summary-box">
+
+<div class="mobile-summary-label">
+CUSTOMER
+</div>
+
+<div
+class="mobile-summary-value"
+id="mobileCustomer">
+
+--
+
+</div>
+
+</div>
+
+
+<div class="mobile-summary-box">
+
+<div class="mobile-summary-label">
+STATUS
+</div>
+
+<div
+class="mobile-summary-value"
+id="mobileStatus">
+
+--
+
+</div>
+
+</div>
+
+
+<div class="mobile-summary-box">
+
+<div class="mobile-summary-label">
+PARTNER
+</div>
+
+<div
+class="mobile-summary-value"
+id="mobilePartner">
+
+--
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="mobile-status">
+
+<div
+class="mobile-status-icon"
+id="mobileStatusIcon">
+
+🚚
+
+</div>
+
+<div>
+
+<div
+class="mobile-status-title"
+id="mobileStatusTitle">
+
+Preparing
+
+</div>
+
+<div class="mobile-status-sub">
+
+Tracking updates automatically
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="partner-assigned-card" id="partnerAssignedCard" style="display:none;">
+
+<div class="partner-card-header">
+<span class="partner-icon">👤</span>
+<span class="partner-title">Partner Assigned</span>
+</div>
+
+<div class="partner-card-body">
+
+<div class="partner-card-name" id="partnerCardName">
+--
+</div>
+
+<button class="partner-call-btn" id="partnerCallBtn" onclick="callPartner()">
+<span class="call-icon">📞</span>
+<span>Call Partner</span>
+</button>
+
+</div>
+
+</div>
+
+
+<div class="mobile-timeline-title">
+
+Pickup Progress
+
+</div>
+
+
+<div id="mobileTimelineContainer">
+</div>
+
+
+<div class="mobile-actions">
+
+<button
+class="mobile-action primary"
+onclick="fitTracking()">
+
+📍 View Route
+
+</button>
+
+<button
+class="mobile-action secondary"
+onclick="location.reload()">
+
+↻ Refresh
+
+</button>
+
+</div>
+
+</section>
+
+
+</div>
+
+`;
+
+
+initMap(
+custGPS.lat,
+custGPS.lng
+);
+
+}
+
+
+/* =========================================================
+   PARTNER
+========================================================= */
+
+document.getElementById(
+"partnerName"
+).textContent=
+pickup.partnerName||
+"Pickup Partner";
+
+
+const phoneEl=
+document.getElementById(
+"partnerPhone"
+);
+
+
+if(pickup.partnerPhone){
+
+phoneEl.textContent=
+"📞 "+
+pickup.partnerPhone;
+
+phoneEl.style.display=
+"block";
+
+}else{
+
+phoneEl.style.display=
+"none";
+
+}
+
+
+/* =========================================================
+   PARTNER ASSIGNED CARD
+========================================================= */
+
+const partnerCard=
+document.getElementById(
+"partnerAssignedCard"
+);
+
+const partnerCardName=
+document.getElementById(
+"partnerCardName"
+);
+
+const partnerCallBtn=
+document.getElementById(
+"partnerCallBtn"
+);
+
+if(pickup.partnerName&&pickup.partnerPhone){
+
+partnerCardName.textContent=
+pickup.partnerName;
+
+partnerCallBtn.setAttribute(
+"data-phone",
+pickup.partnerPhone
+);
+
+partnerCard.style.display=
+"block";
+
+}else{
+
+partnerCard.style.display=
+"none";
+
+}
+
+const partnerCardDesktop=
+document.getElementById(
+"partnerCardDesktop"
+);
+
+const partnerDesktopName=
+document.getElementById(
+"partnerDesktopName"
+);
+
+const partnerCallBtnDesktop=
+document.getElementById(
+"partnerCallBtnDesktop"
+);
+
+if(pickup.partnerName&&pickup.partnerPhone){
+
+partnerDesktopName.textContent=
+pickup.partnerName;
+
+partnerCallBtnDesktop.setAttribute(
+"data-phone",
+pickup.partnerPhone
+);
+
+partnerCardDesktop.style.display=
+"block";
+
+}else{
+
+partnerCardDesktop.style.display=
+"none";
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+const currentStatus=
+getCurrentStatus();
+
+const currentIcon=
+getStatusIcon();
+
+
+document.getElementById(
+"desktopStatusTitle"
+).textContent=
+currentStatus;
+
+document.getElementById(
+"desktopStatusIcon"
+).textContent=
+currentIcon;
+
+document.getElementById(
+"desktopStatus"
+).textContent=
+currentStatus.toUpperCase();
+
+
+document.getElementById(
+"mobileStatus"
+).textContent=
+currentStatus;
+
+document.getElementById(
+"mobileStatusTitle"
+).textContent=
+currentStatus;
+
+document.getElementById(
+"mobileStatusIcon"
+).textContent=
+currentIcon;
+
+document.getElementById(
+"mobilePartner"
+).textContent=
+pickup.partnerName||
+"Not assigned";
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+document.getElementById(
+"pickupIdVal"
+).textContent=
+pickup.id;
+
+document.getElementById(
+"customerVal"
+).textContent=
+pickup.customerName||
+pickup.customer||
+"Customer";
+
+document.getElementById(
+"customerPhoneVal"
+).textContent=
+pickup.phone||
+pickup.mobile||
+"Not provided";
+
+document.getElementById(
+"addressVal"
+).textContent=
+pickup.address||
+pickup.pickupAddress||
+"Not provided";
+
+document.getElementById(
+"statusVal"
+).textContent=
+currentStatus;
+
+
+document.getElementById(
+"mobilePickupId"
+).textContent=
+String(
+pickup.id
+).substring(0,18);
+
+document.getElementById(
+"mobileCustomer"
+).textContent=
+pickup.customerName||
+pickup.customer||
+"Customer";
+
+
+/* =========================================================
+   PARTNER GPS
+========================================================= */
+
+if(
+partGPS&&
+partGPS.enabled
+){
+
+updatePartnerMarker(
+partGPS.lat,
+partGPS.lng
+);
+
+
+const dist=
+calculateDistance(
+
+custGPS.lat,
+custGPS.lng,
+
+partGPS.lat,
+partGPS.lng
+
+);
+
+
+const distBadge=
+document.getElementById(
+"distanceBadge"
+);
+
+distBadge.textContent=
+formatDistance(dist);
+
+distBadge.style.display=
+"block";
+
+
+document.getElementById(
+"etaTime"
+).textContent=
+calculateETA(dist);
+
+
+document.getElementById(
+"statusText"
+).textContent=
+currentStatus+
+" • LIVE";
+
+
+document.getElementById(
+"livePulse"
+).style.display=
+"block";
+
+}else{
+
+const allocatedMins=
+pickup.allocatedMinutes||
+30;
+
+
+document.getElementById(
+"etaTime"
+).textContent=
+allocatedMins+
+" min";
+
+
+if(pickup.partnerName){
+
+document.getElementById(
+"statusText"
+).textContent=
+"Waiting for partner GPS";
+
+}else{
+
+document.getElementById(
+"statusText"
+).textContent=
+currentStatus;
+
+}
+
+
+document.getElementById(
+"livePulse"
+).style.display=
+"none";
+
+
+document.getElementById(
+"distanceBadge"
+).style.display=
+"none";
+
+}
+
+
+renderTimeline();
+
+}
+
+
+/* =========================================================
+   MISSING GPS
+========================================================= */
+
+function showMissingGPS(){
+
+document.getElementById(
+"app"
+).innerHTML=`
+
+<div class="error-page">
+
+<div class="error-card">
+
+<div class="error-logo">
+
+<img
+src="logo.jpeg"
+alt="Covai Scrap Hub"
+>
+
+</div>
+
+<div class="error-icon">
+📍
+</div>
+
+<h2>
+GPS Location Missing
+</h2>
+
+<p>
+Your pickup was found, but a GPS
+location was not captured during booking.
+</p>
+
+<br>
+
+<div style="
+background:#fff8e7;
+border:1px solid #f8df9c;
+padding:13px;
+border-radius:13px;
+font-size:10px;
+color:#92400e;
+line-height:1.6;
+text-align:left;
+margin-bottom:15px;
+">
+
+<strong>Pickup ID:</strong>
+${esc(pickup.id)}
+
+<br>
+
+<strong>Customer:</strong>
+${esc(
+pickup.customerName||
+pickup.customer||
+"N/A"
+)}
+
+<br>
+
+<strong>Status:</strong>
+${esc(
+pickup.status||
+"New"
+)}
+
+</div>
+
+
+<button
+class="main-btn"
+onclick="location.href='track.html'">
+
+← Track Again
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+function renderTimeline(){
+
+if(!pickup)
+return;
+
+
+const stages=[
+
+{
+icon:"📝",
+label:"Pickup Created",
+time:
+pickup.createdAt||
+pickup.submittedAt
+},
+
+{
+icon:"⚙️",
+label:"Processing",
+time:
+pickup.processingAt
+},
+
+{
+icon:"👷",
+label:"Partner Assigned",
+time:
+pickup.partnerAssignedAt
+},
+
+{
+icon:"🚚",
+label:"On The Way",
+time:
+pickup.goingToPickupAt||
+pickup.onTheWayAt
+},
+
+{
+icon:"📍",
+label:"Arrived",
+time:
+pickup.arrivedAt
+},
+
+{
+icon:"♻️",
+label:"Pickup Started",
+time:
+pickup.pickupStartedAt
+},
+
+{
+icon:"✅",
+label:"Completed",
+time:
+pickup.completedAt
+}
+
+];
+
+
+let lastActive=-1;
+
+
+stages.forEach(
+(s,i)=>{
+
+if(s.time)
+lastActive=i;
+
+}
+);
+
+
+const html=
+stages.map(
+(s,i)=>`
+
+<div class="
+timeline-item
+${s.time?"active":""}
+${i===lastActive?"current":""}
+">
+
+<div class="timeline-marker">
+
+<div class="timeline-dot">
+
+${s.time?s.icon:""}
+
+</div>
+
+${
+i<stages.length-1
+?
+`<div class="timeline-line"></div>`
+:
+""
+}
+
+</div>
+
+
+<div class="timeline-content">
+
+<div class="timeline-text">
+
+${s.icon}
+${s.label}
+
+</div>
+
+<div class="timeline-time">
+
+${
+s.time
+?
+formatTime(s.time)
+:
+"Waiting"
+}
+
+</div>
+
+</div>
+
+</div>
+
+`
+).join("");
+
+
+const desktop=
+document.getElementById(
+"timelineContainer"
+);
+
+if(desktop)
+desktop.innerHTML=html;
+
+
+const mobile=
+document.getElementById(
+"mobileTimelineContainer"
+);
+
+if(mobile)
+mobile.innerHTML=html;
+
+}
+
+
+/* =========================================================
+   TIME
+========================================================= */
+
+function formatTime(value){
+
+const time=
+getTimestamp(value);
+
+if(!time)
+return"Waiting";
+
+
+return new Date(time)
+.toLocaleString(
+"en-IN",
+{
+day:"2-digit",
+month:"short",
+hour:"2-digit",
+minute:"2-digit",
+hour12:true
+}
+);
+
+}
+
+
+/* =========================================================
+   FIT MAP
+========================================================= */
+
+window.fitTracking=
+function(){
+
+if(!map)
+return;
+
+
+const points=[];
+
+
+if(customerMarker){
+
+points.push(
+customerMarker.getLatLng()
+);
+
+}
+
+
+if(partnerMarker){
+
+points.push(
+partnerMarker.getLatLng()
+);
+
+}
+
+
+if(points.length===1){
+
+map.setView(
+points[0],
+15,
+{
+animate:true
+}
+);
+
+}else if(points.length>1){
+
+const bounds=
+L.latLngBounds(points);
+
+
+map.fitBounds(
+bounds,
+{
+padding:[60,60],
+maxZoom:16,
+animate:true
+}
+);
+
+}
+
+};
+
+
+/* =========================================================
+   LIVE UPDATE
+========================================================= */
+
+setInterval(
+()=>{
+
+if(!pickup||!map)
+return;
+
+
+const custGPS=
+getCustomerGPS(pickup);
+
+const partGPS=
+getPartnerGPS(pickup);
+
+
+if(
+!custGPS||
+!partGPS||
+!partGPS.enabled
+)
+return;
+
+
+const dist=
+calculateDistance(
+
+custGPS.lat,
+custGPS.lng,
+
+partGPS.lat,
+partGPS.lng
+
+);
+
+
+const distBadge=
+document.getElementById(
+"distanceBadge"
+);
+
+const etaEl=
+document.getElementById(
+"etaTime"
+);
+
+
+if(distBadge){
+
+distBadge.textContent=
+formatDistance(dist);
+
+}
+
+
+if(etaEl){
+
+etaEl.textContent=
+calculateETA(dist);
+
+}
+
+},
+10000
+);
+
+
+/* =========================================================
+   CALL PARTNER
+========================================================= */
+
+function callPartner(){
+
+// Try mobile button first
+let btn=
+document.getElementById(
+"partnerCallBtn"
+);
+
+let phone=
+btn?
+btn.getAttribute(
+"data-phone"
+):
+null;
+
+// If no phone from mobile, try desktop button
+if(!phone){
+
+btn=
+document.getElementById(
+"partnerCallBtnDesktop"
+);
+
+phone=
+btn?
+btn.getAttribute(
+"data-phone"
+):
+null;
+
+}
+
+if(phone){
+
+window.location.href=
+"tel:"+phone;
+
+}else{
+
+alert(
+"Partner phone not available"
+);
+
+}
+
+}
+
+
+/* =========================================================
+   NETWORK
+========================================================= */
+
+window.addEventListener(
+"online",
+()=>{
+console.log(
+"Internet connection restored"
+);
+}
+);
+
+window.addEventListener(
+"offline",
+()=>{
+console.log(
+"Internet connection lost"
+);
+}
+);
+
+</script>
+
+<script src="lang-system.js"></script>
+<script>
+// Apply saved theme
+function applySavedTheme(){
+    const theme = localStorage.getItem("covaiTheme") || "light";
+    if(theme === "dark"){
+        document.body.classList.add("dark-mode");
+    } else {
+        document.body.classList.remove("dark-mode");
+    }
+}
+
+// Initialize language and theme
+window.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem('lang')) {
+        localStorage.setItem('lang', 'en');
+    }
+    applySavedTheme();
+    initLangTheme();
+});
+</script>
+
+<!-- Real-time Tracking Update Script -->
+<script src="track-realtime-update.js"></script>
+
+<script>
+// Start real-time tracking when pickup data is loaded
+window.addEventListener('DOMContentLoaded', function(){
+    // Wait for pickup data to load
+    setTimeout(function(){
+        const pickupIdElement = document.getElementById('pickupIdVal');
+        if(pickupIdElement && pickupIdElement.textContent){
+            const trackingPickupId = pickupIdElement.textContent.trim();
+            console.log('Starting real-time tracking for:', trackingPickupId);
+
+            // Start listening to real-time updates
+            if(typeof listenToRealtimeUpdates === 'function'){
+                listenToRealtimeUpdates(trackingPickupId);
+            }
+        }
+        // Fallback: try global pickupId variable
+        else if(typeof pickupId !== 'undefined' && pickupId){
+            console.log('Starting real-time tracking for:', pickupId);
+            if(typeof listenToRealtimeUpdates === 'function'){
+                listenToRealtimeUpdates(pickupId);
+            }
+        }
+    }, 1000);
+});
+</script>
+
+</body>
+</html>

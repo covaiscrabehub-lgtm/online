@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Test GPS Capture</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+background:linear-gradient(135deg,#10b981,#059669);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+.container{
+background:#fff;
+border-radius:20px;
+padding:40px;
+max-width:600px;
+width:100%;
+box-shadow:0 8px 32px rgba(0,0,0,0.2);
+}
+h1{
+font-size:28px;
+margin-bottom:20px;
+color:#1a1a1a;
+}
+.status{
+background:#f9fafb;
+padding:16px;
+border-radius:12px;
+margin-bottom:16px;
+font-size:14px;
+}
+.status.success{
+background:#d1fae5;
+color:#065f46;
+border:2px solid #10b981;
+}
+.status.error{
+background:#fee2e2;
+color:#991b1b;
+border:2px solid #ef4444;
+}
+button{
+width:100%;
+padding:16px;
+background:#10b981;
+color:#fff;
+border:0;
+border-radius:12px;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+margin-bottom:12px;
+}
+button:hover{
+background:#059669;
+}
+button:disabled{
+background:#d1d5db;
+cursor:not-allowed;
+}
+.coords{
+background:#1a1a1a;
+color:#10b981;
+padding:16px;
+border-radius:12px;
+font-family:monospace;
+font-size:14px;
+margin-top:16px;
+}
+.step{
+padding:12px;
+background:#f9fafb;
+border-radius:8px;
+margin-bottom:8px;
+display:flex;
+align-items:center;
+gap:12px;
+}
+.step-icon{
+font-size:24px;
+}
+.step-text{
+flex:1;
+font-size:14px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>🧪 Test GPS Capture</h1>
+
+<div class="status">
+<strong>Browser:</strong> <span id="browser">Checking...</span><br>
+<strong>HTTPS:</strong> <span id="https">Checking...</span><br>
+<strong>GPS Support:</strong> <span id="gps-support">Checking...</span>
+</div>
+
+<button id="captureBtn" onclick="captureGPS()">
+📍 Capture My Location
+</button>
+
+<div id="steps"></div>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+// Check environment
+document.getElementById("browser").textContent=navigator.userAgent.split(')')[0]+')';
+document.getElementById("https").textContent=location.protocol==="https:"?"✅ Secure":"⚠️ Not secure (GPS may fail)";
+document.getElementById("gps-support").textContent=navigator.geolocation?"✅ Supported":"❌ Not supported";
+
+let capturedLat=null;
+let capturedLng=null;
+
+function log(icon,text,isError=false){
+const div=document.createElement('div');
+div.className='step';
+div.innerHTML=`
+<div class="step-icon">${icon}</div>
+<div class="step-text" style="color:${isError?'#ef4444':'#1a1a1a'}">${text}</div>
+`;
+document.getElementById("steps").appendChild(div);
+}
+
+window.captureGPS=function(){
+
+document.getElementById("steps").innerHTML="";
+document.getElementById("result").innerHTML="";
+
+const btn=document.getElementById("captureBtn");
+btn.disabled=true;
+btn.textContent="📍 Getting location...";
+
+log("📡","Requesting location from browser...");
+
+if(!navigator.geolocation){
+log("❌","Geolocation not supported by browser",true);
+btn.disabled=false;
+btn.textContent="📍 Capture My Location";
+return;
+}
+
+const startTime=Date.now();
+
+navigator.geolocation.getCurrentPosition(
+
+// Success
+position=>{
+
+const elapsed=Date.now()-startTime;
+
+capturedLat=position.coords.latitude;
+capturedLng=position.coords.longitude;
+
+log("✅",`Location captured in ${elapsed}ms`);
+log("📍",`Latitude: ${capturedLat.toFixed(6)}`);
+log("📍",`Longitude: ${capturedLng.toFixed(6)}`);
+log("🎯",`Accuracy: ${Math.round(position.coords.accuracy)} meters`);
+
+document.getElementById("result").innerHTML=`
+<div class="status success">
+<strong>✅ SUCCESS!</strong><br><br>
+GPS captured successfully!
+</div>
+
+<div class="coords">
+{
+  "latitude": ${capturedLat},
+  "longitude": ${capturedLng},
+  "accuracy": ${position.coords.accuracy}
+}
+</div>
+
+<button onclick="testFirebase()">
+💾 Test Firebase Save
+</button>
+
+<button onclick="openMap()">
+🗺️ View on Google Maps
+</button>
+`;
+
+btn.disabled=false;
+btn.textContent="✅ Location Captured";
+
+console.log("GPS captured:",{
+latitude:capturedLat,
+longitude:capturedLng,
+accuracy:position.coords.accuracy,
+timestamp:new Date().toISOString()
+});
+
+},
+
+// Error
+error=>{
+
+const elapsed=Date.now()-startTime;
+
+log("❌",`Failed after ${elapsed}ms`,true);
+
+let errorMsg="Unknown error";
+let solution="";
+
+switch(error.code){
+case 1:
+errorMsg="Permission denied";
+solution="Click the location icon in browser address bar and allow location access";
+break;
+case 2:
+errorMsg="Position unavailable";
+solution="Make sure GPS is enabled on your device and you have good signal";
+break;
+case 3:
+errorMsg="Timeout";
+solution="Location request took too long. Try again in a better location";
+break;
+}
+
+log("⚠️",errorMsg,true);
+log("💡",solution);
+
+document.getElementById("result").innerHTML=`
+<div class="status error">
+<strong>❌ GPS FAILED</strong><br><br>
+<strong>Error:</strong> ${errorMsg}<br><br>
+<strong>Solution:</strong> ${solution}
+</div>
+`;
+
+btn.disabled=false;
+btn.textContent="🔄 Try Again";
+
+console.error("GPS error:",{
+code:error.code,
+message:error.message
+});
+
+},
+
+// Options
+{
+enableHighAccuracy:true,
+timeout:10000,
+maximumAge:0
+}
+
+);
+
+};
+
+window.openMap=function(){
+if(capturedLat&&capturedLng){
+window.open(`https://www.google.com/maps?q=${capturedLat},${capturedLng}`,"_blank");
+}
+};
+
+window.testFirebase=async function(){
+
+if(!capturedLat||!capturedLng){
+alert("No GPS captured yet");
+return;
+}
+
+log("🔄","Testing Firebase connection...");
+
+try{
+
+const {initializeApp}=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+const {getDatabase,ref,push,set}=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js");
+
+const firebaseConfig={
+apiKey:"AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
+authDomain:"covai-scrap-hub.firebaseapp.com",
+databaseURL:"https://covai-scrap-hub-default-rtdb.firebaseio.com",
+projectId:"covai-scrap-hub",
+storageBucket:"covai-scrap-hub.firebasestorage.app",
+messagingSenderId:"979133721874",
+appId:"1:979133721874:web:c5829bb8dbf5270c0917cb",
+measurementId:"G-P3PTSBHWMF"
+};
+
+const db=getDatabase(initializeApp(firebaseConfig));
+
+log("💾","Saving test data to Firebase...");
+
+const testRef=push(ref(db,"gpsTests"));
+
+await set(testRef,{
+latitude:capturedLat,
+longitude:capturedLng,
+timestamp:new Date().toISOString(),
+userAgent:navigator.userAgent,
+testId:testRef.key
+});
+
+log("✅","Firebase save successful!");
+
+alert("✅ Firebase test passed!\n\nGPS saved to: gpsTests/"+testRef.key);
+
+}catch(error){
+
+log("❌","Firebase error: "+error.message,true);
+
+alert("❌ Firebase failed:\n\n"+error.message);
+
+console.error("Firebase error:",error);
+
+}
+
+};
+
+</script>
+
+</body>
+</html>

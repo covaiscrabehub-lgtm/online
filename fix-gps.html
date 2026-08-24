@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Fix GPS - Quick Tool</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Arial,sans-serif;
+background:#f8faf9;
+padding:20px;
+}
+.container{
+max-width:800px;
+margin:auto;
+}
+h1{
+font-size:24px;
+margin-bottom:20px;
+color:#1a1a1a;
+}
+.card{
+background:#fff;
+border-radius:16px;
+padding:20px;
+margin-bottom:16px;
+box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.card h3{
+margin-bottom:12px;
+color:#10b981;
+}
+.pickup-item{
+background:#f9fafb;
+padding:16px;
+border-radius:12px;
+margin-bottom:12px;
+border:2px solid #e5e7eb;
+}
+.pickup-item.has-gps{
+border-color:#10b981;
+background:#d1fae5;
+}
+.pickup-item.no-gps{
+border-color:#ef4444;
+background:#fee2e2;
+}
+button{
+padding:10px 20px;
+background:#10b981;
+color:#fff;
+border:0;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+margin-right:8px;
+}
+button.danger{
+background:#ef4444;
+}
+.loading{
+text-align:center;
+padding:40px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>🔧 GPS Fix Tool</h1>
+
+<div class="card">
+<h3>Scan All Pickups</h3>
+<button onclick="scanPickups()">🔍 Scan for Missing GPS</button>
+</div>
+
+<div id="results"></div>
+
+</div>
+
+<script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
+authDomain:"covai-scrap-hub.firebaseapp.com",
+databaseURL:"https://covai-scrap-hub-default-rtdb.firebaseio.com",
+projectId:"covai-scrap-hub",
+storageBucket:"covai-scrap-hub.firebasestorage.app",
+messagingSenderId:"979133721874",
+appId:"1:979133721874:web:c5829bb8dbf5270c0917cb",
+measurementId:"G-P3PTSBHWMF"
+};
+
+const db=getDatabase(initializeApp(firebaseConfig));
+
+window.scanPickups=async function(){
+
+document.getElementById("results").innerHTML=`
+<div class="loading">Scanning pickups...</div>
+`;
+
+try{
+
+const snap=await get(ref(db,"pickupRequests"));
+
+if(!snap.exists()){
+document.getElementById("results").innerHTML=`
+<div class="card">No pickups found</div>
+`;
+return;
+}
+
+const data=snap.val();
+const pickups=Object.entries(data).map(([id,p])=>({...p,id}));
+
+const withGPS=[];
+const withoutGPS=[];
+
+pickups.forEach(p=>{
+
+const hasGPS=(
+p.latitude!=null&&p.longitude!=null||
+p.customerLatitude!=null&&p.customerLongitude!=null||
+p.pickupLatitude!=null&&p.pickupLongitude!=null||
+(p.customerGPS&&p.customerGPS.latitude!=null)
+);
+
+if(hasGPS){
+withGPS.push(p);
+}else{
+withoutGPS.push(p);
+}
+
+});
+
+let html=`
+<div class="card">
+<h3>✅ Pickups WITH GPS: ${withGPS.length}</h3>
+${withGPS.map(p=>`
+<div class="pickup-item has-gps">
+<strong>ID:</strong> ${p.id}<br>
+<strong>Customer:</strong> ${p.customerName||"N/A"}<br>
+<strong>GPS:</strong> ${p.latitude||p.customerLatitude},${p.longitude||p.customerLongitude}
+</div>
+`).join("")}
+</div>
+
+<div class="card">
+<h3>❌ Pickups WITHOUT GPS: ${withoutGPS.length}</h3>
+${withoutGPS.map(p=>`
+<div class="pickup-item no-gps">
+<strong>ID:</strong> ${p.id}<br>
+<strong>Customer:</strong> ${p.customerName||"N/A"}<br>
+<strong>Phone:</strong> ${p.phone||"N/A"}<br>
+<strong>Address:</strong> ${p.address||"N/A"}<br>
+<button onclick="fixGPS('${p.id}')">📍 Set GPS Now</button>
+<button onclick="useMyLocation('${p.id}')">📱 Use My Location</button>
+</div>
+`).join("")||"<p>All pickups have GPS!</p>"}
+</div>
+`;
+
+document.getElementById("results").innerHTML=html;
+
+}catch(error){
+
+document.getElementById("results").innerHTML=`
+<div class="card" style="color:#ef4444">
+<h3>Error</h3>
+<p>${error.message}</p>
+</div>
+`;
+
+}
+
+};
+
+window.fixGPS=function(id){
+window.open("set-location-admin.html?id="+encodeURIComponent(id),"_blank");
+};
+
+window.useMyLocation=async function(id){
+
+if(!navigator.geolocation){
+alert("GPS not supported");
+return;
+}
+
+if(!confirm("Set YOUR current location as pickup location for this pickup?")){
+return;
+}
+
+navigator.geolocation.getCurrentPosition(
+
+async position=>{
+
+const lat=position.coords.latitude;
+const lng=position.coords.longitude;
+
+try{
+
+await update(ref(db,"pickupRequests/"+id),{
+latitude:lat,
+longitude:lng,
+customerLatitude:lat,
+customerLongitude:lng,
+pickupLatitude:lat,
+pickupLongitude:lng,
+customerGPS:{
+latitude:lat,
+longitude:lng,
+timestamp:new Date().toISOString()
+},
+gpsSetBy:"admin",
+gpsSetAt:new Date().toISOString()
+});
+
+alert("✅ GPS set successfully!\n\nLat: "+lat+"\nLng: "+lng);
+
+scanPickups();
+
+}catch(error){
+
+alert("Error: "+error.message);
+
+}
+
+},
+
+error=>{
+
+alert("GPS error: "+error.message);
+
+}
+
+);
+
+};
+
+</script>
+
+</body>
+</html>

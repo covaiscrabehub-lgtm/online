@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Partner Panel - COVAI SCRAP HUB</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+background:#f8faf9;
+color:#1a1a1a;
+}
+
+header{
+background:linear-gradient(135deg,#10b981,#059669);
+padding:20px;
+box-shadow:0 2px 12px rgba(16,185,129,0.2);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.header-content{
+max-width:1200px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+h1{
+font-size:24px;
+color:#fff;
+font-weight:700;
+}
+
+.partner-badge{
+background:rgba(255,255,255,0.2);
+padding:8px 16px;
+border-radius:20px;
+color:#fff;
+font-size:13px;
+font-weight:600;
+}
+
+main{
+max-width:1200px;
+margin:20px auto;
+padding:0 20px;
+}
+
+.partner-input-card{
+background:#fff;
+border-radius:16px;
+padding:24px;
+margin-bottom:24px;
+box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+
+.partner-input-card h2{
+font-size:20px;
+margin-bottom:8px;
+color:#1a1a1a;
+}
+
+.partner-input-card p{
+font-size:14px;
+color:#6b7280;
+margin-bottom:16px;
+}
+
+.input-group{
+display:flex;
+gap:12px;
+}
+
+.input-group input{
+flex:1;
+padding:14px;
+border:2px solid #e5e7eb;
+border-radius:10px;
+font-size:14px;
+outline:none;
+}
+
+.input-group input:focus{
+border-color:#10b981;
+}
+
+.input-group button{
+padding:14px 24px;
+background:#10b981;
+color:#fff;
+border:0;
+border-radius:10px;
+font-size:14px;
+font-weight:600;
+cursor:pointer;
+}
+
+.input-group button:hover{
+background:#059669;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
+margin-bottom:24px;
+}
+
+.stat-card{
+background:#fff;
+border-radius:16px;
+padding:20px;
+box-shadow:0 2px 8px rgba(0,0,0,0.04);
+}
+
+.stat-label{
+font-size:13px;
+color:#6b7280;
+margin-bottom:8px;
+}
+
+.stat-value{
+font-size:32px;
+font-weight:700;
+color:#10b981;
+}
+
+.pickups-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(400px,1fr));
+gap:20px;
+}
+
+.pickup-card{
+background:#fff;
+border-radius:16px;
+padding:20px;
+box-shadow:0 2px 12px rgba(0,0,0,0.06);
+position:relative;
+}
+
+.corner-badge{
+position:absolute;
+top:12px;
+right:12px;
+padding:6px 12px;
+border-radius:20px;
+font-size:11px;
+font-weight:700;
+background:#d1fae5;
+color:#065f46;
+}
+
+.card-header{
+margin-bottom:16px;
+}
+
+.customer-name{
+font-size:18px;
+font-weight:700;
+margin-bottom:4px;
+}
+
+.pickup-id{
+font-size:12px;
+color:#9ca3af;
+}
+
+.card-details{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin-bottom:16px;
+}
+
+.detail-item{
+background:#f9fafb;
+padding:10px;
+border-radius:8px;
+}
+
+.detail-label{
+font-size:11px;
+color:#6b7280;
+margin-bottom:4px;
+}
+
+.detail-value{
+font-size:13px;
+font-weight:600;
+}
+
+.address-box{
+background:#f9fafb;
+padding:12px;
+border-radius:8px;
+margin-bottom:16px;
+}
+
+.gps-status-box{
+background:#d1fae5;
+border:2px solid #10b981;
+padding:14px;
+border-radius:10px;
+margin-bottom:16px;
+text-align:center;
+}
+
+.gps-status-box.offline{
+background:#fef3c7;
+border-color:#f59e0b;
+}
+
+.gps-label{
+font-size:11px;
+font-weight:600;
+color:#065f46;
+margin-bottom:4px;
+}
+
+.gps-status-box.offline .gps-label{
+color:#92400e;
+}
+
+.gps-value{
+font-size:14px;
+font-weight:700;
+color:#059669;
+}
+
+.gps-status-box.offline .gps-value{
+color:#d97706;
+}
+
+.action-btns{
+display:grid;
+grid-template-columns:1fr;
+gap:10px;
+}
+
+.action-btn{
+padding:14px;
+border:0;
+border-radius:10px;
+font-size:14px;
+font-weight:600;
+cursor:pointer;
+transition:.2s;
+}
+
+.action-btn:hover{
+transform:translateY(-1px);
+}
+
+.btn-customer-track{
+background:#3b82f6;
+color:#fff;
+}
+
+.btn-enable{
+background:#10b981;
+color:#fff;
+}
+
+.btn-disable{
+background:#ef4444;
+color:#fff;
+}
+
+.btn-enable:disabled,
+.btn-disable:disabled{
+opacity:0.5;
+cursor:not-allowed;
+}
+
+.tracking-section{
+margin-top:16px;
+padding-top:16px;
+border-top:2px solid #e5e7eb;
+}
+
+.tracking-title{
+font-size:12px;
+font-weight:700;
+color:#6b7280;
+margin-bottom:10px;
+}
+
+.tracking-btns{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:8px;
+}
+
+.tracking-btn{
+padding:12px 8px;
+border:2px solid #e5e7eb;
+background:#fff;
+border-radius:8px;
+font-size:12px;
+font-weight:600;
+cursor:pointer;
+transition:.2s;
+text-align:center;
+}
+
+.tracking-btn:hover{
+border-color:#10b981;
+background:#f0fdf4;
+}
+
+.tracking-btn.active{
+background:#10b981;
+color:#fff;
+border-color:#10b981;
+}
+
+.tracking-btn.completed{
+background:#d1fae5;
+border-color:#10b981;
+color:#065f46;
+}
+
+.empty-state{
+text-align:center;
+padding:60px 20px;
+color:#9ca3af;
+background:#fff;
+border-radius:16px;
+}
+
+.loading{
+text-align:center;
+padding:60px;
+}
+
+.spinner{
+width:40px;
+height:40px;
+border:3px solid #e5e7eb;
+border-top-color:#10b981;
+border-radius:50%;
+animation:spin 0.8s linear infinite;
+margin:0 auto 16px;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg)}
+}
+
+@media(max-width:900px){
+.stats{grid-template-columns:repeat(2,1fr)}
+.pickups-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+.stats{grid-template-columns:1fr}
+.input-group{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="header-content">
+<h1>🚚 Partner Panel</h1>
+<div class="partner-badge" id="partnerBadge">PARTNER</div>
+</div>
+</header>
+
+<main>
+
+<div class="partner-input-card">
+<h2>Partner Dashboard</h2>
+<p>Enter your partner name assigned by admin</p>
+<div class="input-group">
+<input id="partnerNameInput" placeholder="Partner name">
+<button onclick="loadPartner()">Load My Pickups</button>
+</div>
+</div>
+
+<div class="stats" id="statsSection" style="display:none">
+<div class="stat-card">
+<div class="stat-label">Total Assigned</div>
+<div class="stat-value" id="totalCount">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Active</div>
+<div class="stat-value" id="activeCount">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Live Tracking</div>
+<div class="stat-value" id="liveCount">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Completed</div>
+<div class="stat-value" id="completedCount">0</div>
+</div>
+</div>
+
+<div id="pickupsGrid" class="pickups-grid">
+<div class="empty-state">
+<h3>👋 Welcome Partner!</h3>
+<p>Enter your partner name above to view assigned pickups</p>
+</div>
+</div>
+
+</main>
+
+<script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+onValue,
+update,
+remove
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
+authDomain:"covai-scrap-hub.firebaseapp.com",
+databaseURL:"https://covai-scrap-hub-default-rtdb.firebaseio.com",
+projectId:"covai-scrap-hub",
+storageBucket:"covai-scrap-hub.firebasestorage.app",
+messagingSenderId:"979133721874",
+appId:"1:979133721874:web:c5829bb8dbf5270c0917cb",
+measurementId:"G-P3PTSBHWMF"
+};
+
+const db=getDatabase(initializeApp(firebaseConfig));
+
+let allPickups=[];
+let partnerPickups=[];
+let partnerName="";
+const gpsWatchers={};
+
+// Check URL for partner name
+const urlParams=new URLSearchParams(location.search);
+const urlPartner=urlParams.get("partner")||urlParams.get("name")||"";
+
+if(urlPartner){
+document.getElementById("partnerNameInput").value=urlPartner;
+partnerName=urlPartner;
+loadPartner();
+}
+
+onValue(ref(db,"pickupRequests"),snap=>{
+
+const data=snap.val()||{};
+
+allPickups=Object.entries(data).map(([id,p])=>({
+...p,
+id
+}));
+
+if(partnerName){
+filterAndRender();
+}
+
+});
+
+window.loadPartner=function(){
+
+partnerName=document.getElementById("partnerNameInput").value.trim();
+
+if(!partnerName){
+alert("Please enter partner name");
+return;
+}
+
+document.getElementById("partnerBadge").textContent=partnerName.toUpperCase();
+
+filterAndRender();
+
+};
+
+function filterAndRender(){
+
+partnerPickups=allPickups.filter(p=>
+String(p.partnerName||"").trim().toLowerCase()===
+partnerName.trim().toLowerCase()
+);
+
+updateStats();
+render();
+
+}
+
+function updateStats(){
+
+if(!partnerPickups.length){
+document.getElementById("statsSection").style.display="none";
+return;
+}
+
+document.getElementById("statsSection").style.display="grid";
+
+document.getElementById("totalCount").textContent=partnerPickups.length;
+
+document.getElementById("activeCount").textContent=
+partnerPickups.filter(p=>p.status!=="Completed").length;
+
+document.getElementById("liveCount").textContent=
+partnerPickups.filter(p=>p.partnerGPS&&p.partnerGPS.enabled).length;
+
+document.getElementById("completedCount").textContent=
+partnerPickups.filter(p=>p.status==="Completed").length;
+
+}
+
+function render(){
+
+if(!partnerPickups.length){
+
+document.getElementById("pickupsGrid").innerHTML=`
+<div class="empty-state">
+<h3>📦 No Pickups Assigned</h3>
+<p>No pickups assigned to partner: ${esc(partnerName)}</p>
+<p style="margin-top:12px;font-size:13px">
+Contact admin to get pickup assignments
+</p>
+</div>
+`;
+
+return;
+
+}
+
+document.getElementById("pickupsGrid").innerHTML=
+partnerPickups.map(renderCard).join("");
+
+}
+
+function renderCard(p){
+
+const gps=p.partnerGPS||{};
+const isLive=gps.enabled===true;
+
+return`
+<div class="pickup-card">
+
+<span class="corner-badge">
+${esc(p.status||"Assigned")}
+</span>
+
+<div class="card-header">
+<div class="customer-name">
+${esc(p.customerName||p.customer||"Customer")}
+</div>
+<div class="pickup-id">ID: ${esc(p.id)}</div>
+</div>
+
+<div class="card-details">
+
+<div class="detail-item">
+<div class="detail-label">PHONE</div>
+<div class="detail-value">
+${esc(p.phone||p.mobile||"N/A")}
+</div>
+</div>
+
+<div class="detail-item">
+<div class="detail-label">WEIGHT</div>
+<div class="detail-value">
+${(p.totalWeightKg||0).toFixed(2)} kg
+</div>
+</div>
+
+<div class="detail-item">
+<div class="detail-label">VALUE</div>
+<div class="detail-value">
+₹${(p.totalAmount||0).toFixed(2)}
+</div>
+</div>
+
+<div class="detail-item">
+<div class="detail-label">ITEMS</div>
+<div class="detail-value">
+${(p.items||[]).length} items
+</div>
+</div>
+
+</div>
+
+<div class="address-box">
+<div class="detail-label">PICKUP ADDRESS</div>
+<div style="font-size:13px;color:#374151;line-height:1.6">
+${esc(p.address||p.pickupAddress||"Not provided")}
+</div>
+</div>
+
+<div class="gps-status-box ${isLive?"":"offline"}">
+<div class="gps-label">
+${isLive?"🟢 LIVE TRACKING ACTIVE":"⚪ GPS OFFLINE"}
+</div>
+<div class="gps-value" id="gps-${p.id}">
+${isLive
+?`Lat: ${Number(gps.latitude||0).toFixed(6)}, Lng: ${Number(gps.longitude||0).toFixed(6)}`
+:"Location sharing disabled"
+}
+</div>
+</div>
+
+<div class="tracking-section">
+<div class="tracking-title">📍 UPDATE ORDER STATUS</div>
+<div class="tracking-btns">
+
+<button class="tracking-btn" onclick="updateStatus('${p.id}','pending')">
+📝 Pending
+</button>
+
+<button class="tracking-btn" onclick="updateStatus('${p.id}','confirmed')">
+✅ Confirmed
+</button>
+
+<button class="tracking-btn" onclick="updateStatus('${p.id}','on_the_way')">
+🚛 On the Way
+</button>
+
+<button class="tracking-btn" onclick="updateStatus('${p.id}','picked_up')">
+📦 Picked Up
+</button>
+
+<button class="tracking-btn" onclick="updateStatus('${p.id}','completed')"
+style="grid-column:span 2">
+🎉 Completed
+</button>
+
+</div>
+</div>
+
+<div class="action-btns">
+
+<button class="action-btn btn-customer-track"
+onclick="openCustomerTracking('${p.id}')">
+👁 Customer Live Tracking
+</button>
+
+<button class="action-btn btn-enable"
+id="enable-${p.id}"
+onclick="enableLocation('${p.id}')"
+${isLive?"disabled":""}>
+🟢 Enable Share Location
+</button>
+
+<button class="action-btn btn-disable"
+id="disable-${p.id}"
+onclick="disableLocation('${p.id}')"
+${isLive?"":"disabled"}>
+🔴 Disable Location
+</button>
+
+<button class="action-btn"
+style="background:#ef4444;color:#fff;margin-top:8px"
+onclick="deletePickup('${p.id}')">
+🗑 Delete Pickup
+</button>
+
+</div>
+
+</div>
+`;
+
+}
+
+function esc(v){
+return String(v||"").replace(/[&<>"']/g,m=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+}[m]));
+}
+
+window.openCustomerTracking=function(id){
+
+// Open tracking in new tab
+const trackUrl="track.html?id="+encodeURIComponent(id);
+
+window.open(trackUrl,"_blank");
+
+// Also log for debugging
+console.log("Opening customer tracking:",trackUrl);
+
+};
+
+window.enableLocation=function(id){
+
+if(!navigator.geolocation){
+alert("GPS not supported by browser");
+return;
+}
+
+const enableBtn=document.getElementById("enable-"+id);
+const disableBtn=document.getElementById("disable-"+id);
+const gpsBox=document.getElementById("gps-"+id);
+
+enableBtn.disabled=true;
+gpsBox.textContent="📍 Getting location...";
+
+navigator.geolocation.getCurrentPosition(
+
+async position=>{
+
+const lat=position.coords.latitude;
+const lng=position.coords.longitude;
+
+console.log("Partner GPS captured:",lat,lng);
+
+try{
+
+await update(ref(db,"pickupRequests/"+id),{
+"partnerGPS":{
+latitude:lat,
+longitude:lng,
+enabled:true,
+accuracy:position.coords.accuracy||0,
+updatedAt:Date.now(),
+timestamp:new Date().toISOString()
+}
+});
+
+console.log("Partner GPS saved to Firebase");
+
+startGPSWatcher(id);
+
+enableBtn.disabled=true;
+disableBtn.disabled=false;
+
+alert("✅ Location sharing enabled!\n\nCustomer can now track your live location on the map.");
+
+}catch(error){
+
+console.error("Firebase error:",error);
+alert("Error: "+error.message);
+enableBtn.disabled=false;
+
+}
+
+},
+
+error=>{
+
+console.error("GPS error:",error);
+
+let msg="Location error";
+if(error.code===1){
+msg="Please allow location permission in your browser";
+}else if(error.code===2){
+msg="Location unavailable. Make sure GPS is enabled";
+}else if(error.code===3){
+msg="Location request timed out. Try again";
+}
+
+alert(msg);
+enableBtn.disabled=false;
+
+},
+
+{
+enableHighAccuracy:true,
+timeout:10000,
+maximumAge:0
+}
+
+);
+
+};
+
+function startGPSWatcher(id){
+
+if(gpsWatchers[id])return;
+
+console.log("Starting GPS watcher for:",id);
+
+gpsWatchers[id]=navigator.geolocation.watchPosition(
+
+async position=>{
+
+const lat=position.coords.latitude;
+const lng=position.coords.longitude;
+
+console.log("GPS update:",lat,lng);
+
+try{
+
+await update(ref(db,"pickupRequests/"+id),{
+"partnerGPS":{
+latitude:lat,
+longitude:lng,
+enabled:true,
+accuracy:position.coords.accuracy||0,
+updatedAt:Date.now(),
+timestamp:new Date().toISOString()
+}
+});
+
+console.log("GPS updated in Firebase");
+
+}catch(error){
+
+console.error("Firebase update error:",error);
+
+}
+
+},
+
+error=>{
+console.error("GPS watch error:",error);
+},
+
+{
+enableHighAccuracy:true,
+maximumAge:3000,
+timeout:20000
+}
+
+);
+
+}
+
+window.disableLocation=async function(id){
+
+if(gpsWatchers[id]){
+navigator.geolocation.clearWatch(gpsWatchers[id]);
+delete gpsWatchers[id];
+}
+
+try{
+
+await update(ref(db,"pickupRequests/"+id),{
+"partnerGPS/enabled":false,
+"partnerGPS/updatedAt":Date.now()
+});
+
+const enableBtn=document.getElementById("enable-"+id);
+const disableBtn=document.getElementById("disable-"+id);
+
+enableBtn.disabled=false;
+disableBtn.disabled=true;
+
+}catch(error){
+
+alert("Error: "+error.message);
+
+}
+
+};
+
+window.deletePickup=async function(id){
+
+const pickup=allPickups.find(p=>p.id===id);
+
+if(!pickup){
+alert("Pickup not found");
+return;
+}
+
+const customerName=pickup.customerName||pickup.customer||"this customer";
+
+if(!confirm(`Delete pickup for ${customerName}?\n\nPickup ID: ${id}\n\nThis will permanently remove it from the system!`)){
+return;
+}
+
+try{
+
+// Stop GPS watcher if active
+if(gpsWatchers[id]){
+navigator.geolocation.clearWatch(gpsWatchers[id]);
+delete gpsWatchers[id];
+}
+
+// Delete from Firebase
+await remove(ref(db,"pickupRequests/"+id));
+
+alert("✅ Pickup deleted successfully");
+
+}catch(error){
+
+console.error("Delete error:",error);
+
+alert("❌ Failed to delete: "+error.message);
+
+}
+
+};
+
+window.updateStatus=async function(id,status){
+
+const trackingStages=['pending','confirmed','on_the_way','picked_up','completed'];
+const now=Date.now();
+
+const updates={};
+
+// Update trackingStatus
+updates[`pickupRequests/${id}/trackingStatus`]=status;
+
+// Mark current stage as completed
+updates[`pickupRequests/${id}/tracking/${status}/completed`]=true;
+updates[`pickupRequests/${id}/tracking/${status}/time`]=now;
+
+// Mark all previous stages as completed
+const currentIndex=trackingStages.indexOf(status);
+for(let i=0;i<=currentIndex;i++){
+const stage=trackingStages[i];
+updates[`pickupRequests/${id}/tracking/${stage}/completed`]=true;
+if(!updates[`pickupRequests/${id}/tracking/${stage}/time`]){
+updates[`pickupRequests/${id}/tracking/${stage}/time`]=now;
+}
+}
+
+// Legacy status field for backward compatibility
+const statusMap={
+'pending':'New',
+'confirmed':'Processing',
+'on_the_way':'On the Way',
+'picked_up':'Picked Up',
+'completed':'Completed'
+};
+updates[`pickupRequests/${id}/status`]=statusMap[status];
+
+try{
+
+await update(ref(db),updates);
+
+alert('✅ Status updated: '+statusMap[status]);
+
+}catch(error){
+
+console.error('Status update error:',error);
+
+alert('❌ Failed to update: '+error.message);
+
+}
+
+};
+
+window.addEventListener("beforeunload",()=>{
+
+Object.keys(gpsWatchers).forEach(id=>{
+navigator.geolocation.clearWatch(gpsWatchers[id]);
+});
+
+});
+
+</script>
+
+</body>
+</html>

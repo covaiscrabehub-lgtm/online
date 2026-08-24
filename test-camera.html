@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Camera - Covai Scrap Hub</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container{
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1{
+            color: #149447;
+            margin-bottom: 20px;
+        }
+        .btn{
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-file{
+            background: #149447;
+            color: white;
+        }
+        .btn-camera{
+            background: #0891b2;
+            color: white;
+        }
+        .btn-video{
+            background: #8b5cf6;
+            color: white;
+        }
+        .btn:hover{
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .preview{
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .preview img{
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #149447;
+        }
+        .status{
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .status.success{
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.error{
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status.info{
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        input[type="file"]{
+            display: none;
+        }
+        video{
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #149447;
+        }
+        canvas{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📸 Camera Test</h1>
+
+    <p style="color:#666;margin-bottom:20px;">
+        Test different methods to access camera and photos.
+    </p>
+
+    <!-- Method 1: File Input (Gallery) -->
+    <input type="file" id="fileInput" accept="image/*" multiple onchange="handleFiles(event)">
+    <button class="btn btn-file" onclick="document.getElementById('fileInput').click()">
+        📁 Choose Files (Gallery)
+    </button>
+
+    <!-- Method 2: File Input with Capture (Camera) -->
+    <input type="file" id="cameraInput" accept="image/*" capture="environment" onchange="handleFiles(event)">
+    <button class="btn btn-camera" onclick="document.getElementById('cameraInput').click()">
+        📷 Take Photo (File Input)
+    </button>
+
+    <!-- Method 3: MediaDevices API (Advanced) -->
+    <button class="btn btn-video" onclick="openVideoCamera()">
+        🎥 Use Video Camera (API)
+    </button>
+
+    <div id="videoContainer" style="display:none;text-align:center;">
+        <video id="video" autoplay playsinline></video>
+        <button class="btn btn-camera" onclick="capturePhoto()">
+            ✅ Capture Photo
+        </button>
+        <button class="btn" style="background:#ef4444;" onclick="closeVideoCamera()">
+            ❌ Close Camera
+        </button>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <div id="status"></div>
+
+    <div id="preview" class="preview"></div>
+</div>
+
+<script>
+let photos = [];
+let stream = null;
+
+/* ==========================================
+   METHOD 1 & 2: FILE INPUT
+========================================== */
+
+function handleFiles(event){
+    const files = Array.from(event.target.files);
+
+    showStatus(`Selected ${files.length} file(s)`, 'info');
+
+    if(files.length === 0){
+        showStatus('No files selected', 'error');
+        return;
+    }
+
+    files.forEach(file => {
+        if(file.type.startsWith('image/')){
+            const reader = new FileReader();
+
+            reader.onload = function(e){
+                photos.push({
+                    name: file.name,
+                    data: e.target.result
+                });
+
+                showStatus(`✓ Added: ${file.name}`, 'success');
+                updatePreview();
+            };
+
+            reader.onerror = function(error){
+                showStatus(`✗ Error reading ${file.name}`, 'error');
+                console.error(error);
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            showStatus(`✗ ${file.name} is not an image`, 'error');
+        }
+    });
+
+    // Reset input
+    event.target.value = '';
+}
+
+/* ==========================================
+   METHOD 3: VIDEO CAMERA API
+========================================== */
+
+async function openVideoCamera(){
+    try {
+        // Check if browser supports getUserMedia
+        if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+            showStatus('Camera API not supported in this browser', 'error');
+            return;
+        }
+
+        showStatus('Opening camera...', 'info');
+
+        // Request camera access
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: 'environment' // Use back camera on mobile
+            }
+        });
+
+        const video = document.getElementById('video');
+        video.srcObject = stream;
+
+        document.getElementById('videoContainer').style.display = 'block';
+
+        showStatus('✓ Camera opened! Click "Capture Photo" to take picture', 'success');
+
+    } catch(error) {
+        console.error('Camera error:', error);
+
+        if(error.name === 'NotAllowedError'){
+            showStatus('Camera access denied. Please allow camera permission.', 'error');
+        } else if(error.name === 'NotFoundError'){
+            showStatus('No camera found on this device.', 'error');
+        } else {
+            showStatus(`Camera error: ${error.message}`, 'error');
+        }
+    }
+}
+
+function capturePhoto(){
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    // Set canvas size to match video
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    // Draw current video frame to canvas
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Convert canvas to data URL
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+
+    // Add to photos
+    photos.push({
+        name: `Camera_${Date.now()}.jpg`,
+        data: dataUrl
+    });
+
+    showStatus('✓ Photo captured!', 'success');
+    updatePreview();
+
+    // Close camera after capture
+    closeVideoCamera();
+}
+
+function closeVideoCamera(){
+    if(stream){
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+    }
+
+    document.getElementById('videoContainer').style.display = 'none';
+    showStatus('Camera closed', 'info');
+}
+
+/* ==========================================
+   PREVIEW
+========================================== */
+
+function updatePreview(){
+    const preview = document.getElementById('preview');
+    preview.innerHTML = '';
+
+    if(photos.length === 0){
+        preview.innerHTML = '<p style="color:#666;text-align:center;grid-column:1/-1;">No photos yet</p>';
+        return;
+    }
+
+    photos.forEach((photo, index) => {
+        const div = document.createElement('div');
+        div.style.position = 'relative';
+
+        div.innerHTML = `
+            <img src="${photo.data}" alt="${photo.name}">
+            <button
+                onclick="removePhoto(${index})"
+                style="position:absolute;top:5px;right:5px;background:rgba(239,68,68,0.9);color:white;border:none;border-radius:50%;width:30px;height:30px;font-size:16px;cursor:pointer;font-weight:bold;"
+                title="Remove"
+            >
+                ×
+            </button>
+            <p style="font-size:11px;color:#666;margin-top:5px;word-break:break-all;">${photo.name}</p>
+        `;
+
+        preview.appendChild(div);
+    });
+}
+
+function removePhoto(index){
+    photos.splice(index, 1);
+    updatePreview();
+    showStatus('Photo removed', 'info');
+}
+
+/* ==========================================
+   STATUS
+========================================== */
+
+function showStatus(message, type){
+    const status = document.getElementById('status');
+    status.textContent = message;
+    status.className = `status ${type}`;
+    status.style.display = 'block';
+
+    console.log(`[${type.toUpperCase()}] ${message}`);
+
+    // Auto-hide info messages
+    if(type === 'info'){
+        setTimeout(() => {
+            status.style.display = 'none';
+        }, 3000);
+    }
+}
+
+/* ==========================================
+   DEVICE INFO
+========================================== */
+
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('User Agent:', navigator.userAgent);
+    console.log('Platform:', navigator.platform);
+    console.log('Has MediaDevices:', !!navigator.mediaDevices);
+    console.log('Has getUserMedia:', !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia));
+
+    showStatus('Ready! Try the buttons above.', 'info');
+});
+
+// Clean up on page unload
+window.addEventListener('beforeunload', closeVideoCamera);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>COVAI SCRAP HUB - Portal Selection</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+background:linear-gradient(135deg,#10b981 0%,#059669 100%);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+width:100%;
+}
+
+h1{
+text-align:center;
+color:#fff;
+font-size:32px;
+margin-bottom:40px;
+}
+
+.portals{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.portal-card{
+background:#fff;
+border-radius:20px;
+padding:30px;
+text-align:center;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 4px 20px rgba(0,0,0,0.1);
+text-decoration:none;
+color:#1a1a1a;
+}
+
+.portal-card:hover{
+transform:translateY(-5px);
+box-shadow:0 8px 30px rgba(0,0,0,0.2);
+}
+
+.portal-icon{
+font-size:64px;
+margin-bottom:16px;
+}
+
+.portal-title{
+font-size:20px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.portal-desc{
+font-size:14px;
+color:#6b7280;
+}
+
+.footer{
+text-align:center;
+color:#fff;
+margin-top:40px;
+font-size:14px;
+opacity:0.9;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>♻️ COVAI SCRAP HUB</h1>
+
+<div class="portals">
+
+<a href="customer.html" class="portal-card">
+<div class="portal-icon">👤</div>
+<div class="portal-title">Customer Portal</div>
+<div class="portal-desc">Book pickup & track live</div>
+</a>
+
+<a href="admin-dashboard.html" class="portal-card">
+<div class="portal-icon">👨‍💼</div>
+<div class="portal-title">Admin Dashboard</div>
+<div class="portal-desc">Manage pickups & assign partners</div>
+</a>
+
+<a href="patner.html" class="portal-card">
+<div class="portal-icon">🚚</div>
+<div class="portal-title">Partner Panel</div>
+<div class="portal-desc">View assigned pickups & share location</div>
+</a>
+
+<a href="track.html" class="portal-card">
+<div class="portal-icon">📍</div>
+<div class="portal-title">Live Tracking</div>
+<div class="portal-desc">Track pickup with phone/ID</div>
+</a>
+
+<a href="my-requests.html" class="portal-card">
+<div class="portal-icon">📦</div>
+<div class="portal-title">My Requests</div>
+<div class="portal-desc">View all your pickups</div>
+</a>
+
+<a href="test-tracking.html" class="portal-card">
+<div class="portal-icon">🧪</div>
+<div class="portal-title">Test Tracking</div>
+<div class="portal-desc">Quick test with all pickups</div>
+</a>
+
+</div>
+
+<div class="footer">
+<strong>COVAI SCRAP HUB</strong> • Live GPS Tracking System
+<br>
+Zepto-style real-time tracking with Firebase
+</div>
+
+</div>
+
+</body>
+</html>

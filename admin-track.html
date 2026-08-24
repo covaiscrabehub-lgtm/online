@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Tracking | COVAI SCRAP HUB</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --green:#10b981;
+    --dark-green:#059669;
+    --blue:#3b82f6;
+    --orange:#f59e0b;
+    --red:#ef4444;
+    --bg:#f9fafb;
+    --text:#111827;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+}
+
+.topbar{
+    background:#fff;
+    padding:10px 12px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 1px 2px rgba(0,0,0,.04);
+    border-bottom:1px solid var(--border);
+}
+
+.topbar-inner{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    max-width:900px;
+    margin:0 auto;
+}
+
+.back-btn{
+    width:30px;
+    height:30px;
+    border:0;
+    background:var(--bg);
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.page-title{
+    font-size:14px;
+    font-weight:800;
+    flex:1;
+}
+
+.container{
+    max-width:900px;
+    margin:0 auto;
+    padding:10px;
+}
+
+.orders-list{
+    margin-bottom:20px;
+}
+
+.order-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.order-card:hover{
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.order-card.selected{
+    border-color:var(--green);
+    box-shadow:0 0 0 2px rgba(16,185,129,.2);
+}
+
+.order-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+.order-id-text{
+    font-size:13px;
+    font-weight:800;
+}
+
+.order-status-badge{
+    padding:4px 8px;
+    border-radius:6px;
+    font-size:10px;
+    font-weight:700;
+    background:var(--bg);
+}
+
+.order-details{
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.tracking-panel{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px;
+    display:none;
+}
+
+.tracking-panel.active{
+    display:block;
+}
+
+.section-title{
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:10px;
+    text-transform:uppercase;
+    color:var(--muted);
+}
+
+.info-box{
+    background:var(--bg);
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:12px;
+    font-size:12px;
+    line-height:1.6;
+}
+
+.info-row{
+    display:flex;
+    margin-bottom:4px;
+}
+
+.info-label{
+    font-weight:700;
+    min-width:100px;
+}
+
+.info-value{
+    color:var(--muted);
+}
+
+.partner-section{
+    margin-bottom:16px;
+}
+
+.input-group{
+    margin-bottom:10px;
+}
+
+.input-label{
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:4px;
+    display:block;
+}
+
+.input-field{
+    width:100%;
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    font-size:12px;
+}
+
+.location-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 80px;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.btn-gps{
+    padding:8px;
+    border:1px solid var(--border);
+    background:#fff;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+}
+
+.btn-update-location{
+    width:100%;
+    padding:10px;
+    border:0;
+    background:var(--blue);
+    color:#fff;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.live-update-box{
+    background:#fffbeb;
+    border:1px solid #fde68a;
+    border-radius:6px;
+    padding:8px 10px;
+    margin-bottom:10px;
+    font-size:11px;
+    color:#92400e;
+    display:none;
+}
+
+.live-update-box.active{
+    display:block;
+}
+
+.status-actions{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:8px;
+    margin-bottom:12px;
+}
+
+.btn-status{
+    padding:10px 8px;
+    border:1px solid var(--border);
+    background:#fff;
+    border-radius:6px;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-status:hover{
+    background:var(--bg);
+}
+
+.btn-status.active{
+    background:var(--green);
+    color:#fff;
+    border-color:var(--green);
+}
+
+.btn-status.btn-reached{
+    background:var(--orange);
+    color:#fff;
+    border-color:var(--orange);
+}
+
+.btn-status.btn-completed{
+    background:var(--green);
+    color:#fff;
+    border-color:var(--green);
+}
+
+.distance-display{
+    background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+    border:1px solid #bbf7d0;
+    border-radius:8px;
+    padding:12px;
+    text-align:center;
+    margin-bottom:12px;
+}
+
+.distance-value-big{
+    font-size:24px;
+    font-weight:900;
+    color:var(--green);
+}
+
+.distance-label-small{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.empty-icon{
+    font-size:48px;
+    margin-bottom:10px;
+    opacity:.5;
+}
+
+.empty-text{
+    font-size:13px;
+    color:var(--muted);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <button class="back-btn" onclick="window.location.href='admin-panel.html'">
+            ←
+        </button>
+        <div class="page-title">Track Orders</div>
+    </div>
+</div>
+
+
+<div class="container">
+
+    <div class="orders-list" id="ordersList">
+        <!-- Orders loaded here -->
+    </div>
+
+
+    <div class="tracking-panel" id="trackingPanel">
+
+        <div class="section-title">Customer Location</div>
+        <div class="info-box" id="customerLocationBox">
+            <div class="info-row">
+                <span class="info-label">Address:</span>
+                <span class="info-value" id="customerAddress">Not set</span>
+            </div>
+        </div>
+
+
+        <div class="partner-section">
+            <div class="section-title">Partner Information</div>
+
+            <div class="live-update-box" id="liveUpdateBox">
+                ⚡ Live tracking enabled - Location updating every 30 seconds
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Partner Name</label>
+                <input type="text" class="input-field" id="partnerName" placeholder="Enter partner name">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Partner Phone</label>
+                <input type="tel" class="input-field" id="partnerPhone" placeholder="+91 XXXXX XXXXX">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Partner Location (GPS)</label>
+                <div class="location-grid">
+                    <input type="text" class="input-field" id="partnerLat" placeholder="Latitude">
+                    <input type="text" class="input-field" id="partnerLng" placeholder="Longitude">
+                    <button class="btn-gps" onclick="getAdminGPS()">📍 GPS</button>
+                </div>
+            </div>
+
+            <button class="btn-update-location" onclick="updatePartnerLocation()">
+                📍 Share Live Location to Customer
+            </button>
+
+            <button class="btn-update-location" onclick="toggleLiveTracking()" id="liveTrackBtn" style="background:var(--green);margin-top:8px;">
+                ▶ Start Live Tracking
+            </button>
+
+            <button class="btn-update-location" onclick="setCustomerLocation()" style="background:#10b981;margin-top:8px;">
+                📍 Set Customer Location
+            </button>
+        </div>
+
+
+        <div class="section-title">Distance & ETA</div>
+        <div class="distance-display">
+            <div class="distance-value-big" id="distanceDisplay">-- km</div>
+            <div class="distance-label-small">Distance to customer</div>
+        </div>
+
+
+        <div class="section-title">Order Status (7 Steps)</div>
+        <div class="info-box" style="font-size:10px;padding:6px 8px;margin-bottom:8px;">
+            <strong>Step 6 "Reached":</strong> Shows arrival time to customer
+        </div>
+        <div class="status-actions">
+            <button class="btn-status" onclick="updateStatus('placed')">📝 Placed</button>
+            <button class="btn-status" onclick="updateStatus('confirmed')">✅ Confirmed</button>
+            <button class="btn-status" onclick="updateStatus('assigned')">👤 Assigned</button>
+            <button class="btn-status" onclick="updateStatus('accepted')">📞 Accepted</button>
+            <button class="btn-status" onclick="updateStatus('on-the-way')">🚚 On the Way</button>
+            <button class="btn-status btn-reached" onclick="updateStatus('reached')">📍 Reached</button>
+            <button class="btn-status btn-completed" onclick="updateStatus('completed')">🎉 Completed</button>
+        </div>
+
+    </div>
+
+
+    <div class="empty" id="emptyState">
+        <div class="empty-icon">📦</div>
+        <div class="empty-text">No active orders</div>
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+    authDomain: "covai-scrap-hub.firebaseapp.com",
+    databaseURL: "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+    projectId: "covai-scrap-hub",
+    storageBucket: "covai-scrap-hub.firebasestorage.app",
+    messagingSenderId: "979133721874",
+    appId: "1:979133721874:web:c5829bb8dbf5270c0917cb",
+    measurementId: "G-P3PTSBHWMF"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+let selectedOrderId = null;
+let selectedOrderData = null;
+let liveTrackingInterval = null;
+let isLiveTracking = false;
+
+
+function loadOrders(){
+
+    const ordersRef = ref(database, 'pickupRequests');
+
+    onValue(ordersRef, (snapshot) => {
+
+        const ordersList = document.getElementById('ordersList');
+        const emptyState = document.getElementById('emptyState');
+        const trackingPanel = document.getElementById('trackingPanel');
+
+        if(!snapshot.exists()){
+            ordersList.innerHTML = '';
+            emptyState.style.display = 'block';
+            trackingPanel.classList.remove('active');
+            return;
+        }
+
+        const orders = [];
+        snapshot.forEach((child) => {
+            const order = child.val();
+            order.id = child.key;
+
+            // Only show non-cancelled orders
+            if(order.status !== 'Cancelled'){
+                orders.push(order);
+            }
+        });
+
+        if(orders.length === 0){
+            ordersList.innerHTML = '';
+            emptyState.style.display = 'block';
+            trackingPanel.classList.remove('active');
+            return;
+        }
+
+        emptyState.style.display = 'none';
+
+        let html = '';
+        orders.forEach(order => {
+            const selected = selectedOrderId === order.id ? 'selected' : '';
+
+            html += `
+                <div class="order-card ${selected}" onclick="selectOrder('${order.id}')">
+                    <div class="order-header">
+                        <div class="order-id-text">#${order.id.toUpperCase().slice(-7)}</div>
+                        <div class="order-status-badge">${order.status || 'New'}</div>
+                    </div>
+                    <div class="order-details">
+                        <div><strong>Customer:</strong> ${order.customerName || 'N/A'}</div>
+                        <div><strong>Location:</strong> ${order.customerLocation && order.customerLocation.address ? '✓ Set' : '✗ Not set'}</div>
+                        <div><strong>Partner:</strong> ${order.partnerInfo && order.partnerInfo.name ? order.partnerInfo.name : 'Not assigned'}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        ordersList.innerHTML = html;
+
+        // If an order was selected, refresh its data
+        if(selectedOrderId){
+            const order = orders.find(o => o.id === selectedOrderId);
+            if(order){
+                loadOrderTracking(order);
+            }
+        }
+
+    });
+
+}
+
+
+window.selectOrder = function(orderId){
+
+    // Stop live tracking when switching orders
+    if(isLiveTracking){
+        clearInterval(liveTrackingInterval);
+        isLiveTracking = false;
+        const btn = document.getElementById('liveTrackBtn');
+        const liveBox = document.getElementById('liveUpdateBox');
+        btn.textContent = '▶ Start Live Tracking';
+        btn.style.background = 'var(--green)';
+        liveBox.classList.remove('active');
+    }
+
+    selectedOrderId = orderId;
+
+    const orderRef = ref(database, `pickupRequests/${orderId}`);
+
+    onValue(orderRef, (snapshot) => {
+        if(snapshot.exists()){
+            const order = snapshot.val();
+            order.id = orderId;
+            selectedOrderData = order;
+            loadOrderTracking(order);
+        }
+    }, { onlyOnce: true });
+};
+
+
+function loadOrderTracking(order){
+
+    const trackingPanel = document.getElementById('trackingPanel');
+    trackingPanel.classList.add('active');
+
+    // Customer location
+    const customerAddress = document.getElementById('customerAddress');
+    if(order.customerLocation && order.customerLocation.address){
+        customerAddress.textContent = order.customerLocation.address;
+    } else {
+        customerAddress.textContent = 'Not set (customer needs to confirm)';
+    }
+
+    // Partner info
+    if(order.partnerInfo){
+        document.getElementById('partnerName').value = order.partnerInfo.name || '';
+        document.getElementById('partnerPhone').value = order.partnerInfo.phone || '';
+    } else {
+        document.getElementById('partnerName').value = '';
+        document.getElementById('partnerPhone').value = '';
+    }
+
+    // Partner location
+    if(order.partnerLocation){
+        document.getElementById('partnerLat').value = order.partnerLocation.lat || '';
+        document.getElementById('partnerLng').value = order.partnerLocation.lng || '';
+    } else {
+        document.getElementById('partnerLat').value = '';
+        document.getElementById('partnerLng').value = '';
+    }
+
+    // Distance
+    if(order.distance){
+        document.getElementById('distanceDisplay').textContent = parseFloat(order.distance).toFixed(1) + ' km';
+    } else {
+        document.getElementById('distanceDisplay').textContent = '-- km';
+    }
+
+}
+
+
+window.getAdminGPS = function(){
+    if(!navigator.geolocation){
+        alert('GPS not supported');
+        return;
+    }
+
+    const btn = document.querySelector('.btn-gps');
+    const originalText = btn.textContent;
+    btn.textContent = '⏳';
+    btn.disabled = true;
+
+    navigator.geolocation.getCurrentPosition((position) => {
+        document.getElementById('partnerLat').value = position.coords.latitude.toFixed(6);
+        document.getElementById('partnerLng').value = position.coords.longitude.toFixed(6);
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }, (error) => {
+        alert('GPS error: ' + error.message);
+        btn.textContent = originalText;
+        btn.disabled = false;
+    });
+};
+
+
+// Haversine formula to calculate distance between two GPS coordinates
+function calculateDistance(lat1, lon1, lat2, lon2){
+    const R = 6371; // Earth radius in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+}
+
+
+window.updatePartnerLocation = async function(){
+
+    if(!selectedOrderId){
+        alert('Select an order first');
+        return;
+    }
+
+    const name = document.getElementById('partnerName').value.trim();
+    const phone = document.getElementById('partnerPhone').value.trim();
+    const lat = document.getElementById('partnerLat').value.trim();
+    const lng = document.getElementById('partnerLng').value.trim();
+
+    if(!name || !phone){
+        alert('Enter partner name and phone');
+        return;
+    }
+
+    if(!lat || !lng){
+        alert('Enter partner location');
+        return;
+    }
+
+    const orderRef = ref(database, `pickupRequests/${selectedOrderId}`);
+
+    const updates = {
+        'partnerInfo/name': name,
+        'partnerInfo/phone': phone,
+        'partnerLocation/lat': parseFloat(lat),
+        'partnerLocation/lng': parseFloat(lng),
+        'partnerLocation/timestamp': new Date().toISOString(),
+        'partnerLocation/moving': true
+    };
+
+    // Calculate distance if customer has GPS coords stored
+    // For now, use approximate coords or geocode the address
+    // Simple demo: assume customer is at a fixed point (Coimbatore center)
+    if(selectedOrderData && selectedOrderData.customerLocation){
+        // In production, geocode customerLocation.address to get coords
+        // For demo, use Coimbatore coords: 11.0168, 76.9558
+        const customerLat = 11.0168;
+        const customerLng = 76.9558;
+
+        const distance = calculateDistance(
+            parseFloat(lat),
+            parseFloat(lng),
+            customerLat,
+            customerLng
+        );
+
+        updates['distance'] = distance.toFixed(2);
+
+        document.getElementById('distanceDisplay').textContent = distance.toFixed(1) + ' km';
+    }
+
+    try {
+        await update(orderRef, updates);
+        alert('✓ Location shared to customer');
+    } catch(err){
+        alert('Update failed: ' + err.message);
+    }
+};
+
+
+window.toggleLiveTracking = function(){
+
+    if(!selectedOrderId){
+        alert('Select an order first');
+        return;
+    }
+
+    const btn = document.getElementById('liveTrackBtn');
+    const liveBox = document.getElementById('liveUpdateBox');
+
+    if(isLiveTracking){
+        // Stop tracking
+        clearInterval(liveTrackingInterval);
+        isLiveTracking = false;
+        btn.textContent = '▶ Start Live Tracking';
+        btn.style.background = 'var(--green)';
+        liveBox.classList.remove('active');
+    } else {
+        // Start tracking
+        isLiveTracking = true;
+        btn.textContent = '⏸ Stop Live Tracking';
+        btn.style.background = 'var(--red)';
+        liveBox.classList.add('active');
+
+        // Update immediately
+        updatePartnerLocation();
+
+        // Update every 30 seconds
+        liveTrackingInterval = setInterval(() => {
+            getAdminGPS();
+            setTimeout(updatePartnerLocation, 1000);
+        }, 30000);
+    }
+};
+
+
+window.updateStatus = async function(status){
+
+    if(!selectedOrderId){
+        alert('Select an order first');
+        return;
+    }
+
+    const orderRef = ref(database, `pickupRequests/${selectedOrderId}`);
+
+    const statusMap = {
+        'placed': 'New',
+        'confirmed': 'Processing',
+        'assigned': 'Assigned',
+        'accepted': 'Accepted',
+        'on-the-way': 'On the Way',
+        'reached': 'Reached',
+        'completed': 'Completed'
+    };
+
+    const timestamp = new Date().toISOString();
+
+    const updates = {
+        status: statusMap[status],
+        [`${status}At`]: timestamp
+    };
+
+    // If reached, mark distance as 0
+    if(status === 'reached'){
+        updates['distance'] = '0';
+
+        // Stop live tracking
+        if(isLiveTracking){
+            clearInterval(liveTrackingInterval);
+            isLiveTracking = false;
+            const btn = document.getElementById('liveTrackBtn');
+            const liveBox = document.getElementById('liveUpdateBox');
+            btn.textContent = '▶ Start Live Tracking';
+            btn.style.background = 'var(--green)';
+            liveBox.classList.remove('active');
+        }
+    }
+
+    try {
+        await update(orderRef, updates);
+        alert('✓ Status: ' + statusMap[status]);
+    } catch(err){
+        alert('Update failed: ' + err.message);
+    }
+};
+
+
+window.setCustomerLocation = function(){
+
+    if(!selectedOrderId){
+        alert('Select an order first');
+        return;
+    }
+
+    window.open(
+        'set-location-admin.html?id=' + encodeURIComponent(selectedOrderId),
+        '_blank'
+    );
+
+};
+
+
+loadOrders();
+
+</script>
+
+</body>
+</html>

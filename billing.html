@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>COVAI SCRAP HUB - Professional Billing</title>
+
+<!-- PDF LIBRARIES -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef3ef;
+    color:#17231b;
+}
+
+/* ================= TOP HEADER ================= */
+
+.top-header{
+    background:#087536;
+    color:#fff;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.top-brand{
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:.7px;
+}
+
+.top-brand span{
+    color:#baf5ce;
+}
+
+.top-sub{
+    font-size:12px;
+    opacity:.92;
+}
+
+/* ================= FORM CONTAINER ================= */
+
+.container{
+    width:100%;
+    max-width:1000px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow:0 5px 25px rgba(0,0,0,.07);
+}
+
+.section-title{
+    color:#087536;
+    font-size:19px;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.field label{
+    font-size:12px;
+    color:#526058;
+    font-weight:700;
+}
+
+.field input,
+.field textarea,
+.field select{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #d8e2dc;
+    border-radius:8px;
+    outline:none;
+    background:#fff;
+    font-size:13px;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+    border-color:#149447;
+}
+
+textarea{
+    min-height:70px;
+    resize:vertical;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+/* ================= ITEMS ================= */
+
+.items-head{
+    display:grid;
+    grid-template-columns:2fr 1.3fr 1fr 1fr 42px;
+    gap:8px;
+    padding:10px;
+    background:#eaf8ef;
+    border-radius:8px;
+    color:#087536;
+    font-size:11px;
+    font-weight:800;
+}
+
+.item{
+    display:grid;
+    grid-template-columns:2fr 1.3fr 1fr 1fr 42px;
+    gap:8px;
+    margin-top:8px;
+    align-items:center;
+}
+
+.item input,
+.item select{
+    width:100%;
+    padding:10px;
+    border:1px solid #dce5df;
+    border-radius:7px;
+    outline:none;
+    font-size:12px;
+}
+
+.weight-box{
+    display:grid;
+    grid-template-columns:1fr 72px;
+    gap:5px;
+}
+
+.amount{
+    padding:10px;
+    background:#f3f7f4;
+    border-radius:7px;
+    font-weight:800;
+    font-size:12px;
+    text-align:right;
+}
+
+.delete{
+    height:38px;
+    border:0;
+    background:#ffeaea;
+    color:#d71920;
+    border-radius:7px;
+    font-size:19px;
+    cursor:pointer;
+}
+
+.add{
+    margin-top:14px;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    background:#eaf8ef;
+    color:#087536;
+    font-weight:800;
+    cursor:pointer;
+}
+
+/* ================= TOTAL ================= */
+
+.total-box{
+    width:330px;
+    max-width:100%;
+    margin-left:auto;
+    margin-top:20px;
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:9px 0;
+    border-bottom:1px dashed #d9dfdb;
+    font-size:13px;
+}
+
+.total-row input{
+    width:110px;
+    padding:7px;
+    border:1px solid #ddd;
+    border-radius:6px;
+}
+
+.total-final{
+    border:0;
+    font-size:22px;
+    color:#087536;
+    font-weight:900;
+}
+
+/* ================= BUTTONS ================= */
+
+.actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:800;
+    font-size:13px;
+}
+
+.btn-green{
+    background:#149447;
+    color:#fff;
+}
+
+.btn-dark{
+    background:#17231b;
+    color:#fff;
+}
+
+.btn-gray{
+    background:#e7ede9;
+    color:#17231b;
+}
+
+.btn:hover{
+    opacity:.9;
+}
+
+/* =========================================================
+   BILL SCREEN
+========================================================= */
+
+#billScreen{
+    display:none;
+    padding:20px;
+}
+
+/* =========================================================
+   A4 BILL
+========================================================= */
+
+.invoice{
+    width:210mm;
+    height:297mm;
+    min-height:297mm;
+    background:#fff;
+    margin:0 auto;
+    padding:11mm;
+    position:relative;
+    box-shadow:0 4px 25px rgba(0,0,0,.12);
+    overflow:hidden;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.invoice-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #149447;
+    padding-bottom:9px;
+}
+
+.brand-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #149447;
+    padding:2px;
+    background:#fff;
+}
+
+.brand-name{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:25px;
+    font-weight:900;
+    color:#087536;
+    letter-spacing:.8px;
+}
+
+.brand-tagline{
+    margin-top:4px;
+    font-size:9px;
+    color:#68736c;
+    font-style:italic;
+}
+
+/* TOP RIGHT ADDRESS */
+
+.company-address{
+    text-align:right;
+    max-width:235px;
+    font-size:8.5px;
+    line-height:1.45;
+    color:#59645e;
+}
+
+.company-address strong{
+    display:block;
+    color:#087536;
+    font-size:10px;
+    margin-bottom:2px;
+}
+
+.company-address .phone{
+    color:#087536;
+    font-weight:700;
+    margin-top:2px;
+}
+
+/* =========================================================
+   BILL TITLE
+========================================================= */
+
+.bill-heading{
+    margin-top:11px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+}
+
+.bill-heading h2{
+    font-size:22px;
+    color:#222;
+    letter-spacing:1px;
+}
+
+.bill-meta{
+    text-align:right;
+    font-size:9px;
+    line-height:1.7;
+}
+
+.bill-meta strong{
+    color:#087536;
+}
+
+/* =========================================================
+   CUSTOMER DETAILS - PROPER ORDER
+========================================================= */
+
+.customer-section{
+    margin-top:14px;
+}
+
+.customer-title{
+    background:#087536;
+    color:#fff;
+    padding:7px 9px;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.5px;
+    border-radius:5px 5px 0 0;
+}
+
+.customer-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border:1px solid #dfe8e2;
+    border-top:0;
+    border-radius:0 0 6px 6px;
+}
+
+.customer-detail{
+    padding:8px 10px;
+    border-bottom:1px solid #e5eae6;
+    font-size:9px;
+    line-height:1.55;
+}
+
+.customer-detail:nth-child(odd){
+    border-right:1px solid #e5eae6;
+}
+
+.customer-detail.full{
+    grid-column:1/-1;
+}
+
+.customer-detail label{
+    display:block;
+    font-size:7.5px;
+    color:#78837c;
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:2px;
+}
+
+.customer-detail strong{
+    font-size:9.5px;
+    color:#17231b;
+    word-break:break-word;
+}
+
+/* =========================================================
+   ITEMS TABLE
+========================================================= */
+
+.invoice-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:14px;
+}
+
+.invoice-table th{
+    background:#087536;
+    color:#fff;
+    font-size:9px;
+    padding:8px 6px;
+    text-align:left;
+}
+
+.invoice-table td{
+    padding:7px 6px;
+    border-bottom:1px solid #e0e5e1;
+    font-size:9px;
+}
+
+.invoice-table tr:nth-child(even){
+    background:#f7faf8;
+}
+
+.right{
+    text-align:right!important;
+}
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.bill-total{
+    width:280px;
+    margin-left:auto;
+    margin-top:13px;
+}
+
+.bill-total-row{
+    display:flex;
+    justify-content:space-between;
+    padding:6px;
+    font-size:9px;
+}
+
+.bill-total-row.grand{
+    border-top:2px solid #149447;
+    margin-top:4px;
+    padding-top:8px;
+    font-size:15px;
+    font-weight:900;
+    color:#087536;
+}
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.payment-box{
+    margin-top:12px;
+    padding:9px;
+    background:#f1f8f3;
+    border-left:3px solid #149447;
+    font-size:9px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.bill-thank{
+    text-align:center;
+    margin-top:20px;
+    font-size:11px;
+    font-weight:800;
+    color:#087536;
+}
+
+.bill-footer{
+    position:absolute;
+    left:11mm;
+    right:11mm;
+    bottom:8mm;
+    border-top:1px solid #dce4df;
+    padding-top:7px;
+    text-align:center;
+    font-size:7.5px;
+    color:#7b847e;
+}
+
+/* =========================================================
+   BILL BUTTONS
+========================================================= */
+
+.bill-buttons{
+    max-width:210mm;
+    margin:15px auto;
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+    .top-header{
+        padding:12px;
+    }
+
+    .top-brand{
+        font-size:17px;
+    }
+
+    .top-sub{
+        font-size:9px;
+    }
+
+    .container{
+        margin:15px auto;
+        padding:0 10px;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .items-head{
+        display:none;
+    }
+
+    .item{
+        grid-template-columns:1fr 1fr;
+        background:#f7faf8;
+        padding:10px;
+        border-radius:8px;
+    }
+
+    .item-name{
+        grid-column:1/-1;
+    }
+
+    .weight-box{
+        grid-column:1/-1;
+    }
+
+    .amount{
+        text-align:left;
+    }
+
+    #billScreen{
+        padding:5px;
+        overflow-x:auto;
+    }
+
+    .invoice{
+        width:210mm;
+        height:297mm;
+        min-height:297mm;
+        margin:0;
+        box-shadow:none;
+    }
+
+    .brand-name{
+        font-size:22px;
+    }
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    body *{
+        visibility:hidden;
+    }
+
+    #billScreen,
+    #billScreen *{
+        visibility:visible;
+    }
+
+    #billScreen{
+        display:block!important;
+        position:absolute;
+        left:0;
+        top:0;
+        padding:0;
+        width:100%;
+    }
+
+    .invoice{
+        width:210mm;
+        height:297mm;
+        min-height:297mm;
+        margin:0;
+        box-shadow:none;
+    }
+
+    .bill-buttons{
+        display:none!important;
+    }
+
+    @page{
+        size:A4;
+        margin:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     TOP HEADER
+===================================================== -->
+
+<div class="top-header">
+
+    <div>
+        <div class="top-brand">
+            COVAI <span>SCRAP HUB</span>
+        </div>
+
+        <div class="top-sub">
+            Professional Scrap Billing Software
+        </div>
+    </div>
+
+    <div class="top-sub">
+        Purchase Billing
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     BILLING FORM
+===================================================== -->
+
+<div class="container" id="billingContainer">
+
+    <!-- CUSTOMER -->
+
+    <div class="card">
+
+        <div class="section-title">
+            🧾 Customer Details
+        </div>
+
+        <div class="form-grid">
+
+            <div class="field">
+                <label>Customer Name *</label>
+
+                <input
+                    id="customerName"
+                    type="text"
+                    placeholder="Enter customer name">
+            </div>
+
+
+            <div class="field">
+                <label>Phone Number *</label>
+
+                <input
+                    id="customerPhone"
+                    type="tel"
+                    placeholder="Enter phone number">
+            </div>
+
+
+            <div class="field full">
+                <label>Customer Address</label>
+
+                <textarea
+                    id="customerAddress"
+                    placeholder="Enter complete customer address"></textarea>
+            </div>
+
+
+            <div class="field">
+                <label>Bill Number</label>
+
+                <input
+                    id="billNumber"
+                    readonly>
+            </div>
+
+
+            <div class="field">
+                <label>Bill Date</label>
+
+                <input
+                    id="billDate"
+                    type="date">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         SCRAP ITEMS
+    ================================================== -->
+
+    <div class="card">
+
+        <div class="section-title">
+            ♻️ Scrap Items
+        </div>
+
+
+        <div class="items-head">
+
+            <div>SCRAP ITEM</div>
+            <div>WEIGHT</div>
+            <div>RATE / KG</div>
+            <div>AMOUNT</div>
+            <div></div>
+
+        </div>
+
+
+        <div id="items"></div>
+
+
+        <button
+            class="add"
+            onclick="addItem()">
+
+            + Add Scrap Item
+
+        </button>
+
+
+        <div class="total-box">
+
+            <div class="total-row">
+
+                <span>Subtotal</span>
+
+                <strong id="subtotal">
+                    ₹0.00
+                </strong>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span>Discount</span>
+
+                <input
+                    id="discount"
+                    type="number"
+                    min="0"
+                    value="0"
+                    oninput="calculate()">
+
+            </div>
+
+
+            <div class="total-row total-final">
+
+                <span>Total</span>
+
+                <span id="total">
+                    ₹0.00
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         PAYMENT
+    ================================================== -->
+
+    <div class="card">
+
+        <div class="section-title">
+            💳 Payment Details
+        </div>
+
+        <div class="form-grid">
+
+            <div class="field">
+
+                <label>Payment Method</label>
+
+                <select id="payment">
+
+                    <option>Cash</option>
+                    <option>UPI</option>
+                    <option>Bank Transfer</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="actions">
+
+            <button
+                class="btn btn-gray"
+                onclick="clearAll()">
+                Clear
+            </button>
+
+
+            <button
+                class="btn btn-green"
+                onclick="generateBill()">
+                🧾 Generate Professional Bill
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     BILL
+===================================================== -->
+
+<div id="billScreen">
+
+    <div class="invoice" id="invoice">
+
+        <!-- HEADER -->
+
+        <div class="invoice-header">
+
+            <div class="brand-area">
+
+                <img
+                    src="logo.jpeg"
+                    class="logo"
+                    alt="COVAI SCRAP HUB Logo">
+
+                <div>
+
+                    <div class="brand-name">
+                        COVAI SCRAP HUB
+                    </div>
+
+                    <div class="brand-tagline">
+                        Your Scrap, Our Responsibility!
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SMALL TOP RIGHT ADDRESS -->
+
+            <div class="company-address">
+
+                <strong>
+                    COVAI SCRAP HUB
+                </strong>
+
+                17L297, Anna Nagar,<br>
+                Thachnavili, Covai - 628656
+
+                <div class="phone">
+                    📞 +91 95142 52104
+                </div>
+
+                <div>
+                    ✉ covaiscrabehub@gmail.com
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BILL TITLE -->
+
+        <div class="bill-heading">
+
+            <h2>
+                PURCHASE BILL
+            </h2>
+
+
+            <div class="bill-meta">
+
+                Bill No:
+                <strong id="printBillNo"></strong>
+
+                <br>
+
+                Date:
+                <strong id="printDate"></strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CUSTOMER DETAILS IN PROPER ORDER
+        ================================================== -->
+
+        <div class="customer-section">
+
+            <div class="customer-title">
+                CUSTOMER DETAILS
+            </div>
+
+
+            <div class="customer-grid">
+
+                <div class="customer-detail">
+
+                    <label>
+                        Customer Name
+                    </label>
+
+                    <strong id="printCustomer">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-detail">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <strong id="printPhone">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-detail full">
+
+                    <label>
+                        Customer Address
+                    </label>
+
+                    <strong id="printAddress">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-detail">
+
+                    <label>
+                        Bill Number
+                    </label>
+
+                    <strong id="printBillNoCustomer">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-detail">
+
+                    <label>
+                        Bill Date
+                    </label>
+
+                    <strong id="printDateCustomer">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-detail full">
+
+                    <label>
+                        Payment Method
+                    </label>
+
+                    <strong id="printPayment">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ITEMS TABLE -->
+
+        <table class="invoice-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Scrap Item</th>
+
+                    <th>Weight</th>
+
+                    <th class="right">
+                        Rate / KG
+                    </th>
+
+                    <th class="right">
+                        Amount
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="printItems"></tbody>
+
+        </table>
+
+
+        <!-- TOTAL -->
+
+        <div class="bill-total">
+
+            <div class="bill-total-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong id="printSubtotal">
+                    ₹0.00
+                </strong>
+
+            </div>
+
+
+            <div class="bill-total-row">
+
+                <span>
+                    Discount
+                </span>
+
+                <strong id="printDiscount">
+                    ₹0.00
+                </strong>
+
+            </div>
+
+
+            <div class="bill-total-row grand">
+
+                <span>
+                    GRAND TOTAL
+                </span>
+
+                <span id="printTotal">
+                    ₹0.00
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAYMENT -->
+
+        <div class="payment-box">
+
+            Payment received through
+            <strong id="printPayment2">
+                Cash
+            </strong>.
+
+            Payment status:
+            <strong style="color:#149447;">
+                PAID
+            </strong>
+
+        </div>
+
+
+        <div class="bill-thank">
+
+            Thank You for Choosing COVAI SCRAP HUB
+
+        </div>
+
+
+        <div class="bill-footer">
+
+            COVAI SCRAP HUB • Scrap Collection & Recycling
+
+            <br>
+
+            17L297, Anna Nagar, Thachnavili, Covai - 628656
+            • +91 95142 52104 • covaiscrabehub@gmail.com
+
+            <br>
+
+            Computer Generated Purchase Bill
+
+        </div>
+
+    </div>
+
+
+    <!-- BILL ACTIONS -->
+
+    <div class="bill-buttons">
+
+        <button
+            class="btn btn-gray"
+            onclick="backToBilling()">
+            ← Back
+        </button>
+
+
+        <button
+            class="btn btn-dark"
+            id="downloadBtn"
+            onclick="downloadPDF()">
+            📥 Download Bill PDF
+        </button>
+
+
+        <button
+            class="btn btn-green"
+            id="shareBtn"
+            onclick="sharePDF()">
+            📲 Share Bill PDF
+        </button>
+
+
+        <button
+            class="btn btn-dark"
+            onclick="window.print()">
+            🖨 Print
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DATE
+===================================================== */
+
+document.getElementById("billDate").value =
+    new Date().toISOString().split("T")[0];
+
+
+/* =====================================================
+   BILL NUMBER
+===================================================== */
+
+let billNumber =
+    Number(
+        localStorage.getItem("covai_bill_number") || 1000
+    );
+
+billNumber++;
+
+localStorage.setItem(
+    "covai_bill_number",
+    billNumber
+);
+
+document.getElementById("billNumber").value =
+    "CSH-" + billNumber;
+
+
+/* =====================================================
+   ADD FIRST ITEM
+===================================================== */
+
+addItem();
+
+
+/* =====================================================
+   ADD ITEM
+===================================================== */
+
+function addItem(){
+
+    const box =
+        document.getElementById("items");
+
+    const row =
+        document.createElement("div");
+
+    row.className = "item";
+
+    row.innerHTML = `
+
+        <input
+            class="item-name"
+            type="text"
+            placeholder="e.g. Iron, Paper, Copper">
+
+
+        <div class="weight-box">
+
+            <input
+                class="item-weight"
+                type="number"
+                min="0"
+                step="0.001"
+                placeholder="Weight">
+
+
+            <select
+                class="item-unit"
+                onchange="calculate()">
+
+                <option value="kg">
+                    KG
+                </option>
+
+                <option value="gram">
+                    Gram
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <input
+            class="item-rate"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="₹ / KG">
+
+
+        <div class="amount">
+            ₹0.00
+        </div>
+
+
+        <button
+            class="delete"
+            type="button"
+            onclick="removeItem(this)">
+            ×
+        </button>
+
+    `;
+
+    box.appendChild(row);
+
+
+    row.querySelector(".item-weight")
+       .addEventListener(
+           "input",
+           calculate
+       );
+
+
+    row.querySelector(".item-rate")
+       .addEventListener(
+           "input",
+           calculate
+       );
+}
+
+
+/* =====================================================
+   REMOVE ITEM
+===================================================== */
+
+function removeItem(button){
+
+    const rows =
+        document.querySelectorAll(".item");
+
+    if(rows.length <= 1){
+
+        alert(
+            "At least one scrap item is required."
+        );
+
+        return;
+    }
+
+    button.parentElement.remove();
+
+    calculate();
+}
+
+
+/* =====================================================
+   CALCULATE
+===================================================== */
+
+function calculate(){
+
+    let subtotal = 0;
+
+
+    document
+    .querySelectorAll(".item")
+    .forEach(row => {
+
+        const weight =
+            parseFloat(
+                row.querySelector(".item-weight").value
+            ) || 0;
+
+
+        const rate =
+            parseFloat(
+                row.querySelector(".item-rate").value
+            ) || 0;
+
+
+        const unit =
+            row.querySelector(".item-unit").value;
+
+
+        let kgWeight = weight;
+
+
+        if(unit === "gram"){
+
+            kgWeight =
+                weight / 1000;
+
+        }
+
+
+        const amount =
+            kgWeight * rate;
+
+
+        row.querySelector(".amount")
+           .innerText =
+           money(amount);
+
+
+        subtotal += amount;
+
+    });
+
+
+    const discount =
+        parseFloat(
+            document.getElementById("discount").value
+        ) || 0;
+
+
+    const total =
+        Math.max(
+            0,
+            subtotal - discount
+        );
+
+
+    document.getElementById("subtotal")
+        .innerText =
+        money(subtotal);
+
+
+    document.getElementById("total")
+        .innerText =
+        money(total);
+}
+
+
+/* =====================================================
+   GENERATE BILL
+===================================================== */
+
+function generateBill(){
+
+    const name =
+        document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+
+    const phone =
+        document
+        .getElementById("customerPhone")
+        .value
+        .trim();
+
+
+    const address =
+        document
+        .getElementById("customerAddress")
+        .value
+        .trim();
+
+
+    if(!name){
+
+        alert(
+            "Please enter customer name."
+        );
+
+        return;
+    }
+
+
+    if(!phone){
+
+        alert(
+            "Please enter customer phone number."
+        );
+
+        return;
+    }
+
+
+    calculate();
+
+
+    const billNo =
+        document
+        .getElementById("billNumber")
+        .value;
+
+
+    const date =
+        document
+        .getElementById("billDate")
+        .value;
+
+
+    const payment =
+        document
+        .getElementById("payment")
+        .value;
+
+
+    /* CUSTOMER */
+
+    document.getElementById(
+        "printCustomer"
+    ).innerText =
+        name;
+
+
+    document.getElementById(
+        "printPhone"
+    ).innerText =
+        phone;
+
+
+    document.getElementById(
+        "printAddress"
+    ).innerText =
+        address || "Not provided";
+
+
+    document.getElementById(
+        "printBillNo"
+    ).innerText =
+        billNo;
+
+
+    document.getElementById(
+        "printDate"
+    ).innerText =
+        date;
+
+
+    document.getElementById(
+        "printBillNoCustomer"
+    ).innerText =
+        billNo;
+
+
+    document.getElementById(
+        "printDateCustomer"
+    ).innerText =
+        date;
+
+
+    document.getElementById(
+        "printPayment"
+    ).innerText =
+        payment;
+
+
+    document.getElementById(
+        "printPayment2"
+    ).innerText =
+        payment;
+
+
+    /* ITEMS */
+
+    const printItems =
+        document.getElementById(
+            "printItems"
+        );
+
+
+    printItems.innerHTML = "";
+
+
+    let subtotal = 0;
+
+    let index = 1;
+
+
+    document
+    .querySelectorAll(".item")
+    .forEach(row => {
+
+        const item =
+            row.querySelector(
+                ".item-name"
+            ).value.trim();
+
+
+        const weight =
+            parseFloat(
+                row.querySelector(
+                    ".item-weight"
+                ).value
+            ) || 0;
+
+
+        const rate =
+            parseFloat(
+                row.querySelector(
+                    ".item-rate"
+                ).value
+            ) || 0;
+
+
+        const unit =
+            row.querySelector(
+                ".item-unit"
+            ).value;
+
+
+        let kgWeight =
+            weight;
+
+
+        if(unit === "gram"){
+
+            kgWeight =
+                weight / 1000;
+
+        }
+
+
+        const amount =
+            kgWeight * rate;
+
+
+        if(item && weight > 0){
+
+            subtotal += amount;
+
+
+            const displayWeight =
+                unit === "gram"
+                    ? weight.toFixed(0) + " Gram"
+                    : weight.toFixed(3) + " KG";
+
+
+            printItems.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${index}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(item)}
+                    </td>
+
+                    <td>
+                        ${displayWeight}
+                    </td>
+
+                    <td class="right">
+                        ${money(rate)}
+                    </td>
+
+                    <td class="right">
+                        ${money(amount)}
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            index++;
+
+        }
+
+    });
+
+
+    if(index === 1){
+
+        alert(
+            "Please add at least one scrap item with weight."
+        );
+
+        return;
+    }
+
+
+    const discount =
+        parseFloat(
+            document
+            .getElementById("discount")
+            .value
+        ) || 0;
+
+
+    const total =
+        Math.max(
+            0,
+            subtotal - discount
+        );
+
+
+    document.getElementById(
+        "printSubtotal"
+    ).innerText =
+        money(subtotal);
+
+
+    document.getElementById(
+        "printDiscount"
+    ).innerText =
+        money(discount);
+
+
+    document.getElementById(
+        "printTotal"
+    ).innerText =
+        money(total);
+
+
+    document.getElementById(
+        "billingContainer"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "billScreen"
+    ).style.display =
+        "block";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =====================================================
+   CREATE HIGH QUALITY PDF
+===================================================== */
+
+async function createPDF(){
+
+    const invoice =
+        document.getElementById(
+            "invoice"
+        );
+
+
+    const canvas =
+        await html2canvas(
+            invoice,
+            {
+                scale:4,
+                useCORS:true,
+                allowTaint:false,
+                backgroundColor:"#ffffff",
+                logging:false,
+                imageTimeout:15000
+            }
+        );
+
+
+    const {
+        jsPDF
+    } =
+    window.jspdf;
+
+
+    const pdf =
+        new jsPDF({
+            orientation:"portrait",
+            unit:"mm",
+            format:"a4",
+            compress:true
+        });
+
+
+    const pageWidth =
+        pdf.internal.pageSize.getWidth();
+
+
+    const pageHeight =
+        pdf.internal.pageSize.getHeight();
+
+
+    const imageWidth =
+        pageWidth;
+
+
+    const imageHeight =
+        canvas.height *
+        imageWidth /
+        canvas.width;
+
+
+    const image =
+        canvas.toDataURL(
+            "image/jpeg",
+            1.0
+        );
+
+
+    pdf.addImage(
+        image,
+        "JPEG",
+        0,
+        0,
+        imageWidth,
+        Math.min(
+            imageHeight,
+            pageHeight
+        ),
+        undefined,
+        "SLOW"
+    );
+
+
+    return pdf;
+}
+
+
+/* =====================================================
+   DOWNLOAD PDF
+===================================================== */
+
+async function downloadPDF(){
+
+    const button =
+        document.getElementById(
+            "downloadBtn"
+        );
+
+
+    const oldText =
+        button.innerHTML;
+
+
+    try{
+
+        button.disabled = true;
+
+        button.innerHTML =
+            "⏳ Creating PDF...";
+
+
+        const pdf =
+            await createPDF();
+
+
+        const billNo =
+            document
+            .getElementById(
+                "printBillNo"
+            )
+            .innerText
+            .replace(
+                /[^a-zA-Z0-9-_]/g,
+                ""
+            );
+
+
+        pdf.save(
+            "COVAI-SCRAP-HUB-" +
+            billNo +
+            ".pdf"
+        );
+
+
+    }
+    catch(error){
+
+        console.error(
+            "PDF Error:",
+            error
+        );
+
+
+        alert(
+            "PDF download failed.\n\n" +
+            error.message
+        );
+
+    }
+    finally{
+
+        button.disabled = false;
+
+        button.innerHTML =
+            oldText;
+    }
+}
+
+
+/* =====================================================
+   SHARE PDF
+===================================================== */
+
+async function sharePDF(){
+
+    const button =
+        document.getElementById(
+            "shareBtn"
+        );
+
+
+    const oldText =
+        button.innerHTML;
+
+
+    try{
+
+        if(!navigator.share){
+
+            alert(
+                "PDF sharing is not supported by this browser. Please use Download Bill PDF."
+            );
+
+            return;
+        }
+
+
+        button.disabled = true;
+
+        button.innerHTML =
+            "⏳ Preparing PDF...";
+
+
+        const pdf =
+            await createPDF();
+
+
+        const billNo =
+            document
+            .getElementById(
+                "printBillNo"
+            )
+            .innerText
+            .replace(
+                /[^a-zA-Z0-9-_]/g,
+                ""
+            );
+
+
+        const blob =
+            pdf.output("blob");
+
+
+        const file =
+            new File(
+                [
+                    blob
+                ],
+                "COVAI-SCRAP-HUB-" +
+                billNo +
+                ".pdf",
+                {
+                    type:
+                        "application/pdf"
+                }
+            );
+
+
+        if(
+            navigator.canShare &&
+            navigator.canShare({
+                files:[file]
+            })
+        ){
+
+            await navigator.share({
+
+                title:
+                    "COVAI SCRAP HUB Bill",
+
+                text:
+                    "Purchase Bill " +
+                    billNo,
+
+                files:[
+                    file
+                ]
+
+            });
+
+        }
+        else{
+
+            alert(
+                "Your device/browser does not support PDF file sharing. Please download the PDF and share it manually."
+            );
+
+        }
+
+    }
+    catch(error){
+
+        if(
+            error.name !==
+            "AbortError"
+        ){
+
+            console.error(
+                "Share Error:",
+                error
+            );
+
+
+            alert(
+                "Unable to share PDF.\n\n" +
+                error.message
+            );
+        }
+
+    }
+    finally{
+
+        button.disabled = false;
+
+        button.innerHTML =
+            oldText;
+    }
+}
+
+
+/* =====================================================
+   BACK
+===================================================== */
+
+function backToBilling(){
+
+    document.getElementById(
+        "billScreen"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "billingContainer"
+    ).style.display =
+        "block";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =====================================================
+   CLEAR
+===================================================== */
+
+function clearAll(){
+
+    if(
+        !confirm(
+            "Clear this bill?"
+        )
+    ){
+
+        return;
+    }
+
+
+    document.getElementById(
+        "customerName"
+    ).value = "";
+
+
+    document.getElementById(
+        "customerPhone"
+    ).value = "";
+
+
+    document.getElementById(
+        "customerAddress"
+    ).value = "";
+
+
+    document.getElementById(
+        "discount"
+    ).value = 0;
+
+
+    document.getElementById(
+        "items"
+    ).innerHTML = "";
+
+
+    addItem();
+
+    calculate();
+}
+
+
+/* =====================================================
+   MONEY
+===================================================== */
+
+function money(value){
+
+    return "₹" +
+        Number(
+            value || 0
+        ).toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+}
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(
+        value || ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+}
+
+
+/* =====================================================
+   INITIAL CALCULATION
+===================================================== */
+
+calculate();
+
+</script>
+
+<script src="lang-system.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', () => { initLangTheme(); });
+</script>
+
+</body>
+</html>

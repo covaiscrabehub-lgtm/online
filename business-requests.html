@@ -1,0 +1,2738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Business Requests | Covai Scrap Hub</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f4f8f5;
+    color:#15231b;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    background:#fff;
+
+    border-bottom:1px solid #dfe8e2;
+
+    padding:14px 5%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+.logo{
+
+    font-size:21px;
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+.logo span{
+    color:#149447;
+}
+
+.header-buttons{
+    display:flex;
+    gap:8px;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    font-family:inherit;
+}
+
+.refresh-btn{
+
+    padding:9px 14px;
+
+    border-radius:9px;
+
+    background:#149447;
+    color:#fff;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+.refresh-btn:hover{
+    background:#087536;
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+
+    width:100%;
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:28px 20px 60px;
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+.page-title{
+    margin-bottom:22px;
+}
+
+.page-title h1{
+
+    font-size:29px;
+
+    margin-bottom:5px;
+}
+
+.page-title p{
+
+    color:#748078;
+
+    font-size:12px;
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:14px;
+
+    margin-bottom:22px;
+}
+
+.stat{
+
+    background:#fff;
+
+    border:1px solid #dfe8e2;
+
+    border-radius:15px;
+
+    padding:17px;
+}
+
+.stat span{
+
+    display:block;
+
+    color:#748078;
+
+    font-size:10px;
+
+    margin-bottom:7px;
+}
+
+.stat strong{
+
+    color:#149447;
+
+    font-size:23px;
+}
+
+
+/* =====================================================
+   REQUEST LIST
+===================================================== */
+
+.requests{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.request-card{
+
+    background:#fff;
+
+    border:1px solid #dfe8e2;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 5px 20px
+        rgba(20,60,35,.05);
+
+    transition:.25s;
+}
+
+.request-card:hover{
+
+    transform:translateY(-2px);
+
+    border-color:#9bd8b2;
+
+    box-shadow:
+        0 10px 30px
+        rgba(20,60,35,.10);
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
+
+.card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+    padding-bottom:12px;
+
+    border-bottom:1px solid #edf1ee;
+}
+
+.business-name{
+
+    font-size:17px;
+
+    font-weight:800;
+
+    line-height:1.3;
+}
+
+.contact-name{
+
+    margin-top:3px;
+
+    color:#68746d;
+
+    font-size:10px;
+}
+
+.request-id{
+
+    margin-top:4px;
+
+    color:#9aa49e;
+
+    font-size:8px;
+
+    word-break:break-all;
+}
+
+.status{
+
+    flex-shrink:0;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    background:#eaf8ef;
+
+    color:#087536;
+}
+
+
+/* =====================================================
+   CARD BODY
+===================================================== */
+
+.card-info{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:8px;
+
+    margin-top:13px;
+}
+
+.info{
+
+    background:#f7faf8;
+
+    padding:10px;
+
+    border-radius:9px;
+}
+
+.info label{
+
+    display:block;
+
+    color:#89948d;
+
+    font-size:8px;
+
+    margin-bottom:3px;
+}
+
+.info strong{
+
+    display:block;
+
+    font-size:10px;
+
+    word-break:break-word;
+}
+
+
+/* =====================================================
+   CARD FOOTER
+===================================================== */
+
+.card-footer{
+
+    margin-top:13px;
+
+    padding-top:11px;
+
+    border-top:1px solid #edf1ee;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.date{
+
+    color:#748078;
+
+    font-size:8px;
+}
+
+.view-text{
+
+    color:#149447;
+
+    font-size:9px;
+
+    font-weight:800;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+
+    grid-column:1/-1;
+
+    background:#fff;
+
+    border:1px solid #dfe8e2;
+
+    border-radius:16px;
+
+    padding:55px 20px;
+
+    text-align:center;
+}
+
+.empty-icon{
+
+    font-size:40px;
+
+    margin-bottom:10px;
+}
+
+.empty h2{
+
+    font-size:18px;
+
+    margin-bottom:5px;
+}
+
+.empty p{
+
+    color:#748078;
+
+    font-size:11px;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+
+    grid-column:1/-1;
+
+    padding:60px;
+
+    text-align:center;
+
+    color:#748078;
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.error{
+
+    display:none;
+
+    margin-bottom:20px;
+
+    padding:13px;
+
+    border-radius:10px;
+
+    color:#dc2626;
+
+    background:#fff1f1;
+
+    border:1px solid #fecaca;
+
+    font-size:11px;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:5000;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:18px;
+
+    background:
+        rgba(0,0,0,.60);
+
+    backdrop-filter:blur(8px);
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+
+    width:100%;
+
+    max-width:650px;
+
+    max-height:
+        calc(100vh - 36px);
+
+    overflow-y:auto;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.3);
+}
+
+.modal-header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:2;
+
+    background:#fff;
+
+    padding:19px;
+
+    border-bottom:1px solid #e8eee9;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:15px;
+}
+
+.modal-title h2{
+
+    font-size:20px;
+}
+
+.modal-title p{
+
+    margin-top:3px;
+
+    color:#748078;
+
+    font-size:10px;
+}
+
+.close-btn{
+
+    width:32px;
+    height:32px;
+
+    border-radius:50%;
+
+    background:#f0f3f1;
+
+    color:#333;
+
+    font-size:18px;
+}
+
+.modal-body{
+    padding:19px;
+}
+
+
+/* =====================================================
+   DETAIL SECTION
+===================================================== */
+
+.detail-section{
+    margin-bottom:20px;
+}
+
+.detail-section-title{
+
+    font-size:11px;
+
+    font-weight:800;
+
+    color:#149447;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+    margin-bottom:9px;
+}
+
+.detail-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:9px;
+}
+
+.detail{
+
+    background:#f7faf8;
+
+    border-radius:10px;
+
+    padding:11px;
+}
+
+.detail.full{
+    grid-column:1/-1;
+}
+
+.detail label{
+
+    display:block;
+
+    color:#7a857e;
+
+    font-size:8px;
+
+    margin-bottom:4px;
+}
+
+.detail strong{
+
+    display:block;
+
+    color:#17221b;
+
+    font-size:11px;
+
+    line-height:1.5;
+
+    word-break:break-word;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status-control{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:10px;
+}
+
+.status-control label{
+
+    color:#748078;
+
+    font-size:9px;
+}
+
+.status-control select{
+
+    padding:7px 9px;
+
+    border:1px solid #dfe8e2;
+
+    border-radius:8px;
+
+    outline:none;
+
+    font-family:inherit;
+
+    font-size:10px;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.actions{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:8px;
+
+    margin-top:18px;
+}
+
+.action-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+    min-height:40px;
+
+    border-radius:9px;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.call{
+
+    background:#eaf8ef;
+
+    color:#087536;
+}
+
+.whatsapp{
+
+    background:#eaf8ef;
+
+    color:#087536;
+}
+
+.email{
+
+    background:#eef5ff;
+
+    color:#2563eb;
+}
+
+.location{
+
+    background:#fff7ed;
+
+    color:#c2410c;
+}
+
+
+/* =====================================================
+   DELETE BUTTON
+===================================================== */
+
+.delete{
+
+    background:#fff1f2;
+
+    color:#dc2626;
+
+    width:100%;
+
+    border:0;
+}
+
+.delete:hover{
+
+    background:#fee2e2;
+}
+
+.delete:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:800px){
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .requests{
+
+        grid-template-columns:1fr;
+    }
+}
+
+
+@media(max-width:550px){
+
+    .header{
+
+        padding:11px 12px;
+    }
+
+    .logo{
+
+        font-size:16px;
+    }
+
+    .refresh-btn{
+
+        padding:8px 10px;
+
+        font-size:9px;
+    }
+
+    .container{
+
+        padding:18px 10px 45px;
+    }
+
+    .page-title{
+
+        margin-bottom:16px;
+    }
+
+    .page-title h1{
+
+        font-size:23px;
+    }
+
+    .page-title p{
+
+        font-size:9px;
+    }
+
+    .stats{
+
+        gap:8px;
+
+        margin-bottom:15px;
+    }
+
+    .stat{
+
+        padding:12px;
+
+        border-radius:12px;
+    }
+
+    .stat span{
+
+        font-size:8px;
+    }
+
+    .stat strong{
+
+        font-size:18px;
+    }
+
+
+    .requests{
+
+        gap:9px;
+    }
+
+    .request-card{
+
+        padding:11px;
+
+        border-radius:12px;
+
+        box-shadow:
+            0 3px 12px
+            rgba(20,60,35,.05);
+    }
+
+    .card-header{
+
+        padding-bottom:8px;
+
+        gap:7px;
+    }
+
+    .business-name{
+
+        font-size:13px;
+    }
+
+    .contact-name{
+
+        font-size:8px;
+    }
+
+    .request-id{
+
+        font-size:6px;
+    }
+
+    .status{
+
+        padding:4px 7px;
+
+        font-size:7px;
+    }
+
+    .card-info{
+
+        margin-top:8px;
+
+        gap:5px;
+    }
+
+    .info{
+
+        padding:7px;
+
+        border-radius:7px;
+    }
+
+    .info label{
+
+        font-size:6px;
+
+        margin-bottom:2px;
+    }
+
+    .info strong{
+
+        font-size:8px;
+    }
+
+    .card-footer{
+
+        margin-top:8px;
+
+        padding-top:7px;
+    }
+
+    .date{
+
+        font-size:6px;
+    }
+
+    .view-text{
+
+        font-size:7px;
+    }
+
+
+    /* MODAL */
+
+    .modal{
+
+        padding:8px;
+
+        align-items:flex-end;
+    }
+
+    .modal-box{
+
+        max-height:
+            calc(100vh - 16px);
+
+        border-radius:
+            18px 18px 10px 10px;
+    }
+
+    .modal-header{
+
+        padding:15px;
+    }
+
+    .modal-title h2{
+
+        font-size:16px;
+    }
+
+    .modal-title p{
+
+        font-size:8px;
+    }
+
+    .modal-body{
+
+        padding:15px;
+    }
+
+    .detail-grid{
+
+        grid-template-columns:1fr 1fr;
+
+        gap:6px;
+    }
+
+    .detail{
+
+        padding:8px;
+
+        border-radius:8px;
+    }
+
+    .detail label{
+
+        font-size:6px;
+    }
+
+    .detail strong{
+
+        font-size:9px;
+    }
+
+    .actions{
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .action-btn{
+
+        min-height:36px;
+
+        font-size:8px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        Covai <span>Scrap Hub</span>
+
+    </div>
+
+
+    <div class="header-buttons">
+
+        <button
+            class="refresh-btn"
+            onclick="loadBusinessRequests()"
+        >
+
+            🔄 Refresh
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="container">
+
+
+    <div class="page-title">
+
+        <h1>
+            🏢 Business Requests
+        </h1>
+
+        <p>
+            Business enquiries received from Firebase Realtime Database.
+        </p>
+
+    </div>
+
+
+    <div
+        id="errorBox"
+        class="error"
+    ></div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <span>
+                Total Enquiries
+            </span>
+
+            <strong id="totalRequests">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span>
+                New
+            </span>
+
+            <strong id="newRequests">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span>
+                Today
+            </span>
+
+            <strong id="todayRequests">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span>
+                Completed
+            </span>
+
+            <strong id="completedRequests">
+                0
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- REQUESTS -->
+
+    <div
+        id="requests"
+        class="requests"
+    >
+
+        <div class="loading">
+
+            🔄 Loading business requests...
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     DETAIL MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="detailModal"
+>
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+
+            <div class="modal-title">
+
+                <h2 id="modalBusinessName">
+                    Business
+                </h2>
+
+                <p id="modalRequestId">
+                    Request ID
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+
+                ×
+
+            </button>
+
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <!-- BUSINESS -->
+
+            <div class="detail-section">
+
+                <div class="detail-section-title">
+
+                    🏢 Business Information
+
+                </div>
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail">
+
+                        <label>
+                            Business Name
+                        </label>
+
+                        <strong id="detailBusinessName">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            Contact Person
+                        </label>
+
+                        <strong id="detailContactPerson">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            Business Type
+                        </label>
+
+                        <strong id="detailBusinessType">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            Scrap Type
+                        </label>
+
+                        <strong id="detailScrapType">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            Quantity
+                        </label>
+
+                        <strong id="detailQuantity">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            Pickup Date
+                        </label>
+
+                        <strong id="detailPickupDate">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTACT -->
+
+            <div class="detail-section">
+
+                <div class="detail-section-title">
+
+                    📞 Contact Information
+
+                </div>
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail">
+
+                        <label>
+                            Phone
+                        </label>
+
+                        <strong id="detailPhone">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            WhatsApp
+                        </label>
+
+                        <strong id="detailWhatsapp">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail full">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <strong id="detailEmail">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="detail-section">
+
+                <div class="detail-section-title">
+
+                    📍 Pickup Information
+
+                </div>
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail full">
+
+                        <label>
+                            Pickup Location
+                        </label>
+
+                        <strong id="detailLocation">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail full">
+
+                        <label>
+                            Additional Requirements
+                        </label>
+
+                        <strong id="detailMessage">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- SUBMISSION -->
+
+            <div class="detail-section">
+
+                <div class="detail-section-title">
+
+                    📅 Request Information
+
+                </div>
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail">
+
+                        <label>
+                            Submitted
+                        </label>
+
+                        <strong id="detailSubmitted">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <strong id="detailStatus">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="status-control">
+
+                    <label>
+                        Change Status:
+                    </label>
+
+                    <select
+                        id="statusSelect"
+                    >
+
+                        <option value="New">
+                            New
+                        </option>
+
+                        <option value="Contacted">
+                            Contacted
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="Cancelled">
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+
+                <a
+                    id="callButton"
+                    class="action-btn call"
+                    href="#"
+                >
+
+                    📞 Call
+
+                </a>
+
+
+                <a
+                    id="whatsappButton"
+                    class="action-btn whatsapp"
+                    href="#"
+                    target="_blank"
+                >
+
+                    💬 WhatsApp
+
+                </a>
+
+
+                <a
+                    id="emailButton"
+                    class="action-btn email"
+                    href="#"
+                >
+
+                    ✉ Email
+
+                </a>
+
+
+                <a
+                    id="locationButton"
+                    class="action-btn location"
+                    href="#"
+                    target="_blank"
+                >
+
+                    📍 Location
+
+                </a>
+
+
+                <!-- DELETE -->
+
+                <button
+                    type="button"
+                    id="deleteButton"
+                    class="action-btn delete"
+                >
+
+                    🗑 Delete Request
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+
+    initializeApp
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+
+    getDatabase,
+    ref,
+    onValue,
+    update,
+    remove
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+
+    authDomain:
+        "covai-scrap-hub.firebaseapp.com",
+
+    databaseURL:
+        "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+
+    projectId:
+        "covai-scrap-hub",
+
+    storageBucket:
+        "covai-scrap-hub.firebasestorage.app",
+
+    messagingSenderId:
+        "979133721874",
+
+    appId:
+        "1:979133721874:web:c5829bb8dbf5270c0917cb",
+
+    measurementId:
+        "G-P3PTSBHWMF"
+
+};
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const database =
+    getDatabase(app);
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let allRequests = [];
+
+let currentRequest = null;
+
+let unsubscribeBusinessRequests = null;
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+
+        .replace(/&/g,"&amp;")
+
+        .replace(/</g,"&lt;")
+
+        .replace(/>/g,"&gt;")
+
+        .replace(/"/g,"&quot;")
+
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatDate(value){
+
+    if(!value){
+
+        return "Not available";
+
+    }
+
+    try{
+
+        const date =
+            new Date(value);
+
+        if(!isNaN(date.getTime())){
+
+            return date.toLocaleString(
+                "en-IN",
+                {
+                    timeZone:
+                        "Asia/Kolkata"
+                }
+            );
+
+        }
+
+    }
+    catch(error){}
+
+    return String(value);
+
+}
+
+
+/* =====================================================
+   NORMALIZE PHONE
+===================================================== */
+
+function cleanPhone(value){
+
+    return String(value || "")
+        .replace(/\D/g,"");
+
+}
+
+
+/* =====================================================
+   LOAD BUSINESS REQUESTS
+===================================================== */
+
+function loadBusinessRequests(){
+
+    const container =
+        document.getElementById(
+            "requests"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    errorBox.style.display =
+        "none";
+
+
+    container.innerHTML = `
+
+        <div class="loading">
+
+            🔄 Loading business requests...
+
+        </div>
+
+    `;
+
+
+    const businessRef =
+        ref(
+            database,
+            "businessEnquiries"
+        );
+
+
+    /*
+       Prevent multiple Firebase listeners
+       when Refresh is clicked.
+    */
+
+    if(unsubscribeBusinessRequests){
+
+        unsubscribeBusinessRequests();
+
+    }
+
+
+    unsubscribeBusinessRequests =
+
+        onValue(
+
+            businessRef,
+
+            function(snapshot){
+
+                const data =
+                    snapshot.val();
+
+
+                if(!data){
+
+                    allRequests = [];
+
+
+                    container.innerHTML = `
+
+                        <div class="empty">
+
+                            <div class="empty-icon">
+                                📭
+                            </div>
+
+                            <h2>
+                                No Business Enquiries
+                            </h2>
+
+                            <p>
+                                New business enquiries will appear here.
+                            </p>
+
+                        </div>
+
+                    `;
+
+
+                    updateStats([]);
+
+                    return;
+
+                }
+
+
+                allRequests =
+
+                    Object.entries(data)
+
+                    .map(
+                        function([id,request]){
+
+                            return {
+
+                                id:id,
+
+                                ...request
+
+                            };
+
+                        }
+                    )
+
+                    .reverse();
+
+
+                displayRequests(
+                    allRequests
+                );
+
+
+                updateStats(
+                    allRequests
+                );
+
+            },
+
+
+            function(error){
+
+                console.error(
+                    "Firebase error:",
+                    error
+                );
+
+
+                errorBox.textContent =
+                    "❌ Unable to load business enquiries: "
+                    + error.message;
+
+
+                errorBox.style.display =
+                    "block";
+
+
+                container.innerHTML =
+                    "";
+
+            }
+
+        );
+
+}
+
+
+/* =====================================================
+   DISPLAY REQUESTS
+===================================================== */
+
+function displayRequests(requests){
+
+    const container =
+        document.getElementById(
+            "requests"
+        );
+
+
+    if(!requests.length){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h2>
+                    No Business Enquiries
+                </h2>
+
+                <p>
+                    No enquiries found.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    requests.forEach(
+        function(request,index){
+
+            const businessName =
+                request.businessName ||
+                "Unknown Business";
+
+
+            const contactPerson =
+                request.contactPerson ||
+                "No contact person";
+
+
+            const scrapType =
+                request.scrapType ||
+                "Not specified";
+
+
+            const quantity =
+                request.quantity
+                    ? request.quantity +
+                      " " +
+                      (request.unit || "")
+                    : "Not specified";
+
+
+            const status =
+                request.status ||
+                "New";
+
+
+            html += `
+
+                <div
+                    class="request-card"
+                    onclick="openRequest(${index})"
+                >
+
+                    <div class="card-header">
+
+
+                        <div>
+
+                            <div class="business-name">
+
+                                ${escapeHTML(
+                                    businessName
+                                )}
+
+                            </div>
+
+
+                            <div class="contact-name">
+
+                                👤
+                                ${escapeHTML(
+                                    contactPerson
+                                )}
+
+                            </div>
+
+
+                            <div class="request-id">
+
+                                ID:
+                                ${escapeHTML(
+                                    request.id
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="status">
+
+                            ${escapeHTML(
+                                status
+                            )}
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="card-info">
+
+
+                        <div class="info">
+
+                            <label>
+                                SCRAP
+                            </label>
+
+                            <strong>
+
+                                ${escapeHTML(
+                                    scrapType
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info">
+
+                            <label>
+                                QUANTITY
+                            </label>
+
+                            <strong>
+
+                                ${escapeHTML(
+                                    quantity
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info">
+
+                            <label>
+                                PHONE
+                            </label>
+
+                            <strong>
+
+                                ${escapeHTML(
+                                    request.phone ||
+                                    "Not provided"
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info">
+
+                            <label>
+                                BUSINESS TYPE
+                            </label>
+
+                            <strong>
+
+                                ${escapeHTML(
+                                    request.businessType ||
+                                    "Not specified"
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="card-footer">
+
+
+                        <div class="date">
+
+                            ${escapeHTML(
+                                request.submittedAtIndia ||
+                                formatDate(
+                                    request.submittedAt
+                                )
+                            )}
+
+                        </div>
+
+
+                        <div class="view-text">
+
+                            Tap to view →
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(requests){
+
+    let newCount = 0;
+
+    let todayCount = 0;
+
+    let completedCount = 0;
+
+
+    const today =
+        new Date()
+        .toLocaleDateString(
+            "en-IN",
+            {
+                timeZone:
+                    "Asia/Kolkata"
+            }
+        );
+
+
+    requests.forEach(
+        function(request){
+
+            const status =
+                String(
+                    request.status || "New"
+                ).toLowerCase();
+
+
+            if(status === "new"){
+
+                newCount++;
+
+            }
+
+
+            if(status === "completed"){
+
+                completedCount++;
+
+            }
+
+
+            const submitted =
+                request.submittedAtIndia ||
+                request.submittedAt;
+
+
+            if(submitted){
+
+                const date =
+                    new Date(submitted);
+
+
+                if(
+                    !isNaN(
+                        date.getTime()
+                    )
+                ){
+
+                    const requestDate =
+                        date.toLocaleDateString(
+                            "en-IN",
+                            {
+                                timeZone:
+                                    "Asia/Kolkata"
+                            }
+                        );
+
+
+                    if(
+                        requestDate === today
+                    ){
+
+                        todayCount++;
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "totalRequests"
+    ).textContent =
+        requests.length;
+
+
+    document.getElementById(
+        "newRequests"
+    ).textContent =
+        newCount;
+
+
+    document.getElementById(
+        "todayRequests"
+    ).textContent =
+        todayCount;
+
+
+    document.getElementById(
+        "completedRequests"
+    ).textContent =
+        completedCount;
+
+}
+
+
+/* =====================================================
+   OPEN REQUEST
+===================================================== */
+
+window.openRequest =
+    function(index){
+
+        currentRequest =
+            allRequests[index];
+
+
+        if(!currentRequest){
+
+            return;
+
+        }
+
+
+        const request =
+            currentRequest;
+
+
+        document.getElementById(
+            "modalBusinessName"
+        ).textContent =
+            request.businessName ||
+            "Unknown Business";
+
+
+        document.getElementById(
+            "modalRequestId"
+        ).textContent =
+            "Request ID: " +
+            request.id;
+
+
+        document.getElementById(
+            "detailBusinessName"
+        ).textContent =
+            request.businessName ||
+            "Not provided";
+
+
+        document.getElementById(
+            "detailContactPerson"
+        ).textContent =
+            request.contactPerson ||
+            "Not provided";
+
+
+        document.getElementById(
+            "detailBusinessType"
+        ).textContent =
+            request.businessType ||
+            "Not provided";
+
+
+        document.getElementById(
+            "detailScrapType"
+        ).textContent =
+            request.scrapType ||
+            "Not provided";
+
+
+        document.getElementById(
+            "detailQuantity"
+        ).textContent =
+            request.quantity
+                ? request.quantity +
+                  " " +
+                  (request.unit || "")
+                : "Not provided";
+
+
+        document.getElementById(
+            "detailPickupDate"
+        ).textContent =
+            request.pickupDate ||
+            "Not specified";
+
+
+        document.getElementById(
+            "detailPhone"
+        ).textContent =
+            request.phone ||
+            "Not provided";
+
+
+        document.getElementById(
+            "detailWhatsapp"
+        ).textContent =
+            request.whatsapp ||
+            request.phone ||
+            "Not provided";
+
+
+        document.getElementById(
+            "detailEmail"
+        ).textContent =
+            request.email ||
+            "Not provided";
+
+
+        document.getElementById(
+            "detailLocation"
+        ).textContent =
+            request.location ||
+            "Not provided";
+
+
+        document.getElementById(
+            "detailMessage"
+        ).textContent =
+            request.message ||
+            "No additional requirements";
+
+
+        document.getElementById(
+            "detailSubmitted"
+        ).textContent =
+            request.submittedAtIndia ||
+            formatDate(
+                request.submittedAt
+            );
+
+
+        document.getElementById(
+            "detailStatus"
+        ).textContent =
+            request.status ||
+            "New";
+
+
+        document.getElementById(
+            "statusSelect"
+        ).value =
+            request.status ||
+            "New";
+
+
+        /* =================================================
+           CALL
+        ================================================= */
+
+        const phone =
+            cleanPhone(
+                request.phone
+            );
+
+
+        document.getElementById(
+            "callButton"
+        ).href =
+            phone
+                ? "tel:+" + phone
+                : "#";
+
+
+        /* =================================================
+           WHATSAPP
+        ================================================= */
+
+        document.getElementById(
+            "whatsappButton"
+        ).href =
+            phone
+                ? "https://wa.me/" + phone
+                : "#";
+
+
+        /* =================================================
+           EMAIL
+        ================================================= */
+
+        const email =
+            String(
+                request.email || ""
+            ).trim();
+
+
+        document.getElementById(
+            "emailButton"
+        ).href =
+            email
+                ? "mailto:" + email
+                : "#";
+
+
+        /* =================================================
+           LOCATION
+        ================================================= */
+
+        const location =
+            String(
+                request.location || ""
+            ).trim();
+
+
+        document.getElementById(
+            "locationButton"
+        ).href =
+            location
+                ? "https://www.google.com/maps/search/?api=1&query=" +
+                  encodeURIComponent(location)
+                : "#";
+
+
+        /* =================================================
+           OPEN MODAL
+        ================================================= */
+
+        document.getElementById(
+            "detailModal"
+        ).classList.add(
+            "show"
+        );
+
+    };
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+window.closeModal =
+    function(){
+
+        document.getElementById(
+            "detailModal"
+        ).classList.remove(
+            "show"
+        );
+
+        currentRequest =
+            null;
+
+    };
+
+
+/* =====================================================
+   CHANGE STATUS
+===================================================== */
+
+document.getElementById(
+    "statusSelect"
+)
+.addEventListener(
+    "change",
+    async function(){
+
+        if(!currentRequest){
+
+            return;
+
+        }
+
+
+        const newStatus =
+            this.value;
+
+
+        try{
+
+            await update(
+
+                ref(
+                    database,
+                    "businessEnquiries/" +
+                    currentRequest.id
+                ),
+
+                {
+                    status:
+                        newStatus
+                }
+
+            );
+
+
+            currentRequest.status =
+                newStatus;
+
+
+            document.getElementById(
+                "detailStatus"
+            ).textContent =
+                newStatus;
+
+        }
+        catch(error){
+
+            console.error(
+                "Status update error:",
+                error
+            );
+
+
+            alert(
+                "Unable to update status.\n\n" +
+                error.message
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   DELETE BUSINESS REQUEST
+===================================================== */
+
+document.getElementById(
+    "deleteButton"
+)
+.addEventListener(
+    "click",
+    async function(){
+
+        if(!currentRequest){
+
+            return;
+
+        }
+
+
+        const requestId =
+            currentRequest.id;
+
+
+        const businessName =
+            currentRequest.businessName ||
+            "this business enquiry";
+
+
+        /*
+           Confirmation before deleting
+        */
+
+        const confirmDelete =
+            confirm(
+
+                "Delete this business enquiry?\n\n" +
+
+                "Business: " +
+                businessName +
+
+                "\n\n" +
+
+                "This action cannot be undone."
+
+            );
+
+
+        if(!confirmDelete){
+
+            return;
+
+        }
+
+
+        const deleteButton =
+            document.getElementById(
+                "deleteButton"
+            );
+
+
+        deleteButton.disabled =
+            true;
+
+
+        deleteButton.textContent =
+            "⏳ Deleting...";
+
+
+        try{
+
+
+            /*
+               DELETE FROM:
+
+               businessEnquiries/
+               requestId
+            */
+
+            await remove(
+
+                ref(
+                    database,
+                    "businessEnquiries/" +
+                    requestId
+                )
+
+            );
+
+
+            /*
+               Close modal
+            */
+
+            closeModal();
+
+
+            /*
+               Show success message
+            */
+
+            alert(
+                "Business enquiry deleted successfully."
+            );
+
+
+        }
+        catch(error){
+
+            console.error(
+                "Delete error:",
+                error
+            );
+
+
+            alert(
+
+                "Unable to delete this enquiry.\n\n" +
+
+                "Firebase error: " +
+                error.message
+
+            );
+
+        }
+        finally{
+
+            deleteButton.disabled =
+                false;
+
+
+            deleteButton.textContent =
+                "🗑 Delete Request";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CLOSE WHEN CLICK OUTSIDE
+===================================================== */
+
+document.getElementById(
+    "detailModal"
+)
+.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESC
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   GLOBAL REFRESH
+===================================================== */
+
+window.loadBusinessRequests =
+    loadBusinessRequests;
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadBusinessRequests();
+
+</script>
+
+
+</body>
+
+</html>

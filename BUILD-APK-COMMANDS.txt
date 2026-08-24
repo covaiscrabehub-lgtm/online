@@ -1,0 +1,85 @@
+================================================================
+COVAI SCRAP HUB - ANDROID APK BUILD COMMANDS
+================================================================
+
+QUICK START (Copy and run these commands):
+==========================================
+
+# Step 1: Install dependencies
+cd "c:\Users\MUTHU KRISHNAN\Downloads\covai-main\covai-main"
+npm install
+
+# Step 2: Initialize Capacitor
+npx cap init "Covai Scrap Hub" com.covaiscraphub.app
+
+# Step 3: Add Android platform
+npx cap add android
+
+# Step 4: Sync web files to Android
+npx cap sync android
+
+# Step 5: Build debug APK
+cd android
+gradlew.bat assembleDebug
+
+# APK will be at:
+# android\app\build\outputs\apk\debug\app-debug.apk
+
+
+FULL RELEASE BUILD:
+===================
+
+# Step 1-4: Same as above
+
+# Step 5: Generate keystore
+cd android
+keytool -genkey -v -keystore covai-scrap-hub.keystore -alias covai-key -keyalg RSA -keysize 2048 -validity 10000
+
+# Step 6: Build release APK
+gradlew.bat assembleRelease
+
+# APK will be at:
+# android\app\build\outputs\apk\release\app-release.apk
+
+
+TROUBLESHOOTING:
+================
+
+# If build fails, clean and rebuild:
+cd android
+gradlew.bat clean
+gradlew.bat assembleDebug
+
+# If sync fails, try again:
+cd ..
+npx cap sync android
+
+# Open in Android Studio for manual build:
+npx cap open android
+
+
+TESTING:
+========
+
+# Install on connected device:
+adb install android\app\build\outputs\apk\debug\app-debug.apk
+
+# View logs:
+adb logcat | findstr Capacitor
+
+
+================================================================
+
+FILES CREATED:
+==============
+✓ package.json (updated with Capacitor)
+✓ capacitor.config.json (app configuration)
+✓ capacitor.config.ts (TypeScript config)
+✓ .capacitor.gitignore (git ignore rules)
+✓ CAPACITOR-ANDROID-SETUP.md (full documentation)
+✓ BUILD-APK-COMMANDS.txt (this file)
+
+READY TO BUILD: YES
+NEXT STEP: Run "npm install"
+
+================================================================

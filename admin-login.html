@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>Secure Access | Covai Scrap Hub</title>
+
+<meta name="theme-color" content="#087c4d">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
+
+    background:
+        linear-gradient(
+            rgba(3,10,6,.93),
+            rgba(3,10,6,.98)
+        ),
+        url("lap.jpeg") center/cover fixed;
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   WARNING SCREEN
+========================================================= */
+
+.warning-screen{
+    min-height:100vh;
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:35px 18px 90px;
+}
+
+.warning-container{
+    width:100%;
+    max-width:900px;
+}
+
+
+/* =========================================================
+   SECURITY LABEL
+========================================================= */
+
+.security-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:7px 12px;
+
+    border-radius:7px;
+
+    background:rgba(34,197,94,.08);
+
+    border:1px solid rgba(34,197,94,.22);
+
+    color:#86efac;
+
+    font-size:10px;
+    font-weight:700;
+
+    letter-spacing:.8px;
+
+    text-transform:uppercase;
+
+    margin-bottom:18px;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.warning-title{
+    font-size:clamp(28px,5vw,48px);
+
+    line-height:1.12;
+
+    font-weight:800;
+
+    margin-bottom:20px;
+
+    letter-spacing:-1px;
+}
+
+.warning-title span{
+    color:#22c55e;
+}
+
+
+/* =========================================================
+   WARNING PARAGRAPH
+========================================================= */
+
+.warning-text{
+    color:#b8c2bc;
+
+    font-size:14px;
+
+    line-height:1.85;
+
+    width:100%;
+
+    margin-bottom:22px;
+}
+
+.warning-text strong{
+    color:#fff;
+}
+
+
+/* =========================================================
+   WARNING BOX
+========================================================= */
+
+.warning-box{
+    width:100%;
+
+    padding:20px 22px;
+
+    border-left:3px solid #22c55e;
+
+    background:rgba(255,255,255,.045);
+
+    border-top:1px solid rgba(255,255,255,.08);
+    border-right:1px solid rgba(255,255,255,.08);
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    border-radius:0 12px 12px 0;
+
+    color:#aeb9b2;
+
+    font-size:12px;
+
+    line-height:1.8;
+
+    margin-bottom:28px;
+}
+
+.warning-box strong{
+    color:#fff;
+}
+
+
+/* =========================================================
+   EXTRA WARNING
+========================================================= */
+
+.warning-extra{
+    color:#8f9b94;
+
+    font-size:11px;
+
+    line-height:1.8;
+
+    margin-bottom:24px;
+}
+
+.warning-extra strong{
+    color:#dce5df;
+}
+
+
+/* =========================================================
+   EPFA BOX
+========================================================= */
+
+.epfa-box{
+    width:100%;
+
+    max-width:390px;
+
+    padding:16px;
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.13);
+
+    border-radius:14px;
+
+    backdrop-filter:blur(16px);
+
+    -webkit-backdrop-filter:blur(16px);
+}
+
+
+/* EPFA LABEL */
+
+.epfa-label{
+    display:block;
+
+    color:#dce5df;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+}
+
+
+/* EPFA ROW */
+
+.epfa-row{
+    display:flex;
+
+    gap:8px;
+}
+
+
+/* EPFA INPUT */
+
+.epfa-input{
+    flex:1;
+
+    min-width:0;
+
+    height:42px;
+
+    padding:0 12px;
+
+    border-radius:8px;
+
+    border:1px solid rgba(255,255,255,.14);
+
+    outline:none;
+
+    background:rgba(0,0,0,.35);
+
+    color:#fff;
+
+    font-size:13px;
+
+    letter-spacing:4px;
+
+    text-align:center;
+}
+
+.epfa-input::placeholder{
+    color:#68736d;
+
+    letter-spacing:1px;
+}
+
+.epfa-input:focus{
+    border-color:#22c55e;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(34,197,94,.08);
+}
+
+
+/* =========================================================
+   EPFA BUTTON
+========================================================= */
+
+.epfa-button{
+    width:45px;
+
+    height:42px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:#22c55e;
+
+    color:#fff;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.epfa-button:hover{
+    background:#16a34a;
+}
+
+.epfa-button:active{
+    transform:scale(.96);
+}
+
+.epfa-button.success{
+    background:#16a34a;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(34,197,94,.10);
+}
+
+
+/* =========================================================
+   EPFA STATUS
+========================================================= */
+
+.epfa-status{
+    margin-top:8px;
+
+    color:#68736d;
+
+    font-size:9px;
+
+    min-height:12px;
+}
+
+
+/* =========================================================
+   SCROLL NOTE
+========================================================= */
+
+.scroll-note{
+    margin-top:20px;
+
+    color:#68736d;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+.scroll-note.show{
+    color:#86efac;
+}
+
+
+/* =========================================================
+   LOGIN AREA
+========================================================= */
+
+.login-area{
+    display:none;
+
+    min-height:100vh;
+
+    padding:80px 18px;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+.login-area.active{
+    display:flex;
+}
+
+
+/* =========================================================
+   LOGIN CARD
+========================================================= */
+
+.login-card{
+    width:100%;
+
+    max-width:430px;
+
+    padding:34px 30px;
+
+    background:rgba(255,255,255,.075);
+
+    border:1px solid rgba(255,255,255,.14);
+
+    border-radius:20px;
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.55);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo{
+    width:70px;
+
+    height:70px;
+
+    display:block;
+
+    margin:0 auto 15px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid #22c55e;
+
+    box-shadow:
+        0 8px 25px
+        rgba(34,197,94,.25);
+}
+
+
+/* =========================================================
+   LOGIN TITLE
+========================================================= */
+
+.login-card h1{
+    text-align:center;
+
+    font-size:24px;
+
+    margin-bottom:6px;
+}
+
+.login-subtitle{
+    text-align:center;
+
+    color:#8f9b94;
+
+    font-size:11px;
+
+    margin-bottom:26px;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-group{
+    margin-bottom:15px;
+}
+
+.input-group label{
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#d6ded9;
+
+    font-size:11px;
+}
+
+.input{
+    width:100%;
+
+    padding:13px;
+
+    border-radius:9px;
+
+    border:1px solid rgba(255,255,255,.14);
+
+    outline:none;
+
+    background:rgba(0,0,0,.35);
+
+    color:#fff;
+
+    font-size:13px;
+}
+
+.input::placeholder{
+    color:#68736d;
+}
+
+.input:focus{
+    border-color:#22c55e;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(34,197,94,.08);
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.password-box{
+    position:relative;
+}
+
+.password-box .input{
+    padding-right:45px;
+}
+
+.show-password{
+    position:absolute;
+
+    right:7px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:32px;
+
+    height:32px;
+
+    border:0;
+
+    background:transparent;
+
+    color:#9ca7a0;
+
+    cursor:pointer;
+
+    border-radius:7px;
+
+    font-size:16px;
+}
+
+.show-password:hover{
+    color:#22c55e;
+
+    background:
+        rgba(34,197,94,.08);
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-btn{
+    width:100%;
+
+    padding:13px;
+
+    margin-top:6px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:#22c55e;
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.login-btn:hover{
+    background:#16a34a;
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(34,197,94,.20);
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error{
+    display:none;
+
+    margin-top:13px;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    text-align:center;
+
+    background:
+        rgba(239,68,68,.10);
+
+    border:1px solid
+        rgba(239,68,68,.25);
+
+    color:#fca5a5;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.login-footer{
+    margin-top:22px;
+
+    text-align:center;
+
+    color:#68736d;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    .warning-screen{
+        padding:
+            25px
+            15px
+            85px;
+    }
+
+    .security-label{
+        font-size:9px;
+
+        margin-bottom:15px;
+    }
+
+    .warning-title{
+        font-size:29px;
+
+        margin-bottom:15px;
+    }
+
+    .warning-text{
+        font-size:12px;
+
+        line-height:1.75;
+    }
+
+    .warning-box{
+        font-size:11px;
+
+        padding:15px 16px;
+
+        margin-bottom:22px;
+    }
+
+    .warning-extra{
+        font-size:10px;
+
+        line-height:1.75;
+    }
+
+    .epfa-box{
+        max-width:100%;
+
+        padding:14px;
+
+        border-radius:12px;
+    }
+
+    .epfa-input{
+        height:40px;
+
+        font-size:12px;
+    }
+
+    .epfa-button{
+        width:43px;
+
+        height:40px;
+    }
+
+    .scroll-note{
+        font-size:9px;
+    }
+
+    .login-area{
+        padding:
+            55px
+            15px;
+    }
+
+    .login-card{
+        padding:
+            27px
+            19px;
+
+        border-radius:17px;
+    }
+
+    .logo{
+        width:64px;
+
+        height:64px;
+    }
+
+    .login-card h1{
+        font-size:21px;
+    }
+
+    .login-subtitle{
+        font-size:10px;
+    }
+
+    .input{
+        padding:12px;
+
+        font-size:12px;
+    }
+
+    .login-btn{
+        padding:12px;
+
+        font-size:12px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL
+========================================================= */
+
+@media(max-width:350px){
+
+    .warning-title{
+        font-size:26px;
+    }
+
+    .warning-text{
+        font-size:11px;
+    }
+
+    .warning-box{
+        font-size:10px;
+    }
+
+    .login-card{
+        padding:24px 16px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     WARNING SCREEN
+========================================================= -->
+
+<section class="warning-screen">
+
+    <div class="warning-container">
+
+
+        <div class="security-label">
+            <span>🔐 </span><span data-i18n="secureRestrictedArea">Secure Restricted Area</span>
+        </div>
+
+
+        <h1 class="warning-title">
+            <span data-i18n="authorizedAccess">WARNING</span> 
+        </h1>
+
+
+        <p class="warning-text">
+
+            This section of
+            <strong>COVAI SCRAP HUB</strong>
+            is intended only for authorized personnel involved
+            in scrap collection, pickup management, partner
+            operations, administration and other approved
+            internal activities.
+
+            <br><br>
+
+            This secure system may contain confidential
+            customer information, pickup requests, customer
+            contact details, collection locations, partner
+            information, operational records and other internal
+            business information belonging to
+            <strong>COVAI SCRAP HUB</strong>.
+
+            <br><br>
+
+            Unauthorized access, attempted access, misuse,
+            modification, copying, downloading, distribution,
+            disclosure or interference with customer information,
+            pickup information, partner information or any
+            operational data is strictly prohibited.
+
+            <br><br>
+
+            By continuing, you confirm that you are an authorized
+            user and that you will use this system only for
+            legitimate COVAI SCRAP HUB operational purposes.
+
+        </p>
+
+
+        <div class="warning-box">
+
+            <strong>IMPORTANT SECURITY NOTICE:</strong>
+
+            Do not share your access credentials, PIN or account
+            information with unauthorized persons.
+
+            <br><br>
+
+            Authorized users are responsible for maintaining the
+            confidentiality of their login information and for
+            ensuring that their account is not used by another
+            person.
+
+            <br><br>
+
+            If you are not an authorized partner, administrator
+            or approved user, please leave this page immediately
+            and do not attempt to continue.
+
+            <br><br>
+
+            Any unauthorized attempt to access, manipulate,
+            copy, disclose or interfere with this system or its
+            information is prohibited.
+
+        </div>
+
+
+        <p class="warning-extra">
+
+            <strong>Access requirement:</strong>
+            You must enter the authorized EPFA PIN below before
+            the secure login area becomes available.
+
+            <br><br>
+
+            Please make sure that you are accessing this system
+            only for legitimate COVAI SCRAP HUB business and
+            operational activities.
+
+        </p>
+
+
+        <!-- =================================================
+             EPFA
+        ================================================= -->
+
+        <div class="epfa-box">
+
+            <label class="epfa-label">
+                EPFA
+            </label>
+
+
+            <div class="epfa-row">
+
+                <input
+                    type="password"
+                    id="epfaPin"
+                    class="epfa-input"
+                    inputmode="numeric"
+                    maxlength="4"
+                    autocomplete="off"
+                    placeholder="EPFA"
+                    aria-label="EPFA PIN"
+                >
+
+
+                <button
+                    type="button"
+                    id="epfaButton"
+                    class="epfa-button"
+                    aria-label="Check EPFA"
+                >
+                    ✓
+                </button>
+
+            </div>
+
+
+            <div
+                class="epfa-status"
+                id="epfaStatus"
+            ></div>
+
+        </div>
+
+
+        <div
+            class="scroll-note"
+            id="scrollNote"
+        >
+            Enter the correct EPFA PIN to continue.
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PARTNER LOGIN
+========================================================= -->
+
+<section
+    class="login-area"
+    id="partnerLogin"
+>
+
+    <div class="login-card">
+
+
+        <img
+            src="logo.jpeg"
+            class="logo"
+            alt="Covai Scrap Hub"
+        >
+
+
+        <h1>
+            Partner Login
+        </h1>
+
+
+        <p class="login-subtitle">
+            COVAI SCRAP HUB Partner Panel
+        </p>
+
+
+        <form id="partnerForm">
+
+
+            <div class="input-group">
+
+                <label>
+                    Partner ID
+                </label>
+
+                <input
+                    type="text"
+                    id="partnerID"
+                    class="input"
+                    placeholder="Enter partner ID"
+                    autocomplete="off"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Password
+                </label>
+
+
+                <div class="password-box">
+
+                    <input
+                        type="password"
+                        id="partnerPassword"
+                        class="input"
+                        placeholder="Enter password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        onclick="togglePassword('partnerPassword',this)"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Login to Partner Panel
+            </button>
+
+
+            <div
+                class="error"
+                id="partnerError"
+            >
+                Invalid Partner ID or Password
+            </div>
+
+
+        </form>
+
+
+        <div class="login-footer">
+            © 2026 Covai Scrap Hub • Partner Portal
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     ADMIN LOGIN
+========================================================= -->
+
+<section
+    class="login-area"
+    id="adminLogin"
+>
+
+    <div class="login-card">
+
+
+        <img
+            src="logo.jpeg"
+            class="logo"
+            alt="Covai Scrap Hub"
+        >
+
+
+        <h1>
+            Admin Login
+        </h1>
+
+
+        <p class="login-subtitle">
+            Covai Scrap Hub Administration
+        </p>
+
+
+        <form id="adminForm">
+
+
+            <div class="input-group">
+
+                <label>
+                    Admin ID
+                </label>
+
+
+                <input
+                    type="text"
+                    id="adminID"
+                    class="input"
+                    placeholder="Enter admin ID"
+                    autocomplete="off"
+                    autocapitalize="none"
+                    autocorrect="off"
+                    spellcheck="false"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Password
+                </label>
+
+
+                <div class="password-box">
+
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        class="input"
+                        placeholder="Enter password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        onclick="togglePassword('adminPassword',this)"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Login to Admin Panel
+            </button>
+
+
+            <div
+                class="error"
+                id="adminError"
+            >
+                Invalid Admin ID or Password
+            </div>
+
+
+        </form>
+
+
+        <div class="login-footer">
+            © 2026 Covai Scrap Hub • Admin Portal
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+
+/* =========================================================
+   EPFA CODES
+========================================================= */
+
+const PARTNER_EPFA = "8459";
+
+const ADMIN_EPFA = "9123";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const epfaPin =
+    document.getElementById("epfaPin");
+
+const epfaButton =
+    document.getElementById("epfaButton");
+
+const epfaStatus =
+    document.getElementById("epfaStatus");
+
+const scrollNote =
+    document.getElementById("scrollNote");
+
+const partnerLogin =
+    document.getElementById("partnerLogin");
+
+const adminLogin =
+    document.getElementById("adminLogin");
+
+
+/* =========================================================
+   VERIFY EPFA
+========================================================= */
+
+function verifyEPFA(){
+
+    const code =
+        epfaPin.value.trim();
+
+
+    /* WRONG PIN */
+
+    if(
+        code !== PARTNER_EPFA &&
+        code !== ADMIN_EPFA
+    ){
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       CORRECT PARTNER EPFA
+    ===================================================== */
+
+    if(code === PARTNER_EPFA){
+
+        epfaButton.classList.add("success");
+
+        epfaButton.textContent = "✓";
+
+        epfaStatus.textContent =
+            "EPFA correct. Scroll down to login.";
+
+        epfaStatus.style.color =
+            "#86efac";
+
+        scrollNote.textContent =
+            "✓ EPFA correct — scroll down to continue to Partner Login.";
+
+        scrollNote.classList.add("show");
+
+        partnerLogin.classList.add("active");
+
+        adminLogin.classList.remove("active");
+
+
+        setTimeout(function(){
+
+            partnerLogin.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+        },250);
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       CORRECT ADMIN EPFA
+    ===================================================== */
+
+    if(code === ADMIN_EPFA){
+
+        epfaButton.classList.add("success");
+
+        epfaButton.textContent = "✓";
+
+        epfaStatus.textContent =
+            "EPFA correct. Scroll down to login.";
+
+        epfaStatus.style.color =
+            "#86efac";
+
+        scrollNote.textContent =
+            "✓ EPFA correct — scroll down to continue to Admin Login.";
+
+        scrollNote.classList.add("show");
+
+        adminLogin.classList.add("active");
+
+        partnerLogin.classList.remove("active");
+
+
+        setTimeout(function(){
+
+            adminLogin.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+        },250);
+
+    }
+
+}
+
+
+/* =========================================================
+   EPFA BUTTON
+========================================================= */
+
+epfaButton.addEventListener(
+    "click",
+    verifyEPFA
+);
+
+
+/* =========================================================
+   EPFA ENTER
+========================================================= */
+
+epfaPin.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            verifyEPFA();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   EPFA ONLY NUMBERS
+========================================================= */
+
+epfaPin.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value
+                .replace(/\D/g,"")
+                .slice(0,4);
+
+    }
+);
+
+
+/* =========================================================
+   PARTNER LOGIN
+========================================================= */
+
+const partnerForm =
+    document.getElementById("partnerForm");
+
+
+partnerForm.addEventListener(
+    "submit",
+    function(event){
+
+        event.preventDefault();
+
+
+        const id =
+            document
+                .getElementById("partnerID")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("partnerPassword")
+                .value
+                .trim();
+
+
+        if(
+            id === "ssp23" &&
+            password === "00000"
+        ){
+
+            sessionStorage.setItem(
+                "scrapPartnerLoggedIn",
+                "true"
+            );
+
+
+            sessionStorage.setItem(
+                "scrapPartner",
+                "1111"
+            );
+
+
+            window.location.href =
+                "patner.html";
+
+        }
+
+        else{
+
+            const error =
+                document.getElementById(
+                    "partnerError"
+                );
+
+            error.style.display =
+                "block";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ADMIN ACCOUNTS
+========================================================= */
+
+const admins = [
+
+    {
+        id:"saravanan",
+        password:"9514252104"
+    },
+
+    {
+        id:"krishnan",
+        password:"8459075088"
+    }
+
+];
+
+
+/* =========================================================
+   ADMIN LOGIN
+========================================================= */
+
+const adminForm =
+    document.getElementById("adminForm");
+
+
+adminForm.addEventListener(
+    "submit",
+    function(event){
+
+        event.preventDefault();
+
+
+        const enteredID =
+            document
+                .getElementById("adminID")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const enteredPassword =
+            document
+                .getElementById("adminPassword")
+                .value
+                .trim();
+
+
+        const validAdmin =
+            admins.find(function(admin){
+
+                return(
+                    admin.id === enteredID &&
+                    admin.password === enteredPassword
+                );
+
+            });
+
+
+        if(validAdmin){
+
+            sessionStorage.setItem(
+                "scrapAdminLoggedIn",
+                "true"
+            );
+
+
+            sessionStorage.setItem(
+                "scrapAdmin",
+                validAdmin.id
+            );
+
+
+            window.location.href =
+                "admin.html";
+
+        }
+
+        else{
+
+            const error =
+                document.getElementById(
+                    "adminError"
+                );
+
+            error.style.display =
+                "block";
+
+
+            document.getElementById(
+                "adminPassword"
+            ).value = "";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SHOW / HIDE PASSWORD
+========================================================= */
+
+function togglePassword(
+    inputId,
+    button
+){
+
+    const input =
+        document.getElementById(
+            inputId
+        );
+
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+        button.textContent = "🙈";
+
+    }
+
+    else{
+
+        input.type = "password";
+
+        button.textContent = "👁";
+
+    }
+
+}
+
+
+/* =========================================================
+   HIDE PARTNER ERROR
+========================================================= */
+
+document
+    .getElementById("partnerID")
+    .addEventListener(
+        "input",
+        function(){
+
+            document
+                .getElementById("partnerError")
+                .style.display = "none";
+
+        }
+    );
+
+
+document
+    .getElementById("partnerPassword")
+    .addEventListener(
+        "input",
+        function(){
+
+            document
+                .getElementById("partnerError")
+                .style.display = "none";
+
+        }
+    );
+
+
+/* =========================================================
+   HIDE ADMIN ERROR
+========================================================= */
+
+document
+    .getElementById("adminID")
+    .addEventListener(
+        "input",
+        function(){
+
+            document
+                .getElementById("adminError")
+                .style.display = "none";
+
+        }
+    );
+
+
+document
+    .getElementById("adminPassword")
+    .addEventListener(
+        "input",
+        function(){
+
+            document
+                .getElementById("adminError")
+                .style.display = "none";
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
