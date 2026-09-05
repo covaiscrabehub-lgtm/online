@@ -2856,8 +2856,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
 
-    apiKey:"AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
-
+    // No Google Maps API key is used on this tracking page.
+    // Realtime Database works from databaseURL/appId without exposing a Maps key.
     authDomain:"covai-scrap-hub.firebaseapp.com",
 
     databaseURL:
@@ -4866,38 +4866,81 @@ function initMap(custLat,custLng){
             14
         );
 
+    // Keyless Leaflet map: no Google Maps JavaScript API key is required.
+    // If a WebView blocks a tile provider, the fallback layer below is used.
+
 
     /*
-       WebIntoApp/WebView can receive 403 responses from the
-       standard OSM tile host. Use CARTO tiles first and keep
-       OSM as a fallback layer if CARTO is unavailable.
+       WebIntoApp/WebView-safe map tiles.
+       Primary: Esri World Street Map (HTTPS, no API key).
+       Fallbacks: CARTO Voyager and OpenStreetMap.
     */
     const primaryTiles = L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-        {
-            maxZoom:20,
-            subdomains:"abcd",
-            crossOrigin:true,
-            attribution:"© OpenStreetMap © CARTO"
-        }
-    );
-
-    const fallbackTiles = L.tileLayer(
-        "https://tile.openstreetmap.de/{z}/{x}/{y}.png",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Navigation_Map/MapServer/tile/{z}/{y}/{x}",
         {
             maxZoom:19,
-            crossOrigin:true,
-            attribution:"© OpenStreetMap"
+            attribution:"© Esri © OpenStreetMap contributors",
+            crossOrigin:true
         }
     );
 
-    primaryTiles.on("tileerror",function(){
-        if(map && !map.hasLayer(fallbackTiles)){
-            fallbackTiles.addTo(map);
+    /* Keyless WebView fallback. CARTO is intentionally not used here because
+       its public raster basemap can request an API key. */
+    const fallbackTiles = L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom:19,
+            attribution:"© OpenStreetMap contributors",
+            crossOrigin:true
         }
-    });
+    );
+
+    const finalFallbackTiles = L.tileLayer(
+        "https://a.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png",
+        {
+            maxZoom:20,
+            attribution:"© OpenStreetMap contributors © OSM France",
+            crossOrigin:true
+        }
+    );
+
+    let mapLayerIndex = 0;
+    let mapLayerSwitched = false;
+    const mapLayers = [primaryTiles, fallbackTiles, finalFallbackTiles];
+
+    function switchMapLayer(){
+        if(!map || mapLayerSwitched) return;
+        mapLayerSwitched = true;
+        const current = mapLayers[mapLayerIndex];
+        if(current && map.hasLayer(current)) map.removeLayer(current);
+        mapLayerIndex++;
+        if(mapLayerIndex < mapLayers.length){
+            mapLayers[mapLayerIndex].addTo(map);
+            mapLayers[mapLayerIndex].once("load",function(){
+                mapLayerSwitched = false;
+            });
+        }
+    }
+
+    primaryTiles.on("tileerror",function(){ switchMapLayer(); });
+    fallbackTiles.on("tileerror",function(){ switchMapLayer(); });
 
     primaryTiles.addTo(map);
+
+    // Do not use Google Maps here, so no Google API key is required.
+    // If a WebView blocks a tile server, move to the next keyless provider.
+    [primaryTiles, fallbackTiles, finalFallbackTiles].forEach(function(layer){
+        layer.on("tileerror",function(){
+            const el = document.getElementById("map");
+            if(el && mapLayerIndex >= mapLayers.length - 1 && !el.querySelector(".map-keyless-error")){
+                const msg = document.createElement("div");
+                msg.className = "map-keyless-error";
+                msg.textContent = "Map connection unavailable. Please check the app internet permission.";
+                msg.style.cssText = "position:absolute;z-index:1000;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.96);padding:10px 12px;border-radius:12px;font:600 12px/1.4 system-ui;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.12);";
+                el.appendChild(msg);
+            }
+        });
+    });
 
 
     L.control.zoom({
@@ -7474,6 +7517,16 @@ document.addEventListener("visibilitychange",()=>{
 <!-- =======================================================
      YOUR LANGUAGE SYSTEM
 ======================================================= -->
+
+<script>
+/* COVAI SCRAP HUB: tracking page supports Tamil + English only. */
+(function(){
+  try {
+    const saved = localStorage.getItem("lang");
+    if(saved !== "ta" && saved !== "en") localStorage.setItem("lang","en");
+  } catch(e) {}
+})();
+</script>
 
 <script src="lang-system.js"></script>
 
