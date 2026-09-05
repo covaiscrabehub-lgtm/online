@@ -2,366 +2,1133 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#0b9f55">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
 <title>Partner Panel - COVAI SCRAP HUB</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+  --green:#0b9f55;
+  --green2:#087c42;
+  --green3:#e9f9f0;
+  --dark:#10231a;
+  --text:#17231d;
+  --muted:#718078;
+  --border:#e5ece8;
+  --bg:#f4f8f6;
+  --white:#fff;
+  --blue:#2563eb;
+  --bluebg:#eff6ff;
+  --orange:#f59e0b;
+  --orangebg:#fff8e8;
+  --red:#ef4444;
+  --redbg:#fff1f1;
+  --shadow:0 8px 30px rgba(16,35,26,.07);
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
-font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-background:#f8faf9;
-color:#1a1a1a;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  background:
+    radial-gradient(circle at top right,#dff8e9 0,transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
 }
+
+/* ================= HEADER ================= */
 
 header{
-background:linear-gradient(135deg,#10b981,#059669);
-padding:20px;
-box-shadow:0 2px 12px rgba(16,185,129,0.2);
-position:sticky;
-top:0;
-z-index:100;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(229,236,232,.9);
 }
 
-.header-content{
-max-width:1200px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
+.header-inner{
+  max-width:1180px;
+  margin:auto;
+  min-height:68px;
+  padding:10px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 
-h1{
-font-size:24px;
-color:#fff;
-font-weight:700;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  min-width:0;
+}
+
+.logo{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  object-fit:cover;
+  background:#e9f9f0;
+  box-shadow:0 5px 15px rgba(11,159,85,.15);
+}
+
+.brand-text{
+  min-width:0;
+}
+
+.brand-name{
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:-.3px;
+  white-space:nowrap;
+}
+
+.brand-sub{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+  margin-top:2px;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
 .partner-badge{
-background:rgba(255,255,255,0.2);
-padding:8px 16px;
-border-radius:20px;
-color:#fff;
-font-size:13px;
-font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:var(--green3);
+  color:var(--green2);
+  border:1px solid #cdeedb;
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:10px;
+  font-weight:900;
+  max-width:150px;
 }
+
+.partner-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 0 4px rgba(11,159,85,.1);
+}
+
+.refresh-btn{
+  width:38px;
+  height:38px;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:17px;
+  display:grid;
+  place-items:center;
+  transition:.2s;
+}
+
+.refresh-btn:active{
+  transform:scale(.94);
+}
+
+/* ================= MAIN ================= */
 
 main{
-max-width:1200px;
-margin:20px auto;
-padding:0 20px;
+  max-width:1180px;
+  margin:auto;
+  padding:18px;
 }
+
+/* ================= WELCOME ================= */
+
+.hero{
+  background:
+    linear-gradient(135deg,#087c42,#0b9f55 60%,#14b866);
+  color:#fff;
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:15px;
+  box-shadow:0 12px 35px rgba(11,159,85,.20);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  right:-60px;
+  top:-65px;
+}
+
+.hero h1{
+  font-size:24px;
+  line-height:1.1;
+  font-weight:900;
+  letter-spacing:-.7px;
+  position:relative;
+  z-index:2;
+}
+
+.hero p{
+  margin-top:7px;
+  font-size:12px;
+  opacity:.88;
+  position:relative;
+  z-index:2;
+}
+
+.hero-status{
+  margin-top:15px;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:10px;
+  font-weight:800;
+}
+
+/* ================= INPUT ================= */
 
 .partner-input-card{
-background:#fff;
-border-radius:16px;
-padding:24px;
-margin-bottom:24px;
-box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  box-shadow:var(--shadow);
+  margin-bottom:15px;
 }
 
-.partner-input-card h2{
-font-size:20px;
-margin-bottom:8px;
-color:#1a1a1a;
+.input-title{
+  font-size:14px;
+  font-weight:900;
+  margin-bottom:4px;
 }
 
-.partner-input-card p{
-font-size:14px;
-color:#6b7280;
-margin-bottom:16px;
+.input-sub{
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:12px;
 }
 
 .input-group{
-display:flex;
-gap:12px;
+  display:flex;
+  gap:8px;
 }
 
 .input-group input{
-flex:1;
-padding:14px;
-border:2px solid #e5e7eb;
-border-radius:10px;
-font-size:14px;
-outline:none;
+  min-width:0;
+  flex:1;
+  height:45px;
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  padding:0 13px;
+  font-size:13px;
+  font-weight:600;
+  outline:none;
+  background:#fbfdfc;
+  color:var(--text);
 }
 
 .input-group input:focus{
-border-color:#10b981;
+  border-color:var(--green);
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(11,159,85,.08);
 }
 
-.input-group button{
-padding:14px 24px;
-background:#10b981;
-color:#fff;
-border:0;
-border-radius:10px;
-font-size:14px;
-font-weight:600;
-cursor:pointer;
+.load-btn{
+  height:45px;
+  border:0;
+  border-radius:12px;
+  padding:0 16px;
+  background:var(--green);
+  color:#fff;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  box-shadow:0 6px 15px rgba(11,159,85,.18);
+  white-space:nowrap;
 }
 
-.input-group button:hover{
-background:#059669;
+.load-btn:active{
+  transform:scale(.97);
 }
+
+/* ================= STATS ================= */
 
 .stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:16px;
-margin-bottom:24px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:15px;
 }
 
 .stat-card{
-background:#fff;
-border-radius:16px;
-padding:20px;
-box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:13px;
+  box-shadow:0 5px 20px rgba(16,35,26,.045);
+  position:relative;
+  overflow:hidden;
+}
+
+.stat-card:after{
+  content:"";
+  position:absolute;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:var(--green3);
+  right:-18px;
+  bottom:-18px;
+}
+
+.stat-icon{
+  font-size:17px;
+  margin-bottom:7px;
 }
 
 .stat-label{
-font-size:13px;
-color:#6b7280;
-margin-bottom:8px;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.3px;
 }
 
 .stat-value{
-font-size:32px;
-font-weight:700;
-color:#10b981;
+  font-size:23px;
+  line-height:1;
+  margin-top:4px;
+  font-weight:950;
+  color:var(--dark);
 }
 
+/* ================= SECTION HEADER ================= */
+
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:18px 2px 10px;
+}
+
+.section-title{
+  font-size:16px;
+  font-weight:950;
+  letter-spacing:-.3px;
+}
+
+.section-count{
+  background:#fff;
+  border:1px solid var(--border);
+  color:var(--muted);
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:10px;
+  font-weight:900;
+}
+
+/* ================= PICKUPS ================= */
+
 .pickups-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(400px,1fr));
-gap:20px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
 }
 
 .pickup-card{
-background:#fff;
-border-radius:16px;
-padding:20px;
-box-shadow:0 2px 12px rgba(0,0,0,0.06);
-position:relative;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:15px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
 }
 
-.corner-badge{
-position:absolute;
-top:12px;
-right:12px;
-padding:6px 12px;
-border-radius:20px;
-font-size:11px;
-font-weight:700;
-background:#d1fae5;
-color:#065f46;
+.pickup-card.live{
+  border-color:#bcebd0;
 }
 
-.card-header{
-margin-bottom:16px;
+.card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  padding-right:1px;
+}
+
+.customer-wrap{
+  min-width:0;
 }
 
 .customer-name{
-font-size:18px;
-font-weight:700;
-margin-bottom:4px;
+  font-size:16px;
+  font-weight:950;
+  line-height:1.2;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .pickup-id{
-font-size:12px;
-color:#9ca3af;
+  margin-top:4px;
+  font-size:9px;
+  color:#98a39d;
+  font-weight:700;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
+.status-badge{
+  flex:none;
+  padding:6px 9px;
+  border-radius:999px;
+  font-size:9px;
+  font-weight:900;
+  background:var(--green3);
+  color:var(--green2);
+  border:1px solid #cdeedb;
+  white-space:nowrap;
+}
+
+.status-badge.warning{
+  background:var(--orangebg);
+  color:#a16207;
+  border-color:#fde7a8;
+}
+
+.status-badge.blue{
+  background:var(--bluebg);
+  color:#1d4ed8;
+  border-color:#bfdbfe;
+}
+
+.status-badge.red{
+  background:var(--redbg);
+  color:#b91c1c;
+  border-color:#fecaca;
+}
+
+/* ================= CUSTOMER MINI ================= */
+
+.customer-mini{
+  margin-top:13px;
+  padding:10px;
+  border-radius:13px;
+  background:#f8fbf9;
+  border:1px solid #edf2ef;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.customer-contact{
+  min-width:0;
+}
+
+.customer-contact-label{
+  color:var(--muted);
+  font-size:8px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.customer-phone{
+  margin-top:3px;
+  font-size:12px;
+  font-weight:850;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.call-small{
+  flex:none;
+  text-decoration:none;
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  background:#eaf8f0;
+  color:var(--green2);
+  display:grid;
+  place-items:center;
+  font-size:16px;
+}
+
+/* ================= DETAILS ================= */
+
 .card-details{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-margin-bottom:16px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:10px;
 }
 
 .detail-item{
-background:#f9fafb;
-padding:10px;
-border-radius:8px;
+  background:#fafcfb;
+  border:1px solid #edf1ee;
+  border-radius:10px;
+  padding:9px;
+  min-width:0;
 }
 
 .detail-label{
-font-size:11px;
-color:#6b7280;
-margin-bottom:4px;
+  font-size:8px;
+  color:#8a958f;
+  font-weight:800;
+  text-transform:uppercase;
 }
 
 .detail-value{
-font-size:13px;
-font-weight:600;
+  margin-top:4px;
+  font-size:11px;
+  font-weight:900;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
+
+/* ================= ADDRESS ================= */
 
 .address-box{
-background:#f9fafb;
-padding:12px;
-border-radius:8px;
-margin-bottom:16px;
+  margin-top:10px;
+  padding:11px;
+  border-radius:12px;
+  background:#f8faf9;
+  border:1px solid #edf1ee;
 }
 
+.address-title{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:9px;
+  font-weight:900;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+
+.address-text{
+  margin-top:5px;
+  font-size:11px;
+  line-height:1.5;
+  color:#39453f;
+  font-weight:600;
+}
+
+/* ================= GPS ================= */
+
 .gps-status-box{
-background:#d1fae5;
-border:2px solid #10b981;
-padding:14px;
-border-radius:10px;
-margin-bottom:16px;
-text-align:center;
+  margin-top:10px;
+  border-radius:13px;
+  padding:11px;
+  background:#ecfdf3;
+  border:1px solid #bdebd0;
 }
 
 .gps-status-box.offline{
-background:#fef3c7;
-border-color:#f59e0b;
+  background:#fff9eb;
+  border-color:#f8df9b;
+}
+
+.gps-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.gps-left{
+  min-width:0;
 }
 
 .gps-label{
-font-size:11px;
-font-weight:600;
-color:#065f46;
-margin-bottom:4px;
+  font-size:9px;
+  font-weight:950;
+  color:#087c42;
 }
 
 .gps-status-box.offline .gps-label{
-color:#92400e;
+  color:#a16207;
 }
 
 .gps-value{
-font-size:14px;
-font-weight:700;
-color:#059669;
+  margin-top:4px;
+  font-size:10px;
+  color:#476052;
+  font-weight:700;
+  line-height:1.45;
+  word-break:break-word;
 }
 
-.gps-status-box.offline .gps-value{
-color:#d97706;
+.gps-live-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#16a34a;
+  box-shadow:0 0 0 5px rgba(22,163,74,.12);
+  flex:none;
+  animation:pulse 1.7s infinite;
 }
 
-.action-btns{
-display:grid;
-grid-template-columns:1fr;
-gap:10px;
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.18)}
 }
 
-.action-btn{
-padding:14px;
-border:0;
-border-radius:10px;
-font-size:14px;
-font-weight:600;
-cursor:pointer;
-transition:.2s;
+/* ================= PROGRESS ================= */
+
+.progress-wrap{
+  margin-top:13px;
 }
 
-.action-btn:hover{
-transform:translateY(-1px);
+.progress-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
 }
 
-.btn-customer-track{
-background:#3b82f6;
-color:#fff;
+.progress-title span:first-child{
+  font-size:9px;
+  font-weight:900;
+  color:var(--muted);
+  text-transform:uppercase;
 }
 
-.btn-enable{
-background:#10b981;
-color:#fff;
+.progress-title span:last-child{
+  font-size:9px;
+  font-weight:900;
+  color:var(--green2);
 }
 
-.btn-disable{
-background:#ef4444;
-color:#fff;
+.progress-track{
+  height:6px;
+  border-radius:999px;
+  background:#e9efeb;
+  overflow:hidden;
 }
 
-.btn-enable:disabled,
-.btn-disable:disabled{
-opacity:0.5;
-cursor:not-allowed;
+.progress-fill{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#087c42,#14b866);
+  transition:width .3s ease;
 }
+
+/* ================= TRACKING BUTTONS ================= */
 
 .tracking-section{
-margin-top:16px;
-padding-top:16px;
-border-top:2px solid #e5e7eb;
+  margin-top:13px;
+  padding-top:13px;
+  border-top:1px solid #edf1ee;
 }
 
 .tracking-title{
-font-size:12px;
-font-weight:700;
-color:#6b7280;
-margin-bottom:10px;
+  font-size:9px;
+  font-weight:950;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:8px;
 }
 
 .tracking-btns{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:8px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
 }
 
 .tracking-btn{
-padding:12px 8px;
-border:2px solid #e5e7eb;
-background:#fff;
-border-radius:8px;
-font-size:12px;
-font-weight:600;
-cursor:pointer;
-transition:.2s;
-text-align:center;
+  min-height:48px;
+  border:1px solid #e2e9e5;
+  background:#fff;
+  border-radius:10px;
+  padding:5px 3px;
+  cursor:pointer;
+  font-size:8px;
+  font-weight:850;
+  color:#52615a;
+  line-height:1.2;
+  transition:.18s;
 }
 
-.tracking-btn:hover{
-border-color:#10b981;
-background:#f0fdf4;
+.tracking-btn span{
+  display:block;
+  font-size:15px;
+  margin-bottom:3px;
+}
+
+.tracking-btn:active{
+  transform:scale(.95);
 }
 
 .tracking-btn.active{
-background:#10b981;
-color:#fff;
-border-color:#10b981;
+  background:var(--green);
+  color:#fff;
+  border-color:var(--green);
+  box-shadow:0 5px 12px rgba(11,159,85,.16);
 }
 
-.tracking-btn.completed{
-background:#d1fae5;
-border-color:#10b981;
-color:#065f46;
+.tracking-btn.done{
+  background:#e9f9f0;
+  color:#087c42;
+  border-color:#cdeedb;
 }
+
+/* ================= MAIN ACTIONS ================= */
+
+.action-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+  margin-top:11px;
+}
+
+.action-btn{
+  min-height:42px;
+  border:0;
+  border-radius:11px;
+  padding:9px 8px;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  transition:.18s;
+}
+
+.action-btn:active{
+  transform:scale(.97);
+}
+
+.btn-track{
+  background:#eaf2ff;
+  color:#1d4ed8;
+}
+
+.btn-call{
+  background:#eaf8f0;
+  color:#087c42;
+}
+
+.btn-whatsapp{
+  background:#eaf9ef;
+  color:#15803d;
+}
+
+.btn-map{
+  background:#fff5e5;
+  color:#b45309;
+}
+
+.btn-enable{
+  background:#0b9f55;
+  color:#fff;
+}
+
+.btn-disable{
+  background:#fff0f0;
+  color:#dc2626;
+}
+
+.btn-delete{
+  background:#f7f7f7;
+  color:#b91c1c;
+  border:1px solid #eee;
+}
+
+.action-btn:disabled{
+  opacity:.42;
+  cursor:not-allowed;
+  transform:none;
+}
+
+/* ================= EMPTY ================= */
 
 .empty-state{
-text-align:center;
-padding:60px 20px;
-color:#9ca3af;
-background:#fff;
-border-radius:16px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:45px 20px;
+  text-align:center;
+  box-shadow:var(--shadow);
 }
 
+.empty-icon{
+  width:60px;
+  height:60px;
+  border-radius:20px;
+  background:var(--green3);
+  display:grid;
+  place-items:center;
+  margin:0 auto 13px;
+  font-size:28px;
+}
+
+.empty-state h3{
+  font-size:16px;
+  font-weight:950;
+}
+
+.empty-state p{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+}
+
+/* ================= LOADING ================= */
+
 .loading{
-text-align:center;
-padding:60px;
+  padding:45px 20px;
+  text-align:center;
+  background:#fff;
+  border-radius:19px;
+  border:1px solid var(--border);
 }
 
 .spinner{
-width:40px;
-height:40px;
-border:3px solid #e5e7eb;
-border-top-color:#10b981;
-border-radius:50%;
-animation:spin 0.8s linear infinite;
-margin:0 auto 16px;
+  width:34px;
+  height:34px;
+  border:3px solid #dfe8e3;
+  border-top-color:var(--green);
+  border-radius:50%;
+  animation:spin .75s linear infinite;
+  margin:0 auto 12px;
 }
 
 @keyframes spin{
-to{transform:rotate(360deg)}
+  to{transform:rotate(360deg)}
 }
 
-@media(max-width:900px){
-.stats{grid-template-columns:repeat(2,1fr)}
-.pickups-grid{grid-template-columns:1fr}
+.loading p{
+  font-size:11px;
+  color:var(--muted);
+  font-weight:700;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translate(-50%,20px);
+  width:min(92%,390px);
+  background:#10231a;
+  color:#fff;
+  padding:12px 14px;
+  border-radius:13px;
+  font-size:11px;
+  font-weight:800;
+  text-align:center;
+  box-shadow:0 12px 35px rgba(0,0,0,.2);
+  opacity:0;
+  pointer-events:none;
+  z-index:9999;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* ================= MAP MODAL ================= */
+
+.map-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(8,20,14,.72);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+  z-index:5000;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.map-modal.show{
+  display:flex;
+}
+
+.map-sheet{
+  width:min(700px,100%);
+  height:min(82vh,700px);
+  background:#fff;
+  border-radius:24px 24px 0 0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 -15px 50px rgba(0,0,0,.25);
+}
+
+.map-head{
+  min-height:62px;
+  padding:12px 15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid var(--border);
+}
+
+.map-title{
+  font-size:14px;
+  font-weight:950;
+}
+
+.map-sub{
+  margin-top:3px;
+  font-size:9px;
+  color:var(--muted);
+}
+
+.close-map{
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:11px;
+  background:#f2f5f3;
+  cursor:pointer;
+  font-size:17px;
+}
+
+.map-body{
+  flex:1;
+  background:#e9efeb;
+  position:relative;
+}
+
+#partnerMap{
+  width:100%;
+  height:100%;
+}
+
+.map-actions{
+  padding:10px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  border-top:1px solid var(--border);
+}
+
+.map-action{
+  min-height:42px;
+  border:0;
+  border-radius:11px;
+  background:var(--green);
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.map-action.secondary{
+  background:#eef5f1;
+  color:#087c42;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:800px){
+
+  main{
+    padding:13px;
+  }
+
+  .pickups-grid{
+    grid-template-columns:1fr;
+  }
+
 }
 
 @media(max-width:600px){
-.stats{grid-template-columns:1fr}
-.input-group{flex-direction:column}
+
+  .header-inner{
+    min-height:60px;
+    padding:8px 12px;
+  }
+
+  .logo{
+    width:37px;
+    height:37px;
+    border-radius:11px;
+  }
+
+  .brand-name{
+    font-size:14px;
+  }
+
+  .brand-sub{
+    font-size:8px;
+  }
+
+  .partner-badge{
+    max-width:115px;
+    padding:7px 9px;
+    font-size:8px;
+  }
+
+  .refresh-btn{
+    width:35px;
+    height:35px;
+  }
+
+  main{
+    padding:10px;
+  }
+
+  .hero{
+    border-radius:18px;
+    padding:18px;
+  }
+
+  .hero h1{
+    font-size:21px;
+  }
+
+  .hero p{
+    font-size:10px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
+  }
+
+  .stat-card{
+    padding:11px;
+    border-radius:13px;
+  }
+
+  .stat-value{
+    font-size:21px;
+  }
+
+  .stat-label{
+    font-size:8px;
+  }
+
+  .input-group{
+    flex-direction:column;
+  }
+
+  .load-btn{
+    width:100%;
+  }
+
+  .pickup-card{
+    padding:13px;
+    border-radius:17px;
+  }
+
+  .customer-name{
+    font-size:15px;
+  }
+
+  .card-details{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .tracking-btns{
+    grid-template-columns:repeat(5,1fr);
+  }
+
+  .tracking-btn{
+    min-height:44px;
+    font-size:7px;
+  }
+
+  .tracking-btn span{
+    font-size:13px;
+  }
+
+  .action-btn{
+    min-height:40px;
+    font-size:9px;
+  }
+
+  .map-sheet{
+    height:86vh;
+    border-radius:22px 22px 0 0;
+  }
+}
+
+@media(max-width:360px){
+
+  .brand-sub{
+    display:none;
+  }
+
+  .partner-badge{
+    max-width:90px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .card-details{
+    gap:5px;
+  }
+
+  .detail-item{
+    padding:7px;
+  }
+
+  .detail-value{
+    font-size:10px;
+  }
+
+  .tracking-btn{
+    min-height:42px;
+    padding:3px 1px;
+  }
+
+  .tracking-btn span{
+    font-size:12px;
+  }
 }
 </style>
 </head>
@@ -369,588 +1136,2605 @@ to{transform:rotate(360deg)}
 <body>
 
 <header>
-<div class="header-content">
-<h1>🚚 Partner Panel</h1>
-<div class="partner-badge" id="partnerBadge">PARTNER</div>
-</div>
+  <div class="header-inner">
+
+    <div class="brand">
+
+      <img
+        src="logo.jpeg"
+        class="logo"
+        alt="COVAI SCRAP HUB"
+        onerror="this.style.display='none'"
+      >
+
+      <div class="brand-text">
+        <div class="brand-name">♻️ COVAI SCRAP HUB</div>
+        <div class="brand-sub">PARTNER DELIVERY PANEL</div>
+      </div>
+
+    </div>
+
+    <div class="header-right">
+
+      <div class="partner-badge">
+        <span class="partner-dot"></span>
+        <span id="partnerBadge">PARTNER</span>
+      </div>
+
+      <button
+        class="refresh-btn"
+        onclick="refreshPartner()"
+        title="Refresh"
+      >
+        ↻
+      </button>
+
+    </div>
+
+  </div>
 </header>
+
 
 <main>
 
-<div class="partner-input-card">
-<h2>Partner Dashboard</h2>
-<p>Enter your partner name assigned by admin</p>
-<div class="input-group">
-<input id="partnerNameInput" placeholder="Partner name">
-<button onclick="loadPartner()">Load My Pickups</button>
-</div>
-</div>
+  <!-- HERO -->
 
-<div class="stats" id="statsSection" style="display:none">
-<div class="stat-card">
-<div class="stat-label">Total Assigned</div>
-<div class="stat-value" id="totalCount">0</div>
-</div>
-<div class="stat-card">
-<div class="stat-label">Active</div>
-<div class="stat-value" id="activeCount">0</div>
-</div>
-<div class="stat-card">
-<div class="stat-label">Live Tracking</div>
-<div class="stat-value" id="liveCount">0</div>
-</div>
-<div class="stat-card">
-<div class="stat-label">Completed</div>
-<div class="stat-value" id="completedCount">0</div>
-</div>
-</div>
+  <section class="hero">
 
-<div id="pickupsGrid" class="pickups-grid">
-<div class="empty-state">
-<h3>👋 Welcome Partner!</h3>
-<p>Enter your partner name above to view assigned pickups</p>
-</div>
-</div>
+    <h1>Partner Dashboard 🚚</h1>
+
+    <p>
+      Manage your assigned scrap pickups, customer contact,
+      GPS sharing and pickup status from one place.
+    </p>
+
+    <div class="hero-status">
+      🟢 Partner system online
+    </div>
+
+  </section>
+
+
+  <!-- PARTNER LOGIN / SEARCH -->
+
+  <section class="partner-input-card">
+
+    <div class="input-title">
+      👤 Load Your Pickups
+    </div>
+
+    <div class="input-sub">
+      Enter the exact partner name assigned by admin.
+    </div>
+
+    <div class="input-group">
+
+      <input
+        id="partnerNameInput"
+        type="text"
+        autocomplete="off"
+        placeholder="Enter partner name"
+      >
+
+      <button
+        class="load-btn"
+        onclick="loadPartner()"
+      >
+        Load Pickups
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- STATS -->
+
+  <div
+    class="stats"
+    id="statsSection"
+    style="display:none"
+  >
+
+    <div class="stat-card">
+      <div class="stat-icon">📦</div>
+      <div class="stat-label">Total Assigned</div>
+      <div
+        class="stat-value"
+        id="totalCount"
+      >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-icon">🚛</div>
+      <div class="stat-label">Active</div>
+      <div
+        class="stat-value"
+        id="activeCount"
+      >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-icon">📍</div>
+      <div class="stat-label">Live GPS</div>
+      <div
+        class="stat-value"
+        id="liveCount"
+      >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-icon">✓</div>
+      <div class="stat-label">Completed</div>
+      <div
+        class="stat-value"
+        id="completedCount"
+      >
+        0
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- SECTION TITLE -->
+
+  <div
+    class="section-head"
+    id="pickupSectionHead"
+    style="display:none"
+  >
+
+    <div class="section-title">
+      My Assigned Pickups
+    </div>
+
+    <div
+      class="section-count"
+      id="sectionCount"
+    >
+      0 Pickups
+    </div>
+
+  </div>
+
+
+  <!-- PICKUPS -->
+
+  <div
+    id="pickupsGrid"
+    class="pickups-grid"
+  >
+
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        🚚
+      </div>
+
+      <h3>
+        Welcome Partner!
+      </h3>
+
+      <p>
+        Enter your partner name above to view
+        your assigned pickups.
+      </p>
+
+    </div>
+
+  </div>
 
 </main>
 
+
+<!-- MAP MODAL -->
+
+<div
+  id="mapModal"
+  class="map-modal"
+  onclick="closeMapOutside(event)"
+>
+
+  <div class="map-sheet">
+
+    <div class="map-head">
+
+      <div>
+        <div
+          class="map-title"
+          id="mapTitle"
+        >
+          Customer Location
+        </div>
+
+        <div
+          class="map-sub"
+          id="mapSub"
+        >
+          Pickup location
+        </div>
+      </div>
+
+      <button
+        class="close-map"
+        onclick="closeMap()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <div class="map-body">
+
+      <iframe
+        id="mapFrame"
+        style="
+          width:100%;
+          height:100%;
+          border:0;
+          display:none;
+        "
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+
+      <div
+        id="mapFallback"
+        style="
+          width:100%;
+          height:100%;
+          display:grid;
+          place-items:center;
+          padding:30px;
+          text-align:center;
+          color:#718078;
+          font-size:12px;
+          font-weight:700;
+        "
+      >
+        📍 Customer location not available.
+      </div>
+
+    </div>
+
+    <div class="map-actions">
+
+      <button
+        class="map-action"
+        onclick="openGoogleMaps()"
+      >
+        🗺️ Open Google Maps
+      </button>
+
+      <button
+        class="map-action secondary"
+        onclick="closeMap()"
+      >
+        Done
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
 <script type="module">
 
-import {initializeApp}
+import {
+  initializeApp
+}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+
 import {
-getDatabase,
-ref,
-onValue,
-update,
-remove
+  getDatabase,
+  ref,
+  onValue,
+  update,
+  remove
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-const firebaseConfig={
-apiKey:"AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
-authDomain:"covai-scrap-hub.firebaseapp.com",
-databaseURL:"https://covai-scrap-hub-default-rtdb.firebaseio.com",
-projectId:"covai-scrap-hub",
-storageBucket:"covai-scrap-hub.firebasestorage.app",
-messagingSenderId:"979133721874",
-appId:"1:979133721874:web:c5829bb8dbf5270c0917cb",
-measurementId:"G-P3PTSBHWMF"
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
+
+  authDomain:
+    "covai-scrap-hub.firebaseapp.com",
+
+  databaseURL:
+    "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+
+  projectId:
+    "covai-scrap-hub",
+
+  storageBucket:
+    "covai-scrap-hub.firebasestorage.app",
+
+  messagingSenderId:
+    "979133721874",
+
+  appId:
+    "1:979133721874:web:c5829bb8dbf5270c0917cb",
+
+  measurementId:
+    "G-P3PTSBHWMF"
+
 };
 
-const db=getDatabase(initializeApp(firebaseConfig));
 
-let allPickups=[];
-let partnerPickups=[];
-let partnerName="";
-const gpsWatchers={};
+const app = initializeApp(firebaseConfig);
 
-// Check URL for partner name
-const urlParams=new URLSearchParams(location.search);
-const urlPartner=urlParams.get("partner")||urlParams.get("name")||"";
+const db = getDatabase(app);
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let allPickups = [];
+
+let partnerPickups = [];
+
+let partnerName = "";
+
+const gpsWatchers = {};
+
+let currentMapPickup = null;
+
+
+/* =========================================================
+   URL PARTNER
+========================================================= */
+
+const urlParams =
+  new URLSearchParams(location.search);
+
+const urlPartner =
+  urlParams.get("partner") ||
+  urlParams.get("name") ||
+  "";
+
 
 if(urlPartner){
-document.getElementById("partnerNameInput").value=urlPartner;
-partnerName=urlPartner;
-loadPartner();
+
+  document.getElementById(
+    "partnerNameInput"
+  ).value = urlPartner;
+
+  partnerName = urlPartner;
+
 }
 
-onValue(ref(db,"pickupRequests"),snap=>{
 
-const data=snap.val()||{};
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
-allPickups=Object.entries(data).map(([id,p])=>({
-...p,
-id
-}));
+function esc(value){
 
-if(partnerName){
-filterAndRender();
+  return String(value ?? "")
+    .replace(/[&<>"']/g, function(m){
+
+      return {
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[m];
+
+    });
+
 }
 
-});
 
-window.loadPartner=function(){
+/* =========================================================
+   NUMBER
+========================================================= */
 
-partnerName=document.getElementById("partnerNameInput").value.trim();
+function num(value){
 
-if(!partnerName){
-alert("Please enter partner name");
-return;
+  const n = Number(value);
+
+  return Number.isFinite(n) ? n : 0;
+
 }
 
-document.getElementById("partnerBadge").textContent=partnerName.toUpperCase();
 
-filterAndRender();
+/* =========================================================
+   PHONE
+========================================================= */
+
+function getPhone(p){
+
+  return (
+    p?.phone ||
+    p?.mobile ||
+    p?.customerPhone ||
+    p?.customerMobile ||
+    p?.phoneNumber ||
+    p?.customer?.phone ||
+    p?.customer?.mobile ||
+    ""
+  );
+
+}
+
+
+function cleanPhone(phone){
+
+  return String(phone || "")
+    .replace(/[^\d+]/g,"");
+
+}
+
+
+/* =========================================================
+   CUSTOMER NAME
+========================================================= */
+
+function getCustomerName(p){
+
+  return (
+    p?.customerName ||
+    p?.customer ||
+    p?.name ||
+    p?.customer?.name ||
+    "Customer"
+  );
+
+}
+
+
+/* =========================================================
+   ADDRESS
+========================================================= */
+
+function getAddress(p){
+
+  return (
+    p?.address ||
+    p?.pickupAddress ||
+    p?.customerAddress ||
+    p?.location ||
+    p?.customer?.address ||
+    "Address not provided"
+  );
+
+}
+
+
+/* =========================================================
+   PARTNER NAME
+========================================================= */
+
+function getAssignedPartnerName(p){
+
+  if(!p) return "";
+
+  const candidates = [
+
+    p.partnerName,
+
+    p.partner,
+
+    p.assignedPartnerName,
+
+    p.assignedPartner?.name,
+
+    p.assignedPartner?.partnerName,
+
+    p.partnerDetails?.name,
+
+    p.partnerDetails?.partnerName,
+
+    p.partner?.name,
+
+    p.partner?.partnerName
+
+  ];
+
+  for(const value of candidates){
+
+    if(
+      value !== null &&
+      value !== undefined &&
+      String(value).trim()
+    ){
+
+      return String(value).trim();
+
+    }
+
+  }
+
+  return "";
+
+}
+
+
+/* =========================================================
+   CUSTOMER GPS
+========================================================= */
+
+function getCustomerGPS(p){
+
+  if(!p) return null;
+
+  const sources = [
+
+    p.customerGPS,
+
+    p.customerLocation,
+
+    {
+      latitude:
+        p.latitude ??
+        p.customerLatitude ??
+        p.pickupLatitude,
+
+      longitude:
+        p.longitude ??
+        p.customerLongitude ??
+        p.pickupLongitude
+    }
+
+  ];
+
+  for(const g of sources){
+
+    if(!g) continue;
+
+    const lat =
+      Number(
+        g.latitude ??
+        g.lat
+      );
+
+    const lng =
+      Number(
+        g.longitude ??
+        g.lng ??
+        g.lon
+      );
+
+    if(
+      Number.isFinite(lat) &&
+      Number.isFinite(lng) &&
+      Math.abs(lat) <= 90 &&
+      Math.abs(lng) <= 180
+    ){
+
+      return {
+        latitude:lat,
+        longitude:lng
+      };
+
+    }
+
+  }
+
+  return null;
+
+}
+
+
+/* =========================================================
+   LOAD FIREBASE
+========================================================= */
+
+onValue(
+  ref(db,"pickupRequests"),
+
+  snap => {
+
+    const data =
+      snap.val() || {};
+
+    allPickups =
+      Object.entries(data)
+
+        .filter(
+          ([id,p]) =>
+            p &&
+            typeof p === "object"
+        )
+
+        .map(
+          ([id,p]) => ({
+            ...p,
+            id
+          })
+        );
+
+
+    console.log(
+      "Firebase pickupRequests:",
+      allPickups.length
+    );
+
+
+    if(partnerName){
+
+      filterAndRender();
+
+    }
+
+  },
+
+  error => {
+
+    console.error(
+      "Firebase read error:",
+      error
+    );
+
+
+    document.getElementById(
+      "pickupsGrid"
+    ).innerHTML = `
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Unable to load pickups
+        </h3>
+
+        <p>
+          Firebase could not read pickupRequests.
+        </p>
+
+        <p style="
+          margin-top:10px;
+          font-size:9px;
+          word-break:break-word;
+        ">
+          ${esc(error?.message || "Permission denied")}
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+);
+
+
+/* =========================================================
+   LOAD PARTNER
+========================================================= */
+
+window.loadPartner = function(){
+
+  partnerName =
+    document
+      .getElementById("partnerNameInput")
+      .value
+      .trim();
+
+
+  if(!partnerName){
+
+    showToast(
+      "Please enter your partner name"
+    );
+
+    document
+      .getElementById("partnerNameInput")
+      .focus();
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "partnerBadge"
+  ).textContent =
+    partnerName.toUpperCase();
+
+
+  localStorage.setItem(
+    "covaiPartnerName",
+    partnerName
+  );
+
+
+  filterAndRender();
 
 };
+
+
+/* =========================================================
+   AUTO LOAD SAVED PARTNER
+========================================================= */
+
+if(!partnerName){
+
+  const savedPartner =
+    localStorage.getItem(
+      "covaiPartnerName"
+    );
+
+  if(savedPartner){
+
+    document.getElementById(
+      "partnerNameInput"
+    ).value = savedPartner;
+
+    partnerName = savedPartner;
+
+  }
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
 
 function filterAndRender(){
 
-partnerPickups=allPickups.filter(p=>
-String(p.partnerName||"").trim().toLowerCase()===
-partnerName.trim().toLowerCase()
-);
+  const wanted =
+    partnerName
+      .trim()
+      .toLowerCase();
 
-updateStats();
-render();
+
+  partnerPickups =
+    allPickups.filter(p => {
+
+      const assigned =
+        getAssignedPartnerName(p)
+          .trim()
+          .toLowerCase();
+
+      return (
+        wanted &&
+        assigned === wanted
+      );
+
+    });
+
+
+  updateStats();
+
+  render();
 
 }
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+window.refreshPartner = function(){
+
+  showToast(
+    "Refreshing pickup data..."
+  );
+
+  if(partnerName){
+
+    filterAndRender();
+
+  }
+
+};
+
+
+/* =========================================================
+   STATS
+========================================================= */
 
 function updateStats(){
 
-if(!partnerPickups.length){
-document.getElementById("statsSection").style.display="none";
-return;
+  const stats =
+    document.getElementById(
+      "statsSection"
+    );
+
+  const head =
+    document.getElementById(
+      "pickupSectionHead"
+    );
+
+
+  if(!partnerPickups.length){
+
+    stats.style.display = "none";
+
+    head.style.display = "none";
+
+    return;
+
+  }
+
+
+  stats.style.display = "grid";
+
+  head.style.display = "flex";
+
+
+  document.getElementById(
+    "totalCount"
+  ).textContent =
+    partnerPickups.length;
+
+
+  document.getElementById(
+    "activeCount"
+  ).textContent =
+    partnerPickups.filter(
+      p =>
+        String(
+          p.status || ""
+        ).toLowerCase()
+        !== "completed"
+    ).length;
+
+
+  document.getElementById(
+    "liveCount"
+  ).textContent =
+    partnerPickups.filter(
+      p =>
+        p.partnerGPS &&
+        p.partnerGPS.enabled === true
+    ).length;
+
+
+  document.getElementById(
+    "completedCount"
+  ).textContent =
+    partnerPickups.filter(
+      p =>
+        String(
+          p.status || ""
+        ).toLowerCase()
+        === "completed"
+    ).length;
+
+
+  document.getElementById(
+    "sectionCount"
+  ).textContent =
+    `${partnerPickups.length} Pickup${
+      partnerPickups.length === 1 ? "" : "s"
+    }`;
+
 }
 
-document.getElementById("statsSection").style.display="grid";
 
-document.getElementById("totalCount").textContent=partnerPickups.length;
+/* =========================================================
+   STATUS
+========================================================= */
 
-document.getElementById("activeCount").textContent=
-partnerPickups.filter(p=>p.status!=="Completed").length;
+const statusStages = [
 
-document.getElementById("liveCount").textContent=
-partnerPickups.filter(p=>p.partnerGPS&&p.partnerGPS.enabled).length;
+  "pending",
+  "confirmed",
+  "on_the_way",
+  "picked_up",
+  "completed"
 
-document.getElementById("completedCount").textContent=
-partnerPickups.filter(p=>p.status==="Completed").length;
+];
+
+
+function normalizeStatus(status){
+
+  const s =
+    String(status || "")
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g,"_");
+
+
+  if(
+    s === "new" ||
+    s === "pending"
+  ) return "pending";
+
+
+  if(
+    s === "processing" ||
+    s === "confirmed"
+  ) return "confirmed";
+
+
+  if(
+    s === "on_the_way" ||
+    s === "on_the_way"
+  ) return "on_the_way";
+
+
+  if(
+    s === "picked_up" ||
+    s === "pickup_started"
+  ) return "picked_up";
+
+
+  if(
+    s === "completed" ||
+    s === "complete"
+  ) return "completed";
+
+
+  return "pending";
 
 }
+
+
+function statusText(status){
+
+  const s =
+    normalizeStatus(status);
+
+  return {
+
+    pending:"Pending",
+
+    confirmed:"Confirmed",
+
+    on_the_way:"On The Way",
+
+    picked_up:"Picked Up",
+
+    completed:"Completed"
+
+  }[s] || "Pending";
+
+}
+
+
+function statusClass(status){
+
+  const s =
+    normalizeStatus(status);
+
+  if(s === "completed")
+    return "";
+
+  if(s === "on_the_way")
+    return "blue";
+
+  if(s === "pending")
+    return "warning";
+
+  return "";
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function progressPercent(status){
+
+  const s =
+    normalizeStatus(status);
+
+  const index =
+    statusStages.indexOf(s);
+
+  if(index < 0)
+    return 20;
+
+  return (
+    ((index + 1) /
+    statusStages.length) * 100
+  );
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
 
 function render(){
 
-if(!partnerPickups.length){
+  const grid =
+    document.getElementById(
+      "pickupsGrid"
+    );
 
-document.getElementById("pickupsGrid").innerHTML=`
-<div class="empty-state">
-<h3>📦 No Pickups Assigned</h3>
-<p>No pickups assigned to partner: ${esc(partnerName)}</p>
-<p style="margin-top:12px;font-size:13px">
-Contact admin to get pickup assignments
-</p>
-</div>
-`;
 
-return;
+  if(!partnerPickups.length){
+
+    grid.innerHTML = `
+
+      <div
+        class="empty-state"
+        style="grid-column:1/-1"
+      >
+
+        <div class="empty-icon">
+          📦
+        </div>
+
+        <h3>
+          No Pickups Assigned
+        </h3>
+
+        <p>
+          No pickups are currently assigned
+          to <strong>${esc(partnerName)}</strong>.
+        </p>
+
+        <p>
+          Contact admin if you need a new pickup.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    partnerPickups
+      .map(renderCard)
+      .join("");
 
 }
 
-document.getElementById("pickupsGrid").innerHTML=
-partnerPickups.map(renderCard).join("");
 
-}
+/* =========================================================
+   RENDER CARD
+========================================================= */
 
 function renderCard(p){
 
-const gps=p.partnerGPS||{};
-const isLive=gps.enabled===true;
+  const gps =
+    p.partnerGPS || {};
 
-return`
-<div class="pickup-card">
+  const isLive =
+    gps.enabled === true;
 
-<span class="corner-badge">
-${esc(p.status||"Assigned")}
-</span>
 
-<div class="card-header">
-<div class="customer-name">
-${esc(p.customerName||p.customer||"Customer")}
-</div>
-<div class="pickup-id">ID: ${esc(p.id)}</div>
-</div>
+  const status =
+    normalizeStatus(
+      p.status ||
+      p.trackingStatus
+    );
 
-<div class="card-details">
 
-<div class="detail-item">
-<div class="detail-label">PHONE</div>
-<div class="detail-value">
-${esc(p.phone||p.mobile||"N/A")}
-</div>
-</div>
+  const phone =
+    getPhone(p);
 
-<div class="detail-item">
-<div class="detail-label">WEIGHT</div>
-<div class="detail-value">
-${(p.totalWeightKg||0).toFixed(2)} kg
-</div>
-</div>
 
-<div class="detail-item">
-<div class="detail-label">VALUE</div>
-<div class="detail-value">
-₹${(p.totalAmount||0).toFixed(2)}
-</div>
-</div>
+  const customerGPS =
+    getCustomerGPS(p);
 
-<div class="detail-item">
-<div class="detail-label">ITEMS</div>
-<div class="detail-value">
-${(p.items||[]).length} items
-</div>
-</div>
 
-</div>
+  const weight =
+    num(
+      p.totalWeightKg ??
+      p.weight ??
+      p.totalWeight
+    );
 
-<div class="address-box">
-<div class="detail-label">PICKUP ADDRESS</div>
-<div style="font-size:13px;color:#374151;line-height:1.6">
-${esc(p.address||p.pickupAddress||"Not provided")}
-</div>
-</div>
 
-<div class="gps-status-box ${isLive?"":"offline"}">
-<div class="gps-label">
-${isLive?"🟢 LIVE TRACKING ACTIVE":"⚪ GPS OFFLINE"}
-</div>
-<div class="gps-value" id="gps-${p.id}">
-${isLive
-?`Lat: ${Number(gps.latitude||0).toFixed(6)}, Lng: ${Number(gps.longitude||0).toFixed(6)}`
-:"Location sharing disabled"
+  const amount =
+    num(
+      p.totalAmount ??
+      p.amount ??
+      p.total
+    );
+
+
+  const items =
+    Array.isArray(p.items)
+      ? p.items.length
+      : num(p.itemCount);
+
+
+  const liveClass =
+    isLive ? "live" : "";
+
+
+  return `
+
+  <article
+    class="pickup-card ${liveClass}"
+    id="pickup-card-${esc(p.id)}"
+  >
+
+    <div class="card-top">
+
+      <div class="customer-wrap">
+
+        <div class="customer-name">
+          ${esc(getCustomerName(p))}
+        </div>
+
+        <div class="pickup-id">
+          PICKUP ID · ${esc(p.id)}
+        </div>
+
+      </div>
+
+      <div
+        class="status-badge ${statusClass(status)}"
+      >
+        ${esc(statusText(status))}
+      </div>
+
+    </div>
+
+
+    <!-- CUSTOMER -->
+
+    <div class="customer-mini">
+
+      <div class="customer-contact">
+
+        <div class="customer-contact-label">
+          Customer Phone
+        </div>
+
+        <div class="customer-phone">
+          ${esc(phone || "Not available")}
+        </div>
+
+      </div>
+
+      ${
+        phone
+        ? `
+          <a
+            class="call-small"
+            href="tel:${esc(cleanPhone(phone))}"
+            title="Call customer"
+          >
+            📞
+          </a>
+        `
+        : ""
+      }
+
+    </div>
+
+
+    <!-- DETAILS -->
+
+    <div class="card-details">
+
+      <div class="detail-item">
+
+        <div class="detail-label">
+          Weight
+        </div>
+
+        <div class="detail-value">
+          ${weight.toFixed(2)} kg
+        </div>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <div class="detail-label">
+          Value
+        </div>
+
+        <div class="detail-value">
+          ₹${amount.toFixed(2)}
+        </div>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <div class="detail-label">
+          Items
+        </div>
+
+        <div class="detail-value">
+          ${items}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ADDRESS -->
+
+    <div class="address-box">
+
+      <div class="address-title">
+        📍 Pickup Address
+      </div>
+
+      <div class="address-text">
+        ${esc(getAddress(p))}
+      </div>
+
+    </div>
+
+
+    <!-- GPS -->
+
+    <div
+      class="gps-status-box ${isLive ? "" : "offline"}"
+    >
+
+      <div class="gps-row">
+
+        <div class="gps-left">
+
+          <div class="gps-label">
+
+            ${
+              isLive
+              ? "🟢 LIVE LOCATION SHARING"
+              : "⚪ GPS LOCATION OFFLINE"
+            }
+
+          </div>
+
+          <div
+            class="gps-value"
+            id="gps-${esc(p.id)}"
+          >
+
+            ${
+              isLive
+
+              ? `
+                Lat ${num(gps.latitude).toFixed(6)}
+                · Lng ${num(gps.longitude).toFixed(6)}
+                ${
+                  gps.accuracy
+                  ? ` · ±${num(gps.accuracy).toFixed(0)}m`
+                  : ""
+                }
+              `
+
+              : `
+                Enable GPS so the customer can
+                see your live location.
+              `
+            }
+
+          </div>
+
+        </div>
+
+        ${
+          isLive
+          ? `<div class="gps-live-dot"></div>`
+          : ""
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- PROGRESS -->
+
+    <div class="progress-wrap">
+
+      <div class="progress-title">
+
+        <span>
+          Pickup Progress
+        </span>
+
+        <span>
+          ${Math.round(
+            progressPercent(status)
+          )}%
+        </span>
+
+      </div>
+
+      <div class="progress-track">
+
+        <div
+          class="progress-fill"
+          style="
+            width:${progressPercent(status)}%
+          "
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="tracking-section">
+
+      <div class="tracking-title">
+        Update Pickup Status
+      </div>
+
+      <div class="tracking-btns">
+
+        ${statusButton(
+          p.id,
+          "pending",
+          "📝",
+          "Pending",
+          status
+        )}
+
+        ${statusButton(
+          p.id,
+          "confirmed",
+          "✅",
+          "Confirmed",
+          status
+        )}
+
+        ${statusButton(
+          p.id,
+          "on_the_way",
+          "🚛",
+          "On Way",
+          status
+        )}
+
+        ${statusButton(
+          p.id,
+          "picked_up",
+          "📦",
+          "Picked Up",
+          status
+        )}
+
+        ${statusButton(
+          p.id,
+          "completed",
+          "🎉",
+          "Completed",
+          status
+        )}
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="action-grid">
+
+      ${
+        phone
+        ? `
+          <a
+            class="action-btn btn-call"
+            href="tel:${esc(cleanPhone(phone))}"
+          >
+            📞 Call Customer
+          </a>
+        `
+        : `
+          <button
+            class="action-btn btn-call"
+            disabled
+          >
+            📞 No Phone
+          </button>
+        `
+      }
+
+
+      ${
+        phone
+        ? `
+          <button
+            class="action-btn btn-whatsapp"
+            onclick="openWhatsApp('${esc(phone)}')"
+          >
+            💬 WhatsApp
+          </button>
+        `
+        : `
+          <button
+            class="action-btn btn-whatsapp"
+            disabled
+          >
+            💬 WhatsApp
+          </button>
+        `
+      }
+
+
+      <button
+        class="action-btn btn-track"
+        onclick="openCustomerTracking('${esc(p.id)}')"
+      >
+        👁️ Live Tracking
+      </button>
+
+
+      <button
+        class="action-btn btn-map"
+        ${
+          customerGPS
+          ? `onclick="openCustomerMap('${esc(p.id)}')"`
+          : `onclick="showToast('Customer GPS location is not available')"`
+        }
+      >
+        🗺️ Customer Map
+      </button>
+
+
+      <button
+        class="action-btn btn-enable"
+        id="enable-${esc(p.id)}"
+        onclick="enableLocation('${esc(p.id)}')"
+        ${isLive ? "disabled" : ""}
+      >
+        🟢 Enable GPS
+      </button>
+
+
+      <button
+        class="action-btn btn-disable"
+        id="disable-${esc(p.id)}"
+        onclick="disableLocation('${esc(p.id)}')"
+        ${isLive ? "" : "disabled"}
+      >
+        🔴 Disable GPS
+      </button>
+
+
+      <button
+        class="action-btn btn-delete"
+        style="grid-column:1/-1"
+        onclick="deletePickup('${esc(p.id)}')"
+      >
+        🗑️ Delete Pickup
+      </button>
+
+    </div>
+
+  </article>
+
+  `;
+
 }
-</div>
-</div>
 
-<div class="tracking-section">
-<div class="tracking-title">📍 UPDATE ORDER STATUS</div>
-<div class="tracking-btns">
 
-<button class="tracking-btn" onclick="updateStatus('${p.id}','pending')">
-📝 Pending
-</button>
+/* =========================================================
+   STATUS BUTTON
+========================================================= */
 
-<button class="tracking-btn" onclick="updateStatus('${p.id}','confirmed')">
-✅ Confirmed
-</button>
+function statusButton(
+  id,
+  value,
+  icon,
+  label,
+  current
+){
 
-<button class="tracking-btn" onclick="updateStatus('${p.id}','on_the_way')">
-🚛 On the Way
-</button>
+  const currentIndex =
+    statusStages.indexOf(
+      normalizeStatus(current)
+    );
 
-<button class="tracking-btn" onclick="updateStatus('${p.id}','picked_up')">
-📦 Picked Up
-</button>
+  const valueIndex =
+    statusStages.indexOf(value);
 
-<button class="tracking-btn" onclick="updateStatus('${p.id}','completed')"
-style="grid-column:span 2">
-🎉 Completed
-</button>
 
-</div>
-</div>
+  let cls = "";
 
-<div class="action-btns">
 
-<button class="action-btn btn-customer-track"
-onclick="openCustomerTracking('${p.id}')">
-👁 Customer Live Tracking
-</button>
+  if(value === current){
 
-<button class="action-btn btn-enable"
-id="enable-${p.id}"
-onclick="enableLocation('${p.id}')"
-${isLive?"disabled":""}>
-🟢 Enable Share Location
-</button>
+    cls = "active";
 
-<button class="action-btn btn-disable"
-id="disable-${p.id}"
-onclick="disableLocation('${p.id}')"
-${isLive?"":"disabled"}>
-🔴 Disable Location
-</button>
+  }
+  else if(
+    valueIndex < currentIndex
+  ){
 
-<button class="action-btn"
-style="background:#ef4444;color:#fff;margin-top:8px"
-onclick="deletePickup('${p.id}')">
-🗑 Delete Pickup
-</button>
+    cls = "done";
 
-</div>
+  }
 
-</div>
-`;
+
+  return `
+
+    <button
+      class="tracking-btn ${cls}"
+      onclick="updateStatus(
+        '${esc(id)}',
+        '${value}'
+      )"
+    >
+
+      <span>
+        ${icon}
+      </span>
+
+      ${label}
+
+    </button>
+
+  `;
 
 }
 
-function esc(v){
-return String(v||"").replace(/[&<>"']/g,m=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-}[m]));
-}
 
-window.openCustomerTracking=function(id){
+/* =========================================================
+   CUSTOMER LIVE TRACKING
+========================================================= */
 
-// Open tracking in new tab
-const trackUrl="track.html?id="+encodeURIComponent(id);
+window.openCustomerTracking =
+function(id){
 
-window.open(trackUrl,"_blank");
+  /*
+    IMPORTANT:
+    Do not use window.open().
+    WebIntoApp / Android WebView can block
+    or incorrectly handle new windows.
 
-// Also log for debugging
-console.log("Opening customer tracking:",trackUrl);
+    Navigate directly inside the WebView.
+  */
+
+  const url =
+    "track.html?id=" +
+    encodeURIComponent(id);
+
+
+  window.location.href = url;
 
 };
 
-window.enableLocation=function(id){
 
-if(!navigator.geolocation){
-alert("GPS not supported by browser");
-return;
-}
+/* =========================================================
+   WHATSAPP
+========================================================= */
 
-const enableBtn=document.getElementById("enable-"+id);
-const disableBtn=document.getElementById("disable-"+id);
-const gpsBox=document.getElementById("gps-"+id);
+window.openWhatsApp =
+function(phone){
 
-enableBtn.disabled=true;
-gpsBox.textContent="📍 Getting location...";
+  let clean =
+    String(phone || "")
+      .replace(/\D/g,"");
 
-navigator.geolocation.getCurrentPosition(
 
-async position=>{
+  if(clean.length === 10){
 
-const lat=position.coords.latitude;
-const lng=position.coords.longitude;
+    clean =
+      "91" + clean;
 
-console.log("Partner GPS captured:",lat,lng);
+  }
 
-try{
 
-await update(ref(db,"pickupRequests/"+id),{
-"partnerGPS":{
-latitude:lat,
-longitude:lng,
-enabled:true,
-accuracy:position.coords.accuracy||0,
-updatedAt:Date.now(),
-timestamp:new Date().toISOString()
-}
-});
+  if(!clean){
 
-console.log("Partner GPS saved to Firebase");
+    showToast(
+      "Customer phone not available"
+    );
 
-startGPSWatcher(id);
+    return;
 
-enableBtn.disabled=true;
-disableBtn.disabled=false;
+  }
 
-alert("✅ Location sharing enabled!\n\nCustomer can now track your live location on the map.");
 
-}catch(error){
+  const message =
+    encodeURIComponent(
+      "Hello, this is COVAI SCRAP HUB pickup partner. I am contacting you regarding your scrap pickup."
+    );
 
-console.error("Firebase error:",error);
-alert("Error: "+error.message);
-enableBtn.disabled=false;
 
-}
+  /*
+    HTTPS WhatsApp URL.
+    Works much better in WebIntoApp
+    than custom whatsapp:// links.
+  */
 
-},
+  const url =
+    "https://wa.me/" +
+    clean +
+    "?text=" +
+    message;
 
-error=>{
 
-console.error("GPS error:",error);
-
-let msg="Location error";
-if(error.code===1){
-msg="Please allow location permission in your browser";
-}else if(error.code===2){
-msg="Location unavailable. Make sure GPS is enabled";
-}else if(error.code===3){
-msg="Location request timed out. Try again";
-}
-
-alert(msg);
-enableBtn.disabled=false;
-
-},
-
-{
-enableHighAccuracy:true,
-timeout:10000,
-maximumAge:0
-}
-
-);
+  window.location.href = url;
 
 };
+
+
+/* =========================================================
+   ENABLE GPS
+========================================================= */
+
+window.enableLocation =
+function(id){
+
+  if(!navigator.geolocation){
+
+    showToast(
+      "GPS is not supported on this device"
+    );
+
+    return;
+
+  }
+
+
+  const enableBtn =
+    document.getElementById(
+      "enable-" + id
+    );
+
+  const disableBtn =
+    document.getElementById(
+      "disable-" + id
+    );
+
+  const gpsBox =
+    document.getElementById(
+      "gps-" + id
+    );
+
+
+  if(enableBtn)
+    enableBtn.disabled = true;
+
+
+  if(gpsBox)
+    gpsBox.textContent =
+      "📍 Getting your current location...";
+
+
+  navigator.geolocation.getCurrentPosition(
+
+    async position => {
+
+      const lat =
+        position.coords.latitude;
+
+      const lng =
+        position.coords.longitude;
+
+      const accuracy =
+        position.coords.accuracy || 0;
+
+
+      try{
+
+        await update(
+          ref(
+            db,
+            "pickupRequests/" + id
+          ),
+
+          {
+
+            partnerGPS:{
+
+              latitude:lat,
+
+              longitude:lng,
+
+              enabled:true,
+
+              accuracy:accuracy,
+
+              updatedAt:Date.now(),
+
+              timestamp:
+                new Date().toISOString()
+
+            }
+
+          }
+
+        );
+
+
+        startGPSWatcher(id);
+
+
+        if(enableBtn)
+          enableBtn.disabled = true;
+
+
+        if(disableBtn)
+          disableBtn.disabled = false;
+
+
+        showToast(
+          "✅ Live GPS sharing enabled"
+        );
+
+
+      }
+      catch(error){
+
+        console.error(
+          "GPS Firebase error:",
+          error
+        );
+
+
+        if(enableBtn)
+          enableBtn.disabled = false;
+
+
+        showToast(
+          "❌ Failed to save GPS: " +
+          error.message
+        );
+
+      }
+
+    },
+
+
+    error => {
+
+      console.error(
+        "GPS error:",
+        error
+      );
+
+
+      if(enableBtn)
+        enableBtn.disabled = false;
+
+
+      let message =
+        "Unable to get your location.";
+
+
+      if(error.code === 1){
+
+        message =
+          "Please allow location permission in WebIntoApp.";
+
+      }
+      else if(error.code === 2){
+
+        message =
+          "Location unavailable. Turn on GPS.";
+
+      }
+      else if(error.code === 3){
+
+        message =
+          "GPS request timed out. Try again.";
+
+      }
+
+
+      showToast(
+        "⚠️ " + message
+      );
+
+    },
+
+
+    {
+
+      enableHighAccuracy:true,
+
+      timeout:15000,
+
+      maximumAge:0
+
+    }
+
+  );
+
+};
+
+
+/* =========================================================
+   GPS WATCHER
+========================================================= */
 
 function startGPSWatcher(id){
 
-if(gpsWatchers[id])return;
+  if(gpsWatchers[id]){
 
-console.log("Starting GPS watcher for:",id);
+    return;
 
-gpsWatchers[id]=navigator.geolocation.watchPosition(
+  }
 
-async position=>{
 
-const lat=position.coords.latitude;
-const lng=position.coords.longitude;
+  console.log(
+    "Starting GPS watcher:",
+    id
+  );
 
-console.log("GPS update:",lat,lng);
 
-try{
+  gpsWatchers[id] =
+    navigator.geolocation.watchPosition(
 
-await update(ref(db,"pickupRequests/"+id),{
-"partnerGPS":{
-latitude:lat,
-longitude:lng,
-enabled:true,
-accuracy:position.coords.accuracy||0,
-updatedAt:Date.now(),
-timestamp:new Date().toISOString()
+      async position => {
+
+        const lat =
+          position.coords.latitude;
+
+        const lng =
+          position.coords.longitude;
+
+        const accuracy =
+          position.coords.accuracy || 0;
+
+
+        try{
+
+          await update(
+
+            ref(
+              db,
+              "pickupRequests/" + id
+            ),
+
+            {
+
+              partnerGPS:{
+
+                latitude:lat,
+
+                longitude:lng,
+
+                enabled:true,
+
+                accuracy:accuracy,
+
+                updatedAt:Date.now(),
+
+                timestamp:
+                  new Date().toISOString()
+
+              }
+
+            }
+
+          );
+
+
+          const gps =
+            document.getElementById(
+              "gps-" + id
+            );
+
+
+          if(gps){
+
+            gps.textContent =
+              `Lat ${lat.toFixed(6)} · ` +
+              `Lng ${lng.toFixed(6)} · ` +
+              `±${accuracy.toFixed(0)}m`;
+
+          }
+
+        }
+        catch(error){
+
+          console.error(
+            "GPS update error:",
+            error
+          );
+
+        }
+
+      },
+
+
+      error => {
+
+        console.error(
+          "GPS watcher error:",
+          error
+        );
+
+      },
+
+
+      {
+
+        enableHighAccuracy:true,
+
+        maximumAge:3000,
+
+        timeout:20000
+
+      }
+
+    );
+
 }
-});
 
-console.log("GPS updated in Firebase");
 
-}catch(error){
+/* =========================================================
+   DISABLE GPS
+========================================================= */
 
-console.error("Firebase update error:",error);
+window.disableLocation =
+async function(id){
 
-}
+  if(gpsWatchers[id]){
 
-},
+    navigator.geolocation.clearWatch(
+      gpsWatchers[id]
+    );
 
-error=>{
-console.error("GPS watch error:",error);
-},
+    delete gpsWatchers[id];
 
-{
-enableHighAccuracy:true,
-maximumAge:3000,
-timeout:20000
-}
+  }
 
+
+  try{
+
+    await update(
+
+      ref(
+        db,
+        "pickupRequests/" + id
+      ),
+
+      {
+
+        "partnerGPS/enabled":false,
+
+        "partnerGPS/updatedAt":
+          Date.now()
+
+      }
+
+    );
+
+
+    const enableBtn =
+      document.getElementById(
+        "enable-" + id
+      );
+
+    const disableBtn =
+      document.getElementById(
+        "disable-" + id
+      );
+
+
+    if(enableBtn)
+      enableBtn.disabled = false;
+
+
+    if(disableBtn)
+      disableBtn.disabled = true;
+
+
+    showToast(
+      "🔴 Live GPS sharing disabled"
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Disable GPS error:",
+      error
+    );
+
+
+    showToast(
+      "❌ " + error.message
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   UPDATE STATUS
+========================================================= */
+
+window.updateStatus =
+async function(id,status){
+
+  if(
+    !statusStages.includes(status)
+  ){
+
+    return;
+
+  }
+
+
+  const statusMap = {
+
+    pending:"New",
+
+    confirmed:"Processing",
+
+    on_the_way:"On the Way",
+
+    picked_up:"Picked Up",
+
+    completed:"Completed"
+
+  };
+
+
+  const now =
+    Date.now();
+
+
+  const updates = {};
+
+
+  /*
+    Main status
+  */
+
+  updates[
+    `pickupRequests/${id}/trackingStatus`
+  ] = status;
+
+
+  /*
+    Current stage
+  */
+
+  updates[
+    `pickupRequests/${id}/tracking/${status}/completed`
+  ] = true;
+
+
+  updates[
+    `pickupRequests/${id}/tracking/${status}/time`
+  ] = now;
+
+
+  /*
+    Complete all previous stages
+  */
+
+  const currentIndex =
+    statusStages.indexOf(status);
+
+
+  for(
+    let i = 0;
+    i <= currentIndex;
+    i++
+  ){
+
+    const stage =
+      statusStages[i];
+
+
+    updates[
+      `pickupRequests/${id}/tracking/${stage}/completed`
+    ] = true;
+
+
+    updates[
+      `pickupRequests/${id}/tracking/${stage}/time`
+    ] =
+      updates[
+        `pickupRequests/${id}/tracking/${stage}/time`
+      ] || now;
+
+  }
+
+
+  /*
+    Legacy status
+  */
+
+  updates[
+    `pickupRequests/${id}/status`
+  ] =
+    statusMap[status];
+
+
+  /*
+    Useful timestamps
+  */
+
+  if(status === "confirmed"){
+
+    updates[
+      `pickupRequests/${id}/processingAt`
+    ] = now;
+
+  }
+
+
+  if(status === "on_the_way"){
+
+    updates[
+      `pickupRequests/${id}/onTheWayAt`
+    ] = now;
+
+  }
+
+
+  if(status === "picked_up"){
+
+    updates[
+      `pickupRequests/${id}/pickedUpAt`
+    ] = now;
+
+  }
+
+
+  if(status === "completed"){
+
+    updates[
+      `pickupRequests/${id}/completedAt`
+    ] = now;
+
+  }
+
+
+  try{
+
+    await update(
+      ref(db),
+      updates
+    );
+
+
+    showToast(
+      "✅ Status updated: " +
+      statusMap[status]
+    );
+
+
+  }
+  catch(error){
+
+    console.error(
+      "Status update error:",
+      error
+    );
+
+
+    showToast(
+      "❌ Failed: " +
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+window.deletePickup =
+async function(id){
+
+  const pickup =
+    allPickups.find(
+      p => p.id === id
+    );
+
+
+  if(!pickup){
+
+    showToast(
+      "Pickup not found"
+    );
+
+    return;
+
+  }
+
+
+  const name =
+    getCustomerName(pickup);
+
+
+  const confirmed =
+    confirm(
+
+      `Delete pickup for ${name}?\n\n` +
+
+      `Pickup ID: ${id}\n\n` +
+
+      `This will permanently remove the pickup from Firebase.`
+
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  try{
+
+    if(gpsWatchers[id]){
+
+      navigator.geolocation.clearWatch(
+        gpsWatchers[id]
+      );
+
+      delete gpsWatchers[id];
+
+    }
+
+
+    await remove(
+      ref(
+        db,
+        "pickupRequests/" + id
+      )
+    );
+
+
+    showToast(
+      "✅ Pickup deleted successfully"
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Delete error:",
+      error
+    );
+
+
+    showToast(
+      "❌ Delete failed: " +
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   CUSTOMER MAP
+========================================================= */
+
+window.openCustomerMap =
+function(id){
+
+  const pickup =
+    allPickups.find(
+      p => p.id === id
+    );
+
+
+  if(!pickup){
+
+    showToast(
+      "Pickup not found"
+    );
+
+    return;
+
+  }
+
+
+  const gps =
+    getCustomerGPS(pickup);
+
+
+  if(!gps){
+
+    showToast(
+      "📍 Customer GPS location is not available"
+    );
+
+    return;
+
+  }
+
+
+  currentMapPickup = pickup;
+
+
+  document.getElementById(
+    "mapTitle"
+  ).textContent =
+    getCustomerName(pickup);
+
+
+  document.getElementById(
+    "mapSub"
+  ).textContent =
+    "Customer pickup location";
+
+
+  const frame =
+    document.getElementById(
+      "mapFrame"
+    );
+
+
+  const fallback =
+    document.getElementById(
+      "mapFallback"
+    );
+
+
+  /*
+    HTTPS Google Maps embed.
+    This stays inside the WebView.
+  */
+
+  frame.src =
+    "https://www.google.com/maps?q=" +
+    gps.latitude +
+    "," +
+    gps.longitude +
+    "&z=16&output=embed";
+
+
+  frame.style.display =
+    "block";
+
+
+  fallback.style.display =
+    "none";
+
+
+  document.getElementById(
+    "mapModal"
+  ).classList.add("show");
+
+
+};
+
+
+/* =========================================================
+   GOOGLE MAPS
+========================================================= */
+
+window.openGoogleMaps =
+function(){
+
+  if(!currentMapPickup){
+
+    return;
+
+  }
+
+
+  const gps =
+    getCustomerGPS(
+      currentMapPickup
+    );
+
+
+  if(!gps){
+
+    showToast(
+      "Customer location unavailable"
+    );
+
+    return;
+
+  }
+
+
+  const url =
+    "https://www.google.com/maps/dir/?api=1&destination=" +
+    gps.latitude +
+    "," +
+    gps.longitude;
+
+
+  /*
+    Direct HTTPS navigation.
+    Better compatibility with WebIntoApp.
+  */
+
+  window.location.href = url;
+
+};
+
+
+/* =========================================================
+   CLOSE MAP
+========================================================= */
+
+window.closeMap =
+function(){
+
+  const modal =
+    document.getElementById(
+      "mapModal"
+    );
+
+
+  modal.classList.remove(
+    "show"
+  );
+
+
+  const frame =
+    document.getElementById(
+      "mapFrame"
+    );
+
+
+  frame.src = "";
+
+
+  currentMapPickup = null;
+
+};
+
+
+window.closeMapOutside =
+function(event){
+
+  if(
+    event.target.id ===
+    "mapModal"
+  ){
+
+    closeMap();
+
+  }
+
+};
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+
+window.showToast =
+function(message){
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
+
+  toast.textContent =
+    message;
+
+
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      2800
+    );
+
+};
+
+
+/* =========================================================
+   BEFORE UNLOAD
+========================================================= */
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    Object.keys(
+      gpsWatchers
+    ).forEach(id => {
+
+      navigator.geolocation.clearWatch(
+        gpsWatchers[id]
+      );
+
+    });
+
+  }
 );
 
-}
 
-window.disableLocation=async function(id){
+/* =========================================================
+   AUTO LOAD URL PARTNER
+========================================================= */
 
-if(gpsWatchers[id]){
-navigator.geolocation.clearWatch(gpsWatchers[id]);
-delete gpsWatchers[id];
-}
+if(urlPartner){
 
-try{
+  setTimeout(
+    () => {
 
-await update(ref(db,"pickupRequests/"+id),{
-"partnerGPS/enabled":false,
-"partnerGPS/updatedAt":Date.now()
-});
+      document.getElementById(
+        "partnerBadge"
+      ).textContent =
+        partnerName.toUpperCase();
 
-const enableBtn=document.getElementById("enable-"+id);
-const disableBtn=document.getElementById("disable-"+id);
 
-enableBtn.disabled=false;
-disableBtn.disabled=true;
+      filterAndRender();
 
-}catch(error){
-
-alert("Error: "+error.message);
+    },
+    400
+  );
 
 }
+else if(partnerName){
 
-};
+  setTimeout(
+    () => {
 
-window.deletePickup=async function(id){
+      document.getElementById(
+        "partnerBadge"
+      ).textContent =
+        partnerName.toUpperCase();
 
-const pickup=allPickups.find(p=>p.id===id);
 
-if(!pickup){
-alert("Pickup not found");
-return;
-}
+      filterAndRender();
 
-const customerName=pickup.customerName||pickup.customer||"this customer";
-
-if(!confirm(`Delete pickup for ${customerName}?\n\nPickup ID: ${id}\n\nThis will permanently remove it from the system!`)){
-return;
-}
-
-try{
-
-// Stop GPS watcher if active
-if(gpsWatchers[id]){
-navigator.geolocation.clearWatch(gpsWatchers[id]);
-delete gpsWatchers[id];
-}
-
-// Delete from Firebase
-await remove(ref(db,"pickupRequests/"+id));
-
-alert("✅ Pickup deleted successfully");
-
-}catch(error){
-
-console.error("Delete error:",error);
-
-alert("❌ Failed to delete: "+error.message);
+    },
+    500
+  );
 
 }
-
-};
-
-window.updateStatus=async function(id,status){
-
-const trackingStages=['pending','confirmed','on_the_way','picked_up','completed'];
-const now=Date.now();
-
-const updates={};
-
-// Update trackingStatus
-updates[`pickupRequests/${id}/trackingStatus`]=status;
-
-// Mark current stage as completed
-updates[`pickupRequests/${id}/tracking/${status}/completed`]=true;
-updates[`pickupRequests/${id}/tracking/${status}/time`]=now;
-
-// Mark all previous stages as completed
-const currentIndex=trackingStages.indexOf(status);
-for(let i=0;i<=currentIndex;i++){
-const stage=trackingStages[i];
-updates[`pickupRequests/${id}/tracking/${stage}/completed`]=true;
-if(!updates[`pickupRequests/${id}/tracking/${stage}/time`]){
-updates[`pickupRequests/${id}/tracking/${stage}/time`]=now;
-}
-}
-
-// Legacy status field for backward compatibility
-const statusMap={
-'pending':'New',
-'confirmed':'Processing',
-'on_the_way':'On the Way',
-'picked_up':'Picked Up',
-'completed':'Completed'
-};
-updates[`pickupRequests/${id}/status`]=statusMap[status];
-
-try{
-
-await update(ref(db),updates);
-
-alert('✅ Status updated: '+statusMap[status]);
-
-}catch(error){
-
-console.error('Status update error:',error);
-
-alert('❌ Failed to update: '+error.message);
-
-}
-
-};
-
-window.addEventListener("beforeunload",()=>{
-
-Object.keys(gpsWatchers).forEach(id=>{
-navigator.geolocation.clearWatch(gpsWatchers[id]);
-});
-
-});
 
 </script>
 
