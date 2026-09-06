@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#087536">
+<title>COVAI SCRAP HUB — WhatsApp Automation</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7f5;
+  color:#17231c;
+}
+
+.top{
+  background:#087536;
+  color:#fff;
+  padding:16px 0;
+}
+
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:0 18px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:52px;
+  height:52px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#fff;
+  padding:4px;
+}
+
+.top h1{
+  margin:0;
+  font-size:22px;
+}
+
+.top p{
+  margin:5px 0 0;
+  opacity:.9;
+  font-size:13px;
+}
+
+.tools{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:18px 0 15px;
+}
+
+.tools input,
+.tools select{
+  padding:12px 14px;
+  border:1px solid #d8e2dc;
+  border-radius:12px;
+  background:#fff;
+  font-size:14px;
+  outline:none;
+}
+
+.tools input{
+  flex:1;
+  min-width:220px;
+}
+
+.addBtn{
+  background:#087536;
+  color:#fff;
+  border:0;
+  border-radius:12px;
+  padding:12px 18px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.stat{
+  background:#fff;
+  border:1px solid #e1e9e4;
+  border-radius:18px;
+  padding:16px;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 5px 18px rgba(0,0,0,.04);
+}
+
+.stat:hover{
+  transform:translateY(-2px);
+}
+
+.stat.active{
+  border:2px solid #087536;
+  box-shadow:0 8px 22px rgba(8,117,54,.13);
+}
+
+.stat b{
+  font-size:24px;
+  display:block;
+}
+
+.stat span{
+  font-size:12px;
+  color:#66736b;
+  font-weight:700;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #dfe8e2;
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:12px;
+  box-shadow:0 5px 18px rgba(0,0,0,.04);
+}
+
+.compact-card{
+  padding:0!important;
+  margin-bottom:7px!important;
+  cursor:pointer!important;
+  overflow:hidden;
+}
+
+.compact-main{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  min-width:0;
+}
+
+.compact-name{
+  font-size:14px;
+  font-weight:900;
+  min-width:110px;
+  max-width:180px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.compact-phone{
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.compact-id{
+  font-size:11px;
+  color:#7a867f;
+  min-width:0;
+  flex:1;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.compact-partner{
+  font-size:11px;
+  color:#59655e;
+  max-width:150px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.compact-arrow{
+  font-size:23px;
+  line-height:1;
+  color:#087536;
+  font-weight:900;
+}
+
+.status{
+  font-size:11px;
+  font-weight:800;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#edf7f0;
+  color:#087536;
+  white-space:nowrap;
+}
+
+.myStatus{
+  background:#fff4dd;
+  color:#a56500;
+}
+
+.doneStatus{
+  background:#f0e8fa;
+  color:#6b3fa0;
+}
+
+.empty{
+  text-align:center;
+  padding:40px;
+  color:#6e7a73;
+  background:#fff;
+  border-radius:16px;
+}
+
+.small{
+  font-size:11px;
+  color:#758078;
+  margin-top:8px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.48);
+  padding:18px;
+  z-index:20;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.dialog{
+  background:#fff;
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:20px;
+  padding:20px;
+}
+
+.dialog h2{
+  margin:0 0 6px;
+}
+
+.dialog textarea,
+.dialog input{
+  width:100%;
+  border:1px solid #d9e3dd;
+  border-radius:13px;
+  padding:13px;
+  font:14px Arial;
+  outline:none;
+}
+
+.dialog textarea{
+  min-height:240px;
+  resize:vertical;
+}
+
+.formGroup{
+  margin-top:12px;
+}
+
+.formGroup label{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  color:#59655e;
+  margin-bottom:5px;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  margin-top:12px;
+}
+
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:13px 12px;
+  font-weight:800;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  font-size:13px;
+  min-height:48px;
+}
+
+.close{
+  background:#edf1ee;
+  color:#333;
+}
+
+.send{
+  background:#1faa59;
+  color:#fff;
+}
+
+.new{
+  background:linear-gradient(135deg,#087536,#13a35b);
+  color:#fff;
+}
+
+.partner{
+  background:linear-gradient(135deg,#245b9e,#3479c7);
+  color:#fff;
+}
+
+.done{
+  background:linear-gradient(135deg,#6b3fa0,#8f5bc7);
+  color:#fff;
+}
+
+.my{
+  background:linear-gradient(135deg,#b56a00,#e09a20);
+  color:#fff;
+}
+
+.call{
+  background:#eef3ef;
+  color:#087536;
+}
+
+.copy{
+  background:#eef3ef;
+  color:#34433a;
+}
+
+.detailGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.detailBox{
+  background:#f7faf8;
+  border-radius:14px;
+  padding:13px;
+}
+
+.detailBox .label{
+  font-size:10px;
+  color:#718078;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.detailBox .value{
+  font-size:14px;
+  font-weight:700;
+  word-break:break-word;
+}
+
+.actionRow{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:14px;
+}
+
+.actionRow .btn{
+  width:100%;
+}
+
+.detailNav{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:14px;
+}
+
+.navBtn{
+  border:1px solid #dbe6df;
+  background:#f5f8f6;
+  color:#087536;
+  border-radius:10px;
+  padding:9px 14px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.navBtn:disabled{
+  opacity:.4;
+}
+
+@media(max-width:1000px){
+  .stats{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:700px){
+
+  .wrap{
+    padding:0 12px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .tools{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .tools input,
+  .tools select,
+  .addBtn{
+    width:100%;
+  }
+
+  .compact-main{
+    gap:8px;
+    padding:11px 10px;
+  }
+
+  .compact-name{
+    min-width:72px;
+    max-width:105px;
+    font-size:13px;
+  }
+
+  .compact-phone{
+    font-size:11px;
+  }
+
+  .compact-id{
+    display:none;
+  }
+
+  .compact-partner{
+    max-width:75px;
+    font-size:10px;
+  }
+
+  .compact-main .status{
+    font-size:9px;
+    padding:4px 6px;
+  }
+
+  .compact-arrow{
+    font-size:20px;
+  }
+
+  .detailGrid{
+    grid-template-columns:1fr;
+  }
+
+  .actionRow{
+    grid-template-columns:1fr;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .dialog{
+    padding:15px;
+    border-radius:18px;
+  }
+
+  .row{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+  <div class="wrap">
+
+    <div class="brand">
+
+      <img
+        src="logo.jpeg"
+        alt="COVAI SCRAP HUB"
+        class="logo"
+        onerror="this.style.display='none'"
+      >
+
+      <div>
+        <h1>COVAI SCRAP HUB</h1>
+        <p>Customer WhatsApp Management</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="tools">
+
+    <input
+      id="search"
+      placeholder="Search customer, phone or booking ID..."
+      oninput="render()"
+    >
+
+    <select id="status" onchange="render()">
+      <option value="All">All Customers</option>
+      <option value="New">New Request</option>
+      <option value="Partner Assigned">Partner Assigned</option>
+      <option value="Completed">Completed</option>
+      <option value="My Customers">My Customers</option>
+    </select>
+
+    <button
+      class="addBtn"
+      onclick="openAddCustomer()"
+    >
+      ➕ Add Customer
+    </button>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div
+      class="stat active"
+      id="filterAll"
+      onclick="setFilter('All')"
+    >
+      <b id="total">0</b>
+      <span>📋 All</span>
+    </div>
+
+    <div
+      class="stat"
+      id="filterNew"
+      onclick="setFilter('New')"
+    >
+      <b id="newCount">0</b>
+      <span>🆕 New Request</span>
+    </div>
+
+    <div
+      class="stat"
+      id="filterPartner"
+      onclick="setFilter('Partner Assigned')"
+    >
+      <b id="partnerCount">0</b>
+      <span>🚚 Partner Assigned</span>
+    </div>
+
+    <div
+      class="stat"
+      id="filterCompleted"
+      onclick="setFilter('Completed')"
+    >
+      <b id="completedCount">0</b>
+      <span>🎉 Completed</span>
+    </div>
+
+    <div
+      class="stat"
+      id="filterMy"
+      onclick="setFilter('My Customers')"
+    >
+      <b id="myCount">0</b>
+      <span>⭐ My Customers</span>
+    </div>
+
+  </div>
+
+
+  <div id="list">
+    <div class="empty">Loading customer data...</div>
+  </div>
+
+</div>
+
+
+<!-- CUSTOMER DETAILS -->
+
+<div class="modal" id="detailModal">
+
+  <div class="dialog">
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+
+      <div>
+        <h2 id="detailName">
+          Customer Details
+        </h2>
+
+        <div class="small" id="detailStatus"></div>
+      </div>
+
+      <button
+        class="btn close"
+        onclick="closeDetail()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <div
+      id="detailContent"
+      style="margin-top:15px"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<!-- WHATSAPP -->
+
+<div class="modal" id="modal">
+
+  <div class="dialog">
+
+    <h2 id="modalTitle">
+      Send WhatsApp
+    </h2>
+
+    <div
+      class="small"
+      id="modalTo"
+    ></div>
+
+    <br>
+
+    <textarea id="message"></textarea>
+
+    <div class="row">
+
+      <button
+        class="btn close"
+        onclick="closeModal()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="btn send"
+        onclick="sendFromModal()"
+      >
+        📲 Tap to Send
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ADD CUSTOMER -->
+
+<div class="modal" id="addModal">
+
+  <div class="dialog">
+
+    <h2>➕ Add Customer</h2>
+
+    <div class="small">
+      Add a customer directly to My Customers.
+    </div>
+
+    <div class="formGroup">
+      <label>Customer Name</label>
+      <input id="addName" placeholder="Customer name">
+    </div>
+
+    <div class="formGroup">
+      <label>Phone Number</label>
+      <input id="addPhone" placeholder="Phone number">
+    </div>
+
+    <div class="formGroup">
+      <label>WhatsApp Number</label>
+      <input id="addWhatsapp" placeholder="WhatsApp number">
+    </div>
+
+    <div class="formGroup">
+      <label>Pickup Address</label>
+      <input id="addAddress" placeholder="Customer address">
+    </div>
+
+    <div class="row">
+
+      <button
+        class="btn close"
+        onclick="closeAddCustomer()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="btn my"
+        onclick="saveCustomer()"
+      >
+        ⭐ Add Customer
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  update,
+  push,
+  set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+
+  authDomain:
+    "covai-scrap-hub.firebaseapp.com",
+
+  databaseURL:
+    "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+
+  projectId:
+    "covai-scrap-hub",
+
+  storageBucket:
+    "covai-scrap-hub.firebasestorage.app",
+
+  messagingSenderId:
+    "979133721874",
+
+  appId:
+    "1:979133721874:web:c5829bb8dbf5270c0917cb",
+
+  measurementId:
+    "G-P3PTSBHWMF"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let requests = [];
+let activeRequest = null;
+let activeMode = "new";
+
+
+function customer(r){
+  return r.customerName ||
+         r.customer_name ||
+         r.name ||
+         r.customer ||
+         "Unknown Customer";
+}
+
+
+function phone(r){
+  return r.phone ||
+         r.mobile ||
+         r.phoneNumber ||
+         r.contactNumber ||
+         "";
+}
+
+
+function whatsapp(r){
+  return r.whatsappNumber ||
+         r.whatsappPhone ||
+         r.whatsapp_number ||
+         r.whatsapp_phone ||
+         r.whatsapp ||
+         phone(r) ||
+         "";
+}
+
+
+function cleanPhone(v){
+  return String(v || "").replace(/\D/g,"");
+}
+
+
+function esc(v){
+  return String(v ?? "").replace(
+    /[&<>"']/g,
+    m => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[m])
+  );
+}
+
+
+function address(r){
+  return r.address ||
+         r.pickupAddress ||
+         r.location ||
+         "Not provided";
+}
+
+
+function status(r){
+  return r.status ||
+         r.orderStatus ||
+         r.pickupStatus ||
+         "New";
+}
+
+
+function getTrackingLink(r){
+
+  if(r.trackingUrl)
+    return r.trackingUrl;
+
+  if(r.trackingLink)
+    return r.trackingLink;
+
+  return `${window.location.origin}/track.html?id=${encodeURIComponent(r.id || "")}`;
+}
+
+
+function isMyCustomer(r){
+
+  return (
+    r.myCustomer === true ||
+    r.myCustomer === "true" ||
+    r.isMyCustomer === true ||
+    r.isMyCustomer === "true" ||
+    r.my_customer === true ||
+    r.my_customer === "true" ||
+    r.customerType === "my_customer" ||
+    r.whatsappAutomationStage === "My Customers"
+  );
+}
+
+
+/* AUTOMATION STAGE */
+
+function automationStage(r){
+
+  const saved =
+    String(
+      r.whatsappAutomationStage || ""
+    ).trim();
+
+  if(saved === "My Customers")
+    return "My Customers";
+
+  if(saved)
+    return saved;
+
+  if(isMyCustomer(r))
+    return "My Customers";
+
+  const s =
+    String(status(r))
+      .trim()
+      .toLowerCase();
+
+  if(
+    s === "partner assigned" ||
+    s === "assigned" ||
+    s === "partner_assigned"
+  )
+    return "Partner Assigned";
+
+  if(
+    s === "completed" ||
+    s === "complete" ||
+    s === "order completed"
+  )
+    return "Completed";
+
+  return "New";
+}
+
+
+/* NEW REQUEST */
+
+function newRequestMessage(r){
+
+  const n = customer(r);
+  const id = r.id || "";
+  const tracking = getTrackingLink(r);
+
+  return `Hello ${n} 👋
+
+♻️ *COVAI SCRAP HUB*
+
+✅ *Your booking is confirmed!*
+
+📋 *Booking ID:* ${id}
+
+🚚 *Our pickup partner will be assigned soon.*
+
+Once a partner is assigned, we will share the partner details and live tracking information with you.
+
+📍 *Track your pickup:*
+${tracking}
+
+Thank you for choosing *COVAI SCRAP HUB*! 💚`;
+}
+
+
+/* PARTNER */
+
+function partnerAssignedMessage(r){
+
+  const n = customer(r) || "Customer";
+
+  const id =
+    r.id ||
+    r.pickupId ||
+    r.bookingId ||
+    "—";
+
+  const tracking = getTrackingLink(r);
+
+  const partner =
+    r.partnerName ||
+    r.assignedPartnerName ||
+    r.partner ||
+    r.partnerFullName ||
+    "Pickup Partner";
+
+  const partnerPhone =
+    r.partnerPhone ||
+    r.assignedPartnerPhone ||
+    r.partnerMobile ||
+    r.partnerNumber ||
+    r.partnerContact ||
+    r.partnerContactNumber ||
+    "Not available";
+
+  const trackingId =
+    r.trackingId ||
+    r.trackingID ||
+    r.trackId ||
+    r.tracking_id ||
+    id;
+
+  return `Hello ${n} 👋
+
+♻️ *COVAI SCRAP HUB*
+
+🚚 *Your Pickup Partner Has Been Assigned!*
+
+📋 *Booking ID:* ${id}
+🆔 *Tracking ID:* ${trackingId}
+
+👤 *Partner Name:* ${partner}
+📞 *Partner Phone:* ${partnerPhone}
+
+📍 *Track Your Pickup Live:*
+${tracking}
+
+Please keep your scrap ready for pickup. ♻️
+
+Thank you for choosing *COVAI SCRAP HUB*! 💚`;
+}
+
+
+/* MY CUSTOMERS */
+
+function myCustomerMessage(r){
+
+  const n =
+    customer(r) ||
+    "Customer";
+
+  return `Hello ${n} 👋
+
+♻️ *COVAI SCRAP HUB*
+
+⭐ *Thank you for being our valued customer!*
+
+We would be happy to serve you again.
+
+🛒 *SELL YOUR SCRAP NOW*
+
+Book an easy doorstep scrap pickup through our website:
+
+🌐 https://covaiscraphup.vercel.app
+
+💰 *Check Today's Scrap Rates*
+
+Get the latest scrap rates before selling:
+
+📦 *Book Scrap Pickup*
+
+Sell your scrap from your home:
+
+📩 *MORE ENQUIRY*
+
+For business enquiries, bulk scrap collection or any other enquiry, contact us:
+
+📧 covaiscrabehub@gmail.com
+
+🌐 https://covaiscraphup.vercel.app
+
+
+♻️ *Sell your scrap. Get value. Keep recycling.*`;
+}
+
+
+/* COMPLETED */
+
+function completedMessage(r){
+
+  const n =
+    customer(r) ||
+    "Customer";
+
+  const id =
+    r.id ||
+    r.pickupId ||
+    r.bookingId ||
+    "—";
+
+  return `Hello ${n} 👋
+
+♻️ *COVAI SCRAP HUB*
+
+🎉 *Pickup Completed Successfully!*
+
+Your scrap pickup has been completed successfully.
+
+📋 *Booking ID:* ${id}
+
+⭐ *We'd love to hear your feedback!*
+
+How was your pickup experience with us?
+
+Please share your feedback and help us serve you better. 💚
+
+Thank you for choosing *COVAI SCRAP HUB*! 🙏♻️`;
+}
+
+
+function messageFor(r,mode){
+
+  if(mode === "partner")
+    return partnerAssignedMessage(r);
+
+  if(mode === "completed")
+    return completedMessage(r);
+
+  if(mode === "my")
+    return myCustomerMessage(r);
+
+  return newRequestMessage(r);
+}
+
+
+function modeLabel(mode){
+
+  if(mode === "partner")
+    return "Partner Assigned";
+
+  if(mode === "completed")
+    return "Completed";
+
+  if(mode === "my")
+    return "My Customer";
+
+  return "New Request";
+}
+
+
+/* WHATSAPP MODAL */
+
+window.openMessage = function(id,mode){
+
+  const r =
+    requests.find(x => x.id === id);
+
+  if(!r)
+    return;
+
+  const p =
+    cleanPhone(
+      whatsapp(r)
+    );
+
+  if(!p){
+
+    alert(
+      "No WhatsApp/phone number found for this customer."
+    );
+
+    return;
+  }
+
+  activeRequest = r;
+  activeMode = mode;
+
+  document.getElementById("modalTitle")
+    .textContent =
+    `${modeLabel(mode)} — ${customer(r)}`;
+
+  document.getElementById("modalTo")
+    .textContent =
+    `To: +${p} • Booking ID: ${r.id || ""}`;
+
+  document.getElementById("message")
+    .value =
+    messageFor(r,mode);
+
+  document.getElementById("modal")
+    .classList.add("show");
+};
+
+
+window.closeModal = function(){
+
+  document.getElementById("modal")
+    .classList.remove("show");
+
+  activeRequest = null;
+};
+
+
+window.sendFromModal = function(){
+
+  if(!activeRequest)
+    return;
+
+  const p =
+    cleanPhone(
+      whatsapp(activeRequest)
+    );
+
+  const text =
+    document.getElementById("message")
+      .value
+      .trim();
+
+  if(!p){
+
+    alert("No WhatsApp/phone number found.");
+    return;
+  }
+
+  if(!text){
+
+    alert("Message is empty.");
+    return;
+  }
+
+  window.open(
+    `https://wa.me/${p}?text=${encodeURIComponent(text)}`,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+  closeModal();
+};
+
+
+/* DIRECT WHATSAPP */
+
+window.sendDirect = async function(id,mode){
+
+  const r =
+    requests.find(x => x.id === id);
+
+  if(!r)
+    return;
+
+  const p =
+    cleanPhone(
+      whatsapp(r)
+    );
+
+  if(!p){
+
+    alert(
+      "No WhatsApp/phone number found for this customer."
+    );
+
+    return;
+  }
+
+  const text =
+    messageFor(r,mode);
+
+  window.open(
+    `https://wa.me/${p}?text=${encodeURIComponent(text)}`,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+  /*
+   * AUTOMATIC FLOW:
+   *
+   * New -> Partner Assigned
+   * Partner Assigned -> Completed
+   * Completed -> My Customers
+   */
+
+  let next = "Completed";
+
+  if(mode === "new")
+    next = "Partner Assigned";
+
+  else if(mode === "partner")
+    next = "Completed";
+
+  else if(mode === "completed")
+    next = "My Customers";
+
+  try{
+
+    await update(
+      ref(
+        db,
+        `pickupRequests/${r.id}`
+      ),
+      {
+        whatsappAutomationStage: next,
+        whatsappAutomationUpdatedAt: Date.now(),
+
+        ...(next === "My Customers"
+          ? {
+              myCustomer:true,
+              customerType:"my_customer",
+              myCustomerAddedAt:Date.now()
+            }
+          : {})
+      }
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "WhatsApp opened, but customer status could not be updated. Check Firebase write permission."
+    );
+  }
+};
+
+
+/* CALL */
+
+window.callCustomer = function(id){
+
+  const r =
+    requests.find(x => x.id === id);
+
+  if(!r)
+    return;
+
+  const p =
+    cleanPhone(
+      phone(r)
+    );
+
+  if(p){
+
+    location.href =
+      `tel:+${p}`;
+
+  }else{
+
+    alert(
+      "No phone number found."
+    );
+  }
+};
+
+
+/* COPY */
+
+window.copyData = function(id){
+
+  const r =
+    requests.find(x => x.id === id);
+
+  if(!r)
+    return;
+
+  const text =
+`Customer: ${customer(r)}
+WhatsApp: ${whatsapp(r) || "Not provided"}
+Phone: ${phone(r) || "Not provided"}
+Booking ID: ${r.id || ""}
+Address: ${address(r)}`;
+
+  if(navigator.clipboard){
+
+    navigator.clipboard
+      .writeText(text)
+      .then(
+        () =>
+          alert(
+            "Customer details copied."
+          )
+      );
+
+  }else{
+
+    alert(text);
+  }
+};
+
+
+/* FILTER */
+
+window.setFilter = function(value){
+
+  document.getElementById("status")
+    .value = value;
+
+  document
+    .querySelectorAll(".stat")
+    .forEach(
+      x =>
+        x.classList.remove("active")
+    );
+
+  const ids = {
+
+    "All":
+      "filterAll",
+
+    "New":
+      "filterNew",
+
+    "Partner Assigned":
+      "filterPartner",
+
+    "Completed":
+      "filterCompleted",
+
+    "My Customers":
+      "filterMy"
+  };
+
+  document
+    .getElementById(
+      ids[value] || "filterAll"
+    )
+    ?.classList.add("active");
+
+  render();
+};
+
+
+/* STATUS MATCH */
+
+function matchesStatus(r,st){
+
+  if(st === "All")
+    return true;
+
+  return automationStage(r) === st;
+}
+
+
+/* CUSTOMER DETAILS */
+
+window.openDetail = function(id){
+
+  const r =
+    requests.find(x => x.id === id);
+
+  if(!r)
+    return;
+
+  activeRequest = r;
+
+  const partner =
+    r.partnerName ||
+    r.assignedPartnerName ||
+    r.partner ||
+    "Not assigned";
+
+  const partnerPhone =
+    r.partnerPhone ||
+    r.assignedPartnerPhone ||
+    r.partnerMobile ||
+    r.partnerNumber ||
+    "Not assigned";
+
+  const trackingId =
+    r.trackingId ||
+    r.trackingID ||
+    r.trackId ||
+    r.tracking_id ||
+    r.id ||
+    "—";
+
+  const stage =
+    automationStage(r);
+
+  document.getElementById("detailName")
+    .textContent =
+    customer(r);
+
+  document.getElementById("detailStatus")
+    .textContent =
+    `Booking ID: ${r.id || "—"} • ${stage}`;
+
+  document.getElementById("detailContent")
+    .innerHTML = `
+
+<div class="detailGrid">
+
+  <div class="detailBox">
+    <div class="label">CUSTOMER NAME</div>
+    <div class="value">
+      ${esc(customer(r))}
+    </div>
+  </div>
+
+  <div class="detailBox">
+    <div class="label">PHONE NUMBER</div>
+    <div class="value">
+      ${esc(phone(r) || "Not provided")}
+    </div>
+  </div>
+
+  <div class="detailBox">
+    <div class="label">WHATSAPP NUMBER</div>
+    <div class="value">
+      ${esc(whatsapp(r) || "Not provided")}
+    </div>
+  </div>
+
+  <div class="detailBox">
+    <div class="label">BOOKING ID</div>
+    <div class="value">
+      ${esc(r.id || "—")}
+    </div>
+  </div>
+
+  <div class="detailBox">
+    <div class="label">PARTNER NAME</div>
+    <div class="value">
+      ${esc(partner)}
+    </div>
+  </div>
+
+  <div class="detailBox">
+    <div class="label">PARTNER PHONE</div>
+    <div class="value">
+      ${esc(partnerPhone)}
+    </div>
+  </div>
+
+  <div class="detailBox">
+    <div class="label">TRACKING ID</div>
+    <div class="value">
+      ${esc(trackingId)}
+    </div>
+  </div>
+
+  <div class="detailBox">
+    <div class="label">CUSTOMER TYPE</div>
+    <div class="value">
+      ${
+        stage === "My Customers"
+          ? "⭐ My Customer"
+          : esc(stage)
+      }
+    </div>
+  </div>
+
+</div>
+
+<div
+  class="detailBox"
+  style="margin-top:10px"
+>
+  <div class="label">
+    PICKUP ADDRESS
+  </div>
+
+  <div class="value">
+    ${esc(address(r))}
+  </div>
+</div>
+
+<div
+  class="detailBox"
+  style="margin-top:10px"
+>
+  <div class="label">
+    TRACKING LINK
+  </div>
+
+  <div class="value">
+    ${esc(getTrackingLink(r))}
+  </div>
+</div>
+
+<div class="actionRow">
+
+  ${
+    stage === "New"
+    ?
+    `<button
+      class="btn new"
+      onclick="sendDirect('${esc(r.id)}','new')"
+    >
+      🆕 Send New Request
+    </button>`
+    :
+    ""
+  }
+
+  ${
+    stage === "Partner Assigned"
+    ?
+    `<button
+      class="btn partner"
+      onclick="sendDirect('${esc(r.id)}','partner')"
+    >
+      🚚 Send Partner Assigned
+    </button>`
+    :
+    ""
+  }
+
+  ${
+    stage === "Completed"
+    ?
+    `<button
+      class="btn done"
+      onclick="sendDirect('${esc(r.id)}','completed')"
+    >
+      🎉 Send Completed
+    </button>`
+    :
+    ""
+  }
+
+  ${
+    stage === "My Customers"
+    ?
+    `<button
+      class="btn my"
+      onclick="sendDirect('${esc(r.id)}','my')"
+    >
+      ⭐ Send My Customer
+    </button>`
+    :
+    ""
+  }
+
+  <button
+    class="btn call"
+    onclick="callCustomer('${esc(r.id)}')"
+  >
+    📞 Call Customer
+  </button>
+
+  <button
+    class="btn copy"
+    onclick="copyData('${esc(r.id)}')"
+  >
+    📋 Copy Details
+  </button>
+
+</div>
+`;
+
+  document.getElementById("detailModal")
+    .classList.add("show");
+};
+
+
+window.closeDetail = function(){
+
+  document.getElementById("detailModal")
+    .classList.remove("show");
+
+  activeRequest = null;
+};
+
+
+/* ADD CUSTOMER */
+
+window.openAddCustomer = function(){
+
+  document.getElementById("addName").value = "";
+  document.getElementById("addPhone").value = "";
+  document.getElementById("addWhatsapp").value = "";
+  document.getElementById("addAddress").value = "";
+
+  document.getElementById("addModal")
+    .classList.add("show");
+};
+
+
+window.closeAddCustomer = function(){
+
+  document.getElementById("addModal")
+    .classList.remove("show");
+};
+
+
+window.saveCustomer = async function(){
+
+  const name =
+    document.getElementById("addName")
+      .value.trim();
+
+  const ph =
+    document.getElementById("addPhone")
+      .value.trim();
+
+  const wa =
+    document.getElementById("addWhatsapp")
+      .value.trim() || ph;
+
+  const addr =
+    document.getElementById("addAddress")
+      .value.trim();
+
+  if(!name){
+
+    alert("Please enter customer name.");
+    return;
+  }
+
+  if(!ph && !wa){
+
+    alert("Please enter phone or WhatsApp number.");
+    return;
+  }
+
+  try{
+
+    const newRef =
+      push(
+        ref(db,"pickupRequests")
+      );
+
+    await set(
+      newRef,
+      {
+        customerName:name,
+        name:name,
+
+        phone:ph,
+        whatsappNumber:wa,
+
+        address:addr || "Not provided",
+
+        status:"Completed",
+
+        myCustomer:true,
+        isMyCustomer:true,
+        customerType:"my_customer",
+
+        whatsappAutomationStage:
+          "My Customers",
+
+        myCustomerAddedAt:
+          Date.now(),
+
+        createdAt:
+          Date.now()
+      }
+    );
+
+    closeAddCustomer();
+
+    alert(
+      "Customer added successfully to My Customers."
+    );
+
+    setFilter("My Customers");
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "Could not add customer. Check Firebase write permission."
+    );
+  }
+};
+
+
+/* PREVIOUS */
+
+window.detailPrev = function(){
+
+  if(!activeRequest)
+    return;
+
+  const st =
+    document.getElementById("status")
+      .value;
+
+  const q =
+    document.getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const arr =
+    requests.filter(r => {
+
+      const hay =
+        `${customer(r)}
+         ${whatsapp(r)}
+         ${phone(r)}
+         ${r.id || ""}
+         ${status(r)}
+         ${automationStage(r)}`
+        .toLowerCase();
+
+      return (
+        (!q || hay.includes(q)) &&
+        matchesStatus(r,st)
+      );
+    });
+
+  const i =
+    arr.findIndex(
+      x => x.id === activeRequest.id
+    );
+
+  if(i > 0)
+    openDetail(
+      arr[i - 1].id
+    );
+};
+
+
+/* NEXT */
+
+window.detailNext = function(){
+
+  if(!activeRequest)
+    return;
+
+  const st =
+    document.getElementById("status")
+      .value;
+
+  const q =
+    document.getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const arr =
+    requests.filter(r => {
+
+      const hay =
+        `${customer(r)}
+         ${whatsapp(r)}
+         ${phone(r)}
+         ${r.id || ""}
+         ${status(r)}
+         ${automationStage(r)}`
+        .toLowerCase();
+
+      return (
+        (!q || hay.includes(q)) &&
+        matchesStatus(r,st)
+      );
+    });
+
+  const i =
+    arr.findIndex(
+      x => x.id === activeRequest.id
+    );
+
+  if(
+    i >= 0 &&
+    i < arr.length - 1
+  ){
+
+    openDetail(
+      arr[i + 1].id
+    );
+  }
+};
+
+
+/* RENDER */
+
+window.render = function(){
+
+  const q =
+    document.getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const st =
+    document.getElementById("status")
+      .value;
+
+  const filtered =
+    requests.filter(r => {
+
+      const hay =
+        `${customer(r)}
+         ${whatsapp(r)}
+         ${phone(r)}
+         ${r.id || ""}
+         ${status(r)}
+         ${address(r)}
+         ${automationStage(r)}`
+        .toLowerCase();
+
+      return (
+        (!q || hay.includes(q)) &&
+        matchesStatus(r,st)
+      );
+    });
+
+
+  const counts = {
+
+    new:
+      requests.filter(
+        r =>
+          matchesStatus(r,"New")
+      ).length,
+
+    partner:
+      requests.filter(
+        r =>
+          matchesStatus(
+            r,
+            "Partner Assigned"
+          )
+      ).length,
+
+    completed:
+      requests.filter(
+        r =>
+          matchesStatus(
+            r,
+            "Completed"
+          )
+      ).length,
+
+    my:
+      requests.filter(
+        r =>
+          matchesStatus(
+            r,
+            "My Customers"
+          )
+      ).length
+  };
+
+
+  document.getElementById("total")
+    .textContent =
+    requests.length;
+
+  document.getElementById("newCount")
+    .textContent =
+    counts.new;
+
+  document.getElementById("partnerCount")
+    .textContent =
+    counts.partner;
+
+  document.getElementById("completedCount")
+    .textContent =
+    counts.completed;
+
+  document.getElementById("myCount")
+    .textContent =
+    counts.my;
+
+
+  if(!filtered.length){
+
+    document.getElementById("list")
+      .innerHTML =
+      '<div class="empty">No customer records found.</div>';
+
+    return;
+  }
+
+
+  document.getElementById("list")
+    .innerHTML =
+
+    filtered.map(r => {
+
+      const wp =
+        whatsapp(r);
+
+      const ph =
+        phone(r);
+
+      const stage =
+        automationStage(r);
+
+      let statusClass =
+        "";
+
+      if(stage === "My Customers")
+        statusClass = "myStatus";
+
+      if(stage === "Completed")
+        statusClass = "doneStatus";
+
+      return `
+
+<div
+  class="card compact-card"
+  onclick="openDetail('${esc(r.id)}')"
+  role="button"
+  tabindex="0"
+  onkeydown="
+    if(event.key==='Enter'||event.key===' '){
+      event.preventDefault();
+      openDetail('${esc(r.id)}')
+    }
+  "
+>
+
+  <div class="compact-main">
+
+    <div class="compact-name">
+      ${esc(customer(r))}
+    </div>
+
+    <div class="compact-phone">
+      📞 ${esc(ph || wp || "No phone")}
+    </div>
+
+    <div class="compact-id">
+      ${esc(r.id || "")}
+    </div>
+
+    <div class="compact-partner">
+      ${
+        esc(
+          r.partnerName ||
+          r.assignedPartnerName ||
+          r.partner ||
+          "Not assigned"
+        )
+      }
+    </div>
+
+    <span class="status ${statusClass}">
+      ${
+        stage === "My Customers"
+          ? "⭐ My Customer"
+          : esc(stage)
+      }
+    </span>
+
+    <span class="compact-arrow">
+      ›
+    </span>
+
+  </div>
+
+</div>
+
+`;
+
+    }).join("");
+};
+
+
+/* FIREBASE */
+
+onValue(
+  ref(db,"pickupRequests"),
+
+  snap => {
+
+    const data =
+      snap.val() || {};
+
+    requests =
+      Object.entries(data)
+        .map(
+          ([id,r]) => ({
+            id,
+            ...(r || {})
+          })
+        );
+
+    /*
+     * Automatically recognise old
+     * completed customers as My Customers
+     * when they were already marked as myCustomer.
+     */
+
+    requests.forEach(r => {
+
+      if(
+        r.myCustomer === true ||
+        r.myCustomer === "true" ||
+        r.isMyCustomer === true ||
+        r.isMyCustomer === "true" ||
+        r.customerType === "my_customer"
+      ){
+
+        r.whatsappAutomationStage =
+          "My Customers";
+      }
+
+    });
+
+    requests.sort(
+      (a,b) =>
+        (
+          b.createdAt ||
+          b.timestamp ||
+          0
+        )
+        -
+        (
+          a.createdAt ||
+          a.timestamp ||
+          0
+        )
+    );
+
+    render();
+  },
+
+  err => {
+
+    document.getElementById("list")
+      .innerHTML =
+      `<div class="empty">
+        Firebase error:
+        ${esc(err.message)}
+        <br><br>
+        Check your Realtime Database read rules.
+      </div>`;
+  }
+);
+
+
+/* CLOSE MODALS */
+
+document
+  .getElementById("modal")
+  .addEventListener(
+    "click",
+    e => {
+
+      if(e.target.id === "modal")
+        closeModal();
+    }
+  );
+
+
+document
+  .getElementById("detailModal")
+  .addEventListener(
+    "click",
+    e => {
+
+      if(e.target.id === "detailModal")
+        closeDetail();
+    }
+  );
+
+
+document
+  .getElementById("addModal")
+  .addEventListener(
+    "click",
+    e => {
+
+      if(e.target.id === "addModal")
+        closeAddCustomer();
+    }
+  );
+
+</script>
+
+</body>
+</html>
