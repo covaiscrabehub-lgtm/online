@@ -2869,98 +2869,72 @@ body.dark-mode .custom-product-input:focus{
 .profile-popup-overlay{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.7);
-    backdrop-filter:blur(8px);
+    background:rgba(0,0,0,.68);
+    backdrop-filter:blur(7px);
+    -webkit-backdrop-filter:blur(7px);
     z-index:10000;
     display:none;
     align-items:center;
     justify-content:center;
-    padding:20px;
+    padding:18px;
+    touch-action:manipulation;
 }
 
-.profile-popup-overlay.show{
-    display:flex;
-}
+.profile-popup-overlay.show{display:flex;}
 
 .profile-popup{
-    background:#fff;
+    position:relative;
+    isolation:isolate;
+    background:var(--card,#fff);
+    color:var(--text,#15231b);
+    border:1px solid var(--border,#e4ebe6);
     border-radius:20px;
     max-width:500px;
     width:100%;
-    padding:32px;
-    box-shadow:0 20px 60px rgba(0,0,0,.3);
+    padding:30px;
+    box-shadow:0 20px 60px rgba(0,0,0,.30);
     animation:popupIn .3s ease;
 }
 
-@keyframes popupIn{
-    from{
-        opacity:0;
-        transform:scale(.9) translateY(20px);
-    }
-    to{
-        opacity:1;
-        transform:scale(1) translateY(0);
-    }
-}
-
-.popup-header{
-    text-align:center;
-    margin-bottom:24px;
-}
-
-.popup-icon{
-    font-size:64px;
-    margin-bottom:16px;
-}
-
-.popup-title{
-    font-size:24px;
-    font-weight:800;
-    margin-bottom:8px;
-}
-
-.popup-desc{
-    font-size:14px;
-    color:var(--muted);
-    line-height:1.5;
-}
-
-.popup-buttons{
-    display:flex;
-    gap:12px;
-    margin-top:24px;
-}
-
-.popup-btn{
-    flex:1;
-    padding:14px;
+.profile-popup-close{
+    position:absolute;
+    top:10px;
+    right:10px;
+    z-index:20;
+    width:34px;
+    height:34px;
     border:0;
-    border-radius:12px;
-    font-size:15px;
+    border-radius:50%;
+    background:#f1f4f2;
+    color:#5d6a62;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
     font-weight:700;
     cursor:pointer;
-    transition:.2s;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
 }
 
-.popup-btn-skip{
-    background:#f3f4f6;
-    color:#6b7280;
+.profile-popup-close:active{transform:scale(.94);}
+
+@keyframes popupIn{
+    from{opacity:0;transform:scale(.9) translateY(20px);}
+    to{opacity:1;transform:scale(1) translateY(0);}
 }
 
-.popup-btn-skip:hover{
-    background:#e5e7eb;
-}
+.popup-header{text-align:center;margin-bottom:24px;}
+.popup-icon{font-size:64px;margin-bottom:16px;}
+.popup-title{font-size:24px;font-weight:800;margin-bottom:8px;}
+.popup-desc{font-size:14px;color:var(--muted);line-height:1.5;}
+.popup-buttons{display:flex;gap:12px;margin-top:24px;}
+.popup-btn{flex:1;padding:14px;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.popup-btn-skip{background:#f3f4f6;color:#6b7280;}
+.popup-btn-skip:hover{background:#e5e7eb;}
+.popup-btn-continue{background:#149447;color:#fff;box-shadow:0 4px 12px rgba(20,148,71,.3);}
+.popup-btn-continue:hover{background:#087536;transform:translateY(-2px);}
 
-.popup-btn-continue{
-    background:#149447;
-    color:#fff;
-    box-shadow:0 4px 12px rgba(20,148,71,.3);
-}
-
-.popup-btn-continue:hover{
-    background:#087536;
-    transform:translateY(-2px);
-}
 /* =====================================================
    SETTINGS OPTIONS
 ===================================================== */
@@ -3234,192 +3208,81 @@ body.dark-mode .settings-options button:hover{
     }
 }
 
-
 /* =====================================================
-   POPUP MOBILE/TOUCH FIXES
-   Only popup behavior/layout is changed.
+   POPUP MOBILE / TOUCH FIX
 ===================================================== */
-
-.profile-popup-overlay,
-.download-popup-overlay{
-    -webkit-tap-highlight-color:transparent;
-    touch-action:manipulation;
-}
-
-.profile-popup,
-.download-popup{
-    position:relative;
-    isolation:isolate;
-}
-
-.profile-popup button,
-.download-popup button,
-.download-popup a{
-    position:relative;
-    z-index:2;
-    -webkit-tap-highlight-color:transparent;
-    touch-action:manipulation;
-}
-
-.download-popup-close{
-    z-index:10;
-    pointer-events:auto;
-}
-
-.download-popup-btn{
-    cursor:pointer;
-    -webkit-user-select:none;
-    user-select:none;
-}
-
-@media(max-width:600px){
+@media (max-width:600px){
     .profile-popup-overlay,
     .download-popup-overlay{
         padding:14px;
+        padding-top:max(14px,env(safe-area-inset-top));
+        padding-right:max(14px,env(safe-area-inset-right));
+        padding-bottom:max(14px,env(safe-area-inset-bottom));
+        padding-left:max(14px,env(safe-area-inset-left));
+        -webkit-tap-highlight-color:transparent;
+        touch-action:manipulation;
     }
 
     .profile-popup{
-        width:min(92vw, 340px);
-        max-width:340px;
-        padding:22px 18px 18px;
+        width:min(330px,calc(100vw - 28px));
+        padding:24px 17px 18px;
         border-radius:18px;
-        box-shadow:0 18px 45px rgba(0,0,0,.28);
     }
 
-    .popup-header{
-        margin-bottom:15px;
-    }
-
-    .popup-icon{
-        font-size:42px;
-        margin-bottom:8px;
-    }
-
-    .popup-title{
-        font-size:18px;
-        line-height:1.25;
-        margin-bottom:6px;
-    }
-
-    .popup-desc{
-        font-size:11px;
-        line-height:1.5;
-    }
-
-    .popup-buttons{
-        gap:8px;
-        margin-top:16px;
-    }
-
-    .popup-btn{
-        min-height:42px;
-        padding:10px 8px;
-        border-radius:10px;
-        font-size:11px;
-        -webkit-appearance:none;
-        appearance:none;
-    }
-
-    .download-popup{
-        width:min(88vw, 310px);
-        max-width:310px;
-        padding:22px 17px 18px;
-        border-radius:19px;
-    }
-
-    .download-popup-icon{
-        font-size:38px;
-        margin-bottom:9px;
-    }
-
-    .download-popup h3{
-        font-size:18px;
-        margin-bottom:7px;
-    }
-
-    .download-popup p{
-        font-size:11px;
-        line-height:1.45;
-        margin-bottom:14px;
-    }
-
-    .download-popup-btn{
-        width:100%;
-        min-height:44px;
-        padding:11px 14px;
-        border-radius:11px;
-        font-size:13px;
-        gap:7px;
-    }
-
-    .download-popup-close{
-        width:30px;
-        height:30px;
+    .profile-popup-close{
         top:8px;
         right:8px;
-        font-size:15px;
-    }
-}
-
-@media(max-width:360px){
-    .profile-popup{
-        width:calc(100vw - 28px);
-        padding:19px 14px 15px;
-    }
-
-    .popup-icon{
-        font-size:36px;
-    }
-
-    .popup-title{
+        width:30px;
+        height:30px;
         font-size:16px;
     }
 
-    .popup-desc{
-        font-size:10px;
-    }
-
-    .popup-btn{
-        min-height:40px;
-        font-size:10px;
-    }
+    .popup-header{margin-bottom:16px;}
+    .popup-icon{font-size:42px;margin-bottom:9px;}
+    .popup-title{font-size:18px;line-height:1.2;margin:0 22px 7px;}
+    .popup-desc{font-size:11px;line-height:1.45;padding:0 5px;}
+    .popup-buttons{gap:8px;margin-top:16px;}
+    .popup-btn{padding:10px 8px;border-radius:10px;font-size:11px;min-height:40px;}
 
     .download-popup{
-        width:calc(100vw - 36px);
-        padding:19px 14px 16px;
+        position:relative;
+        isolation:isolate;
+        width:min(300px,calc(100vw - 28px));
+        max-width:300px;
+        padding:24px 18px 19px;
+        border-radius:19px;
     }
 
-    .download-popup h3{
-        font-size:17px;
+    .download-popup-close{
+        position:absolute;
+        top:8px;
+        right:8px;
+        z-index:20;
+        width:30px;
+        height:30px;
+        font-size:16px;
+        pointer-events:auto;
+        touch-action:manipulation;
+        -webkit-tap-highlight-color:transparent;
     }
 
-    .download-popup p{
-        font-size:10px;
-    }
-
-    .download-popup-btn{
-        min-height:42px;
-        font-size:12px;
-    }
+    .download-popup-icon{font-size:40px;margin-bottom:10px;}
+    .download-popup h3{font-size:18px;margin-bottom:7px;}
+    .download-popup p{font-size:11px;line-height:1.45;margin:0 2px 16px;}
+    .download-popup-btn{position:relative;z-index:10;padding:11px 19px;font-size:13px;border-radius:12px;min-height:42px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 }
 
+@media (max-width:360px){
+    .profile-popup{width:calc(100vw - 24px);padding:22px 14px 16px;}
+    .popup-title{font-size:17px;}
+    .popup-desc{font-size:10.5px;}
+    .popup-btn{font-size:10.5px;padding:9px 6px;}
+    .download-popup{width:calc(100vw - 24px);padding:22px 15px 17px;}
+}
 
 /* =====================================================
    NOTIFICATION CARD - REMOVED
 ===================================================== */
-</style>
-
-
-<style id="popup-safe-area-fix">
-@media(max-width:600px){
-    .profile-popup-overlay,
-    .download-popup-overlay{
-        padding-top:max(14px, env(safe-area-inset-top));
-        padding-right:max(14px, env(safe-area-inset-right));
-        padding-bottom:max(14px, env(safe-area-inset-bottom));
-        padding-left:max(14px, env(safe-area-inset-left));
-    }
-}
 </style>
 
 </head>
@@ -6551,6 +6414,7 @@ if(window.firebaseReady){
 <!-- PROFILE SETUP POPUP -->
 <div class="profile-popup-overlay" id="profilePopup">
     <div class="profile-popup">
+        <button type="button" class="profile-popup-close" onclick="closeProfilePopup()" aria-label="Close">✕</button>
         <div class="popup-header">
             <div class="popup-icon">👋</div>
             <h2 class="popup-title" data-i18n="welcomeHub">Welcome to Covai Scrap Hub!</h2>
@@ -6574,119 +6438,73 @@ if(window.firebaseReady){
 
 /* =====================================================
    PROFILE POPUP
-   First customer entry only + 10 second delay.
-   Existing profile/skip behavior is preserved.
 ===================================================== */
-
 (function(){
+    const PROFILE_SESSION_KEY = 'covaiCustomerProfilePromptShown';
+    const DOWNLOAD_DELAY_AFTER_PROFILE = 7000;
+    let downloadTimer = null;
 
-    const PROFILE_PROMPT_SESSION_KEY =
-        'covaiCustomerProfilePromptShown';
+    function getPopup(id){
+        return document.getElementById(id);
+    }
 
-    function isCustomerFirstEntry(){
+    function showDownloadPopup(){
+        const popup = getPopup('downloadPopup');
+        if(popup) popup.classList.add('show');
+    }
 
-        /*
-           Do not disturb an existing saved profile.
-           Do not show again after the user has skipped it.
-        */
-        const hasProfile =
-            localStorage.getItem('userProfile');
-
-        const hasSkipped =
-            localStorage.getItem('profileSkipped');
-
-        if(hasProfile || hasSkipped){
-            return false;
-        }
-
-        /*
-           Session guard:
-           one popup attempt per customer-page session.
-           This prevents the popup from repeatedly appearing
-           after mobile navigation/re-render.
-        */
-        if(sessionStorage.getItem(PROFILE_PROMPT_SESSION_KEY)){
-            return false;
-        }
-
-        return true;
+    function scheduleDownloadPopup(){
+        clearTimeout(downloadTimer);
+        downloadTimer = setTimeout(showDownloadPopup, DOWNLOAD_DELAY_AFTER_PROFILE);
     }
 
     function checkProfileSetup(){
+        const hasProfile = localStorage.getItem('userProfile');
+        const hasSkipped = localStorage.getItem('profileSkipped');
+        const alreadyShown = sessionStorage.getItem(PROFILE_SESSION_KEY);
 
-        if(!isCustomerFirstEntry()){
+        if(hasProfile || hasSkipped || alreadyShown){
+            // Existing customers do not get the first-entry profile popup.
+            // Keep the app popup flow available and show it after 7 seconds.
+            setTimeout(showDownloadPopup, 7000);
             return;
         }
 
-        /*
-           Mark before showing so a second initialization
-           cannot schedule another popup.
-        */
-        sessionStorage.setItem(
-            PROFILE_PROMPT_SESSION_KEY,
-            'true'
-        );
+        sessionStorage.setItem(PROFILE_SESSION_KEY,'true');
 
+        // First customer entry: profile popup after exactly 10 seconds.
         setTimeout(function(){
-
-            const popup =
-                document.getElementById('profilePopup');
-
-            if(!popup){
-                return;
-            }
-
+            const popup = getPopup('profilePopup');
+            if(!popup) return;
             popup.classList.add('show');
 
-        }, 10000); // exactly 10 seconds
-
+            // Download popup appears 7 seconds after the profile popup appears.
+            scheduleDownloadPopup();
+        },10000);
     }
 
+    window.closeProfilePopup = function(){
+        const popup = getPopup('profilePopup');
+        if(popup) popup.classList.remove('show');
+    };
+
     window.skipProfile = function(){
-
-        localStorage.setItem(
-            'profileSkipped',
-            'true'
-        );
-
-        const popup =
-            document.getElementById('profilePopup');
-
-        if(popup){
-            popup.classList.remove('show');
-        }
-
+        localStorage.setItem('profileSkipped','true');
+        closeProfilePopup();
     };
 
     window.setupProfile = function(){
-
-        const popup =
-            document.getElementById('profilePopup');
-
-        if(popup){
-            popup.classList.remove('show');
-        }
-
-        window.location.href =
-            'profile.html';
-
+        closeProfilePopup();
+        window.location.href='profile.html';
     };
 
-    /*
-       Run after the page is ready.
-       This does not change the existing customer page flow.
-    */
-    if(document.readyState === 'loading'){
-        document.addEventListener(
-            'DOMContentLoaded',
-            checkProfileSetup,
-            {once:true}
-        );
+    if(document.readyState==='loading'){
+        document.addEventListener('DOMContentLoaded',checkProfileSetup,{once:true});
     }else{
         checkProfileSetup();
     }
-
 })();
+
 </script>
 
 <script src="lang-system.js"></script>
@@ -7415,14 +7233,15 @@ window.addEventListener('DOMContentLoaded', function(){
 <!-- Download App Popup -->
 <div class="download-popup-overlay" id="downloadPopup">
     <div class="download-popup">
-        <button class="download-popup-close" onclick="closeDownloadPopup()" aria-label="Close">✕</button>
+        <button type="button" class="download-popup-close" id="downloadPopupClose" aria-label="Close">✕</button>
         <div class="download-popup-icon">📱</div>
         <h3>Download Our App</h3>
         <p>Get better experience with our mobile app. Fast, easy, and convenient!</p>
         <a href="https://drive.google.com/file/d/13I_zW9h-Vri8GcV9IoUQuMgKwG8ecFoq/view?usp=drivesdk"
            target="_blank"
+           rel="noopener"
            class="download-popup-btn"
-           onclick="closeDownloadPopup()">
+           id="downloadPopupBtn">
             <span>⬇️</span>
             <span>Download Now</span>
         </a>
@@ -7432,225 +7251,47 @@ window.addEventListener('DOMContentLoaded', function(){
 <script>
 // =====================================================
 // DOWNLOAD APP POPUP
-// Mobile + laptop touch/click fix.
-// The existing download URL is preserved.
 // =====================================================
-
 (function(){
-
-    var popup = null;
-    var closeButton = null;
-    var downloadButton = null;
-
-    function getPopupElements(){
-
-        popup =
-            document.getElementById('downloadPopup');
-
-        if(!popup){
-            return false;
-        }
-
-        closeButton =
-            popup.querySelector('.download-popup-close');
-
-        downloadButton =
-            popup.querySelector('.download-popup-btn');
-
-        return true;
-    }
-
-    function showDownloadPopup(){
-
-        if(!getPopupElements()){
-            return;
-        }
-
-        popup.classList.add('show');
-
-        /*
-           Keep the popup above the mobile browser safe area.
-        */
-        document.body.classList.add(
-            'download-popup-open'
-        );
-
-    }
+    const popup = document.getElementById('downloadPopup');
+    const closeBtn = document.getElementById('downloadPopupClose');
+    const downloadBtn = document.getElementById('downloadPopupBtn');
 
     window.closeDownloadPopup = function(){
-
-        if(!popup){
-            getPopupElements();
-        }
-
-        if(popup){
-            popup.classList.remove('show');
-        }
-
-        document.body.classList.remove(
-            'download-popup-open'
-        );
-
+        if(popup) popup.classList.remove('show');
     };
 
-    function openDownloadLink(event){
-
-        /*
-           IMPORTANT:
-           Do not let the overlay's click handler,
-           document handlers, or touch handling cancel
-           the actual download link on mobile.
-        */
-        if(event){
+    if(closeBtn){
+        closeBtn.addEventListener('click',function(event){
+            event.preventDefault();
             event.stopPropagation();
-        }
-
-        var link =
-            event &&
-            event.currentTarget
-                ? event.currentTarget
-                : downloadButton;
-
-        if(!link){
-            return;
-        }
-
-        /*
-           Keep the original Google Drive URL from the HTML.
-           Use the normal browser navigation path on mobile.
-        */
-        var url = link.getAttribute('href');
-
-        if(!url){
-            return;
-        }
-
-        window.closeDownloadPopup();
-
-        /*
-           Let the anchor's own navigation happen normally.
-           Preventing default here can cause mobile browsers
-           to ignore the download/open action.
-        */
+            closeDownloadPopup();
+        });
+        closeBtn.addEventListener('touchend',function(event){
+            event.preventDefault();
+            event.stopPropagation();
+            closeDownloadPopup();
+        },{passive:false});
     }
 
-    function initDownloadPopup(){
+    if(downloadBtn){
+        // Do not prevent the link's default action: this keeps it working on mobile.
+        downloadBtn.addEventListener('click',function(){
+            closeDownloadPopup();
+        });
+    }
 
-        if(!getPopupElements()){
-            return;
-        }
-
-        /*
-           Close button: explicit touch + click support.
-        */
-        if(closeButton){
-
-            closeButton.addEventListener(
-                'click',
-                function(event){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    window.closeDownloadPopup();
-                }
-            );
-
-            closeButton.addEventListener(
-                'touchend',
-                function(event){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    window.closeDownloadPopup();
-                },
-                {passive:false}
-            );
-
-        }
-
-        /*
-           Download button:
-           allow the real <a href> navigation to happen.
-           We only close the popup; we do NOT prevent default.
-        */
-        if(downloadButton){
-
-            downloadButton.addEventListener(
-                'click',
-                openDownloadLink
-            );
-
-            downloadButton.addEventListener(
-                'touchend',
-                function(event){
-
-                    event.stopPropagation();
-
-                    /*
-                       Do not preventDefault:
-                       mobile browser must receive the anchor
-                       navigation/download action.
-                    */
-
-                },
-                {passive:true}
-            );
-
-        }
-
-        /*
-           Clicking/tapping the dark area closes the popup.
-           Clicking inside the card never closes it accidentally.
-        */
-        popup.addEventListener(
-            'click',
-            function(event){
-
-                if(
-                    event.target === popup
-                ){
-                    window.closeDownloadPopup();
-                }
-
+    if(popup){
+        popup.addEventListener('click',function(event){
+            if(event.target === popup){
+                closeDownloadPopup();
             }
-        );
-
-        /*
-           ESC on desktop.
-        */
-        document.addEventListener(
-            'keydown',
-            function(event){
-
-                if(event.key === 'Escape'){
-                    window.closeDownloadPopup();
-                }
-
-            }
-        );
-
-        /*
-           Show after the existing short delay.
-        */
-        setTimeout(
-            showDownloadPopup,
-            800
-        );
-
+        });
     }
 
-    if(document.readyState === 'loading'){
-
-        document.addEventListener(
-            'DOMContentLoaded',
-            initDownloadPopup,
-            {once:true}
-        );
-
-    }else{
-
-        initDownloadPopup();
-
-    }
-
+    document.addEventListener('keydown',function(event){
+        if(event.key === 'Escape') closeDownloadPopup();
+    });
 })();
 </script>
 
