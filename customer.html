@@ -3234,9 +3234,192 @@ body.dark-mode .settings-options button:hover{
     }
 }
 
+
+/* =====================================================
+   POPUP MOBILE/TOUCH FIXES
+   Only popup behavior/layout is changed.
+===================================================== */
+
+.profile-popup-overlay,
+.download-popup-overlay{
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+}
+
+.profile-popup,
+.download-popup{
+    position:relative;
+    isolation:isolate;
+}
+
+.profile-popup button,
+.download-popup button,
+.download-popup a{
+    position:relative;
+    z-index:2;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+}
+
+.download-popup-close{
+    z-index:10;
+    pointer-events:auto;
+}
+
+.download-popup-btn{
+    cursor:pointer;
+    -webkit-user-select:none;
+    user-select:none;
+}
+
+@media(max-width:600px){
+    .profile-popup-overlay,
+    .download-popup-overlay{
+        padding:14px;
+    }
+
+    .profile-popup{
+        width:min(92vw, 340px);
+        max-width:340px;
+        padding:22px 18px 18px;
+        border-radius:18px;
+        box-shadow:0 18px 45px rgba(0,0,0,.28);
+    }
+
+    .popup-header{
+        margin-bottom:15px;
+    }
+
+    .popup-icon{
+        font-size:42px;
+        margin-bottom:8px;
+    }
+
+    .popup-title{
+        font-size:18px;
+        line-height:1.25;
+        margin-bottom:6px;
+    }
+
+    .popup-desc{
+        font-size:11px;
+        line-height:1.5;
+    }
+
+    .popup-buttons{
+        gap:8px;
+        margin-top:16px;
+    }
+
+    .popup-btn{
+        min-height:42px;
+        padding:10px 8px;
+        border-radius:10px;
+        font-size:11px;
+        -webkit-appearance:none;
+        appearance:none;
+    }
+
+    .download-popup{
+        width:min(88vw, 310px);
+        max-width:310px;
+        padding:22px 17px 18px;
+        border-radius:19px;
+    }
+
+    .download-popup-icon{
+        font-size:38px;
+        margin-bottom:9px;
+    }
+
+    .download-popup h3{
+        font-size:18px;
+        margin-bottom:7px;
+    }
+
+    .download-popup p{
+        font-size:11px;
+        line-height:1.45;
+        margin-bottom:14px;
+    }
+
+    .download-popup-btn{
+        width:100%;
+        min-height:44px;
+        padding:11px 14px;
+        border-radius:11px;
+        font-size:13px;
+        gap:7px;
+    }
+
+    .download-popup-close{
+        width:30px;
+        height:30px;
+        top:8px;
+        right:8px;
+        font-size:15px;
+    }
+}
+
+@media(max-width:360px){
+    .profile-popup{
+        width:calc(100vw - 28px);
+        padding:19px 14px 15px;
+    }
+
+    .popup-icon{
+        font-size:36px;
+    }
+
+    .popup-title{
+        font-size:16px;
+    }
+
+    .popup-desc{
+        font-size:10px;
+    }
+
+    .popup-btn{
+        min-height:40px;
+        font-size:10px;
+    }
+
+    .download-popup{
+        width:calc(100vw - 36px);
+        padding:19px 14px 16px;
+    }
+
+    .download-popup h3{
+        font-size:17px;
+    }
+
+    .download-popup p{
+        font-size:10px;
+    }
+
+    .download-popup-btn{
+        min-height:42px;
+        font-size:12px;
+    }
+}
+
+
 /* =====================================================
    NOTIFICATION CARD - REMOVED
 ===================================================== */
+</style>
+
+
+<style id="popup-safe-area-fix">
+@media(max-width:600px){
+    .profile-popup-overlay,
+    .download-popup-overlay{
+        padding-top:max(14px, env(safe-area-inset-top));
+        padding-right:max(14px, env(safe-area-inset-right));
+        padding-bottom:max(14px, env(safe-area-inset-bottom));
+        padding-left:max(14px, env(safe-area-inset-left));
+    }
+}
 </style>
 
 </head>
@@ -6391,32 +6574,119 @@ if(window.firebaseReady){
 
 /* =====================================================
    PROFILE POPUP
+   First customer entry only + 10 second delay.
+   Existing profile/skip behavior is preserved.
 ===================================================== */
 
-function checkProfileSetup(){
-    const hasProfile = localStorage.getItem('userProfile');
-    const hasSkipped = localStorage.getItem('profileSkipped');
+(function(){
 
-    if(!hasProfile && !hasSkipped){
-        setTimeout(() => {
-            document.getElementById('profilePopup').classList.add('show');
-        }, 1000);
+    const PROFILE_PROMPT_SESSION_KEY =
+        'covaiCustomerProfilePromptShown';
+
+    function isCustomerFirstEntry(){
+
+        /*
+           Do not disturb an existing saved profile.
+           Do not show again after the user has skipped it.
+        */
+        const hasProfile =
+            localStorage.getItem('userProfile');
+
+        const hasSkipped =
+            localStorage.getItem('profileSkipped');
+
+        if(hasProfile || hasSkipped){
+            return false;
+        }
+
+        /*
+           Session guard:
+           one popup attempt per customer-page session.
+           This prevents the popup from repeatedly appearing
+           after mobile navigation/re-render.
+        */
+        if(sessionStorage.getItem(PROFILE_PROMPT_SESSION_KEY)){
+            return false;
+        }
+
+        return true;
     }
-}
 
-function skipProfile(){
-    localStorage.setItem('profileSkipped', 'true');
-    document.getElementById('profilePopup').classList.remove('show');
-}
+    function checkProfileSetup(){
 
-function setupProfile(){
-    document.getElementById('profilePopup').classList.remove('show');
-    window.location.href = 'profile.html';
-}
+        if(!isCustomerFirstEntry()){
+            return;
+        }
 
-// Check on page load
-checkProfileSetup();
+        /*
+           Mark before showing so a second initialization
+           cannot schedule another popup.
+        */
+        sessionStorage.setItem(
+            PROFILE_PROMPT_SESSION_KEY,
+            'true'
+        );
 
+        setTimeout(function(){
+
+            const popup =
+                document.getElementById('profilePopup');
+
+            if(!popup){
+                return;
+            }
+
+            popup.classList.add('show');
+
+        }, 10000); // exactly 10 seconds
+
+    }
+
+    window.skipProfile = function(){
+
+        localStorage.setItem(
+            'profileSkipped',
+            'true'
+        );
+
+        const popup =
+            document.getElementById('profilePopup');
+
+        if(popup){
+            popup.classList.remove('show');
+        }
+
+    };
+
+    window.setupProfile = function(){
+
+        const popup =
+            document.getElementById('profilePopup');
+
+        if(popup){
+            popup.classList.remove('show');
+        }
+
+        window.location.href =
+            'profile.html';
+
+    };
+
+    /*
+       Run after the page is ready.
+       This does not change the existing customer page flow.
+    */
+    if(document.readyState === 'loading'){
+        document.addEventListener(
+            'DOMContentLoaded',
+            checkProfileSetup,
+            {once:true}
+        );
+    }else{
+        checkProfileSetup();
+    }
+
+})();
 </script>
 
 <script src="lang-system.js"></script>
@@ -7162,33 +7432,226 @@ window.addEventListener('DOMContentLoaded', function(){
 <script>
 // =====================================================
 // DOWNLOAD APP POPUP
+// Mobile + laptop touch/click fix.
+// The existing download URL is preserved.
 // =====================================================
 
-// Show popup immediately (script is at end of body, so DOM is ready)
-setTimeout(function() {
-    var popup = document.getElementById('downloadPopup');
-    if (popup) {
+(function(){
+
+    var popup = null;
+    var closeButton = null;
+    var downloadButton = null;
+
+    function getPopupElements(){
+
+        popup =
+            document.getElementById('downloadPopup');
+
+        if(!popup){
+            return false;
+        }
+
+        closeButton =
+            popup.querySelector('.download-popup-close');
+
+        downloadButton =
+            popup.querySelector('.download-popup-btn');
+
+        return true;
+    }
+
+    function showDownloadPopup(){
+
+        if(!getPopupElements()){
+            return;
+        }
+
         popup.classList.add('show');
-        console.log('Download popup shown');
-    } else {
-        console.error('Download popup element not found');
-    }
-}, 800);
 
-// Close popup function
-function closeDownloadPopup() {
-    var popup = document.getElementById('downloadPopup');
-    if (popup) {
-        popup.classList.remove('show');
-    }
-}
+        /*
+           Keep the popup above the mobile browser safe area.
+        */
+        document.body.classList.add(
+            'download-popup-open'
+        );
 
-// Close on overlay click
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('download-popup-overlay')) {
-        closeDownloadPopup();
     }
-});
+
+    window.closeDownloadPopup = function(){
+
+        if(!popup){
+            getPopupElements();
+        }
+
+        if(popup){
+            popup.classList.remove('show');
+        }
+
+        document.body.classList.remove(
+            'download-popup-open'
+        );
+
+    };
+
+    function openDownloadLink(event){
+
+        /*
+           IMPORTANT:
+           Do not let the overlay's click handler,
+           document handlers, or touch handling cancel
+           the actual download link on mobile.
+        */
+        if(event){
+            event.stopPropagation();
+        }
+
+        var link =
+            event &&
+            event.currentTarget
+                ? event.currentTarget
+                : downloadButton;
+
+        if(!link){
+            return;
+        }
+
+        /*
+           Keep the original Google Drive URL from the HTML.
+           Use the normal browser navigation path on mobile.
+        */
+        var url = link.getAttribute('href');
+
+        if(!url){
+            return;
+        }
+
+        window.closeDownloadPopup();
+
+        /*
+           Let the anchor's own navigation happen normally.
+           Preventing default here can cause mobile browsers
+           to ignore the download/open action.
+        */
+    }
+
+    function initDownloadPopup(){
+
+        if(!getPopupElements()){
+            return;
+        }
+
+        /*
+           Close button: explicit touch + click support.
+        */
+        if(closeButton){
+
+            closeButton.addEventListener(
+                'click',
+                function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    window.closeDownloadPopup();
+                }
+            );
+
+            closeButton.addEventListener(
+                'touchend',
+                function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    window.closeDownloadPopup();
+                },
+                {passive:false}
+            );
+
+        }
+
+        /*
+           Download button:
+           allow the real <a href> navigation to happen.
+           We only close the popup; we do NOT prevent default.
+        */
+        if(downloadButton){
+
+            downloadButton.addEventListener(
+                'click',
+                openDownloadLink
+            );
+
+            downloadButton.addEventListener(
+                'touchend',
+                function(event){
+
+                    event.stopPropagation();
+
+                    /*
+                       Do not preventDefault:
+                       mobile browser must receive the anchor
+                       navigation/download action.
+                    */
+
+                },
+                {passive:true}
+            );
+
+        }
+
+        /*
+           Clicking/tapping the dark area closes the popup.
+           Clicking inside the card never closes it accidentally.
+        */
+        popup.addEventListener(
+            'click',
+            function(event){
+
+                if(
+                    event.target === popup
+                ){
+                    window.closeDownloadPopup();
+                }
+
+            }
+        );
+
+        /*
+           ESC on desktop.
+        */
+        document.addEventListener(
+            'keydown',
+            function(event){
+
+                if(event.key === 'Escape'){
+                    window.closeDownloadPopup();
+                }
+
+            }
+        );
+
+        /*
+           Show after the existing short delay.
+        */
+        setTimeout(
+            showDownloadPopup,
+            800
+        );
+
+    }
+
+    if(document.readyState === 'loading'){
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            initDownloadPopup,
+            {once:true}
+        );
+
+    }else{
+
+        initDownloadPopup();
+
+    }
+
+})();
 </script>
 
 </body>
