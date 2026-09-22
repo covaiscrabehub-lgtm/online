@@ -244,6 +244,95 @@ main{
   margin-bottom:12px;
 }
 
+.auth-input{
+  width:100%;
+  height:45px;
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  padding:0 13px;
+  font-size:13px;
+  font-weight:650;
+  outline:none;
+  background:#fbfdfc;
+  color:var(--text);
+}
+
+.auth-input:focus{
+  border-color:var(--green);
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(11,159,85,.08);
+}
+
+.login-message{
+  display:none;
+  margin-top:10px;
+  padding:10px 11px;
+  border-radius:11px;
+  font-size:10px;
+  font-weight:800;
+  line-height:1.45;
+}
+
+.join-card{
+  margin-top:14px;
+  padding:13px;
+  border-radius:14px;
+  background:#f0faf4;
+  border:1px solid #cdeedb;
+}
+
+.join-title{
+  color:#087c42;
+  font-size:11px;
+  font-weight:950;
+}
+
+.join-text{
+  margin-top:5px;
+  color:#53635a;
+  font-size:10px;
+  line-height:1.5;
+  font-weight:650;
+}
+
+.join-call{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:39px;
+  margin-top:10px;
+  border-radius:10px;
+  background:var(--green);
+  color:#fff;
+  text-decoration:none;
+  font-size:10px;
+  font-weight:950;
+}
+
+.logged-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.logged-info{
+  min-width:0;
+}
+
+.logout-main{
+  flex:none;
+  min-height:38px;
+  padding:0 12px;
+  border:0;
+  border-radius:10px;
+  background:#fff0f0;
+  color:#dc2626;
+  font-size:9px;
+  font-weight:950;
+  cursor:pointer;
+}
+
 .input-group{
   display:flex;
   gap:8px;
@@ -984,6 +1073,219 @@ main{
 
 }
 
+
+
+/* =========================================================
+   PREMIUM LOGIN SCREEN / MOBILE UX
+========================================================= */
+.login-logo-wrap{
+  width:82px;
+  height:82px;
+  margin:0 auto 10px;
+  border-radius:23px;
+  padding:6px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#effbf4,#ffffff);
+  border:1px solid #d7eee0;
+  box-shadow:0 12px 28px rgba(11,159,85,.12);
+}
+
+.login-logo{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:17px;
+}
+
+.login-brand{
+  text-align:center;
+  color:var(--green2);
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:1px;
+  margin-bottom:3px;
+}
+
+.login-title{
+  text-align:center;
+  font-size:22px;
+  margin-bottom:5px;
+}
+
+#loginSection{
+  width:min(430px,100%);
+  margin-left:auto;
+  margin-right:auto;
+  padding:22px 18px 18px;
+  border-radius:24px;
+  box-shadow:0 18px 50px rgba(16,35,26,.11);
+}
+
+#loginSection .input-sub{
+  text-align:center;
+  max-width:350px;
+  margin-left:auto;
+  margin-right:auto;
+  line-height:1.5;
+}
+
+#loginSection .auth-input{
+  height:47px;
+  border-radius:13px;
+}
+
+#loginSection .load-btn{
+  height:47px;
+  border-radius:13px;
+  font-size:11px;
+}
+
+/* Logged-out mode: clean app-style login screen with no scrolling */
+body.logged-out{
+  min-height:100svh;
+  height:100svh;
+  overflow:hidden;
+}
+
+body.logged-out main{
+  min-height:calc(100svh - 68px);
+  height:calc(100svh - 68px);
+  padding:12px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+body.logged-out .hero,
+body.logged-out #loggedInSection,
+body.logged-out #notificationSection,
+body.logged-out #statsSection,
+body.logged-out #pickupSectionHead,
+body.logged-out #pickupsGrid{
+  display:none !important;
+}
+
+body.logged-out #loginSection{
+  margin:0 auto;
+  flex:none;
+}
+
+body.logged-in{
+  overflow-x:hidden;
+}
+
+@media(max-width:600px){
+  .header-inner{
+    min-height:62px;
+    padding:8px 11px;
+  }
+
+  .logo{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+  }
+
+  .brand-name{
+    font-size:13px;
+  }
+
+  .brand-sub{
+    font-size:8px;
+  }
+
+  .partner-badge{
+    max-width:105px;
+    padding:7px 9px;
+    font-size:8px;
+  }
+
+  .refresh-btn{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+  }
+
+  body.logged-out main{
+    min-height:calc(100svh - 62px);
+    height:calc(100svh - 62px);
+    padding:10px;
+  }
+
+  #loginSection{
+    width:min(390px,100%);
+    padding:18px 14px 14px;
+    border-radius:21px;
+  }
+
+  .login-logo-wrap{
+    width:68px;
+    height:68px;
+    border-radius:19px;
+    margin-bottom:8px;
+  }
+
+  .login-title{
+    font-size:20px;
+  }
+
+  #loginSection .input-sub{
+    font-size:9px;
+    margin-bottom:11px;
+  }
+
+  #loginSection .auth-input,
+  #loginSection .load-btn{
+    height:43px;
+  }
+
+  .join-card{
+    margin-top:11px;
+    padding:10px;
+    border-radius:12px;
+  }
+
+  .join-title{
+    font-size:9px;
+  }
+
+  .join-text{
+    font-size:8.5px;
+    line-height:1.45;
+  }
+
+  .join-call{
+    min-height:34px;
+    margin-top:8px;
+    font-size:9px;
+  }
+}
+
+@media(max-width:360px){
+  #loginSection{
+    padding:15px 12px 12px;
+  }
+
+  .login-logo-wrap{
+    width:58px;
+    height:58px;
+  }
+
+  .login-title{
+    font-size:18px;
+  }
+
+  #loginSection .input-sub{
+    font-size:8px;
+  }
+
+  .join-card{
+    display:none;
+  }
+}
 @media(max-width:600px){
 
   .header-inner{
@@ -1130,10 +1432,126 @@ main{
     font-size:12px;
   }
 }
+
+/* =========================================================
+   PARTNER LOGIN - PREMIUM PASSWORD + POPUP UX
+========================================================= */
+.password-wrap{
+  position:relative;
+  width:100%;
+}
+.password-wrap .auth-input{
+  width:100%;
+  padding-right:72px !important;
+}
+.password-toggle{
+  position:absolute;
+  right:9px;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:transparent;
+  color:var(--green2);
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.3px;
+  cursor:pointer;
+  padding:8px 5px;
+  z-index:3;
+}
+.password-toggle:active{transform:translateY(-50%) scale(.96);}
+.partner-popup-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  background:rgba(7,25,16,.56);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .2s ease,visibility .2s ease;
+}
+.partner-popup-backdrop.show{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+.partner-popup{
+  width:min(390px,100%);
+  background:#fff;
+  border:1px solid #e3eee8;
+  border-radius:24px;
+  padding:24px 20px 19px;
+  text-align:center;
+  box-shadow:0 28px 80px rgba(0,0,0,.25);
+  transform:translateY(14px) scale(.97);
+  transition:transform .22s ease;
+}
+.partner-popup-backdrop.show .partner-popup{
+  transform:translateY(0) scale(1);
+}
+.partner-popup-icon{
+  width:58px;
+  height:58px;
+  margin:0 auto 12px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#fff0ef;
+  color:#d83f35;
+  border:7px solid #fff8f7;
+  font-size:26px;
+  font-weight:950;
+}
+.partner-popup-title{
+  color:var(--dark);
+  font-size:19px;
+  font-weight:950;
+  line-height:1.2;
+}
+.partner-popup-text{
+  max-width:315px;
+  margin:8px auto 17px;
+  color:#64736b;
+  font-size:12px;
+  font-weight:650;
+  line-height:1.55;
+}
+.partner-popup-btn{
+  width:100%;
+  min-height:44px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:#fff;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.4px;
+  cursor:pointer;
+  box-shadow:0 9px 22px rgba(11,159,85,.20);
+}
+.partner-popup-btn:active{transform:scale(.985);}
+@media(max-width:600px){
+  .partner-popup-backdrop{padding:12px;}
+  .partner-popup{width:min(360px,calc(100vw - 24px));padding:21px 16px 16px;border-radius:21px;}
+  .partner-popup-icon{width:52px;height:52px;font-size:23px;margin-bottom:10px;}
+  .partner-popup-title{font-size:17px;}
+  .partner-popup-text{font-size:11px;margin-bottom:14px;}
+  .partner-popup-btn{min-height:42px;}
+}
+@media(max-width:360px){
+  .partner-popup{padding:18px 14px 14px;}
+  .partner-popup-icon{width:47px;height:47px;font-size:21px;}
+}
 </style>
 </head>
 
-<body>
+<body class="logged-out">
 
 <header>
   <div class="header-inner">
@@ -1169,6 +1587,16 @@ main{
         ↻
       </button>
 
+      <button
+        id="logoutBtn"
+        class="refresh-btn"
+        onclick="partnerLogout()"
+        title="Logout"
+        style="display:none;color:#dc2626;"
+      >
+        ⇥
+      </button>
+
     </div>
 
   </div>
@@ -1195,34 +1623,179 @@ main{
   </section>
 
 
-  <!-- PARTNER LOGIN / SEARCH -->
+  <!-- PARTNER LOGIN -->
 
-  <section class="partner-input-card">
+  <section
+    class="partner-input-card"
+    id="loginSection"
+  >
 
-    <div class="input-title">
-      👤 Load Your Pickups
+    <div class="login-logo-wrap">
+      <img
+        src="logo.jpeg"
+        class="login-logo"
+        alt="COVAI SCRAP HUB"
+        onerror="this.style.display='none'"
+      >
+    </div>
+
+    <div class="login-brand">COVAI SCRAP HUB</div>
+
+    <div class="input-title login-title">
+      Partner Login
     </div>
 
     <div class="input-sub">
-      Enter the exact partner name assigned by admin.
+      Login with the email ID and password created for you by COVAI SCRAP HUB.
+      Your assigned pickups will load automatically after login.
     </div>
 
-    <div class="input-group">
+    <div style="display:grid;gap:9px;">
 
       <input
-        id="partnerNameInput"
-        type="text"
-        autocomplete="off"
-        placeholder="Enter partner name"
+        id="partnerEmail"
+        class="auth-input"
+        type="email"
+        autocomplete="email"
+        placeholder="Partner Email ID"
       >
+
+      <div class="password-wrap">
+        <input
+          id="partnerPassword"
+          class="auth-input"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Password"
+        >
+        <button
+          type="button"
+          class="password-toggle"
+          id="togglePartnerPassword"
+          aria-label="Show password"
+        >SHOW</button>
+      </div>
 
       <button
         class="load-btn"
-        onclick="loadPartner()"
+        id="loginBtn"
+        type="button"
+        onclick="partnerLogin()"
       >
-        Load Pickups
+        🔐 LOGIN TO PARTNER PANEL
       </button>
 
+    </div>
+
+    <div
+      id="loginMessage"
+      class="login-message"
+    ></div>
+
+    <div class="join-card">
+
+      <div class="join-title">
+        🚚 Interested in joining COVAI SCRAP HUB?
+      </div>
+
+      <div class="join-text">
+        Call <strong>+91 95142 52104</strong> immediately.
+        We will create your partner account and you can start receiving scrap pickup assignments.
+      </div>
+
+      <a
+        class="join-call"
+        href="tel:+919514252104"
+      >
+        📞 CALL +91 95142 52104
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- LOGIN ERROR / STATUS POPUP -->
+  <div class="partner-popup-backdrop" id="partnerAlertPopup" aria-hidden="true">
+    <div class="partner-popup" role="alertdialog" aria-modal="true" aria-labelledby="partnerPopupTitle">
+      <div class="partner-popup-icon" id="partnerPopupIcon">!</div>
+      <div class="partner-popup-title" id="partnerPopupTitle">Login failed</div>
+      <div class="partner-popup-text" id="partnerPopupText">Please check your details and try again.</div>
+      <button class="partner-popup-btn" id="partnerPopupOk" type="button">OK, TRY AGAIN</button>
+    </div>
+  </div>
+
+
+  <!-- LOGGED-IN PARTNER -->
+
+  <section
+    class="partner-input-card"
+    id="loggedInSection"
+    style="display:none;"
+  >
+
+    <div class="logged-row">
+
+      <div class="logged-info">
+        <div
+          class="input-title"
+          id="loggedPartnerName"
+        >
+          👤 Partner
+        </div>
+        <div
+          class="input-sub"
+          id="loggedPartnerEmail"
+          style="margin-bottom:0;"
+        >
+          Partner account
+        </div>
+      </div>
+
+      <button
+        class="logout-main"
+        type="button"
+        onclick="partnerLogout()"
+      >
+        LOGOUT
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- PUSH NOTIFICATIONS -->
+
+  <section
+    class="partner-input-card"
+    id="notificationSection"
+    style="margin-top:14px;"
+  >
+
+    <div class="input-title">
+      🔔 Partner Notifications
+    </div>
+
+    <div class="input-sub">
+      Enable push notifications to receive new pickup and status updates.
+    </div>
+
+    <button
+      id="partnerNotificationBtn"
+      class="load-btn"
+      type="button"
+      onclick="enablePartnerNotifications()"
+      style="margin-top:12px;"
+    >
+      🔔 Enable Notifications
+    </button>
+
+    <div
+      id="partnerNotificationStatus"
+      style="margin-top:9px;font-size:12px;font-weight:700;color:#708078;"
+    >
+      Notifications are currently not enabled.
     </div>
 
   </section>
@@ -1326,7 +1899,7 @@ main{
       </h3>
 
       <p>
-        Enter your partner name above to view
+        Login with your partner email and password to view
         your assigned pickups.
       </p>
 
@@ -1447,11 +2020,28 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getDatabase,
   ref,
+  get,
   onValue,
   update,
   remove
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+  getMessaging,
+  getToken,
+  onMessage
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
 
 
 /* =========================================================
@@ -1461,7 +2051,7 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 const firebaseConfig = {
 
   apiKey:
-    "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
+    "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
 
   authDomain:
     "covai-scrap-hub.firebaseapp.com",
@@ -1490,6 +2080,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
+const auth = getAuth(app);
+
+const messaging = getMessaging(app);
+
+const VAPID_KEY =
+  "BObXaxevMK2LMk9aDeEtJ2yNM2k-V53pVht_woVyjLFTCwML5wBvN29Swx1WKaft4u6PfQ0tH0NpAWRnBUqFhRE";
 
 
 /* =========================================================
@@ -1501,6 +2097,9 @@ let allPickups = [];
 let partnerPickups = [];
 
 let partnerName = "";
+let currentPartnerUid = "";
+let currentPartnerProfile = {};
+let authReady = false;
 
 const gpsWatchers = {};
 
@@ -1508,25 +2107,234 @@ let currentMapPickup = null;
 
 
 /* =========================================================
-   URL PARTNER
+   PARTNER PUSH NOTIFICATIONS
 ========================================================= */
 
-const urlParams =
-  new URLSearchParams(location.search);
+async function enablePartnerNotifications(){
 
-const urlPartner =
-  urlParams.get("partner") ||
-  urlParams.get("name") ||
-  "";
+  const button =
+    document.getElementById(
+      "partnerNotificationBtn"
+    );
+
+  const status =
+    document.getElementById(
+      "partnerNotificationStatus"
+    );
+
+  try{
+
+    if(!("Notification" in window)){
+
+      throw new Error(
+        "This browser does not support notifications."
+      );
+
+    }
+
+    if(!("serviceWorker" in navigator)){
+
+      throw new Error(
+        "Service Worker is not supported."
+      );
+
+    }
+
+    if(!window.isSecureContext){
+
+      throw new Error(
+        "Notifications require HTTPS."
+      );
+
+    }
+
+    if(button){
+      button.disabled = true;
+      button.textContent = "Enabling...";
+    }
+
+    const permission =
+      await Notification.requestPermission();
+
+    if(permission !== "granted"){
+      throw new Error(
+        "Notification permission was not granted."
+      );
+    }
+
+    const registration =
+      await navigator.serviceWorker.register(
+        "/firebase-messaging-sw.js",
+        { scope: "/" }
+      );
+
+    await navigator.serviceWorker.ready;
+
+    const token =
+      await getToken(
+        messaging,
+        {
+          vapidKey: VAPID_KEY,
+          serviceWorkerRegistration: registration
+        }
+      );
+
+    if(!token){
+      throw new Error(
+        "FCM token was not generated."
+      );
+    }
+
+    const safeToken =
+      encodeURIComponent(token);
+
+    await update(
+      ref(
+        db,
+        `notificationTokens/${safeToken}`
+      ),
+      {
+        token: token,
+        enabled: true,
+        role: "partner",
+        partnerName: partnerName || "",
+        partnerUid: currentPartnerUid || "",
+        partnerEmail: auth.currentUser?.email || "",
+        platform: "web",
+        browser: navigator.userAgent,
+        updatedAt: Date.now(),
+        createdAt: Date.now()
+      }
+    );
+
+    localStorage.setItem(
+      "csh_partner_notifications",
+      "true"
+    );
+
+    if(button){
+      button.disabled = false;
+      button.textContent =
+        "✓ Notifications Enabled";
+    }
+
+    if(status){
+      status.textContent =
+        "✅ Push notifications are enabled.";
+      status.style.color = "#087536";
+    }
+
+    showToast(
+      "🔔 Notifications enabled"
+    );
+
+    console.log(
+      "Partner FCM token:",
+      token
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Partner notification error:",
+      error
+    );
+
+    if(button){
+      button.disabled = false;
+      button.textContent =
+        "🔔 Enable Notifications";
+    }
+
+    if(status){
+      status.textContent =
+        "❌ " + (error.message || "Notification setup failed.");
+      status.style.color = "#dc2626";
+    }
+
+    showToast(
+      "❌ " + (error.message || "Notification setup failed.")
+    );
+
+  }
+
+}
+
+window.enablePartnerNotifications =
+  enablePartnerNotifications;
 
 
-if(urlPartner){
+/* =========================================================
+   FOREGROUND PUSH HANDLER
+========================================================= */
 
-  document.getElementById(
-    "partnerNameInput"
-  ).value = urlPartner;
+onMessage(
+  messaging,
+  function(payload){
 
-  partnerName = urlPartner;
+    console.log(
+      "📩 Partner foreground notification:",
+      payload
+    );
+
+    const notification =
+      payload.notification || {};
+
+    const title =
+      notification.title ||
+      payload.data?.title ||
+      "COVAI SCRAP HUB";
+
+    const body =
+      notification.body ||
+      payload.data?.body ||
+      "You have a new pickup update.";
+
+    showToast(
+      "🔔 " + title + " — " + body
+    );
+
+  }
+);
+
+
+/* =========================================================
+   RESTORE NOTIFICATION UI STATE
+========================================================= */
+
+function restorePartnerNotificationState(){
+
+  const button =
+    document.getElementById(
+      "partnerNotificationBtn"
+    );
+
+  const status =
+    document.getElementById(
+      "partnerNotificationStatus"
+    );
+
+  if(
+    localStorage.getItem(
+      "csh_partner_notifications"
+    ) === "true" &&
+    typeof Notification !== "undefined" &&
+    Notification.permission === "granted"
+  ){
+
+    if(button){
+      button.textContent =
+        "✓ Notifications Enabled";
+    }
+
+    if(status){
+      status.textContent =
+        "✅ Push notifications are enabled.";
+      status.style.color = "#087536";
+    }
+
+  }
 
 }
 
@@ -1781,7 +2589,7 @@ onValue(
     );
 
 
-    if(partnerName){
+    if(currentPartnerUid){
 
       filterAndRender();
 
@@ -1833,73 +2641,367 @@ onValue(
 
 
 /* =========================================================
-   LOAD PARTNER
+   PARTNER AUTHENTICATION
 ========================================================= */
 
-window.loadPartner = function(){
+function showLoginMessage(message, type="error"){
 
-  partnerName =
-    document
-      .getElementById("partnerNameInput")
-      .value
-      .trim();
+  const box = document.getElementById("loginMessage");
 
+  if(!box) return;
 
-  if(!partnerName){
+  box.style.display = "block";
+  box.style.background = type === "success" ? "#ecfdf3" : "#fff1f1";
+  box.style.color = type === "success" ? "#087c42" : "#b91c1c";
+  box.textContent = message;
 
-    showToast(
-      "Please enter your partner name"
-    );
+}
 
-    document
-      .getElementById("partnerNameInput")
-      .focus();
+function clearLoginMessage(){
+
+  const box = document.getElementById("loginMessage");
+
+  if(box){
+    box.style.display = "none";
+    box.textContent = "";
+  }
+
+}
+
+function setLoginLoading(loading){
+
+  const button = document.getElementById("loginBtn");
+
+  if(!button) return;
+
+  button.disabled = loading;
+  button.textContent = loading
+    ? "LOGGING IN..."
+    : "🔐 LOGIN TO PARTNER PANEL";
+
+}
+
+window.partnerLogin = async function(){
+
+  const email =
+    document.getElementById("partnerEmail")?.value.trim().toLowerCase() || "";
+
+  const password =
+    document.getElementById("partnerPassword")?.value || "";
+
+  clearLoginMessage();
+
+  if(!email || !password){
+
+    showLoginMessage("Please enter your partner email ID and password.");
+    showPartnerPopup("Missing login details","Please enter your partner email ID and password.","warning");
 
     return;
 
   }
 
+  if(!email.includes("@")){
 
-  document.getElementById(
-    "partnerBadge"
-  ).textContent =
-    partnerName.toUpperCase();
-
-
-  localStorage.setItem(
-    "covaiPartnerName",
-    partnerName
-  );
-
-
-  filterAndRender();
-
-};
-
-
-/* =========================================================
-   AUTO LOAD SAVED PARTNER
-========================================================= */
-
-if(!partnerName){
-
-  const savedPartner =
-    localStorage.getItem(
-      "covaiPartnerName"
-    );
-
-  if(savedPartner){
-
-    document.getElementById(
-      "partnerNameInput"
-    ).value = savedPartner;
-
-    partnerName = savedPartner;
+    showLoginMessage("Please enter a valid email ID.");
+    showPartnerPopup("Invalid email ID","Please enter a valid partner email address.","warning");
+    return;
 
   }
 
+  try{
+
+    setLoginLoading(true);
+
+    if(!authReady){
+      await new Promise(resolve => {
+        const started = Date.now();
+        const timer = setInterval(() => {
+          if(authReady || Date.now() - started > 5000){
+            clearInterval(timer);
+            resolve();
+          }
+        }, 50);
+      });
+    }
+
+    const credential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const signedInUser = credential?.user || auth.currentUser;
+
+    if(!signedInUser){
+      throw new Error("Firebase login completed, but the partner session was not created.");
+    }
+
+    // Load and validate the partner profile immediately. This prevents a
+    // successful Firebase login from appearing to do nothing.
+    await loadPartnerProfile(signedInUser.uid);
+
+    clearLoginMessage();
+    if(typeof window.showPartnerPopup === "function"){
+      window.showPartnerPopup(
+        "Login successful",
+        "Welcome to the COVAI SCRAP HUB Partner Panel.",
+        "success"
+      );
+    }
+
+  }
+  catch(error){
+
+    console.error("Partner login error:",error);
+
+    let message =
+      "Login failed. Please check your email ID and password.";
+
+    switch(error?.code){
+
+      case "auth/invalid-credential":
+      case "auth/invalid-login-credentials":
+      case "auth/user-not-found":
+      case "auth/wrong-password":
+        message = "Invalid email ID or password.";
+        break;
+
+      case "auth/user-disabled":
+        message = "Your partner account is disabled. Please contact COVAI SCRAP HUB.";
+        break;
+
+      case "auth/too-many-requests":
+        message = "Too many login attempts. Please wait and try again.";
+        break;
+
+      case "auth/network-request-failed":
+        message = "Network error. Check your internet connection and try again.";
+        break;
+
+      case "auth/operation-not-allowed":
+        message = "Email/password login is not enabled in Firebase Authentication.";
+        break;
+
+      default:
+        message = error?.message || message;
+
+    }
+
+    showLoginMessage(message);
+    if(typeof window.showPartnerPopup === "function" && !error?.code?.startsWith("auth/")){
+      window.showPartnerPopup("Partner profile problem", message, "error");
+    }
+    if(error?.code === "auth/user-not-found"){
+      showPartnerPopup("Email ID not found","No partner account was found for this email ID. Please contact COVAI SCRAP HUB.","error");
+    }else if(error?.code === "auth/invalid-email"){
+      showPartnerPopup("Invalid email ID","Please enter a valid partner email address.","warning");
+    }else if(error?.code === "auth/wrong-password"){
+      showPartnerPopup("Wrong password","The password you entered is incorrect. Please try again.","error");
+    }else if(error?.code === "auth/invalid-credential" || error?.code === "auth/invalid-login-credentials"){
+      showPartnerPopup("Wrong email or password","The email ID or password is incorrect. Please check both and try again.","error");
+    }else if(error?.code === "auth/too-many-requests"){
+      showPartnerPopup("Too many attempts","Please wait a little while before trying to log in again.","warning");
+    }else if(error?.code === "auth/network-request-failed"){
+      showPartnerPopup("Connection problem","Please check your internet connection and try again.","warning");
+    }else if(error?.code === "auth/user-disabled"){
+      showPartnerPopup("Account disabled","Your partner account is disabled. Please contact COVAI SCRAP HUB.","error");
+    }else{
+      showPartnerPopup("Login failed",message,"error");
+    }
+
+  }
+  finally{
+
+    setLoginLoading(false);
+
+  }
+
+};
+
+document.getElementById("partnerPassword")?.addEventListener("keydown", event => {
+  if(event.key === "Enter") window.partnerLogin();
+});
+
+document.getElementById("partnerEmail")?.addEventListener("keydown", event => {
+  if(event.key === "Enter") document.getElementById("partnerPassword")?.focus();
+});
+
+const partnerLoginForm = document.getElementById("partnerLoginForm");
+if(partnerLoginForm){
+  partnerLoginForm.addEventListener("submit", event => {
+    event.preventDefault();
+    window.partnerLogin();
+  });
 }
 
+window.partnerLogout = async function(){
+
+  try{
+
+    Object.keys(gpsWatchers).forEach(id => {
+
+      navigator.geolocation.clearWatch(gpsWatchers[id]);
+      delete gpsWatchers[id];
+
+    });
+
+    await signOut(auth);
+
+    showToast("Logged out successfully");
+
+  }
+  catch(error){
+
+    console.error("Logout error:",error);
+    showToast("❌ Logout failed: " + (error?.message || "Unknown error"));
+
+  }
+
+};
+
+async function loadPartnerProfile(uid){
+
+  const snapshot = await get(
+    ref(db,"partners/" + uid)
+  );
+
+  if(!snapshot.exists()){
+
+    await signOut(auth);
+
+    throw new Error(
+      "Partner profile not found. Please contact COVAI SCRAP HUB."
+    );
+
+  }
+
+  const profile = snapshot.val() || {};
+
+  const role =
+    String(profile.role || "partner").trim().toLowerCase();
+
+  const accountStatus =
+    String(profile.status || "active").trim().toLowerCase();
+
+  if(role !== "partner"){
+
+    await signOut(auth);
+
+    throw new Error(
+      "This Firebase account is not registered as a partner account."
+    );
+
+  }
+
+  if(
+    accountStatus === "inactive" ||
+    accountStatus === "disabled" ||
+    accountStatus === "blocked" ||
+    accountStatus === "suspended"
+  ){
+
+    await signOut(auth);
+
+    throw new Error(
+      "Your partner account is currently inactive. Please contact COVAI SCRAP HUB."
+    );
+
+  }
+
+  currentPartnerUid = uid;
+  currentPartnerProfile = profile;
+  partnerName = String(profile.name || "Partner").trim() || "Partner";
+
+  const loginSection = document.getElementById("loginSection");
+  const loggedInSection = document.getElementById("loggedInSection");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if(loginSection) loginSection.style.display = "none";
+  if(loggedInSection) loggedInSection.style.display = "block";
+  if(logoutBtn) logoutBtn.style.display = "grid";
+  const notificationSection = document.getElementById("notificationSection");
+  if(notificationSection) notificationSection.style.display = "block";
+
+  document.body.classList.remove("logged-out");
+  document.body.classList.add("logged-in");
+
+  const nameEl = document.getElementById("loggedPartnerName");
+  const emailEl = document.getElementById("loggedPartnerEmail");
+
+  if(nameEl){
+    nameEl.textContent = "👤 " + partnerName;
+  }
+
+  if(emailEl){
+    emailEl.textContent = profile.email || auth.currentUser?.email || "Partner account";
+  }
+
+  document.getElementById("partnerBadge").textContent =
+    partnerName.toUpperCase();
+
+  document.getElementById("statsSection").style.display = "none";
+  document.getElementById("pickupSectionHead").style.display = "none";
+
+  filterAndRender();
+
+}
+
+onAuthStateChanged(auth, async user => {
+
+  authReady = true;
+
+  if(!user){
+
+    currentPartnerUid = "";
+    currentPartnerProfile = {};
+    partnerName = "";
+    partnerPickups = [];
+
+    Object.keys(gpsWatchers).forEach(id => {
+      navigator.geolocation.clearWatch(gpsWatchers[id]);
+      delete gpsWatchers[id];
+    });
+
+    document.getElementById("loginSection").style.display = "block";
+    document.getElementById("loggedInSection").style.display = "none";
+    document.getElementById("logoutBtn").style.display = "none";
+    document.getElementById("notificationSection").style.display = "none";
+    document.getElementById("partnerBadge").textContent = "PARTNER";
+    document.body.classList.remove("logged-in");
+    document.body.classList.add("logged-out");
+    document.getElementById("statsSection").style.display = "none";
+    document.getElementById("pickupSectionHead").style.display = "none";
+
+    return;
+
+  }
+
+  try{
+
+    if(currentPartnerUid !== user.uid){
+      await loadPartnerProfile(user.uid);
+    }
+
+  }
+  catch(error){
+
+    console.error("Partner profile error:",error);
+
+    document.getElementById("loginSection").style.display = "block";
+    document.getElementById("loggedInSection").style.display = "none";
+    document.getElementById("logoutBtn").style.display = "none";
+    document.getElementById("notificationSection").style.display = "none";
+    document.getElementById("partnerBadge").textContent = "PARTNER";
+    document.body.classList.remove("logged-in");
+    document.body.classList.add("logged-out");
+
+    showLoginMessage(
+      error?.message || "Unable to load your partner profile."
+    );
+
+  }
+
+});
 
 /* =========================================================
    FILTER
@@ -1907,30 +3009,36 @@ if(!partnerName){
 
 function filterAndRender(){
 
-  const wanted =
-    partnerName
-      .trim()
-      .toLowerCase();
+  if(!currentPartnerUid){
 
+    partnerPickups = [];
+    updateStats();
+    render();
+    return;
 
-  partnerPickups =
-    allPickups.filter(p => {
+  }
 
-      const assigned =
-        getAssignedPartnerName(p)
-          .trim()
-          .toLowerCase();
+  partnerPickups = allPickups.filter(p => {
 
-      return (
-        wanted &&
-        assigned === wanted
-      );
+    const assignedUid = String(
+      p.assignedPartnerUid || ""
+    ).trim();
 
-    });
+    /* Primary identity: Firebase Auth UID assigned by admin. */
+    if(assignedUid){
+      return assignedUid === String(currentPartnerUid);
+    }
 
+    /* Backward compatibility for old assignments without UID. */
+    const assignedName =
+      getAssignedPartnerName(p).trim().toLowerCase();
+
+    return !!assignedName &&
+      assignedName === partnerName.trim().toLowerCase();
+
+  });
 
   updateStats();
-
   render();
 
 }
@@ -1946,7 +3054,7 @@ window.refreshPartner = function(){
     "Refreshing pickup data..."
   );
 
-  if(partnerName){
+  if(currentPartnerUid){
 
     filterAndRender();
 
@@ -3696,47 +4804,90 @@ window.addEventListener(
 
 
 /* =========================================================
-   AUTO LOAD URL PARTNER
+   LOGIN ENTER KEY
 ========================================================= */
 
-if(urlPartner){
+["partnerEmail","partnerPassword"].forEach(id => {
 
-  setTimeout(
-    () => {
+  const input = document.getElementById(id);
 
-      document.getElementById(
-        "partnerBadge"
-      ).textContent =
-        partnerName.toUpperCase();
+  if(input){
 
+    input.addEventListener("keydown", event => {
 
-      filterAndRender();
+      if(event.key === "Enter"){
+        window.partnerLogin();
+      }
 
-    },
-    400
-  );
+    });
 
-}
-else if(partnerName){
+  }
 
-  setTimeout(
-    () => {
-
-      document.getElementById(
-        "partnerBadge"
-      ).textContent =
-        partnerName.toUpperCase();
+});
 
 
-      filterAndRender();
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+    restorePartnerNotificationState();
+  }
+);
 
-    },
-    500
-  );
-
-}
 
 </script>
 
+
+<script>
+/* =========================================================
+   PREMIUM LOGIN POPUP + PASSWORD VISIBILITY
+========================================================= */
+(function(){
+  const popup=document.getElementById("partnerAlertPopup");
+  const title=document.getElementById("partnerPopupTitle");
+  const text=document.getElementById("partnerPopupText");
+  const icon=document.getElementById("partnerPopupIcon");
+  const ok=document.getElementById("partnerPopupOk");
+  const password=document.getElementById("partnerPassword");
+  const toggle=document.getElementById("togglePartnerPassword");
+
+  window.showPartnerPopup=function(titleText,message,type="error"){
+    if(!popup)return;
+    title.textContent=titleText || "Login failed";
+    text.textContent=message || "Please check your details and try again.";
+    if(type === "success"){
+      icon.textContent="✓";
+      icon.style.background="#eaf9f0";
+      icon.style.color="#168a4a";
+    }else if(type === "warning"){
+      icon.textContent="!";
+      icon.style.background="#fff7df";
+      icon.style.color="#b87900";
+    }else{
+      icon.textContent="!";
+      icon.style.background="#fff0ef";
+      icon.style.color="#d83f35";
+    }
+    popup.classList.add("show");
+    popup.setAttribute("aria-hidden","false");
+    setTimeout(()=>ok?.focus(),50);
+  };
+
+  function closePopup(){
+    if(!popup)return;
+    popup.classList.remove("show");
+    popup.setAttribute("aria-hidden","true");
+  }
+  ok?.addEventListener("click",closePopup);
+  popup?.addEventListener("click",e=>{if(e.target===popup)closePopup();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closePopup();});
+
+  toggle?.addEventListener("click",()=>{
+    const hidden=password.type === "password";
+    password.type=hidden ? "text" : "password";
+    toggle.textContent=hidden ? "HIDE" : "SHOW";
+    toggle.setAttribute("aria-label",hidden ? "Hide password" : "Show password");
+  });
+})();
+</script>
 </body>
 </html>
