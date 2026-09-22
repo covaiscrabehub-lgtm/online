@@ -1606,6 +1606,328 @@ main{
 
 }
 
+
+/* =========================
+   PARTNER MODAL
+========================= */
+.partner-modal{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+}
+.partner-modal.open{
+    display:flex;
+}
+.partner-modal-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(5,24,14,.58);
+    backdrop-filter:blur(7px);
+}
+.partner-modal-card{
+    position:relative;
+    z-index:2;
+    width:min(560px,100%);
+    max-height:min(760px,92vh);
+    display:flex;
+    flex-direction:column;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:24px;
+    box-shadow:0 30px 90px rgba(0,0,0,.24);
+    overflow:hidden;
+    animation:partnerModalIn .22s ease both;
+}
+@keyframes partnerModalIn{
+    from{opacity:0;transform:translateY(12px) scale(.98)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+.partner-modal-head{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    padding:22px 22px 16px;
+    background:linear-gradient(135deg,#f4fbf6,#fff);
+    border-bottom:1px solid var(--border);
+}
+.partner-modal-kicker{
+    color:var(--green);
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1.3px;
+    margin-bottom:5px;
+}
+.partner-modal-head h2{
+    font-family:'Manrope',sans-serif;
+    font-size:22px;
+    line-height:1.1;
+}
+.partner-modal-head p{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:11px;
+}
+.partner-modal-close{
+    width:36px;
+    height:36px;
+    flex:0 0 36px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:#fff;
+    color:var(--muted);
+    font-size:24px;
+    line-height:1;
+    cursor:pointer;
+}
+.partner-modal-close:hover{
+    color:var(--red);
+    border-color:#fecaca;
+    background:#fff7f7;
+}
+.partner-search-wrap{
+    position:relative;
+    margin:16px 18px 10px;
+}
+.partner-search-wrap span{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    opacity:.6;
+}
+.partner-search-wrap input{
+    width:100%;
+    height:44px;
+    padding:0 14px 0 39px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    outline:none;
+    background:#f8fbf9;
+    font-family:inherit;
+    font-size:12px;
+}
+.partner-search-wrap input:focus{
+    border-color:var(--green);
+    background:#fff;
+    box-shadow:0 0 0 3px rgba(20,148,71,.08);
+}
+.partner-list{
+    min-height:120px;
+    max-height:430px;
+    overflow:auto;
+    padding:4px 18px 14px;
+}
+.partner-option{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px;
+    margin:6px 0;
+    text-align:left;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:#fff;
+    cursor:pointer;
+    transition:.18s ease;
+}
+.partner-option:hover{
+    border-color:rgba(20,148,71,.45);
+    background:#f5fbf7;
+    transform:translateY(-1px);
+}
+.partner-avatar{
+    width:42px;
+    height:42px;
+    flex:0 0 42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    color:#fff;
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    background:linear-gradient(135deg,var(--green),var(--green-dark));
+}
+.partner-option-main{
+    min-width:0;
+    flex:1;
+}
+.partner-option-name{
+    font-size:13px;
+    font-weight:800;
+    color:var(--text);
+}
+.partner-option-meta{
+    margin-top:3px;
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.5;
+    word-break:break-word;
+}
+.partner-option-arrow{
+    color:var(--green);
+    font-size:18px;
+}
+.partner-list-loading,
+.partner-empty{
+    min-height:150px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--muted);
+    font-size:11px;
+    padding:25px;
+}
+.partner-list-loading .loading-spinner{
+    width:30px;
+    height:30px;
+    margin-bottom:10px;
+}
+.partner-modal-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:13px 18px;
+    border-top:1px solid var(--border);
+    background:#fbfdfb;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:700;
+}
+.partner-cancel-btn{
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text);
+    padding:9px 14px;
+    border-radius:10px;
+    font-family:inherit;
+    font-size:10px;
+    font-weight:800;
+    cursor:pointer;
+}
+.partner-cancel-btn:hover{
+    border-color:#cbd8cf;
+    background:#f7faf8;
+}
+@media(max-width:540px){
+    .partner-modal{
+        padding:10px;
+        align-items:flex-end;
+    }
+    .partner-modal-card{
+        width:100%;
+        max-height:90vh;
+        border-radius:20px 20px 0 0;
+    }
+    .partner-modal-head{
+        padding:18px 16px 14px;
+    }
+    .partner-search-wrap{
+        margin:12px 14px 8px;
+    }
+    .partner-list{
+        padding:3px 14px 12px;
+    }
+}
+
+
+/* =========================
+   QUICK CREATE PARTNER
+========================= */
+.new-partner-area{
+    padding:0 18px 12px;
+    border-top:1px solid var(--border);
+    background:#fff;
+}
+.new-partner-btn{
+    width:100%;
+    height:42px;
+    margin-top:12px;
+    border:1px dashed rgba(20,148,71,.5);
+    border-radius:11px;
+    background:#f3fbf5;
+    color:var(--green-dark);
+    font-family:inherit;
+    font-size:10px;
+    font-weight:900;
+    cursor:pointer;
+}
+.new-partner-btn:hover{background:#eaf8ef;}
+.quick-partner-form{
+    display:none;
+    margin-top:12px;
+    padding:13px;
+    border:1px solid #d9eadf;
+    border-radius:14px;
+    background:#f8fcf9;
+}
+.quick-partner-form.open{display:grid;}
+.quick-partner-title{
+    font-size:11px;
+    font-weight:900;
+    color:var(--text);
+    margin-bottom:8px;
+}
+.quick-partner-form input{
+    width:100%;
+    height:40px;
+    margin-top:7px;
+    padding:0 11px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    outline:none;
+    background:#fff;
+    font-family:inherit;
+    font-size:11px;
+}
+.quick-partner-form input:focus{
+    border-color:var(--green);
+    box-shadow:0 0 0 3px rgba(20,148,71,.08);
+}
+.quick-partner-message{
+    display:none;
+    margin-top:8px;
+    padding:8px 9px;
+    border-radius:9px;
+    font-size:9px;
+    line-height:1.4;
+}
+.quick-partner-message.show{display:block;}
+.quick-partner-message.error{background:#fff0f0;color:#b42323;border:1px solid #f4caca;}
+.quick-partner-message.info{background:#eef7ff;color:#1d5f91;border:1px solid #cfe6fa;}
+.quick-partner-message.success{background:#ebfaf1;color:#126336;border:1px solid #c5e9d0;}
+.quick-partner-actions{
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:7px;
+    margin-top:9px;
+}
+.quick-cancel-btn,.quick-create-btn{
+    height:40px;
+    border-radius:10px;
+    font-family:inherit;
+    font-size:9px;
+    font-weight:900;
+    cursor:pointer;
+}
+.quick-cancel-btn{border:1px solid var(--border);background:#fff;color:var(--text);}
+.quick-create-btn{border:0;background:linear-gradient(135deg,#149447,#087536);color:#fff;}
+.quick-create-btn:disabled{opacity:.55;cursor:not-allowed;}
+@media(max-width:540px){
+    .new-partner-area{padding:0 14px 10px;}
+    .new-partner-btn{height:40px;font-size:9px;}
+    .quick-partner-form{padding:11px;}
+    .quick-partner-form input{height:38px;font-size:10px;}
+    .quick-partner-title{font-size:10px;}
+}
 </style>
 </head>
 
@@ -1643,6 +1965,61 @@ main{
 
 </header>
 
+
+<!-- =========================
+     PARTNER SELECTION MODAL
+========================= -->
+<div id="partnerModal" class="partner-modal" aria-hidden="true">
+    <div class="partner-modal-backdrop" onclick="closePartnerModal()"></div>
+
+    <div class="partner-modal-card" role="dialog" aria-modal="true" aria-labelledby="partnerModalTitle">
+        <div class="partner-modal-head">
+            <div>
+                <div class="partner-modal-kicker">ASSIGN PICKUP</div>
+                <h2 id="partnerModalTitle">Select Partner</h2>
+                <p id="partnerModalPickup">Choose an active partner for this pickup.</p>
+            </div>
+            <button class="partner-modal-close" type="button" onclick="closePartnerModal()" aria-label="Close">×</button>
+        </div>
+
+        <div class="partner-search-wrap">
+            <span>🔎</span>
+            <input id="partnerSearch" type="search" placeholder="Search partner name, email or phone..." autocomplete="off">
+        </div>
+
+        <div id="partnerList" class="partner-list">
+            <div class="partner-list-loading">
+                <div class="loading-spinner"></div>
+                <strong>Loading partners...</strong>
+            </div>
+        </div>
+
+        <div class="new-partner-area">
+            <button id="showCreatePartnerBtn" class="new-partner-btn" type="button">＋ CREATE NEW PARTNER</button>
+
+            <form id="quickPartnerForm" class="quick-partner-form" autocomplete="off">
+                <div class="quick-partner-title">Create new partner & assign this pickup</div>
+
+                <input id="quickPartnerName" type="text" placeholder="Partner name" maxlength="80" required>
+                <input id="quickPartnerEmail" type="email" placeholder="Partner email / login ID" maxlength="120" required>
+                <input id="quickPartnerPassword" type="password" placeholder="Password (minimum 6 characters)" minlength="6" maxlength="128" required>
+                <input id="quickPartnerConfirm" type="password" placeholder="Confirm password" minlength="6" maxlength="128" required>
+
+                <div id="quickPartnerMessage" class="quick-partner-message"></div>
+
+                <div class="quick-partner-actions">
+                    <button type="button" class="quick-cancel-btn" id="cancelQuickPartner">Cancel</button>
+                    <button type="submit" class="quick-create-btn" id="quickCreatePartnerBtn">CREATE & ASSIGN</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="partner-modal-foot">
+            <span id="partnerCount">0 active partners</span>
+            <button class="partner-cancel-btn" type="button" onclick="closePartnerModal()">Cancel</button>
+        </div>
+    </div>
+</div>
 
 <main>
 
@@ -1863,7 +2240,7 @@ main{
 
 <script type="module">
 
-import { initializeApp }
+import { initializeApp, getApps, getApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -1871,9 +2248,17 @@ import {
     ref,
     onValue,
     update,
-    remove
+    remove,
+    get
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 /* =========================
@@ -1911,6 +2296,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
+
+/* Secondary Auth app: creates a partner without replacing the Admin login. */
+const partnerCreatorAppName = "partnerCreatorFromAdmin";
+const partnerCreatorApp = getApps().some(x => x.name === partnerCreatorAppName)
+    ? getApp(partnerCreatorAppName)
+    : initializeApp(firebaseConfig, partnerCreatorAppName);
+const partnerCreatorAuth = getAuth(partnerCreatorApp);
 
 let requests = [];
 
@@ -2569,7 +2961,7 @@ function card(r){
             <div class="info-box">
 
                 <div class="info-label">
-                    PARTNER
+                    ASSIGNED PARTNER
                 </div>
 
                 <div class="info-value">
@@ -2931,97 +3323,456 @@ async function(id){
         );
 
     if(!r){
-
-        alert(
-            "Pickup not found."
-        );
-
+        alert("Pickup not found.");
         return;
-
     }
 
+    pendingPartnerPickupId = id;
 
-    const partnerName =
-        prompt(
-            "Enter partner name:"
-        );
+    const modal =
+        document.getElementById("partnerModal");
+
+    document.getElementById("partnerModalPickup").textContent =
+        "Pickup ID: " + id +
+        " • Customer: " + customer(r);
+
+    document.getElementById("partnerSearch").value = "";
+
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+
+    await loadPartners();
+
+    setTimeout(() => {
+        document.getElementById("partnerSearch").focus();
+    },80);
+};
 
 
-    if(
-        !partnerName ||
-        !partnerName.trim()
-    )
-        return;
+
+/* =========================
+   PARTNER SELECTOR
+========================= */
+
+let pendingPartnerPickupId = null;
+let partnerDirectory = [];
+
+window.closePartnerModal =
+function(){
+
+    pendingPartnerPickupId = null;
+
+    resetQuickPartnerForm();
+
+    const modal =
+        document.getElementById("partnerModal");
+
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+};
 
 
-    const partnerPhone =
-        prompt(
-            "Enter partner phone number (optional):"
-        );
+async function loadPartners(){
 
+    const list =
+        document.getElementById("partnerList");
+
+    list.innerHTML = `
+        <div class="partner-list-loading">
+            <div class="loading-spinner"></div>
+            <strong>Loading partners...</strong>
+        </div>
+    `;
 
     try{
 
-        await update(
+        const snap =
+            await get(
+                ref(db,"partners")
+            );
 
+        const data =
+            snap.val() || {};
+
+        partnerDirectory =
+            Object.entries(data)
+            .map(([uid,p]) => ({
+                uid,
+                ...(p || {})
+            }))
+            .filter(p =>
+                String(p.role || "partner").toLowerCase() === "partner" &&
+                String(p.status || "active").toLowerCase() !== "inactive" &&
+                String(p.status || "active").toLowerCase() !== "disabled"
+            )
+            .sort((a,b) =>
+                String(a.name || "").localeCompare(
+                    String(b.name || ""),
+                    undefined,
+                    {sensitivity:"base"}
+                )
+            );
+
+        renderPartnerDirectory();
+
+    }
+    catch(error){
+
+        console.error("Partner load error:",error);
+
+        list.innerHTML = `
+            <div class="partner-empty">
+                <div style="font-size:28px;margin-bottom:8px">⚠️</div>
+                <strong>Unable to load partners</strong>
+                <span style="margin-top:5px">
+                    ${esc(error.message)}
+                </span>
+            </div>
+        `;
+
+        document.getElementById("partnerCount").textContent =
+            "Partner list unavailable";
+    }
+}
+
+
+function renderPartnerDirectory(){
+
+    const list =
+        document.getElementById("partnerList");
+
+    const search =
+        document.getElementById("partnerSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const filtered =
+        partnerDirectory.filter(p => {
+
+            const haystack = [
+                p.name,
+                p.email,
+                p.phone,
+                p.mobile
+            ]
+            .map(v => String(v || "").toLowerCase())
+            .join(" ");
+
+            return !search ||
+                haystack.includes(search);
+        });
+
+    document.getElementById("partnerCount").textContent =
+        filtered.length +
+        (filtered.length === 1
+            ? " active partner"
+            : " active partners");
+
+    if(!filtered.length){
+
+        list.innerHTML = `
+            <div class="partner-empty">
+                <div style="font-size:28px;margin-bottom:8px">
+                    ${partnerDirectory.length ? "🔎" : "👷"}
+                </div>
+                <strong>
+                    ${
+                        partnerDirectory.length
+                        ? "No matching partner"
+                        : "No active partners found"
+                    }
+                </strong>
+                <span style="margin-top:5px">
+                    ${
+                        partnerDirectory.length
+                        ? "Try another name, email or phone number."
+                        : "Create a partner account first in partneraccount.html."
+                    }
+                </span>
+            </div>
+        `;
+
+        return;
+    }
+
+    list.innerHTML =
+        filtered.map(p => {
+
+            const name =
+                p.name ||
+                p.partnerName ||
+                "Unnamed Partner";
+
+            const phone =
+                p.phone ||
+                p.mobile ||
+                "No phone";
+
+            const email =
+                p.email ||
+                "No email";
+
+            return `
+                <button
+                    type="button"
+                    class="partner-option"
+                    onclick="selectPartner('${esc(p.uid)}')"
+                >
+                    <div class="partner-avatar">
+                        ${esc(avatar(name))}
+                    </div>
+
+                    <div class="partner-option-main">
+                        <div class="partner-option-name">
+                            ${esc(name)}
+                        </div>
+
+                        <div class="partner-option-meta">
+                            ${esc(email)} • ${esc(phone)}
+                        </div>
+                    </div>
+
+                    <div class="partner-option-arrow">›</div>
+                </button>
+            `;
+
+        }).join("");
+}
+
+
+function showQuickPartnerMessage(text,type="info"){
+    const el=document.getElementById("quickPartnerMessage");
+    el.textContent=text;
+    el.className="quick-partner-message show "+type;
+}
+
+function clearQuickPartnerMessage(){
+    const el=document.getElementById("quickPartnerMessage");
+    el.textContent="";
+    el.className="quick-partner-message";
+}
+
+function resetQuickPartnerForm(){
+    document.getElementById("quickPartnerForm").reset();
+    clearQuickPartnerMessage();
+    document.getElementById("quickPartnerForm").classList.remove("open");
+    document.getElementById("showCreatePartnerBtn").style.display="block";
+}
+
+async function createAndAssignNewPartner(){
+    const id=pendingPartnerPickupId;
+    if(!id){
+        showQuickPartnerMessage("Pickup not found. Close this window and try again.","error");
+        return;
+    }
+
+    const name=document.getElementById("quickPartnerName").value.trim().replace(/\s+/g," ");
+    const email=document.getElementById("quickPartnerEmail").value.trim().toLowerCase();
+    const password=document.getElementById("quickPartnerPassword").value;
+    const confirmPassword=document.getElementById("quickPartnerConfirm").value;
+    const btn=document.getElementById("quickCreatePartnerBtn");
+
+    if(name.length<2){showQuickPartnerMessage("Enter a valid partner name.","error");return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showQuickPartnerMessage("Enter a valid partner email.","error");return;}
+    if(password.length<6){showQuickPartnerMessage("Password must contain at least 6 characters.","error");return;}
+    if(password!==confirmPassword){showQuickPartnerMessage("Passwords do not match.","error");return;}
+
+    btn.disabled=true;
+    btn.textContent="CREATING...";
+    showQuickPartnerMessage("Creating secure Firebase partner account...","info");
+
+    try{
+        const credential=await createUserWithEmailAndPassword(partnerCreatorAuth,email,password);
+        const uid=credential.user.uid;
+        const now=new Date().toISOString();
+
+        await update(ref(db,"partners/"+uid),{
+            name,
+            email,
+            role:"partner",
+            status:"active",
+            createdAt:now,
+            updatedAt:now,
+            createdBy:"admin"
+        });
+
+        await update(ref(db,"pickupRequests/"+id),{
+            assignedPartnerUid:uid,
+            partnerName:name,
+            partnerEmail:email,
+            partnerPhone:null,
+            status:"Partner Assigned",
+            partnerAssignedAt:now,
+            updatedAt:now
+        });
+
+        await signOut(partnerCreatorAuth);
+
+        showQuickPartnerMessage("Partner account created and pickup assigned successfully.","success");
+        document.getElementById("partnerSearch").value="";
+        await loadPartners();
+
+        setTimeout(()=>{
+            closePartnerModal();
+            alert("✅ New partner " + name + " created and assigned successfully!");
+        },450);
+
+    }catch(error){
+        console.error("Create and assign partner error:",error);
+        try{ await signOut(partnerCreatorAuth); }catch(_e){}
+        let msg=error?.message || "Unable to create partner account.";
+        switch(error?.code){
+            case "auth/email-already-in-use": msg="This email is already registered. Use another partner email."; break;
+            case "auth/invalid-email": msg="Please enter a valid email address."; break;
+            case "auth/weak-password": msg="Password is too weak. Use at least 6 characters."; break;
+            case "auth/operation-not-allowed": msg="Email/password authentication is not enabled in Firebase."; break;
+            case "auth/network-request-failed": msg="Network error. Check your internet connection."; break;
+            case "PERMISSION_DENIED": msg="Firebase Database permission denied. Check your database rules."; break;
+        }
+        showQuickPartnerMessage(msg,"error");
+    }finally{
+        btn.disabled=false;
+        btn.textContent="CREATE & ASSIGN";
+    }
+}
+
+document.getElementById("showCreatePartnerBtn").addEventListener("click",()=>{
+    document.getElementById("showCreatePartnerBtn").style.display="none";
+    document.getElementById("quickPartnerForm").classList.add("open");
+    document.getElementById("quickPartnerName").focus();
+});
+
+document.getElementById("cancelQuickPartner").addEventListener("click",resetQuickPartnerForm);
+
+document.getElementById("quickPartnerForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    await createAndAssignNewPartner();
+});
+
+window.selectPartner =
+async function(uid){
+
+    const id =
+        pendingPartnerPickupId;
+
+    if(!id || !uid)
+        return;
+
+    const partner =
+        partnerDirectory.find(
+            p => p.uid === uid
+        );
+
+    if(!partner){
+        alert("Partner details not found.");
+        return;
+    }
+
+    const name =
+        partner.name ||
+        partner.partnerName ||
+        "Partner";
+
+    const email =
+        partner.email ||
+        "";
+
+    const phone =
+        partner.phone ||
+        partner.mobile ||
+        "";
+
+    const confirmed =
+        confirm(
+            "Assign this partner?\n\n" +
+            "Partner: " + name + "\n" +
+            "Email: " + (email || "Not provided") + "\n" +
+            "Phone: " + (phone || "Not provided") + "\n\n" +
+            "The partner will see this pickup after login."
+        );
+
+    if(!confirmed)
+        return;
+
+    try{
+
+        const now =
+            new Date().toISOString();
+
+        await update(
             ref(
                 db,
                 "pickupRequests/" + id
             ),
-
             {
+                assignedPartnerUid: uid,
 
-                partnerName:
-                    partnerName.trim(),
+                partnerName: name,
+
+                partnerEmail:
+                    email || null,
 
                 partnerPhone:
-                    partnerPhone
-                    ? partnerPhone.trim()
-                    : null,
+                    phone || null,
 
                 status:
                     "Partner Assigned",
 
                 partnerAssignedAt:
-                    new Date().toISOString()
+                    now,
 
+                updatedAt:
+                    now
             }
-
         );
 
+        closePartnerModal();
 
         alert(
-            "✅ Partner assigned successfully!"
-        );
-
-
-        window.open(
-
-            "patner.html?partner=" +
-            encodeURIComponent(
-                partnerName.trim()
-            ),
-
-            "_blank"
-
+            "✅ " + name +
+            " assigned successfully!"
         );
 
     }
     catch(error){
 
         console.error(
-            "Assign error:",
+            "Assign partner error:",
             error
         );
 
         alert(
-            "❌ Failed to assign partner: " +
+            "❌ Failed to assign partner:\n" +
             error.message
         );
+    }
+};
+
+
+document
+.getElementById("partnerSearch")
+.addEventListener(
+    "input",
+    renderPartnerDirectory
+);
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "Escape" &&
+            document
+                .getElementById("partnerModal")
+                .classList.contains("open")
+        ){
+            closePartnerModal();
+        }
 
     }
-
-};
+);
 
 
 /* =========================
