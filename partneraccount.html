@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <meta name="theme-color" content="#087f3e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <title>COVAI SCRAP HUB | Create Partner Account</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(20, 170, 85, 0.12), transparent 35%),
+        linear-gradient(135deg, #f2fff7 0%, #ffffff 50%, #effff5 100%);
+      color: #14231a;
+      min-height: 100vh;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    .topbar {
+      width: 100%;
+      height: 74px;
+      background: #ffffff;
+      border-bottom: 1px solid #dfeee5;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 3px 15px rgba(0, 70, 35, 0.06);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .logo-img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #087f3e;
+      white-space: nowrap;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      font-size: 10px;
+      color: #718078;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    main {
+      width: 100%;
+      min-height: calc(100vh - 74px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 45px 18px 50px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 510px;
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .hero-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 14px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #079447, #06b957);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 28px;
+      box-shadow: 0 12px 30px rgba(5, 130, 62, 0.22);
+    }
+
+    .hero h1 {
+      font-size: 27px;
+      font-weight: 800;
+      color: #10291a;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #6d7b73;
+    }
+
+    /* =========================
+       CARD
+    ========================== */
+
+    .card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid #dcece2;
+      border-radius: 24px;
+      padding: 28px 26px;
+      box-shadow:
+        0 18px 50px rgba(0, 73, 35, 0.09),
+        0 3px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .card-heading {
+      margin-bottom: 20px;
+    }
+
+    .card-heading h2 {
+      font-size: 18px;
+      color: #173622;
+      font-weight: 700;
+    }
+
+    .card-heading p {
+      margin-top: 4px;
+      color: #849088;
+      font-size: 11px;
+    }
+
+    /* =========================
+       FORM
+    ========================== */
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #33463b;
+      margin-bottom: 7px;
+    }
+
+    .input-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #779082;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #d6e4db;
+      border-radius: 12px;
+      outline: none;
+      background: #fbfefc;
+      color: #1a2b21;
+      padding: 0 13px 0 38px;
+      font-family: "Poppins", sans-serif;
+      font-size: 13px;
+      transition: 0.2s ease;
+    }
+
+    input::placeholder {
+      color: #a0aca5;
+    }
+
+    input:focus {
+      border-color: #079447;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(7, 148, 71, 0.09);
+    }
+
+    /* =========================
+       PASSWORD TOGGLE
+    ========================== */
+
+    .password-input {
+      padding-right: 45px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: #73827a;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 5px;
+    }
+
+    .toggle-password:hover {
+      color: #087f3e;
+    }
+
+    /* =========================
+       PASSWORD INFO
+    ========================== */
+
+    .password-info {
+      margin-top: 6px;
+      font-size: 9px;
+      color: #849088;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       BUTTON
+    ========================== */
+
+    .create-btn {
+      width: 100%;
+      height: 50px;
+      border: 0;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #07883f, #08ad52);
+      color: #ffffff;
+      font-family: "Poppins", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 5px;
+      box-shadow: 0 10px 22px rgba(5, 139, 66, 0.20);
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        opacity 0.18s ease;
+    }
+
+    .create-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(5, 139, 66, 0.25);
+    }
+
+    .create-btn:active {
+      transform: translateY(0);
+    }
+
+    .create-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .button-loader {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.45);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      vertical-align: -2px;
+      margin-right: 6px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =========================
+       MESSAGE
+    ========================== */
+
+    .message {
+      display: none;
+      margin-top: 14px;
+      border-radius: 11px;
+      padding: 11px 12px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .message.success {
+      display: block;
+      background: #ebfaf1;
+      border: 1px solid #bfe8ce;
+      color: #126336;
+    }
+
+    .message.error {
+      display: block;
+      background: #fff1f1;
+      border: 1px solid #f1caca;
+      color: #a32626;
+    }
+
+    .message.info {
+      display: block;
+      background: #eef7ff;
+      border: 1px solid #c9e3fa;
+      color: #1b5f91;
+    }
+
+    /* =========================
+       SUCCESS RESULT
+    ========================== */
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #f2fbf5;
+      border: 1px solid #ccebd6;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 11px;
+    }
+
+    .result-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #d8f5e2;
+      color: #07883f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .result-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #17582f;
+    }
+
+    .result-subtitle {
+      margin-top: 2px;
+      font-size: 9px;
+      color: #708078;
+    }
+
+    .result-details {
+      border-top: 1px solid #d8ebde;
+      padding-top: 10px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+      font-size: 10px;
+    }
+
+    .result-row span:first-child {
+      color: #76857c;
+    }
+
+    .result-row span:last-child {
+      color: #203b2a;
+      font-weight: 600;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    /* =========================
+       FOOTER NOTE
+    ========================== */
+
+    .security-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 10px 11px;
+      border-radius: 11px;
+      background: #f6faf7;
+      border: 1px solid #e2ece5;
+      color: #738078;
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .security-icon {
+      color: #087f3e;
+      flex-shrink: 0;
+      font-size: 12px;
+    }
+
+    /* =========================
+       DESKTOP
+    ========================== */
+
+    @media (min-width: 769px) {
+      .topbar {
+        padding-left: 32px;
+        padding-right: 32px;
+      }
+
+      main {
+        padding-top: 55px;
+      }
+    }
+
+    /* =========================
+       MOBILE
+       COMPACT / NO SCROLL
+    ========================== */
+
+    @media (max-width: 600px) {
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+      }
+
+      body {
+        background:
+          linear-gradient(180deg, #f3fff7 0%, #ffffff 60%, #f4fff8 100%);
+      }
+
+      .topbar {
+        height: 64px;
+        padding: 0 12px;
+      }
+
+      .brand {
+        gap: 8px;
+      }
+
+      .logo-img {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+      }
+
+      .brand-title {
+        font-size: 14px;
+      }
+
+      .brand-subtitle {
+        font-size: 8px;
+        margin-top: 2px;
+      }
+
+      main {
+        min-height: calc(100vh - 64px);
+        padding: 20px 10px 28px;
+        align-items: flex-start;
+      }
+
+      .container {
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .hero {
+        margin-bottom: 16px;
+      }
+
+      .hero-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        font-size: 22px;
+        margin-bottom: 9px;
+      }
+
+      .hero h1 {
+        font-size: 23px;
+      }
+
+      .hero p {
+        max-width: 330px;
+        margin: 5px auto 0;
+        font-size: 10px;
+        line-height: 1.45;
+      }
+
+      .card {
+        width: 100%;
+        padding: 17px 13px;
+        border-radius: 17px;
+      }
+
+      .card-heading {
+        margin-bottom: 13px;
+      }
+
+      .card-heading h2 {
+        font-size: 15px;
+      }
+
+      .card-heading p {
+        font-size: 9px;
+        margin-top: 2px;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+      }
+
+      .form-group label {
+        font-size: 9px;
+        margin-bottom: 4px;
+      }
+
+      input {
+        height: 45px;
+        border-radius: 10px;
+        font-size: 12px;
+        padding-left: 35px;
+      }
+
+      .input-icon {
+        left: 11px;
+        font-size: 12px;
+      }
+
+      .password-input {
+        padding-right: 40px;
+      }
+
+      .toggle-password {
+        right: 8px;
+        font-size: 12px;
+      }
+
+      .password-info {
+        margin-top: 4px;
+        font-size: 8px;
+      }
+
+      .create-btn {
+        height: 47px;
+        border-radius: 11px;
+        font-size: 12px;
+        margin-top: 2px;
+      }
+
+      .message {
+        margin-top: 10px;
+        padding: 9px 10px;
+        font-size: 9px;
+      }
+
+      .result {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 12px;
+      }
+
+      .result-top {
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .result-icon {
+        width: 29px;
+        height: 29px;
+        font-size: 12px;
+      }
+
+      .result-title {
+        font-size: 11px;
+      }
+
+      .result-subtitle {
+        font-size: 8px;
+      }
+
+      .result-row {
+        padding: 3px 0;
+        font-size: 8px;
+      }
+
+      .security-note {
+        margin-top: 10px;
+        padding: 8px 9px;
+        font-size: 8px;
+      }
+
+      .security-icon {
+        font-size: 10px;
+      }
+    }
+
+    /* =========================
+       VERY SMALL PHONES
+    ========================== */
+
+    @media (max-width: 380px) {
+
+      .topbar {
+        height: 60px;
+        padding: 0 9px;
+      }
+
+      .logo-img {
+        width: 38px;
+        height: 38px;
+      }
+
+      .brand-title {
+        font-size: 13px;
+      }
+
+      .brand-subtitle {
+        font-size: 7px;
+      }
+
+      main {
+        min-height: calc(100vh - 60px);
+        padding: 15px 8px 20px;
+      }
+
+      .hero {
+        margin-bottom: 12px;
+      }
+
+      .hero-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        font-size: 19px;
+        margin-bottom: 7px;
+      }
+
+      .hero h1 {
+        font-size: 20px;
+      }
+
+      .hero p {
+        font-size: 9px;
+      }
+
+      .card {
+        padding: 14px 11px;
+        border-radius: 15px;
+      }
+
+      .card-heading {
+        margin-bottom: 10px;
+      }
+
+      .card-heading h2 {
+        font-size: 14px;
+      }
+
+      .card-heading p {
+        font-size: 8px;
+      }
+
+      .form-group {
+        margin-bottom: 8px;
+      }
+
+      .form-group label {
+        font-size: 8px;
+        margin-bottom: 3px;
+      }
+
+      input {
+        height: 42px;
+        font-size: 11px;
+        border-radius: 9px;
+      }
+
+      .create-btn {
+        height: 44px;
+        font-size: 11px;
+      }
+
+      .security-note {
+        font-size: 7px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="topbar">
+    <div class="brand">
+      <img
+        src="logo.jpeg"
+        alt="COVAI SCRAP HUB Logo"
+        class="logo-img"
+        onerror="this.style.display='none';"
+      >
+
+      <div class="brand-text">
+        <div class="brand-title">COVAI SCRAP HUB</div>
+        <div class="brand-subtitle">Partner Account Management</div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main>
+
+    <div class="container">
+
+      <!-- HERO -->
+
+      <section class="hero">
+
+        <div class="hero-icon">
+          👤
+        </div>
+
+        <h1>Create Partner Account</h1>
+
+        <p>
+          Create a secure login account for your COVAI SCRAP HUB pickup partner.
+        </p>
+
+      </section>
+
+
+      <!-- FORM CARD -->
+
+      <section class="card">
+
+        <div class="card-heading">
+          <h2>Partner Account Details</h2>
+
+          <p>
+            Enter the partner's name and login credentials.
+          </p>
+        </div>
+
+
+        <form id="partnerForm" autocomplete="off">
+
+          <!-- PARTNER NAME -->
+
+          <div class="form-group">
+
+            <label for="partnerName">
+              Partner Name
+            </label>
+
+            <div class="input-wrap">
+
+              <span class="input-icon">
+                👤
+              </span>
+
+              <input
+                type="text"
+                id="partnerName"
+                name="partnerName"
+                placeholder="Enter partner name"
+                autocomplete="off"
+                maxlength="80"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- PARTNER EMAIL -->
+
+          <div class="form-group">
+
+            <label for="partnerEmail">
+              Partner Email / Login ID
+            </label>
+
+            <div class="input-wrap">
+
+              <span class="input-icon">
+                ✉
+              </span>
+
+              <input
+                type="email"
+                id="partnerEmail"
+                name="partnerEmail"
+                placeholder="partner@example.com"
+                autocomplete="off"
+                maxlength="120"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="partnerPassword">
+              Password
+            </label>
+
+            <div class="input-wrap">
+
+              <span class="input-icon">
+                🔒
+              </span>
+
+              <input
+                type="password"
+                id="partnerPassword"
+                name="partnerPassword"
+                class="password-input"
+                placeholder="Create password"
+                autocomplete="new-password"
+                maxlength="128"
+                required
+              >
+
+              <button
+                type="button"
+                class="toggle-password"
+                data-target="partnerPassword"
+                aria-label="Show password"
+              >
+                👁
+              </button>
+
+            </div>
+
+            <div class="password-info">
+              Use at least 6 characters. Do not use the partner's name as the password.
+            </div>
+
+          </div>
+
+
+          <!-- CONFIRM PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="confirmPassword">
+              Confirm Password
+            </label>
+
+            <div class="input-wrap">
+
+              <span class="input-icon">
+                🔐
+              </span>
+
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                class="password-input"
+                placeholder="Re-enter password"
+                autocomplete="new-password"
+                maxlength="128"
+                required
+              >
+
+              <button
+                type="button"
+                class="toggle-password"
+                data-target="confirmPassword"
+                aria-label="Show password"
+              >
+                👁
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- CREATE BUTTON -->
+
+          <button
+            type="submit"
+            class="create-btn"
+            id="createBtn"
+          >
+            Create Partner Account
+          </button>
+
+        </form>
+
+
+        <!-- MESSAGE -->
+
+        <div
+          id="message"
+          class="message"
+          role="alert"
+        ></div>
+
+
+        <!-- SUCCESS RESULT -->
+
+        <div
+          id="result"
+          class="result"
+        >
+
+          <div class="result-top">
+
+            <div class="result-icon">
+              ✓
+            </div>
+
+            <div>
+              <div class="result-title">
+                Partner Account Created
+              </div>
+
+              <div class="result-subtitle">
+                The partner can now login using the email and password.
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="result-details">
+
+            <div class="result-row">
+              <span>Partner Name</span>
+              <span id="resultName">-</span>
+            </div>
+
+            <div class="result-row">
+              <span>Login Email</span>
+              <span id="resultEmail">-</span>
+            </div>
+
+            <div class="result-row">
+              <span>Role</span>
+              <span>Partner</span>
+            </div>
+
+            <div class="result-row">
+              <span>Status</span>
+              <span>Active</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- SECURITY NOTE -->
+
+        <div class="security-note">
+
+          <div class="security-icon">
+            🔒
+          </div>
+
+          <div>
+            Partner passwords are securely managed by Firebase Authentication.
+            The password is never saved in the Realtime Database.
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       FIREBASE
+  ========================== -->
+
+  <script type="module">
+
+    import {
+      initializeApp,
+      getApps,
+      getApp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    import {
+      getDatabase,
+      ref,
+      set
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+    /* ==========================================
+       YOUR EXISTING FIREBASE CONFIG
+    ========================================== */
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+      authDomain: "covai-scrap-hub.firebaseapp.com",
+      databaseURL: "https://covai-scrap-hub-default-rtdb.firebaseio.com",
+      projectId: "covai-scrap-hub",
+      storageBucket: "covai-scrap-hub.firebasestorage.app",
+      messagingSenderId: "979133721874",
+      appId: "1:979133721874:web:c5829bb8dbf5270c0917cb",
+      measurementId: "G-P3PTSBHWMF"
+    };
+
+
+    /* ==========================================
+       EXISTING / PRIMARY FIREBASE APP
+       Keeps admin session separate
+    ========================================== */
+
+    let primaryApp;
+
+    try {
+
+      primaryApp = getApps().length
+        ? getApp()
+        : initializeApp(firebaseConfig);
+
+    } catch (error) {
+
+      console.error(
+        "Primary Firebase initialization error:",
+        error
+      );
+
+      primaryApp = initializeApp(
+        firebaseConfig,
+        "primaryPartnerAccountApp"
+      );
+
+    }
+
+
+    const db = getDatabase(primaryApp);
+
+
+    /* ==========================================
+       SECONDARY FIREBASE APP
+       Used ONLY for creating partner accounts.
+
+       This prevents:
+       Admin login
+       ↓
+       Partner account creation
+       ↓
+       Admin gets logged out
+
+       from happening.
+    ========================================== */
+
+    const creatorAppName = "partnerAccountCreator";
+
+    let creatorApp;
+
+    try {
+
+      const existingCreatorApp = getApps().find(
+        app => app.name === creatorAppName
+      );
+
+      creatorApp = existingCreatorApp
+        ? existingCreatorApp
+        : initializeApp(
+            firebaseConfig,
+            creatorAppName
+          );
+
+    } catch (error) {
+
+      console.error(
+        "Secondary Firebase initialization error:",
+        error
+      );
+
+      throw error;
+
+    }
+
+
+    const creatorAuth = getAuth(creatorApp);
+
+
+    /* ==========================================
+       DOM ELEMENTS
+    ========================================== */
+
+    const partnerForm =
+      document.getElementById("partnerForm");
+
+    const partnerName =
+      document.getElementById("partnerName");
+
+    const partnerEmail =
+      document.getElementById("partnerEmail");
+
+    const partnerPassword =
+      document.getElementById("partnerPassword");
+
+    const confirmPassword =
+      document.getElementById("confirmPassword");
+
+    const createBtn =
+      document.getElementById("createBtn");
+
+    const message =
+      document.getElementById("message");
+
+    const result =
+      document.getElementById("result");
+
+    const resultName =
+      document.getElementById("resultName");
+
+    const resultEmail =
+      document.getElementById("resultEmail");
+
+
+    /* ==========================================
+       SHOW MESSAGE
+    ========================================== */
+
+    function showMessage(
+      text,
+      type = "info"
+    ) {
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    /* ==========================================
+       HIDE MESSAGE
+    ========================================== */
+
+    function hideMessage() {
+
+      message.textContent = "";
+
+      message.className = "message";
+
+    }
+
+
+    /* ==========================================
+       PASSWORD VISIBILITY
+    ========================================== */
+
+    document
+      .querySelectorAll(".toggle-password")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const targetId =
+              button.getAttribute("data-target");
+
+            const input =
+              document.getElementById(targetId);
+
+            if (!input) return;
+
+            if (input.type === "password") {
+
+              input.type = "text";
+
+              button.textContent = "🙈";
+
+              button.setAttribute(
+                "aria-label",
+                "Hide password"
+              );
+
+            } else {
+
+              input.type = "password";
+
+              button.textContent = "👁";
+
+              button.setAttribute(
+                "aria-label",
+                "Show password"
+              );
+
+            }
+
+          }
+        );
+
+      });
+
+
+    /* ==========================================
+       EMAIL VALIDATION
+    ========================================== */
+
+    function isValidEmail(email) {
+
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        email
+      );
+
+    }
+
+
+    /* ==========================================
+       CLEAN NAME
+    ========================================== */
+
+    function cleanName(name) {
+
+      return name
+        .replace(/\s+/g, " ")
+        .trim();
+
+    }
+
+
+    /* ==========================================
+       CLEAN EMAIL
+    ========================================== */
+
+    function cleanEmail(email) {
+
+      return email
+        .trim()
+        .toLowerCase();
+
+    }
+
+
+    /* ==========================================
+       RESET SUCCESS RESULT
+    ========================================== */
+
+    function hideResult() {
+
+      result.classList.remove("show");
+
+      resultName.textContent = "-";
+
+      resultEmail.textContent = "-";
+
+    }
+
+
+    /* ==========================================
+       FORM SUBMIT
+    ========================================== */
+
+    partnerForm.addEventListener(
+      "submit",
+      async event => {
+
+        event.preventDefault();
+
+        hideMessage();
+
+        hideResult();
+
+
+        /* ------------------------------
+           READ VALUES
+        ------------------------------ */
+
+        const name =
+          cleanName(partnerName.value);
+
+        const email =
+          cleanEmail(partnerEmail.value);
+
+        const password =
+          partnerPassword.value;
+
+        const confirm =
+          confirmPassword.value;
+
+
+        /* ------------------------------
+           VALIDATE NAME
+        ------------------------------ */
+
+        if (!name) {
+
+          showMessage(
+            "Please enter the partner name.",
+            "error"
+          );
+
+          partnerName.focus();
+
+          return;
+
+        }
+
+
+        if (name.length < 2) {
+
+          showMessage(
+            "Partner name must contain at least 2 characters.",
+            "error"
+          );
+
+          partnerName.focus();
+
+          return;
+
+        }
+
+
+        /* ------------------------------
+           VALIDATE EMAIL
+        ------------------------------ */
+
+        if (!email) {
+
+          showMessage(
+            "Please enter the partner email.",
+            "error"
+          );
+
+          partnerEmail.focus();
+
+          return;
+
+        }
+
+
+        if (!isValidEmail(email)) {
+
+          showMessage(
+            "Please enter a valid email address.",
+            "error"
+          );
+
+          partnerEmail.focus();
+
+          return;
+
+        }
+
+
+        /* ------------------------------
+           VALIDATE PASSWORD
+        ------------------------------ */
+
+        if (!password) {
+
+          showMessage(
+            "Please create a password.",
+            "error"
+          );
+
+          partnerPassword.focus();
+
+          return;
+
+        }
+
+
+        if (password.length < 6) {
+
+          showMessage(
+            "Password must contain at least 6 characters.",
+            "error"
+          );
+
+          partnerPassword.focus();
+
+          return;
+
+        }
+
+
+        /* ------------------------------
+           CONFIRM PASSWORD
+        ------------------------------ */
+
+        if (!confirm) {
+
+          showMessage(
+            "Please confirm the password.",
+            "error"
+          );
+
+          confirmPassword.focus();
+
+          return;
+
+        }
+
+
+        if (password !== confirm) {
+
+          showMessage(
+            "Passwords do not match.",
+            "error"
+          );
+
+          confirmPassword.focus();
+
+          return;
+
+        }
+
+
+        /* ------------------------------
+           DISABLE BUTTON
+        ------------------------------ */
+
+        createBtn.disabled = true;
+
+        createBtn.innerHTML =
+          '<span class="button-loader"></span>Creating Account...';
+
+
+        try {
+
+          showMessage(
+            "Creating secure partner account...",
+            "info"
+          );
+
+
+          /* ==================================
+             CREATE FIREBASE AUTH ACCOUNT
+          ================================== */
+
+          const credential =
+            await createUserWithEmailAndPassword(
+              creatorAuth,
+              email,
+              password
+            );
+
+
+          const user =
+            credential.user;
+
+          const uid =
+            user.uid;
+
+
+          /* ==================================
+             CREATE PARTNER PROFILE
+
+             IMPORTANT:
+             PASSWORD IS NOT STORED HERE.
+          ================================== */
+
+          const now =
+            new Date().toISOString();
+
+
+          const partnerProfile = {
+
+            name: name,
+
+            email: email,
+
+            role: "partner",
+
+            status: "active",
+
+            createdAt: now,
+
+            updatedAt: now,
+
+            createdBy: "admin"
+
+          };
+
+
+          await set(
+            ref(
+              db,
+              "partners/" + uid
+            ),
+            partnerProfile
+          );
+
+
+          /* ==================================
+             SIGN OUT SECONDARY AUTH
+          ================================== */
+
+          try {
+
+            await signOut(
+              creatorAuth
+            );
+
+          } catch (signOutError) {
+
+            console.warn(
+              "Secondary Auth sign-out warning:",
+              signOutError
+            );
+
+          }
+
+
+          /* ==================================
+             SHOW SUCCESS
+          ================================== */
+
+          hideMessage();
+
+
+          resultName.textContent =
+            name;
+
+          resultEmail.textContent =
+            email;
+
+          result.classList.add(
+            "show"
+          );
+
+
+          partnerForm.reset();
+
+
+          showMessage(
+            "Partner account created successfully. The partner can now login with the email and password.",
+            "success"
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "Partner account creation error:",
+            error
+          );
+
+
+          /* ==================================
+             FIREBASE ERROR HANDLING
+          ================================== */
+
+          let errorMessage =
+            "Unable to create partner account. Please try again.";
+
+
+          switch (error.code) {
+
+            case "auth/email-already-in-use":
+
+              errorMessage =
+                "This email already has a Firebase account. Please use another email.";
+
+              break;
+
+
+            case "auth/invalid-email":
+
+              errorMessage =
+                "The email address is invalid.";
+
+              break;
+
+
+            case "auth/weak-password":
+
+              errorMessage =
+                "Password is too weak. Use at least 6 characters.";
+
+              break;
+
+
+            case "auth/network-request-failed":
+
+              errorMessage =
+                "Network connection failed. Check your internet connection and try again.";
+
+              break;
+
+
+            case "auth/operation-not-allowed":
+
+              errorMessage =
+                "Email/password login is not enabled in Firebase Authentication.";
+
+              break;
+
+
+            case "auth/admin-restricted-operation":
+
+              errorMessage =
+                "Firebase is blocking account creation. Check Authentication settings and permissions.";
+
+              break;
+
+
+            case "auth/invalid-api-key":
+
+              errorMessage =
+                "Firebase API configuration is invalid.";
+
+              break;
+
+
+            case "auth/too-many-requests":
+
+              errorMessage =
+                "Too many attempts. Please wait and try again.";
+
+              break;
+
+
+            case "PERMISSION_DENIED":
+
+              errorMessage =
+                "Firebase Database permission denied. Please check your Realtime Database rules.";
+
+              break;
+
+
+            case "permission-denied":
+
+              errorMessage =
+                "Firebase Database permission denied. Please check your Realtime Database rules.";
+
+              break;
+
+
+            default:
+
+              if (
+                error &&
+                error.message &&
+                error.message.includes(
+                  "permission_denied"
+                )
+              ) {
+
+                errorMessage =
+                  "Firebase Database permission denied. Please check your Realtime Database rules.";
+
+              } else if (
+                error &&
+                error.message
+              ) {
+
+                errorMessage =
+                  error.message;
+
+              }
+
+          }
+
+
+          showMessage(
+            errorMessage,
+            "error"
+          );
+
+
+          /* ==================================
+             IMPORTANT:
+             IF AUTH USER WAS CREATED BUT
+             RTDB PROFILE FAILED, THE AUTH
+             ACCOUNT MAY ALREADY EXIST.
+
+             This is intentionally not deleted
+             automatically because deleting Auth
+             users from a client requires admin
+             privileges.
+          ================================== */
+
+
+          try {
+
+            await signOut(
+              creatorAuth
+            );
+
+          } catch (signOutError) {
+
+            console.warn(
+              "Cleanup sign-out warning:",
+              signOutError
+            );
+
+          }
+
+        } finally {
+
+          /* ------------------------------
+             ENABLE BUTTON
+          ------------------------------ */
+
+          createBtn.disabled = false;
+
+          createBtn.textContent =
+            "Create Partner Account";
+
+        }
+
+      }
+    );
+
+
+    /* ==========================================
+       INPUT NORMALIZATION
+    ========================================== */
+
+    partnerName.addEventListener(
+      "input",
+      () => {
+
+        partnerName.value =
+          partnerName.value
+            .replace(/\s{2,}/g, " ");
+
+      }
+    );
+
+
+    partnerEmail.addEventListener(
+      "blur",
+      () => {
+
+        partnerEmail.value =
+          cleanEmail(
+            partnerEmail.value
+          );
+
+      }
+    );
+
+
+    /* ==========================================
+       PASSWORD MATCH CHECK
+    ========================================== */
+
+    confirmPassword.addEventListener(
+      "input",
+      () => {
+
+        if (
+          confirmPassword.value &&
+          partnerPassword.value !==
+            confirmPassword.value
+        ) {
+
+          confirmPassword.style.borderColor =
+            "#e58b8b";
+
+        } else {
+
+          confirmPassword.style.borderColor =
+            "";
+
+        }
+
+      }
+    );
+
+
+    /* ==========================================
+       STARTUP
+    ========================================== */
+
+    console.log(
+      "COVAI SCRAP HUB Partner Account Manager loaded."
+    );
+
+    console.log(
+      "Firebase Partner Account Creator ready."
+    );
+
+  </script>
+
+</body>
+</html>
