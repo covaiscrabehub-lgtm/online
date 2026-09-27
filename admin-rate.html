@@ -1,802 +1,384 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#087c4d">
 
-<meta
-    name="viewport"
-    content="width=device-width,initial-scale=1.0,viewport-fit=cover"
->
+<title>Manage Rates | COVAI SCRAP HUB</title>
 
-<meta
-    name="theme-color"
-    content="#087c4d"
->
-
-<title>
-    Manage Rates | COVAI SCRAP HUB
-</title>
-
-<link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
->
-
-<link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
->
-
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet"
->
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-
 :root{
-
     --green:#10b981;
     --dark:#047857;
     --blue:#2563eb;
     --red:#dc2626;
-
     --bg:#f5faf7;
     --text:#10231b;
     --muted:#6b7c74;
     --border:#e1ece6;
-
 }
-
 
 body{
-
-    font-family:
-        Inter,
-        system-ui,
-        sans-serif;
-
+    font-family:Inter,system-ui,sans-serif;
     background:
-        radial-gradient(
-            circle at 20% 0%,
-            #dcfce7 0,
-            transparent 30%
-        ),
+        radial-gradient(circle at 20% 0%,#dcfce7 0,transparent 30%),
         var(--bg);
-
     color:var(--text);
-
     min-height:100vh;
-
 }
-
-
-/* =====================================================
-   TOP BAR
-===================================================== */
 
 .topbar{
-
     position:sticky;
-
     top:0;
-
     z-index:30;
-
-    background:
-        rgba(255,255,255,.9);
-
-    backdrop-filter:
-        blur(16px);
-
-    border-bottom:
-        1px solid var(--border);
-
-    padding:
-        9px 12px;
-
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+    padding:9px 12px;
 }
-
 
 .topbar-inner{
-
     max-width:760px;
-
     margin:auto;
-
     display:flex;
-
     align-items:center;
-
     gap:9px;
-
 }
-
 
 .back-btn{
-
     width:34px;
-
     height:34px;
-
-    border:
-        1px solid var(--border);
-
+    border:1px solid var(--border);
     border-radius:10px;
-
     background:#fff;
-
     font-size:18px;
-
     cursor:pointer;
-
     color:var(--dark);
-
 }
-
 
 .topbar-title{
-
     font-size:15px;
-
     font-weight:900;
-
     flex:1;
-
 }
-
-
-/* =====================================================
-   CONTAINER
-===================================================== */
 
 .container{
-
-    width:
-        min(
-            100% - 20px,
-            760px
-        );
-
+    width:min(100% - 20px,760px);
     margin:auto;
-
-    padding:
-        11px 0 30px;
-
+    padding:11px 0 30px;
 }
-
-
-/* =====================================================
-   BANNER
-===================================================== */
 
 .banner{
-
     display:flex;
-
     align-items:center;
-
     gap:10px;
-
     padding:13px;
-
     border-radius:16px;
-
     color:#fff;
-
-    background:
-        linear-gradient(
-            135deg,
-            #10b981,
-            #047857
-        );
-
-    box-shadow:
-        0 10px 25px
-        rgba(5,150,105,.18);
-
+    background:linear-gradient(135deg,#10b981,#047857);
+    box-shadow:0 10px 25px rgba(5,150,105,.18);
     margin-bottom:10px;
-
 }
-
 
 .banner-info{
-
     flex:1;
-
 }
-
 
 .label{
-
     font-size:8px;
-
     text-transform:uppercase;
-
     letter-spacing:.12em;
-
     opacity:.8;
-
     font-weight:800;
-
 }
-
 
 .date{
-
     font-size:12px;
-
     font-weight:900;
-
     margin-top:3px;
-
 }
-
-
-/* =====================================================
-   BUTTONS
-===================================================== */
 
 .btn{
-
     border:0;
-
     border-radius:10px;
-
-    padding:
-        9px 12px;
-
-    font:
-        800 10px Inter;
-
+    padding:9px 12px;
+    font:800 10px Inter;
     cursor:pointer;
-
     white-space:nowrap;
-
 }
-
 
 .btn:active{
-
     transform:scale(.96);
-
 }
 
+.btn:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
 
 .btn-light{
-
-    background:
-        rgba(255,255,255,.18);
-
+    background:rgba(255,255,255,.18);
     color:#fff;
-
-    border:
-        1px solid
-        rgba(255,255,255,.3);
-
+    border:1px solid rgba(255,255,255,.3);
 }
-
 
 .btn-blue{
-
-    background:
-        var(--blue);
-
+    background:var(--blue);
     color:#fff;
-
 }
-
 
 .btn-red{
-
     background:#fff0f0;
-
     color:var(--red);
-
-    border:
-        1px solid #ffd5d5;
-
+    border:1px solid #ffd5d5;
 }
-
-
-/* =====================================================
-   PANEL
-===================================================== */
 
 .panel{
-
     background:#fff;
-
-    border:
-        1px solid var(--border);
-
+    border:1px solid var(--border);
     border-radius:15px;
-
     padding:11px;
-
     margin-bottom:10px;
-
-    box-shadow:
-        0 4px 15px
-        rgba(15,80,50,.04);
-
+    box-shadow:0 4px 15px rgba(15,80,50,.04);
 }
-
 
 .panel-title{
-
     font-size:11px;
-
     font-weight:900;
-
     margin-bottom:8px;
-
 }
-
-
-/* =====================================================
-   ADD MATERIAL
-===================================================== */
 
 .add-grid{
-
     display:grid;
-
-    grid-template-columns:
-        1.5fr
-        .8fr
-        .7fr
-        auto;
-
+    grid-template-columns:1.5fr .8fr .7fr auto;
     gap:7px;
-
 }
-
 
 input{
-
     width:100%;
-
     height:36px;
-
-    border:
-        1px solid var(--border);
-
+    border:1px solid var(--border);
     border-radius:9px;
-
-    padding:
-        0 10px;
-
-    font:
-        700 11px Inter;
-
+    padding:0 10px;
+    font:700 11px Inter;
     color:var(--text);
-
     background:#fbfdfc;
-
 }
-
 
 input:focus{
-
     outline:none;
-
-    border-color:
-        var(--green);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(16,185,129,.1);
-
+    border-color:var(--green);
+    box-shadow:0 0 0 3px rgba(16,185,129,.1);
 }
-
-
-/* =====================================================
-   RATE ITEM
-===================================================== */
 
 .rate-item{
-
     display:grid;
-
-    grid-template-columns:
-        38px
-        minmax(0,1fr)
-        105px
-        72px
-        70px;
-
+    grid-template-columns:38px minmax(0,1fr) 105px 72px 70px;
     align-items:center;
-
     gap:8px;
-
     padding:8px;
-
-    border:
-        1px solid var(--border);
-
+    border:1px solid var(--border);
     border-radius:12px;
-
     background:#fff;
-
     margin-bottom:7px;
-
 }
-
 
 .icon{
-
     width:38px;
-
     height:38px;
-
     border-radius:10px;
-
     display:grid;
-
     place-items:center;
-
     background:#edfcf3;
-
     font-size:19px;
-
 }
-
 
 .name{
-
     font-size:11px;
-
     font-weight:900;
-
     white-space:nowrap;
-
     overflow:hidden;
-
     text-overflow:ellipsis;
-
 }
-
 
 .unit{
-
     font-size:8px;
-
     color:var(--muted);
-
     margin-top:2px;
-
 }
-
 
 .price-input{
-
     text-align:right;
-
     height:34px;
-
 }
-
 
 .small-btn{
-
     height:34px;
-
-    padding:
-        0 8px;
-
+    padding:0 8px;
 }
-
-
-/* =====================================================
-   LOADING
-===================================================== */
 
 .loading{
-
     text-align:center;
-
     padding:35px;
-
     color:var(--muted);
-
     font-size:11px;
-
 }
-
 
 .spinner{
-
     width:24px;
-
     height:24px;
-
-    border:
-        3px solid #d7eee2;
-
-    border-top-color:
-        var(--green);
-
+    border:3px solid #d7eee2;
+    border-top-color:var(--green);
     border-radius:50%;
-
-    animation:
-        spin .8s linear infinite;
-
-    margin:
-        0 auto 8px;
-
+    animation:spin .8s linear infinite;
+    margin:0 auto 8px;
 }
 
-
 @keyframes spin{
-
     to{
         transform:rotate(360deg);
     }
-
 }
-
-
-/* =====================================================
-   TOAST
-===================================================== */
 
 .toast{
-
     position:fixed;
-
     left:50%;
-
     bottom:18px;
-
-    transform:
-        translate(-50%,20px);
-
+    transform:translate(-50%,20px);
     opacity:0;
-
     pointer-events:none;
-
     background:#10231b;
-
     color:#fff;
-
-    padding:
-        10px 14px;
-
+    padding:10px 14px;
     border-radius:10px;
-
     font-size:10px;
-
     font-weight:800;
-
     z-index:100;
-
     transition:.25s;
-
-    box-shadow:
-        0 10px 25px
-        rgba(0,0,0,.18);
-
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
 }
-
 
 .toast.show{
-
     opacity:1;
-
-    transform:
-        translate(-50%,0);
-
+    transform:translate(-50%,0);
 }
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
 
 @media(max-width:620px){
 
     .container{
-
-        width:
-            min(
-                100% - 14px,
-                760px
-            );
-
+        width:min(100% - 14px,760px);
         padding-top:8px;
-
     }
-
 
     .banner{
-
         padding:11px;
-
         border-radius:13px;
-
     }
-
 
     .btn{
-
-        padding:
-            8px 9px;
-
+        padding:8px 9px;
     }
-
 
     .add-grid{
-
-        grid-template-columns:
-            1fr 1fr;
-
+        grid-template-columns:1fr 1fr;
     }
-
 
     .add-grid input:first-child{
-
-        grid-column:
-            1 / -1;
-
+        grid-column:1/-1;
     }
-
 
     .add-grid .btn{
-
-        grid-column:
-            1 / -1;
-
+        grid-column:1/-1;
     }
-
 
     .rate-item{
-
-        grid-template-columns:
-            34px
-            minmax(0,1fr)
-            76px;
-
+        grid-template-columns:34px minmax(0,1fr) 76px;
         gap:7px;
-
         padding:7px;
-
     }
-
 
     .icon{
-
         width:34px;
-
         height:34px;
-
         font-size:17px;
-
     }
-
 
     .rate-item .update-rate{
-
-        grid-column:
-            2 / 3;
-
+        grid-column:2/3;
     }
-
 
     .rate-item .delete-rate{
-
-        grid-column:
-            3 / 4;
-
+        grid-column:3/4;
     }
-
 
     .price-input{
-
-        grid-column:
-            3 / 4;
-
+        grid-column:3/4;
         grid-row:1;
-
         height:32px;
-
     }
-
 
     .rate-item .update-rate{
-
         height:31px;
-
     }
-
 
     .rate-item .delete-rate{
-
         height:31px;
-
     }
-
 }
-
 
 @media(max-width:390px){
 
     .rate-item{
-
-        grid-template-columns:
-            32px
-            minmax(0,1fr)
-            70px;
-
+        grid-template-columns:32px minmax(0,1fr) 70px;
     }
-
 
     .name{
-
         font-size:10px;
-
     }
-
 
     .unit{
-
         font-size:7px;
-
     }
-
 
     .price-input{
-
         font-size:10px;
-
     }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <header class="topbar">
-
     <div class="topbar-inner">
 
         <button
             class="back-btn"
             onclick="history.back()"
-            aria-label="Go back"
-        >
+            aria-label="Go back">
             ←
         </button>
-
 
         <h1 class="topbar-title">
             Manage Scrap Rates
         </h1>
 
     </div>
-
 </header>
 
 
 <main class="container">
-
 
 <section class="banner">
 
@@ -808,23 +390,19 @@ input:focus{
 
         <div
             class="date"
-            id="updateDate"
-        >
+            id="updateDate">
             Loading...
         </div>
 
     </div>
 
-
     <button
         class="btn btn-light"
-        id="updateAllBtn"
-    >
+        id="updateAllBtn">
         Update All
     </button>
 
 </section>
-
 
 
 <section class="panel">
@@ -833,35 +411,27 @@ input:focus{
         Add New Material
     </div>
 
-
     <div class="add-grid">
 
         <input
             id="materialName"
-            placeholder="Material name"
-        >
-
+            placeholder="Material name">
 
         <input
             id="materialPrice"
             type="number"
             min="0"
             step="0.01"
-            placeholder="Price"
-        >
-
+            placeholder="Price">
 
         <input
             id="materialUnit"
             value="kg"
-            placeholder="Unit"
-        >
-
+            placeholder="Unit">
 
         <button
             class="btn btn-blue"
-            id="addBtn"
-        >
+            id="addBtn">
             + Add Rate
         </button>
 
@@ -870,11 +440,9 @@ input:focus{
 </section>
 
 
-
 <div
     id="loading"
-    class="loading"
->
+    class="loading">
 
     <div class="spinner"></div>
 
@@ -883,34 +451,23 @@ input:focus{
 </div>
 
 
-<section
-    id="ratesContainer"
-></section>
-
+<section id="ratesContainer"></section>
 
 </main>
 
 
 <div
     id="toast"
-    class="toast"
-></div>
-
+    class="toast">
+</div>
 
 
 <script type="module">
 
-
-/* =====================================================
-   FIREBASE IMPORTS
-===================================================== */
-
 import {
     initializeApp
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
     getDatabase,
@@ -920,77 +477,54 @@ import {
     update,
     remove
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-
-/* =====================================================
-   COVAI SCRAP HUB - NEW FIREBASE PROJECT
-   REALTIME DATABASE
-===================================================== */
+/* =========================================
+   FIREBASE
+========================================= */
 
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyCAVdbE2YfcRUEizM9qhp3HMAdY2fEDUsc",
+        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
 
     authDomain:
-        "covaiscrap.firebaseapp.com",
+        "covai-scrap-hub.firebaseapp.com",
 
     databaseURL:
-        "https://covaiscrap-default-rtdb.firebaseio.com",
+        "https://covai-scrap-hub-default-rtdb.firebaseio.com",
 
     projectId:
-        "covaiscrap",
+        "covai-scrap-hub",
 
     storageBucket:
-        "covaiscrap.firebasestorage.app",
+        "covai-scrap-hub.firebasestorage.app",
 
     messagingSenderId:
-        "1093933670685",
+        "979133721874",
 
     appId:
-        "1:1093933670685:web:e305d3ed1e4f62e269c1f4",
+        "1:979133721874:web:c5829bb8dbf5270c0917cb",
 
     measurementId:
-        "G-MCXYBSB57M"
-
+        "G-P3PTSBHWMF"
 };
 
 
-
-/* =====================================================
-   INITIALIZE FIREBASE
-===================================================== */
-
 const app =
-    initializeApp(
-        firebaseConfig
-    );
-
+    initializeApp(firebaseConfig);
 
 const db =
-    getDatabase(
-        app
-    );
-
-
-/* =====================================================
-   REALTIME DATABASE RATE PATH
-===================================================== */
+    getDatabase(app);
 
 const ratesRef =
-    ref(
-        db,
-        "scrapRates"
-    );
+    ref(db,"scrapRates");
 
 
-
-/* =====================================================
-   DEFAULT PRODUCTS
-===================================================== */
+/* =========================================
+   DEFAULT MATERIALS
+========================================= */
 
 const defaults = [
 
@@ -1067,37 +601,30 @@ const defaults = [
     },
 
     {
-        id:"mixed",
-        name:"Mixed Scrap",
-        price:20,
-        unit:"kg",
-        emoji:"♻️"
+        id:"vehicle",
+        name:"Old Vehicle",
+        price:35000,
+        unit:"unit",
+        emoji:"🚗"
     }
 
 ];
 
 
-
-/* =====================================================
-   EMOJI MAP
-===================================================== */
-
 const emojiMap =
     Object.fromEntries(
         defaults.map(
-            item =>
-                [
-                    item.id,
-                    item.emoji
-                ]
+            item => [
+                item.id,
+                item.emoji
+            ]
         )
     );
 
 
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
+/* =========================================
+   HELPERS
+========================================= */
 
 function esc(value){
 
@@ -1105,17 +632,14 @@ function esc(value){
         value ?? ""
     ).replace(
         /[&<>"']/g,
-
         function(match){
 
             return {
-
                 "&":"&amp;",
                 "<":"&lt;",
                 ">":"&gt;",
                 '"':"&quot;",
                 "'":"&#039;"
-
             }[match];
 
         }
@@ -1124,25 +648,14 @@ function esc(value){
 }
 
 
-
-/* =====================================================
-   DATE FORMAT
-===================================================== */
-
 function dateText(value){
 
     if(!value){
-
         return "Never updated";
-
     }
 
-
     const date =
-        new Date(
-            value
-        );
-
+        new Date(value);
 
     if(
         Number.isNaN(
@@ -1150,144 +663,97 @@ function dateText(value){
         )
     ){
 
-        return String(
-            value
-        );
+        return String(value);
 
     }
-
 
     return date.toLocaleDateString(
         "en-IN",
         {
-
             day:"2-digit",
             month:"short",
             year:"numeric",
-
             hour:"2-digit",
             minute:"2-digit"
-
         }
     );
 
 }
 
 
-
-/* =====================================================
-   TOAST
-===================================================== */
-
 function toast(message){
 
-    const t =
-        document.getElementById(
-            "toast"
-        );
+    const element =
+        document.getElementById("toast");
 
-
-    t.textContent =
+    element.textContent =
         message;
 
-
-    t.classList.add(
-        "show"
-    );
-
+    element.classList.add("show");
 
     clearTimeout(
         window.toastTimer
     );
 
-
     window.toastTimer =
         setTimeout(
-
             function(){
 
-                t.classList.remove(
+                element.classList.remove(
                     "show"
                 );
 
             },
-
             2200
-
         );
 
 }
 
 
-
-/* =====================================================
-   SAFE FIREBASE ID
-===================================================== */
-
 function slug(value){
 
-    return String(
-        value
-    )
-    .toLowerCase()
-    .trim()
-    .replace(
-        /[^a-z0-9]+/g,
-        "-"
-    )
-    .replace(
-        /^-|-$/g,
-        ""
-    )
-    ||
-    Date.now().toString();
+    return String(value)
+        .toLowerCase()
+        .trim()
+        .replace(
+            /[^a-z0-9]+/g,
+            "-"
+        )
+        .replace(
+            /^-|-$/g,
+            ""
+        ) ||
+        Date.now().toString();
 
 }
 
 
-
-/* =====================================================
+/* =========================================
    CREATE DEFAULT RATES
-===================================================== */
+========================================= */
 
 async function ensureDefaults(){
 
     const snapshot =
         await new Promise(
-
-            function(resolve){
+            function(resolve,reject){
 
                 onValue(
-
                     ratesRef,
-
                     resolve,
-
+                    reject,
                     {
                         onlyOnce:true
                     }
-
                 );
 
             }
-
         );
 
 
-    const existing =
-        snapshot.val();
-
-
-    /*
-       If rates already exist,
-       DO NOT overwrite them.
-    */
-
     if(
-
-        existing &&
-        existing.rates
-
+        snapshot.exists() &&
+        snapshot.val()?.rates
     ){
 
         return;
@@ -1297,64 +763,47 @@ async function ensureDefaults(){
 
     const rates = {};
 
-
     defaults.forEach(
-
         function(item){
 
             rates[item.id] = {
 
-                name:
-                    item.name,
+                name:item.name,
 
-                price:
-                    item.price,
+                price:item.price,
 
-                unit:
-                    item.unit
+                unit:item.unit
 
             };
 
         }
-
     );
 
 
     await set(
-
         ratesRef,
-
         {
 
-            rates:
-
-                rates,
+            rates:rates,
 
             lastUpdated:
-
                 new Date().toISOString()
 
         }
-
     );
 
 }
 
 
-
-/* =====================================================
+/* =========================================
    RENDER RATES
-===================================================== */
+========================================= */
 
 function render(data){
 
-    const loading =
-        document.getElementById(
-            "loading"
-        );
-
-
-    loading.style.display =
+    document.getElementById(
+        "loading"
+    ).style.display =
         "none";
 
 
@@ -1365,9 +814,7 @@ function render(data){
     document.getElementById(
         "updateDate"
     ).textContent =
-
         "Last updated • " +
-
         dateText(
             data?.lastUpdated
         );
@@ -1380,22 +827,13 @@ function render(data){
 
 
     const keys =
-        Object.keys(
-            rates
-        );
+        Object.keys(rates);
 
 
     if(!keys.length){
 
-        box.innerHTML = `
-
-            <div class="panel">
-
-                No rates available.
-
-            </div>
-
-        `;
+        box.innerHTML =
+            '<div class="panel">No rates available.</div>';
 
         return;
 
@@ -1403,146 +841,67 @@ function render(data){
 
 
     box.innerHTML =
-
         keys.map(
-
             function(id){
 
                 const rate =
                     rates[id] || {};
 
 
-                const price =
-                    Number(
-                        rate.price || 0
-                    );
-
-
                 return `
 
-                    <div
-                        class="rate-item"
-                    >
+                <div class="rate-item">
 
+                    <div class="icon">
+                        ${emojiMap[id] || "♻️"}
+                    </div>
 
-                        <div
-                            class="icon"
-                        >
+                    <div>
 
-                            ${
-                                emojiMap[id]
-                                ||
-                                "♻️"
-                            }
-
+                        <div class="name">
+                            ${esc(rate.name || id)}
                         </div>
 
-
-                        <div>
-
-                            <div
-                                class="name"
-                            >
-
-                                ${
-                                    esc(
-                                        rate.name
-                                        ||
-                                        id
-                                    )
-                                }
-
-                            </div>
-
-
-                            <div
-                                class="unit"
-                            >
-
-                                per
-                                ${
-                                    esc(
-                                        rate.unit
-                                        ||
-                                        "kg"
-                                    )
-                                }
-
-                            </div>
-
+                        <div class="unit">
+                            per ${esc(rate.unit || "kg")}
                         </div>
-
-
-                        <input
-
-                            class="price-input"
-
-                            type="number"
-
-                            min="0"
-
-                            step="0.01"
-
-                            id="price-${esc(id)}"
-
-                            value="${
-                                price.toFixed(2)
-                            }"
-
-                        >
-
-
-                        <button
-
-                            class="
-                                btn
-                                btn-blue
-                                small-btn
-                                update-rate
-                            "
-
-                            data-id="${esc(id)}"
-
-                        >
-
-                            Save
-
-                        </button>
-
-
-                        <button
-
-                            class="
-                                btn
-                                btn-red
-                                small-btn
-                                delete-rate
-                            "
-
-                            data-id="${esc(id)}"
-
-                        >
-
-                            Delete
-
-                        </button>
-
 
                     </div>
+
+                    <input
+                        class="price-input"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        id="price-${esc(id)}"
+                        value="${Number(rate.price || 0).toFixed(2)}"
+                    >
+
+                    <button
+                        class="btn btn-blue small-btn update-rate"
+                        data-id="${esc(id)}">
+                        Save
+                    </button>
+
+                    <button
+                        class="btn btn-red small-btn delete-rate"
+                        data-id="${esc(id)}">
+                        Delete
+                    </button>
+
+                </div>
 
                 `;
 
             }
-
         ).join("");
 
 }
 
 
-
-/* =====================================================
+/* =========================================
    REALTIME LISTENER
-===================================================== */
+========================================= */
 
 onValue(
 
@@ -1550,113 +909,387 @@ onValue(
 
     function(snapshot){
 
-        const data =
-            snapshot.val();
-
-
         render(
-            data
+            snapshot.val()
         );
 
     },
 
     function(error){
 
+        document.getElementById(
+            "loading"
+        ).innerHTML =
+            "❌ Unable to load rates.<br><small>" +
+            esc(error.message) +
+            "</small>";
+
         console.error(
-            "Firebase Realtime Database error:",
             error
         );
-
-
-        const loading =
-            document.getElementById(
-                "loading"
-            );
-
-
-        loading.innerHTML = `
-
-            ❌ Unable to load rates.
-
-            <br><br>
-
-            <small>
-
-                ${
-                    esc(
-                        error.message
-                    )
-                }
-
-            </small>
-
-        `;
 
     }
 
 );
 
 
-
-/* =====================================================
-   INITIALIZE DEFAULTS
-===================================================== */
+/* =========================================
+   INITIALIZE
+========================================= */
 
 ensureDefaults()
-.catch(
+    .catch(
+        function(error){
 
-    function(error){
+            console.error(
+                "Default rate error:",
+                error
+            );
 
-        console.error(
-            "Default rate setup error:",
-            error
-        );
-
-    }
-
-);
+        }
+    );
 
 
-
-/* =====================================================
-   SAVE / DELETE RATE
-===================================================== */
+/* =========================================
+   SAVE / DELETE
+========================================= */
 
 document
-.getElementById(
-    "ratesContainer"
-)
-.addEventListener(
+    .getElementById(
+        "ratesContainer"
+    )
+    .addEventListener(
+        "click",
+        async function(event){
 
-    "click",
+            const saveButton =
+                event.target.closest(
+                    ".update-rate"
+                );
 
-    async function(event){
+            const deleteButton =
+                event.target.closest(
+                    ".delete-rate"
+                );
 
-        const saveButton =
-            event.target.closest(
-                ".update-rate"
+
+            /* SAVE */
+
+            if(saveButton){
+
+                const id =
+                    saveButton.dataset.id;
+
+                const input =
+                    document.getElementById(
+                        "price-" + id
+                    );
+
+                const price =
+                    parseFloat(
+                        input.value
+                    );
+
+
+                if(
+                    !Number.isFinite(price) ||
+                    price < 0
+                ){
+
+                    toast(
+                        "Enter a valid price"
+                    );
+
+                    return;
+
+                }
+
+
+                saveButton.disabled =
+                    true;
+
+
+                try{
+
+                    await update(
+
+                        ref(
+                            db,
+                            "scrapRates/rates/" +
+                            id
+                        ),
+
+                        {
+                            price:price
+                        }
+
+                    );
+
+
+                    await set(
+
+                        ref(
+                            db,
+                            "scrapRates/lastUpdated"
+                        ),
+
+                        new Date()
+                            .toISOString()
+
+                    );
+
+
+                    toast(
+                        "✓ Rate updated"
+                    );
+
+
+                }
+                catch(error){
+
+                    console.error(
+                        error
+                    );
+
+                    toast(
+                        "❌ Update failed"
+                    );
+
+                }
+                finally{
+
+                    saveButton.disabled =
+                        false;
+
+                }
+
+            }
+
+
+            /* DELETE */
+
+            if(deleteButton){
+
+                const id =
+                    deleteButton.dataset.id;
+
+
+                if(
+                    !confirm(
+                        "Delete this material rate?"
+                    )
+                ){
+
+                    return;
+
+                }
+
+
+                try{
+
+                    await remove(
+
+                        ref(
+                            db,
+                            "scrapRates/rates/" +
+                            id
+                        )
+
+                    );
+
+
+                    await set(
+
+                        ref(
+                            db,
+                            "scrapRates/lastUpdated"
+                        ),
+
+                        new Date()
+                            .toISOString()
+
+                    );
+
+
+                    toast(
+                        "✓ Rate deleted"
+                    );
+
+                }
+                catch(error){
+
+                    console.error(
+                        error
+                    );
+
+                    toast(
+                        "❌ Delete failed"
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+/* =========================================
+   ADD NEW RATE
+========================================= */
+
+document
+    .getElementById(
+        "addBtn"
+    )
+    .onclick =
+    async function(){
+
+        const name =
+            document
+                .getElementById(
+                    "materialName"
+                )
+                .value
+                .trim();
+
+
+        const price =
+            parseFloat(
+                document
+                    .getElementById(
+                        "materialPrice"
+                    )
+                    .value
             );
 
 
-        const deleteButton =
-            event.target.closest(
-                ".delete-rate"
+        const unit =
+            document
+                .getElementById(
+                    "materialUnit"
+                )
+                .value
+                .trim() ||
+            "kg";
+
+
+        if(
+            !name ||
+            !Number.isFinite(price) ||
+            price < 0
+        ){
+
+            toast(
+                "Enter material and valid price"
+            );
+
+            return;
+
+        }
+
+
+        const id =
+            slug(name) +
+            "-" +
+            Date.now();
+
+
+        try{
+
+            await update(
+
+                ref(
+                    db,
+                    "scrapRates"
+                ),
+
+                {
+
+                    [`rates/${id}`]:{
+
+                        name:name,
+
+                        price:price,
+
+                        unit:unit
+
+                    },
+
+                    lastUpdated:
+                        new Date()
+                            .toISOString()
+
+                }
+
             );
 
 
-        /* =============================================
-           SAVE ONE RATE
-        ============================================= */
+            document.getElementById(
+                "materialName"
+            ).value = "";
 
-        if(saveButton){
+
+            document.getElementById(
+                "materialPrice"
+            ).value = "";
+
+
+            document.getElementById(
+                "materialUnit"
+            ).value = "kg";
+
+
+            toast(
+                "✓ Rate added"
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+            toast(
+                "❌ Add failed"
+            );
+
+        }
+
+    };
+
+
+/* =========================================
+   UPDATE ALL
+========================================= */
+
+document
+    .getElementById(
+        "updateAllBtn"
+    )
+    .onclick =
+    async function(){
+
+        const inputs =
+            [
+                ...document.querySelectorAll(
+                    ".price-input"
+                )
+            ];
+
+
+        const updates = {};
+
+
+        for(
+            const input of inputs
+        ){
 
             const id =
-                saveButton.dataset.id;
-
-
-            const input =
-                document.getElementById(
-                    "price-" + id
+                input.id.replace(
+                    "price-",
+                    ""
                 );
 
 
@@ -1667,19 +1300,12 @@ document
 
 
             if(
-
-                !Number.isFinite(
-                    price
-                )
-
-                ||
-
+                !Number.isFinite(price) ||
                 price < 0
-
             ){
 
                 toast(
-                    "Enter a valid price"
+                    "Check all prices"
                 );
 
                 return;
@@ -1687,434 +1313,53 @@ document
             }
 
 
-            saveButton.disabled =
-                true;
-
-
-            try{
-
-                /*
-                   Save only the price.
-                */
-
-                await update(
-
-                    ref(
-                        db,
-                        "scrapRates/rates/" +
-                        id
-                    ),
-
-                    {
-
-                        price:
-                            price
-
-                    }
-
-                );
-
-
-                /*
-                   Update timestamp.
-                */
-
-                await set(
-
-                    ref(
-                        db,
-                        "scrapRates/lastUpdated"
-                    ),
-
-                    new Date()
-                    .toISOString()
-
-                );
-
-
-                toast(
-                    "✓ Rate updated"
-                );
-
-            }
-
-            catch(error){
-
-                console.error(
-                    "Rate update error:",
-                    error
-                );
-
-
-                toast(
-                    "❌ Update failed"
-                );
-
-            }
-
-            finally{
-
-                saveButton.disabled =
-                    false;
-
-            }
+            updates[
+                `rates/${id}/price`
+            ] =
+                price;
 
         }
 
 
+        try{
 
-        /* =============================================
-           DELETE RATE
-        ============================================= */
+            await update(
 
-        if(deleteButton){
+                ratesRef,
 
-            const id =
-                deleteButton.dataset.id;
+                {
 
+                    ...updates,
 
-            if(
-                !confirm(
-                    "Delete this material rate?"
-                )
-            ){
+                    lastUpdated:
+                        new Date()
+                            .toISOString()
 
-                return;
+                }
 
-            }
-
-
-            try{
-
-                await remove(
-
-                    ref(
-                        db,
-                        "scrapRates/rates/" +
-                        id
-                    )
-
-                );
-
-
-                await set(
-
-                    ref(
-                        db,
-                        "scrapRates/lastUpdated"
-                    ),
-
-                    new Date()
-                    .toISOString()
-
-                );
-
-
-                toast(
-                    "✓ Rate deleted"
-                );
-
-            }
-
-            catch(error){
-
-                console.error(
-                    "Rate delete error:",
-                    error
-                );
-
-
-                toast(
-                    "❌ Delete failed"
-                );
-
-            }
-
-        }
-
-    }
-
-);
-
-
-
-/* =====================================================
-   ADD NEW MATERIAL
-===================================================== */
-
-document
-.getElementById(
-    "addBtn"
-)
-.onclick =
-
-async function(){
-
-    const name =
-        document
-        .getElementById(
-            "materialName"
-        )
-        .value
-        .trim();
-
-
-    const price =
-        parseFloat(
-
-            document
-            .getElementById(
-                "materialPrice"
-            )
-            .value
-
-        );
-
-
-    const unit =
-        document
-        .getElementById(
-            "materialUnit"
-        )
-        .value
-        .trim()
-        ||
-        "kg";
-
-
-    if(
-
-        !name
-
-        ||
-
-        !Number.isFinite(
-            price
-        )
-
-        ||
-
-        price < 0
-
-    ){
-
-        toast(
-            "Enter material and valid price"
-        );
-
-        return;
-
-    }
-
-
-    const id =
-        slug(name) +
-        "-" +
-        Date.now();
-
-
-    try{
-
-        await update(
-
-            ref(
-                db,
-                "scrapRates"
-            ),
-
-            {
-
-                [`rates/${id}`]:
-
-                    {
-
-                        name:
-                            name,
-
-                        price:
-                            price,
-
-                        unit:
-                            unit
-
-                    },
-
-
-                lastUpdated:
-
-                    new Date()
-                    .toISOString()
-
-            }
-
-        );
-
-
-        document
-        .getElementById(
-            "materialName"
-        )
-        .value = "";
-
-
-        document
-        .getElementById(
-            "materialPrice"
-        )
-        .value = "";
-
-
-        document
-        .getElementById(
-            "materialUnit"
-        )
-        .value = "kg";
-
-
-        toast(
-            "✓ Rate added"
-        );
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Add rate error:",
-            error
-        );
-
-
-        toast(
-            "❌ Add failed"
-        );
-
-    }
-
-};
-
-
-
-/* =====================================================
-   UPDATE ALL RATES
-===================================================== */
-
-document
-.getElementById(
-    "updateAllBtn"
-)
-.onclick =
-
-async function(){
-
-    const inputs =
-        [
-            ...
-            document.querySelectorAll(
-                ".price-input"
-            )
-        ];
-
-
-    const updates = {};
-
-
-    for(
-
-        const input
-        of inputs
-
-    ){
-
-        const id =
-            input.id.replace(
-                "price-",
-                ""
             );
 
-
-        const price =
-            parseFloat(
-                input.value
-            );
-
-
-        if(
-
-            !Number.isFinite(
-                price
-            )
-
-            ||
-
-            price < 0
-
-        ){
 
             toast(
-                "Check all prices"
+                "✓ All rates updated"
             );
 
-            return;
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+            toast(
+                "❌ Update All failed"
+            );
 
         }
 
-
-        updates[
-            `rates/${id}/price`
-        ] =
-            price;
-
-    }
-
-
-    try{
-
-        await update(
-
-            ratesRef,
-
-            {
-
-                ...updates,
-
-                lastUpdated:
-
-                    new Date()
-                    .toISOString()
-
-            }
-
-        );
-
-
-        toast(
-            "✓ All rates updated"
-        );
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Update all error:",
-            error
-        );
-
-
-        toast(
-            "❌ Update All failed"
-        );
-
-    }
-
-};
-
+    };
 
 </script>
 
-
 </body>
-
 </html>
-```
