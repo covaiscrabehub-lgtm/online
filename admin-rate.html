@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0,viewport-fit=cover"
+>
+
 <meta name="theme-color" content="#087c4d">
 
-<title>Manage Rates | COVAI SCRAP HUB</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>Admin Rates | COVAI SCRAP HUB</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -19,391 +23,934 @@
 }
 
 :root{
-    --green:#10b981;
-    --dark:#047857;
+    --green:#0aa66f;
+    --green-dark:#047857;
+    --green-deep:#065f46;
     --blue:#2563eb;
-    --red:#dc2626;
-    --bg:#f5faf7;
+    --bg:#f3faf6;
+    --white:#ffffff;
     --text:#10231b;
-    --muted:#6b7c74;
-    --border:#e1ece6;
+    --muted:#718079;
+    --border:#dcebe3;
+    --danger:#dc2626;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    font-family:Inter,system-ui,sans-serif;
-    background:
-        radial-gradient(circle at 20% 0%,#dcfce7 0,transparent 30%),
-        var(--bg);
-    color:var(--text);
     min-height:100vh;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:var(--text);
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            #d8fbe7 0,
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 100% 15%,
+            #e3fff0 0,
+            transparent 28%
+        ),
+        var(--bg);
+
+    -webkit-font-smoothing:antialiased;
 }
+
+
+/* =========================
+   TOP BAR
+========================= */
 
 .topbar{
     position:sticky;
     top:0;
-    z-index:30;
-    background:rgba(255,255,255,.92);
-    backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--border);
-    padding:9px 12px;
+    z-index:100;
+
+    padding:
+        8px
+        10px;
+
+    background:
+        rgba(255,255,255,.93);
+
+    border-bottom:
+        1px solid var(--border);
+
+    backdrop-filter:
+        blur(18px);
 }
 
 .topbar-inner{
-    max-width:760px;
+    width:min(100%,760px);
+
     margin:auto;
+
     display:flex;
     align-items:center;
+
     gap:9px;
 }
 
 .back-btn{
-    width:34px;
-    height:34px;
-    border:1px solid var(--border);
+    width:35px;
+    height:35px;
+
+    border:
+        1px solid var(--border);
+
     border-radius:10px;
+
     background:#fff;
-    font-size:18px;
+
+    color:var(--green-dark);
+
+    display:grid;
+    place-items:center;
+
+    font-size:19px;
+
     cursor:pointer;
-    color:var(--dark);
+
+    transition:.2s;
 }
 
-.topbar-title{
+.back-btn:hover{
+    transform:translateY(-1px);
+}
+
+.page-title{
     font-size:15px;
     font-weight:900;
-    flex:1;
 }
+
+
+/* =========================
+   MAIN
+========================= */
 
 .container{
-    width:min(100% - 20px,760px);
+    width:
+        min(
+            calc(100% - 16px),
+            760px
+        );
+
     margin:auto;
-    padding:11px 0 30px;
+
+    padding:
+        9px
+        0
+        30px;
 }
 
-.banner{
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+
+    overflow:hidden;
+
     display:flex;
     align-items:center;
+
     gap:10px;
-    padding:13px;
-    border-radius:16px;
+
+    padding:14px;
+
+    margin-bottom:9px;
+
     color:#fff;
-    background:linear-gradient(135deg,#10b981,#047857);
-    box-shadow:0 10px 25px rgba(5,150,105,.18);
-    margin-bottom:10px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10b981,
+            #047857 72%,
+            #065f46
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(5,150,105,.20);
 }
 
-.banner-info{
+.hero::after{
+    content:"";
+
+    position:absolute;
+
+    width:150px;
+    height:150px;
+
+    right:-65px;
+    top:-70px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.10);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+
     flex:1;
+
+    min-width:0;
 }
 
-.label{
+.hero-label{
     font-size:8px;
-    text-transform:uppercase;
-    letter-spacing:.12em;
-    opacity:.8;
-    font-weight:800;
-}
 
-.date{
-    font-size:12px;
     font-weight:900;
+
+    letter-spacing:.12em;
+}
+
+.hero-title{
     margin-top:3px;
+
+    font-size:16px;
+
+    font-weight:900;
 }
 
-.btn{
-    border:0;
+.hero-date{
+    margin-top:4px;
+
+    font-size:9px;
+
+    opacity:.82;
+}
+
+.update-all{
+    position:relative;
+    z-index:3;
+
+    flex-shrink:0;
+
+    padding:
+        9px
+        11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.25);
+
     border-radius:10px;
-    padding:9px 12px;
-    font:800 10px Inter;
+
+    background:
+        rgba(255,255,255,.18);
+
+    color:#fff;
+
+    font-size:9px;
+
+    font-weight:900;
+
     cursor:pointer;
-    white-space:nowrap;
+
+    transition:.2s;
 }
 
-.btn:active{
-    transform:scale(.96);
+.update-all:hover{
+    background:
+        rgba(255,255,255,.28);
 }
 
-.btn:disabled{
+.update-all:disabled{
     opacity:.55;
     cursor:not-allowed;
 }
 
-.btn-light{
-    background:rgba(255,255,255,.18);
-    color:#fff;
-    border:1px solid rgba(255,255,255,.3);
-}
 
-.btn-blue{
-    background:var(--blue);
-    color:#fff;
-}
+/* =========================
+   INFO
+========================= */
 
-.btn-red{
-    background:#fff0f0;
-    color:var(--red);
-    border:1px solid #ffd5d5;
-}
-
-.panel{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:15px;
-    padding:11px;
-    margin-bottom:10px;
-    box-shadow:0 4px 15px rgba(15,80,50,.04);
-}
-
-.panel-title{
-    font-size:11px;
-    font-weight:900;
-    margin-bottom:8px;
-}
-
-.add-grid{
-    display:grid;
-    grid-template-columns:1.5fr .8fr .7fr auto;
-    gap:7px;
-}
-
-input{
-    width:100%;
-    height:36px;
-    border:1px solid var(--border);
-    border-radius:9px;
-    padding:0 10px;
-    font:700 11px Inter;
-    color:var(--text);
-    background:#fbfdfc;
-}
-
-input:focus{
-    outline:none;
-    border-color:var(--green);
-    box-shadow:0 0 0 3px rgba(16,185,129,.1);
-}
-
-.rate-item{
-    display:grid;
-    grid-template-columns:38px minmax(0,1fr) 105px 72px 70px;
+.info{
+    display:flex;
     align-items:center;
-    gap:8px;
-    padding:8px;
-    border:1px solid var(--border);
-    border-radius:12px;
+
+    gap:9px;
+
+    padding:9px;
+
+    margin-bottom:9px;
+
     background:#fff;
-    margin-bottom:7px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:12px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(15,80,50,.04);
 }
 
-.icon{
-    width:38px;
-    height:38px;
-    border-radius:10px;
+.info-icon{
+    width:30px;
+    height:30px;
+
+    flex:0 0 30px;
+
     display:grid;
     place-items:center;
-    background:#edfcf3;
-    font-size:19px;
+
+    border-radius:9px;
+
+    background:#ecfdf5;
+
+    font-size:15px;
 }
 
-.name{
+.info-text{
+    font-size:9px;
+
+    line-height:1.45;
+
+    color:var(--muted);
+}
+
+.info-text strong{
+    color:var(--text);
+}
+
+
+/* =========================
+   FIRESTORE STATUS
+========================= */
+
+.status{
+    display:flex;
+    align-items:center;
+
+    gap:7px;
+
+    padding:8px 10px;
+
+    margin-bottom:9px;
+
+    border:
+        1px solid
+        #dcebe3;
+
+    border-radius:10px;
+
+    background:#fff;
+
+    font-size:9px;
+
+    color:var(--muted);
+}
+
+.status-dot{
+    width:8px;
+    height:8px;
+
+    flex:0 0 8px;
+
+    border-radius:50%;
+
+    background:#f59e0b;
+}
+
+.status.ok .status-dot{
+    background:#10b981;
+}
+
+.status.error .status-dot{
+    background:#ef4444;
+}
+
+.status strong{
+    color:var(--text);
+}
+
+
+/* =========================
+   RATE CARD
+========================= */
+
+.rate-card{
+    display:grid;
+
+    grid-template-columns:
+        40px
+        minmax(0,1fr)
+        110px
+        62px;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px;
+
+    margin-bottom:7px;
+
+    background:#fff;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:13px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(15,80,50,.045);
+
+    animation:
+        cardIn .25s ease both;
+}
+
+@keyframes cardIn{
+
+    from{
+        opacity:0;
+        transform:translateY(5px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.product-icon{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #effdf5,
+            #d8f8e5
+        );
+
+    font-size:20px;
+}
+
+.product-name{
     font-size:11px;
+
     font-weight:900;
+
     white-space:nowrap;
+
     overflow:hidden;
+
     text-overflow:ellipsis;
 }
 
-.unit{
-    font-size:8px;
-    color:var(--muted);
+.product-unit{
     margin-top:2px;
+
+    font-size:8px;
+
+    color:var(--muted);
+}
+
+.price-box{
+    position:relative;
+}
+
+.rupee{
+    position:absolute;
+
+    left:8px;
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:var(--green-dark);
+
+    font-size:11px;
+
+    font-weight:900;
+
+    pointer-events:none;
 }
 
 .price-input{
-    text-align:right;
+    width:100%;
     height:34px;
+
+    padding:
+        0
+        6px
+        0
+        21px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:9px;
+
+    background:#fbfefc;
+
+    color:var(--text);
+
+    text-align:right;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    outline:none;
+
+    -moz-appearance:textfield;
 }
 
-.small-btn{
-    height:34px;
-    padding:0 8px;
+.price-input::-webkit-inner-spin-button,
+.price-input::-webkit-outer-spin-button{
+    -webkit-appearance:none;
+    margin:0;
 }
+
+.price-input:focus{
+    border-color:var(--green);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(16,185,129,.10);
+}
+
+.save-btn{
+    width:100%;
+    height:34px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:var(--blue);
+
+    color:#fff;
+
+    font-size:8px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.save-btn:hover{
+    filter:brightness(.95);
+}
+
+.save-btn:disabled{
+    opacity:.55;
+
+    cursor:not-allowed;
+}
+
+
+/* =========================
+   LOADING
+========================= */
 
 .loading{
-    text-align:center;
     padding:35px;
+
+    text-align:center;
+
     color:var(--muted);
-    font-size:11px;
+
+    font-size:10px;
 }
 
 .spinner{
-    width:24px;
-    height:24px;
-    border:3px solid #d7eee2;
-    border-top-color:var(--green);
+    width:25px;
+    height:25px;
+
+    margin:
+        0
+        auto
+        8px;
+
+    border:
+        3px solid
+        #d8eee2;
+
+    border-top-color:
+        var(--green);
+
     border-radius:50%;
-    animation:spin .8s linear infinite;
-    margin:0 auto 8px;
+
+    animation:
+        spin .8s linear infinite;
 }
 
 @keyframes spin{
+
     to{
         transform:rotate(360deg);
     }
+
 }
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error{
+    display:none;
+
+    padding:10px;
+
+    margin-bottom:9px;
+
+    border:
+        1px solid
+        #fecaca;
+
+    border-radius:11px;
+
+    background:#fff5f5;
+
+    color:#b42318;
+
+    font-size:9px;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   TOAST
+========================= */
 
 .toast{
     position:fixed;
+
     left:50%;
-    bottom:18px;
-    transform:translate(-50%,20px);
-    opacity:0;
-    pointer-events:none;
-    background:#10231b;
-    color:#fff;
-    padding:10px 14px;
+    bottom:17px;
+
+    z-index:9999;
+
+    max-width:
+        calc(100% - 25px);
+
+    padding:
+        10px
+        14px;
+
     border-radius:10px;
-    font-size:10px;
-    font-weight:800;
-    z-index:100;
+
+    background:#10231b;
+
+    color:#fff;
+
+    text-align:center;
+
+    font-size:9px;
+
+    font-weight:900;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transform:
+        translate(-50%,20px);
+
     transition:.25s;
 }
 
 .toast.show{
     opacity:1;
-    transform:translate(-50%,0);
+
+    transform:
+        translate(-50%,0);
 }
 
-@media(max-width:620px){
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
 
     .container{
-        width:min(100% - 14px,760px);
-        padding-top:8px;
+        width:
+            calc(100% - 12px);
+
+        padding-top:7px;
     }
 
-    .add-grid{
-        grid-template-columns:1fr 1fr;
+    .hero{
+        padding:11px;
+
+        border-radius:14px;
     }
 
-    .add-grid input:first-child{
-        grid-column:1/-1;
+    .hero-title{
+        font-size:14px;
     }
 
-    .add-grid .btn{
-        grid-column:1/-1;
+    .hero-label{
+        font-size:7px;
     }
 
-    .rate-item{
-        grid-template-columns:34px minmax(0,1fr) 76px;
-        gap:7px;
+    .hero-date{
+        font-size:8px;
+    }
+
+    .update-all{
+        padding:
+            8px
+            9px;
+
+        font-size:8px;
+    }
+
+    .rate-card{
+        grid-template-columns:
+            36px
+            minmax(0,1fr)
+            82px
+            56px;
+
+        gap:6px;
+
         padding:7px;
+
+        border-radius:11px;
     }
 
-    .icon{
-        width:34px;
-        height:34px;
-        font-size:17px;
+    .product-icon{
+        width:36px;
+        height:36px;
+
+        font-size:18px;
     }
 
-    .price-input{
-        grid-column:3;
-        grid-row:1;
+    .product-name{
+        font-size:10px;
+    }
+
+    .product-unit{
+        font-size:7px;
+    }
+
+    .price-input,
+    .save-btn{
         height:32px;
     }
 
-    .update-rate{
-        grid-column:2;
-        height:31px;
+    .price-input{
+        font-size:10px;
     }
 
-    .delete-rate{
-        grid-column:3;
-        height:31px;
+    .save-btn{
+        font-size:7px;
     }
+
 }
+
+@media(max-width:360px){
+
+    .rate-card{
+        grid-template-columns:
+            33px
+            minmax(0,1fr)
+            69px
+            51px;
+
+        gap:5px;
+    }
+
+    .product-icon{
+        width:33px;
+        height:33px;
+
+        font-size:16px;
+    }
+
+    .product-name{
+        font-size:9px;
+    }
+
+    .price-input{
+        font-size:9px;
+    }
+
+    .save-btn{
+        font-size:6px;
+    }
+
+}
+
+/* =========================
+   ADMIN AUTH
+========================= */
+.auth-panel{display:none;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:9px;box-shadow:0 4px 14px rgba(15,80,50,.04)}
+.auth-panel.show{display:block}
+.auth-title{font-size:13px;font-weight:900;margin-bottom:4px}
+.auth-sub{font-size:9px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.auth-input{width:100%;height:38px;border:1px solid var(--border);border-radius:9px;padding:0 10px;margin-bottom:7px;outline:none;background:#fbfefc;color:var(--text);font-size:10px}
+.auth-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,.10)}
+.auth-btn{width:100%;height:36px;border:0;border-radius:9px;background:var(--green);color:#fff;font-size:9px;font-weight:900;cursor:pointer}
+.auth-btn:disabled{opacity:.55;cursor:not-allowed}
+.auth-error{display:none;color:#b42318;background:#fff5f5;border:1px solid #fecaca;border-radius:8px;padding:8px;margin-top:8px;font-size:8px;line-height:1.4}
+.auth-user{display:none;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:#ecfdf5;border:1px solid #dcebe3;border-radius:10px;margin-bottom:9px}
+.auth-user.show{display:flex}
+.auth-user-text{font-size:9px;color:var(--muted);min-width:0}
+.auth-user-text strong{display:block;color:var(--text);font-size:10px;overflow:hidden;text-overflow:ellipsis}
+.logout-btn{border:0;border-radius:8px;background:#fff;color:#b42318;padding:7px 9px;font-size:8px;font-weight:900;cursor:pointer}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header class="topbar">
+
     <div class="topbar-inner">
 
         <button
             class="back-btn"
-            onclick="history.back()">
+            type="button"
+            onclick="history.back()"
+            aria-label="Go back"
+        >
             ←
         </button>
 
-        <h1 class="topbar-title">
+        <div class="page-title">
             Manage Scrap Rates
-        </h1>
+        </div>
 
     </div>
+
 </header>
+
 
 <main class="container">
 
-<section class="banner">
 
-    <div class="banner-info">
+<section class="hero">
 
-        <div class="label">
-            Rates dashboard
+    <div class="hero-content">
+
+        <div class="hero-label">
+            COVAI SCRAP HUB • ADMIN
+        </div>
+
+        <div class="hero-title">
+            Update Product Rates
         </div>
 
         <div
-            class="date"
-            id="updateDate">
-            Loading...
+            class="hero-date"
+            id="updateDate"
+        >
+            Loading rates...
         </div>
 
     </div>
 
     <button
-        class="btn btn-light"
-        id="updateAllBtn">
-        Update All
+        class="update-all"
+        id="updateAllBtn"
+        type="button"
+    >
+        UPDATE ALL
     </button>
 
 </section>
 
-<section class="panel">
 
-    <div class="panel-title">
-        Add New Material
+<section class="info">
+
+    <div class="info-icon">
+        💰
     </div>
 
-    <div class="add-grid">
+    <div class="info-text">
 
-        <input
-            id="materialName"
-            placeholder="Material name">
+        <strong>
+            10 fixed products
+        </strong>
 
-        <input
-            id="materialPrice"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Price">
-
-        <input
-            id="materialUnit"
-            value="kg"
-            placeholder="Unit">
-
-        <button
-            class="btn btn-blue"
-            id="addBtn">
-            + Add Rate
-        </button>
+        — only the price can be changed.
+        Product names and product IDs are fixed.
 
     </div>
 
 </section>
 
+
+<section class="auth-panel show" id="loginPanel">
+    <div class="auth-title">Admin sign in</div>
+    <div class="auth-sub">Sign in with the Firebase Authentication account allowed to edit scrap rates.</div>
+    <input class="auth-input" id="adminEmail" type="email" autocomplete="username" placeholder="Admin email">
+    <input class="auth-input" id="adminPassword" type="password" autocomplete="current-password" placeholder="Password">
+    <button class="auth-btn" id="loginBtn" type="button">SIGN IN</button>
+    <div class="auth-error" id="authError"></div>
+</section>
+
+<div class="auth-user" id="authUser">
+    <div class="auth-user-text">
+        <span>Signed in as</span>
+        <strong id="authUserEmail">Admin</strong>
+    </div>
+    <button class="logout-btn" id="logoutBtn" type="button">SIGN OUT</button>
+</div>
+
 <div
+    class="status"
+    id="status"
+>
+
+    <span class="status-dot"></span>
+
+    <span id="statusText">
+        Connecting to Firestore...
+    </span>
+
+</div>
+
+
+<div
+    class="loading"
     id="loading"
-    class="loading">
+>
 
     <div class="spinner"></div>
 
@@ -411,35 +958,63 @@ input:focus{
 
 </div>
 
-<section id="ratesContainer"></section>
+
+<div
+    class="error"
+    id="error"
+></div>
+
+
+<section
+    id="ratesContainer"
+></section>
+
 
 </main>
 
+
 <div
+    class="toast"
     id="toast"
-    class="toast">
-</div>
+></div>
 
 
 <script type="module">
 
+
+/* =====================================================
+   FIREBASE FIRESTORE
+===================================================== */
+
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
-    getDatabase,
-    ref,
-    onValue,
-    set,
-    update,
-    remove
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    getFirestore,
+    doc,
+    onSnapshot,
+    setDoc
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-/* =========================================
-   COVAI SCRAP HUB - EXISTING RTDB
-========================================= */
+/* =====================================================
+   YOUR EXACT FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
@@ -469,739 +1044,891 @@ const firebaseConfig = {
 };
 
 
+/* =====================================================
+   FIREBASE INIT
+===================================================== */
+
 const app =
-    initializeApp(firebaseConfig);
-
-const db =
-    getDatabase(app);
-
-const ratesRef =
-    ref(db,"scrapRates");
-
-
-/* =========================================
-   DEFAULT MATERIALS
-========================================= */
-
-const defaults = [
-
-    {
-        id:"steel",
-        name:"Steel Scrap",
-        price:45,
-        unit:"kg",
-        emoji:"🔩"
-    },
-
-    {
-        id:"paper",
-        name:"Paper Scrap",
-        price:12,
-        unit:"kg",
-        emoji:"📰"
-    },
-
-    {
-        id:"aluminium",
-        name:"Aluminium Scrap",
-        price:85,
-        unit:"kg",
-        emoji:"🥫"
-    },
-
-    {
-        id:"copper",
-        name:"Copper Scrap",
-        price:420,
-        unit:"kg",
-        emoji:"🔶"
-    },
-
-    {
-        id:"plastic",
-        name:"Plastic Scrap",
-        price:8,
-        unit:"kg",
-        emoji:"📦"
-    },
-
-    {
-        id:"brass",
-        name:"Brass Scrap",
-        price:320,
-        unit:"kg",
-        emoji:"🔔"
-    },
-
-    {
-        id:"iron",
-        name:"Iron Scrap",
-        price:25,
-        unit:"kg",
-        emoji:"⚙️"
-    },
-
-    {
-        id:"battery",
-        name:"Old Battery",
-        price:50,
-        unit:"kg",
-        emoji:"🔋"
-    },
-
-    {
-        id:"ewaste",
-        name:"E-Waste",
-        price:15,
-        unit:"kg",
-        emoji:"💻"
-    },
-
-    {
-        id:"vehicle",
-        name:"Old Vehicle",
-        price:35000,
-        unit:"unit",
-        emoji:"🚗"
-    }
-
-];
-
-
-const emojiMap =
-    Object.fromEntries(
-        defaults.map(
-            item => [
-                item.id,
-                item.emoji
-            ]
-        )
+    initializeApp(
+        firebaseConfig
     );
 
 
-/* =========================================
-   HELPERS
-========================================= */
+const db =
+    getFirestore(app);
 
-function esc(value){
+const auth =
+    getAuth(app);
 
-    return String(value ?? "")
-        .replace(
-            /[&<>"']/g,
-            function(match){
 
-                return {
-                    "&":"&amp;",
-                    "<":"&lt;",
-                    ">":"&gt;",
-                    '"':"&quot;",
-                    "'":"&#039;"
-                }[match];
+/* =====================================================
+   YOUR EXISTING FIRESTORE DOCUMENT
+===================================================== */
 
-            }
-        );
+const ratesDocument =
+    doc(
+        db,
+        "covai hub",
+        "f9k5K0JaYiXmE8aZ5vdf"
+    );
 
+
+/* =====================================================
+   EXACTLY 10 FIXED PRODUCTS
+===================================================== */
+
+const PRODUCTS = [
+    { id:"Stainlesssteelsteel", name:"Stainless Steel Scrap", unit:"kg", emoji:"🔩" },
+    { id:"paper", name:"Paper Scrap", unit:"kg", emoji:"📰" },
+    { id:"aluminium", name:"Aluminium Scrap", unit:"kg", emoji:"🥫" },
+    { id:"copper", name:"Copper Scrap", unit:"kg", emoji:"🔶" },
+    { id:"iron", name:"Iron Scrap", unit:"kg", emoji:"⚙️" },
+    { id:"battery", name:"Old Battery", unit:"kg", emoji:"🔋" },
+    { id:"plastic", name:"Plastic Scrap", unit:"kg", emoji:"📦", legacyId:"palstic" },
+    { id:"vehicle", name:"Vehicle Scrap", unit:"kg", emoji:"🚗" },
+    { id:"tyre", name:"Tyre Waste", unit:"kg", emoji:"🛞" },
+    { id:"ewaste", name:"E-Waste", unit:"kg", emoji:"💻" },
+    { id:"mixed", name:"Mixed Scrap", unit:"kg", emoji:"♻️" }
+];
+
+
+/* =====================================================
+   GLOBAL DATA
+===================================================== */
+
+let currentData = {};
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const container =
+    document.getElementById(
+        "ratesContainer"
+    );
+
+
+const loading =
+    document.getElementById(
+        "loading"
+    );
+
+
+const errorBox =
+    document.getElementById(
+        "error"
+    );
+
+
+const status =
+    document.getElementById(
+        "status"
+    );
+
+
+const statusText =
+    document.getElementById(
+        "statusText"
+    );
+
+
+const toast =
+    document.getElementById(
+        "toast"
+    );
+
+
+const updateDate =
+    document.getElementById(
+        "updateDate"
+    );
+
+
+const updateAllBtn =
+    document.getElementById(
+        "updateAllBtn"
+    );
+
+const loginPanel = document.getElementById("loginPanel");
+const authUser = document.getElementById("authUser");
+const authUserEmail = document.getElementById("authUserEmail");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const adminEmail = document.getElementById("adminEmail");
+const adminPassword = document.getElementById("adminPassword");
+const authError = document.getElementById("authError");
+
+function setEditorEnabled(enabled){
+    document.querySelectorAll(".price-input,.save-btn").forEach(el => {
+        el.disabled = !enabled;
+    });
+    updateAllBtn.disabled = !enabled;
 }
 
+function showAuthError(message){
+    authError.textContent = message;
+    authError.style.display = "block";
+}
 
-function toast(message){
+loginBtn.addEventListener("click", async () => {
+    const email = adminEmail.value.trim();
+    const password = adminPassword.value;
+    authError.style.display = "none";
 
-    const element =
-        document.getElementById("toast");
+    if(!email || !password){
+        showAuthError("Enter your Firebase Authentication email and password.");
+        return;
+    }
 
-    element.textContent =
+    loginBtn.disabled = true;
+    loginBtn.textContent = "SIGNING IN...";
+
+    try{
+        await signInWithEmailAndPassword(auth, email, password);
+        adminPassword.value = "";
+        showToast("✓ Admin signed in");
+    }catch(error){
+        console.error("Admin sign-in error:", error);
+        showAuthError(
+            error.code === "auth/invalid-credential"
+                ? "Invalid email or password."
+                : (error.message || "Sign-in failed.")
+        );
+    }finally{
+        loginBtn.disabled = false;
+        loginBtn.textContent = "SIGN IN";
+    }
+});
+
+logoutBtn.addEventListener("click", async () => {
+    try{
+        await signOut(auth);
+        showToast("Signed out");
+    }catch(error){
+        console.error(error);
+        showToast("Sign out failed");
+    }
+});
+
+adminPassword.addEventListener("keydown", e => {
+    if(e.key === "Enter") loginBtn.click();
+});
+
+onAuthStateChanged(auth, user => {
+    const signedIn = !!user;
+    loginPanel.classList.toggle("show", !signedIn);
+    authUser.classList.toggle("show", signedIn);
+    authUserEmail.textContent = user?.email || "Admin";
+    setEditorEnabled(signedIn);
+
+    if(signedIn){
+        status.classList.remove("error");
+        status.classList.add("ok");
+        statusText.innerHTML = "<strong>Signed in</strong> • Admin editing enabled";
+    }else{
+        status.classList.remove("ok");
+        status.classList.add("error");
+        statusText.innerHTML = "<strong>Sign in required</strong> • Rates are read-only until admin login";
+    }
+});
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message){
+
+    toast.textContent =
         message;
 
-    element.classList.add("show");
+    toast.classList.add(
+        "show"
+    );
 
-    clearTimeout(window.toastTimer);
+    clearTimeout(
+        window.__toastTimer
+    );
 
-    window.toastTimer =
+    window.__toastTimer =
         setTimeout(
-            () => element.classList.remove("show"),
-            2200
-        );
+            () => {
 
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2600
+        );
 }
 
+
+/* =====================================================
+   DATE FORMAT
+===================================================== */
 
 function formatDate(value){
 
     if(!value){
-        return "Never updated";
+        return "Rates not updated yet";
     }
 
-    const date =
-        new Date(value);
+    let date;
 
-    if(Number.isNaN(date.getTime())){
-        return String(value);
+    if(
+        value &&
+        typeof value.toDate === "function"
+    ){
+
+        date =
+            value.toDate();
+
+    }
+    else{
+
+        date =
+            new Date(value);
+
     }
 
-    return date.toLocaleString(
-        "en-IN",
-        {
-            day:"2-digit",
-            month:"short",
-            year:"numeric",
-            hour:"2-digit",
-            minute:"2-digit"
-        }
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "Rates not updated yet";
+
+    }
+
+
+    return (
+        "Last updated • " +
+        date.toLocaleDateString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            }
+        ) +
+        " " +
+        date.toLocaleTimeString(
+            "en-IN",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        )
     );
 }
 
 
-function makeId(value){
+/* =====================================================
+   GET PRICE
+===================================================== */
 
-    return String(value)
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g,"-")
-        .replace(/^-|-$/g,"")
-        .substring(0,40)
-        + "-" +
-        Date.now();
+function getProductPrice(
+    product,
+    data
+){
 
-}
+    if(!data){
+        return 0;
+    }
 
 
-/* =========================================
-   CREATE DEFAULTS ONLY IF EMPTY
-========================================= */
+    /*
+       First use the new correct ID.
+    */
 
-async function ensureDefaults(){
+    if(
+        data[product.id] !== undefined
+    ){
 
-    return new Promise(
-        (resolve,reject) => {
-
-            onValue(
-                ratesRef,
-                async snapshot => {
-
-                    if(
-                        snapshot.exists() &&
-                        snapshot.val()?.rates
-                    ){
-
-                        resolve();
-                        return;
-
-                    }
-
-                    const rates = {};
-
-                    defaults.forEach(
-                        item => {
-
-                            rates[item.id] = {
-
-                                name:item.name,
-
-                                price:item.price,
-
-                                unit:item.unit
-
-                            };
-
-                        }
-                    );
-
-                    try{
-
-                        await set(
-                            ratesRef,
-                            {
-                                rates,
-
-                                lastUpdated:
-                                    new Date().toISOString()
-                            }
-                        );
-
-                        resolve();
-
-                    }
-                    catch(error){
-
-                        reject(error);
-
-                    }
-
-                },
-                error => reject(error),
-                {
-                    onlyOnce:true
-                }
+        const value =
+            Number(
+                data[product.id]
             );
 
-        }
-    );
+        if(
+            Number.isFinite(value)
+        ){
 
+            return value;
+
+        }
+
+    }
+
+
+    /*
+       Then support the old "palstic"
+       field in your existing Firestore.
+    */
+
+    if(
+        product.legacyId &&
+        data[product.legacyId] !== undefined
+    ){
+
+        const value =
+            Number(
+                data[product.legacyId]
+            );
+
+        if(
+            Number.isFinite(value)
+        ){
+
+            return value;
+
+        }
+
+    }
+
+
+    return 0;
 }
 
 
-/* =========================================
-   RENDER
-========================================= */
+/* =====================================================
+   RENDER PRODUCTS
+===================================================== */
 
-function render(data){
+function renderProducts(
+    data
+){
 
-    document.getElementById("loading")
-        .style.display = "none";
+    let html = "";
 
-    const rates =
-        data?.rates || {};
 
-    document.getElementById("updateDate")
-        .textContent =
-        "Last updated • " +
-        formatDate(data?.lastUpdated);
+    PRODUCTS.forEach(
+        (
+            product,
+            index
+        ) => {
 
-    const container =
-        document.getElementById("ratesContainer");
+            const price =
+                getProductPrice(
+                    product,
+                    data
+                );
 
-    const ids =
-        Object.keys(rates);
 
-    if(!ids.length){
+            html += `
 
-        container.innerHTML = `
-            <div class="panel">
-                No rates available.
-            </div>
-        `;
+                <div
+                    class="rate-card"
+                    style="
+                        animation-delay:
+                        ${index * 30}ms
+                    "
+                >
 
-        return;
-    }
-
-    container.innerHTML =
-        ids.map(
-            id => {
-
-                const rate =
-                    rates[id] || {};
-
-                return `
-
-                <div class="rate-item">
-
-                    <div class="icon">
-                        ${emojiMap[id] || "♻️"}
+                    <div class="product-icon">
+                        ${product.emoji}
                     </div>
+
 
                     <div>
 
-                        <div class="name">
-                            ${esc(rate.name || id)}
+                        <div class="product-name">
+                            ${product.name}
                         </div>
 
-                        <div class="unit">
-                            per ${esc(rate.unit || "kg")}
+                        <div class="product-unit">
+                            Per ${product.unit}
                         </div>
 
                     </div>
 
-                    <input
-                        class="price-input"
-                        id="price-${esc(id)}"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        value="${Number(rate.price || 0)}"
+
+                    <div class="price-box">
+
+                        <span class="rupee">
+                            ₹
+                        </span>
+
+                        <input
+                            class="price-input"
+                            id="price-${product.id}"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            inputmode="decimal"
+                            value="${price}"
+                            aria-label="${product.name} price"
+                        >
+
+                    </div>
+
+
+                    <button
+                        class="save-btn"
+                        type="button"
+                        data-product="${product.id}"
                     >
-
-                    <button
-                        class="btn btn-blue small-btn update-rate"
-                        data-id="${esc(id)}">
-                        Save
-                    </button>
-
-                    <button
-                        class="btn btn-red small-btn delete-rate"
-                        data-id="${esc(id)}">
-                        Delete
+                        SAVE
                     </button>
 
                 </div>
 
-                `;
+            `;
 
-            }
-        ).join("");
+        }
+    );
 
+
+    container.innerHTML =
+        html;
+
+
+    updateDate.textContent =
+        formatDate(
+            data.lastUpdated
+        );
+
+    setEditorEnabled(!!auth.currentUser);
 }
 
 
-/* =========================================
-   LIVE LISTENER
-========================================= */
+/* =====================================================
+   FIRESTORE REAL-TIME LISTENER
+===================================================== */
 
-onValue(
+onSnapshot(
 
-    ratesRef,
+    ratesDocument,
 
     snapshot => {
 
-        render(
-            snapshot.val()
+        /*
+           If the document exists,
+           use its fields.
+
+           If it does not exist,
+           simply show all 10 products
+           with ₹0.
+        */
+
+        currentData =
+            snapshot.exists()
+                ? (
+                    snapshot.data() || {}
+                )
+                : {};
+
+
+        renderProducts(
+            currentData
         );
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "none";
+
+
+        status.classList.remove(
+            "error"
+        );
+
+        status.classList.add(
+            "ok"
+        );
+
+
+        statusText.innerHTML =
+            "<strong>Connected</strong> • Firestore rates are live";
 
     },
 
     error => {
 
-        document.getElementById("loading")
-            .innerHTML =
-            "❌ Unable to load rates.<br><small>" +
-            esc(error.message) +
-            "</small>";
-
         console.error(
-            "Firebase rates error:",
+            "Firestore error:",
             error
         );
+
+
+        /*
+           Still show the 10 fixed products.
+        */
+
+        currentData = {};
+
+        renderProducts(
+            currentData
+        );
+
+
+        loading.style.display =
+            "none";
+
+
+        status.classList.remove(
+            "ok"
+        );
+
+        status.classList.add(
+            "error"
+        );
+
+
+        statusText.textContent =
+            "Firestore permission error";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        if(
+            error.code ===
+            "permission-denied"
+        ){
+
+            errorBox.innerHTML =
+                "⚠️ Firestore permission denied. " +
+                "Your Firestore Security Rules are blocking this page from reading the rates.";
+
+        }
+        else{
+
+            errorBox.innerHTML =
+                "⚠️ Firestore connection failed. " +
+                error.message;
+
+        }
 
     }
 
 );
 
 
-/* =========================================
-   INITIALIZE DEFAULTS
-========================================= */
+/* =====================================================
+   SAVE ONE PRODUCT
+===================================================== */
 
-ensureDefaults()
-    .catch(
-        error => {
+container.addEventListener(
+    "click",
+    async event => {
 
-            console.error(
-                "Default creation error:",
-                error
+        const button =
+            event.target.closest(
+                ".save-btn"
             );
 
+
+        if(!button){
+            return;
         }
-    );
 
 
-/* =========================================
-   SAVE / DELETE
-========================================= */
-
-document
-    .getElementById("ratesContainer")
-    .addEventListener(
-        "click",
-        async event => {
-
-            const saveButton =
-                event.target.closest(".update-rate");
-
-            const deleteButton =
-                event.target.closest(".delete-rate");
+        const productId =
+            button.dataset.product;
 
 
-            /* SAVE */
-
-            if(saveButton){
-
-                const id =
-                    saveButton.dataset.id;
-
-                const input =
-                    document.getElementById(
-                        "price-" + id
-                    );
-
-                const price =
-                    Number(input.value);
-
-                if(
-                    !Number.isFinite(price) ||
-                    price < 0
-                ){
-
-                    toast(
-                        "Enter a valid price"
-                    );
-
-                    return;
-                }
-
-                saveButton.disabled =
-                    true;
-
-                try{
-
-                    await update(
-                        ref(
-                            db,
-                            "scrapRates/rates/" + id
-                        ),
-                        {
-                            price:price
-                        }
-                    );
-
-                    await set(
-                        ref(
-                            db,
-                            "scrapRates/lastUpdated"
-                        ),
-                        new Date().toISOString()
-                    );
-
-                    toast(
-                        "✓ Rate updated"
-                    );
-
-                }
-                catch(error){
-
-                    console.error(error);
-
-                    toast(
-                        "❌ Update failed"
-                    );
-
-                }
-                finally{
-
-                    saveButton.disabled =
-                        false;
-
-                }
-
-            }
+        const product =
+            PRODUCTS.find(
+                item =>
+                    item.id ===
+                    productId
+            );
 
 
-            /* DELETE */
+        if(!product){
+            return;
+        }
 
-            if(deleteButton){
 
-                const id =
-                    deleteButton.dataset.id;
+        if(!auth.currentUser){
+            showToast("❌ Please sign in as admin first");
+            return;
+        }
 
-                if(
-                    !confirm(
-                        "Delete this material rate?"
-                    )
-                ){
+        const input =
+            document.getElementById(
+                "price-" +
+                productId
+            );
 
-                    return;
 
-                }
+        const price =
+            Number(
+                input.value
+            );
 
-                try{
 
-                    await remove(
-                        ref(
-                            db,
-                            "scrapRates/rates/" + id
-                        )
-                    );
+        if(
+            !Number.isFinite(price) ||
+            price < 0
+        ){
 
-                    await set(
-                        ref(
-                            db,
-                            "scrapRates/lastUpdated"
-                        ),
-                        new Date().toISOString()
-                    );
+            showToast(
+                "Enter a valid price"
+            );
 
-                    toast(
-                        "✓ Rate deleted"
-                    );
+            input.focus();
 
-                }
-                catch(error){
-
-                    console.error(error);
-
-                    toast(
-                        "❌ Delete failed"
-                    );
-
-                }
-
-            }
+            return;
 
         }
-    );
 
 
-/* =========================================
-   ADD RATE
-========================================= */
+        button.disabled =
+            true;
 
-document
-    .getElementById("addBtn")
-    .addEventListener(
-        "click",
-        async () => {
+        button.textContent =
+            "SAVING";
 
-            const name =
-                document
-                    .getElementById("materialName")
-                    .value
-                    .trim();
 
-            const price =
-                Number(
-                    document
-                        .getElementById("materialPrice")
-                        .value
-                );
+        try{
 
-            const unit =
-                document
-                    .getElementById("materialUnit")
-                    .value
-                    .trim() ||
-                "kg";
+            /*
+               IMPORTANT:
+
+               setDoc(..., {merge:true})
+               works even if the field
+               does not currently exist.
+
+               This is better than updateDoc
+               for your existing document.
+            */
+
+            const dataToSave = {};
+
+
+            dataToSave[
+                product.id
+            ] =
+                price;
+
+
+            /*
+               For plastic, keep the existing
+               "palstic" field synchronized too.
+            */
 
             if(
-                !name ||
-                !Number.isFinite(price) ||
-                price < 0
+                product.id ===
+                "plastic"
             ){
 
-                toast(
-                    "Enter material and valid price"
-                );
-
-                return;
-            }
-
-            const id =
-                makeId(name);
-
-            try{
-
-                await update(
-                    ratesRef,
-                    {
-                        [`rates/${id}`]:{
-                            name:name,
-                            price:price,
-                            unit:unit
-                        },
-
-                        lastUpdated:
-                            new Date().toISOString()
-                    }
-                );
-
-                document.getElementById(
-                    "materialName"
-                ).value = "";
-
-                document.getElementById(
-                    "materialPrice"
-                ).value = "";
-
-                document.getElementById(
-                    "materialUnit"
-                ).value = "kg";
-
-                toast(
-                    "✓ Rate added"
-                );
-
-            }
-            catch(error){
-
-                console.error(error);
-
-                toast(
-                    "❌ Add failed"
-                );
-
-            }
-
-        }
-    );
-
-
-/* =========================================
-   UPDATE ALL
-========================================= */
-
-document
-    .getElementById("updateAllBtn")
-    .addEventListener(
-        "click",
-        async () => {
-
-            const inputs =
-                [
-                    ...document.querySelectorAll(
-                        ".price-input"
-                    )
-                ];
-
-            const updates = {};
-
-            for(
-                const input of inputs
-            ){
-
-                const id =
-                    input.id.replace(
-                        "price-",
-                        ""
-                    );
-
-                const price =
-                    Number(input.value);
-
-                if(
-                    !Number.isFinite(price) ||
-                    price < 0
-                ){
-
-                    toast(
-                        "Check all prices"
-                    );
-
-                    return;
-                }
-
-                updates[
-                    `rates/${id}/price`
-                ] =
+                dataToSave.palstic =
                     price;
 
             }
 
-            try{
 
-                await update(
-                    ratesRef,
-                    {
-                        ...updates,
+            dataToSave.lastUpdated =
+                new Date();
 
-                        lastUpdated:
-                            new Date().toISOString()
-                    }
-                );
 
-                toast(
-                    "✓ All rates updated"
+            await setDoc(
+                ratesDocument,
+                dataToSave,
+                {
+                    merge:true
+                }
+            );
+
+
+            showToast(
+                "✓ " +
+                product.name +
+                " updated"
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+
+            if(
+                error.code ===
+                "permission-denied"
+            ){
+
+                showToast(
+                    "❌ Firestore permission denied"
                 );
 
             }
-            catch(error){
+            else{
 
-                console.error(error);
-
-                toast(
-                    "❌ Update All failed"
+                showToast(
+                    "❌ Save failed"
                 );
 
             }
 
         }
-    );
+        finally{
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "SAVE";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   UPDATE ALL 11
+===================================================== */
+
+updateAllBtn.addEventListener(
+    "click",
+    async () => {
+
+        if(!auth.currentUser){
+            showToast("❌ Please sign in as admin first");
+            return;
+        }
+
+        const dataToSave = {};
+
+
+        for(
+            const product of PRODUCTS
+        ){
+
+            const input =
+                document.getElementById(
+                    "price-" +
+                    product.id
+                );
+
+
+            const price =
+                Number(
+                    input.value
+                );
+
+
+            if(
+                !Number.isFinite(price) ||
+                price < 0
+            ){
+
+                showToast(
+                    "Invalid price: " +
+                    product.name
+                );
+
+
+                input.focus();
+
+                return;
+
+            }
+
+
+            dataToSave[
+                product.id
+            ] =
+                price;
+
+
+            /*
+               Preserve your existing
+               Firestore "palstic" field.
+            */
+
+            if(
+                product.id ===
+                "plastic"
+            ){
+
+                dataToSave.palstic =
+                    price;
+
+            }
+
+        }
+
+
+        dataToSave.lastUpdated =
+            new Date();
+
+
+        updateAllBtn.disabled =
+            true;
+
+
+        updateAllBtn.textContent =
+            "SAVING...";
+
+
+        try{
+
+            await setDoc(
+                ratesDocument,
+                dataToSave,
+                {
+                    merge:true
+                }
+            );
+
+
+            showToast(
+                "✓ All 11 prices updated"
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+
+            if(
+                error.code ===
+                "permission-denied"
+            ){
+
+                showToast(
+                    "❌ Firestore permission denied"
+                );
+
+            }
+            else{
+
+                showToast(
+                    "❌ Update failed"
+                );
+
+            }
+
+        }
+        finally{
+
+            updateAllBtn.disabled =
+                false;
+
+            updateAllBtn.textContent =
+                "UPDATE ALL";
+
+        }
+
+    }
+);
 
 </script>
 
