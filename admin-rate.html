@@ -699,7 +699,7 @@ body{
 
 /* =========================
    MOBILE
-========================= */
+========================= \*/
 
 @media(max-width:600px){
 
@@ -813,24 +813,6 @@ body{
 
 }
 
-/* =========================
-   ADMIN AUTH
-========================= */
-.auth-panel{display:none;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:9px;box-shadow:0 4px 14px rgba(15,80,50,.04)}
-.auth-panel.show{display:block}
-.auth-title{font-size:13px;font-weight:900;margin-bottom:4px}
-.auth-sub{font-size:9px;color:var(--muted);line-height:1.5;margin-bottom:12px}
-.auth-input{width:100%;height:38px;border:1px solid var(--border);border-radius:9px;padding:0 10px;margin-bottom:7px;outline:none;background:#fbfefc;color:var(--text);font-size:10px}
-.auth-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,.10)}
-.auth-btn{width:100%;height:36px;border:0;border-radius:9px;background:var(--green);color:#fff;font-size:9px;font-weight:900;cursor:pointer}
-.auth-btn:disabled{opacity:.55;cursor:not-allowed}
-.auth-error{display:none;color:#b42318;background:#fff5f5;border:1px solid #fecaca;border-radius:8px;padding:8px;margin-top:8px;font-size:8px;line-height:1.4}
-.auth-user{display:none;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:#ecfdf5;border:1px solid #dcebe3;border-radius:10px;margin-bottom:9px}
-.auth-user.show{display:flex}
-.auth-user-text{font-size:9px;color:var(--muted);min-width:0}
-.auth-user-text strong{display:block;color:var(--text);font-size:10px;overflow:hidden;text-overflow:ellipsis}
-.logout-btn{border:0;border-radius:8px;background:#fff;color:#b42318;padding:7px 9px;font-size:8px;font-weight:900;cursor:pointer}
-
 </style>
 
 </head>
@@ -895,7 +877,6 @@ body{
 
 </section>
 
-
 <section class="info">
 
     <div class="info-icon">
@@ -905,7 +886,7 @@ body{
     <div class="info-text">
 
         <strong>
-            11 fixed products
+            10 fixed products
         </strong>
 
         — only the price can be changed.
@@ -915,23 +896,6 @@ body{
 
 </section>
 
-
-<section class="auth-panel show" id="loginPanel">
-    <div class="auth-title">Admin sign in</div>
-    <div class="auth-sub">Sign in with the Firebase Authentication account allowed to edit scrap rates.</div>
-    <input class="auth-input" id="adminEmail" type="email" autocomplete="username" placeholder="Admin email">
-    <input class="auth-input" id="adminPassword" type="password" autocomplete="current-password" placeholder="Password">
-    <button class="auth-btn" id="loginBtn" type="button">SIGN IN</button>
-    <div class="auth-error" id="authError"></div>
-</section>
-
-<div class="auth-user" id="authUser">
-    <div class="auth-user-text">
-        <span>Signed in as</span>
-        <strong id="authUserEmail">Admin</strong>
-    </div>
-    <button class="logout-btn" id="logoutBtn" type="button">SIGN OUT</button>
-</div>
 
 <div
     class="status"
@@ -1002,14 +966,6 @@ import {
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 /* =====================================================
@@ -1057,8 +1013,6 @@ const app =
 const db =
     getFirestore(app);
 
-const auth =
-    getAuth(app);
 
 
 /* =====================================================
@@ -1074,21 +1028,89 @@ const ratesDocument =
 
 
 /* =====================================================
-   11 FIXED PRODUCTS
+   EXACTLY 10 FIXED PRODUCTS
 ===================================================== */
 
 const PRODUCTS = [
-    { id:"Stainlesssteelsteel", name:"Stainless Steel Scrap", unit:"kg", emoji:"🔩" },
-    { id:"paper", name:"Paper Scrap", unit:"kg", emoji:"📰" },
-    { id:"aluminium", name:"Aluminium Scrap", unit:"kg", emoji:"🥫" },
-    { id:"copper", name:"Copper Scrap", unit:"kg", emoji:"🔶" },
-    { id:"iron", name:"Iron Scrap", unit:"kg", emoji:"⚙️" },
-    { id:"battery", name:"Old Battery", unit:"kg", emoji:"🔋" },
-    { id:"plastic", name:"Plastic Scrap", unit:"kg", emoji:"📦", legacyId:"palstic" },
-    { id:"vehicle", name:"Vehicle Scrap", unit:"kg", emoji:"🚗" },
-    { id:"tyre", name:"Tyre Waste", unit:"kg", emoji:"🛞" },
-    { id:"ewaste", name:"E-Waste", unit:"kg", emoji:"💻" },
-    { id:"mixed", name:"Mixed Scrap", unit:"kg", emoji:"♻️" }
+
+    {
+        id:"steel",
+        name:"Steel Scrap",
+        unit:"kg",
+        emoji:"🔩"
+    },
+
+    {
+        id:"paper",
+        name:"Paper Scrap",
+        unit:"kg",
+        emoji:"📰"
+    },
+
+    {
+        id:"aluminium",
+        name:"Aluminium Scrap",
+        unit:"kg",
+        emoji:"🥫"
+    },
+
+    {
+        id:"copper",
+        name:"Copper Scrap",
+        unit:"kg",
+        emoji:"🔶"
+    },
+
+    {
+        id:"plastic",
+        name:"Plastic Scrap",
+        unit:"kg",
+        emoji:"📦",
+
+        /*
+         Your existing Firestore screenshot
+         shows "palstic".
+         Support both names.
+        */
+
+        legacyId:"palstic"
+    },
+
+    {
+        id:"brass",
+        name:"Brass Scrap",
+        unit:"kg",
+        emoji:"🔔"
+    },
+
+    {
+        id:"iron",
+        name:"Iron Scrap",
+        unit:"kg",
+        emoji:"⚙️"
+    },
+
+    {
+        id:"battery",
+        name:"Old Battery",
+        unit:"kg",
+        emoji:"🔋"
+    },
+
+    {
+        id:"ewaste",
+        name:"E-Waste",
+        unit:"kg",
+        emoji:"💻"
+    },
+
+    {
+        id:"mixed",
+        name:"Mixed Scrap",
+        unit:"kg",
+        emoji:"♻️"
+    }
+
 ];
 
 
@@ -1150,88 +1172,6 @@ const updateAllBtn =
         "updateAllBtn"
     );
 
-const loginPanel = document.getElementById("loginPanel");
-const authUser = document.getElementById("authUser");
-const authUserEmail = document.getElementById("authUserEmail");
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const adminEmail = document.getElementById("adminEmail");
-const adminPassword = document.getElementById("adminPassword");
-const authError = document.getElementById("authError");
-
-function setEditorEnabled(enabled){
-    document.querySelectorAll(".price-input,.save-btn").forEach(el => {
-        el.disabled = !enabled;
-    });
-    updateAllBtn.disabled = !enabled;
-}
-
-function showAuthError(message){
-    authError.textContent = message;
-    authError.style.display = "block";
-}
-
-loginBtn.addEventListener("click", async () => {
-    const email = adminEmail.value.trim();
-    const password = adminPassword.value;
-    authError.style.display = "none";
-
-    if(!email || !password){
-        showAuthError("Enter your Firebase Authentication email and password.");
-        return;
-    }
-
-    loginBtn.disabled = true;
-    loginBtn.textContent = "SIGNING IN...";
-
-    try{
-        await signInWithEmailAndPassword(auth, email, password);
-        adminPassword.value = "";
-        showToast("✓ Admin signed in");
-    }catch(error){
-        console.error("Admin sign-in error:", error);
-        showAuthError(
-            error.code === "auth/invalid-credential"
-                ? "Invalid email or password."
-                : (error.message || "Sign-in failed.")
-        );
-    }finally{
-        loginBtn.disabled = false;
-        loginBtn.textContent = "SIGN IN";
-    }
-});
-
-logoutBtn.addEventListener("click", async () => {
-    try{
-        await signOut(auth);
-        showToast("Signed out");
-    }catch(error){
-        console.error(error);
-        showToast("Sign out failed");
-    }
-});
-
-adminPassword.addEventListener("keydown", e => {
-    if(e.key === "Enter") loginBtn.click();
-});
-
-onAuthStateChanged(auth, user => {
-    const signedIn = !!user;
-    loginPanel.classList.toggle("show", !signedIn);
-    authUser.classList.toggle("show", signedIn);
-    authUserEmail.textContent = user?.email || "Admin";
-    setEditorEnabled(signedIn);
-
-    if(signedIn){
-        status.classList.remove("error");
-        status.classList.add("ok");
-        statusText.innerHTML = "<strong>Signed in</strong> • Admin editing enabled";
-    }else{
-        status.classList.remove("ok");
-        status.classList.add("error");
-        statusText.innerHTML = "<strong>Sign in required</strong> • Rates are read-only until admin login";
-    }
-});
 
 
 /* =====================================================
@@ -1491,8 +1431,6 @@ function renderProducts(
         formatDate(
             data.lastUpdated
         );
-
-    setEditorEnabled(!!auth.currentUser);
 }
 
 
@@ -1559,7 +1497,7 @@ onSnapshot(
 
 
         /*
-           Still show the 11 fixed products.
+           Still show the 10 fixed products.
         */
 
         currentData = {};
@@ -1648,11 +1586,6 @@ container.addEventListener(
             return;
         }
 
-
-        if(!auth.currentUser){
-            showToast("❌ Please sign in as admin first");
-            return;
-        }
 
         const input =
             document.getElementById(
@@ -1789,17 +1722,13 @@ container.addEventListener(
 
 
 /* =====================================================
-   UPDATE ALL 11
+   UPDATE ALL 10
 ===================================================== */
 
 updateAllBtn.addEventListener(
     "click",
     async () => {
 
-        if(!auth.currentUser){
-            showToast("❌ Please sign in as admin first");
-            return;
-        }
 
         const dataToSave = {};
 
@@ -1887,7 +1816,7 @@ updateAllBtn.addEventListener(
 
 
             showToast(
-                "✓ All 11 prices updated"
+                "✓ All 10 prices updated"
             );
 
         }
