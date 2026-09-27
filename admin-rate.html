@@ -42,7 +42,7 @@ body{
     position:sticky;
     top:0;
     z-index:30;
-    background:rgba(255,255,255,.9);
+    background:rgba(255,255,255,.92);
     backdrop-filter:blur(16px);
     border-bottom:1px solid var(--border);
     padding:9px 12px;
@@ -266,7 +266,6 @@ input:focus{
     font-weight:800;
     z-index:100;
     transition:.25s;
-    box-shadow:0 10px 25px rgba(0,0,0,.18);
 }
 
 .toast.show{
@@ -279,15 +278,6 @@ input:focus{
     .container{
         width:min(100% - 14px,760px);
         padding-top:8px;
-    }
-
-    .banner{
-        padding:11px;
-        border-radius:13px;
-    }
-
-    .btn{
-        padding:8px 9px;
     }
 
     .add-grid{
@@ -314,45 +304,20 @@ input:focus{
         font-size:17px;
     }
 
-    .rate-item .update-rate{
-        grid-column:2/3;
-    }
-
-    .rate-item .delete-rate{
-        grid-column:3/4;
-    }
-
     .price-input{
-        grid-column:3/4;
+        grid-column:3;
         grid-row:1;
         height:32px;
     }
 
-    .rate-item .update-rate{
+    .update-rate{
+        grid-column:2;
         height:31px;
     }
 
-    .rate-item .delete-rate{
+    .delete-rate{
+        grid-column:3;
         height:31px;
-    }
-}
-
-@media(max-width:390px){
-
-    .rate-item{
-        grid-template-columns:32px minmax(0,1fr) 70px;
-    }
-
-    .name{
-        font-size:10px;
-    }
-
-    .unit{
-        font-size:7px;
-    }
-
-    .price-input{
-        font-size:10px;
     }
 }
 </style>
@@ -365,8 +330,7 @@ input:focus{
 
         <button
             class="back-btn"
-            onclick="history.back()"
-            aria-label="Go back">
+            onclick="history.back()">
             ←
         </button>
 
@@ -376,7 +340,6 @@ input:focus{
 
     </div>
 </header>
-
 
 <main class="container">
 
@@ -403,7 +366,6 @@ input:focus{
     </button>
 
 </section>
-
 
 <section class="panel">
 
@@ -439,7 +401,6 @@ input:focus{
 
 </section>
 
-
 <div
     id="loading"
     class="loading">
@@ -450,11 +411,9 @@ input:focus{
 
 </div>
 
-
 <section id="ratesContainer"></section>
 
 </main>
-
 
 <div
     id="toast"
@@ -466,8 +425,7 @@ input:focus{
 
 import {
     initializeApp
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
     getDatabase,
@@ -476,18 +434,17 @@ import {
     set,
     update,
     remove
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
 /* =========================================
-   FIREBASE
+   COVAI SCRAP HUB - EXISTING RTDB
 ========================================= */
 
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztHA",
+        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
 
     authDomain:
         "covai-scrap-hub.firebaseapp.com",
@@ -628,55 +585,21 @@ const emojiMap =
 
 function esc(value){
 
-    return String(
-        value ?? ""
-    ).replace(
-        /[&<>"']/g,
-        function(match){
+    return String(value ?? "")
+        .replace(
+            /[&<>"']/g,
+            function(match){
 
-            return {
-                "&":"&amp;",
-                "<":"&lt;",
-                ">":"&gt;",
-                '"':"&quot;",
-                "'":"&#039;"
-            }[match];
+                return {
+                    "&":"&amp;",
+                    "<":"&lt;",
+                    ">":"&gt;",
+                    '"':"&quot;",
+                    "'":"&#039;"
+                }[match];
 
-        }
-    );
-
-}
-
-
-function dateText(value){
-
-    if(!value){
-        return "Never updated";
-    }
-
-    const date =
-        new Date(value);
-
-    if(
-        Number.isNaN(
-            date.getTime()
-        )
-    ){
-
-        return String(value);
-
-    }
-
-    return date.toLocaleDateString(
-        "en-IN",
-        {
-            day:"2-digit",
-            month:"short",
-            year:"numeric",
-            hour:"2-digit",
-            minute:"2-digit"
-        }
-    );
+            }
+        );
 
 }
 
@@ -691,103 +614,125 @@ function toast(message){
 
     element.classList.add("show");
 
-    clearTimeout(
-        window.toastTimer
-    );
+    clearTimeout(window.toastTimer);
 
     window.toastTimer =
         setTimeout(
-            function(){
-
-                element.classList.remove(
-                    "show"
-                );
-
-            },
+            () => element.classList.remove("show"),
             2200
         );
 
 }
 
 
-function slug(value){
+function formatDate(value){
+
+    if(!value){
+        return "Never updated";
+    }
+
+    const date =
+        new Date(value);
+
+    if(Number.isNaN(date.getTime())){
+        return String(value);
+    }
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+}
+
+
+function makeId(value){
 
     return String(value)
         .toLowerCase()
         .trim()
-        .replace(
-            /[^a-z0-9]+/g,
-            "-"
-        )
-        .replace(
-            /^-|-$/g,
-            ""
-        ) ||
-        Date.now().toString();
+        .replace(/[^a-z0-9]+/g,"-")
+        .replace(/^-|-$/g,"")
+        .substring(0,40)
+        + "-" +
+        Date.now();
 
 }
 
 
 /* =========================================
-   CREATE DEFAULT RATES
+   CREATE DEFAULTS ONLY IF EMPTY
 ========================================= */
 
 async function ensureDefaults(){
 
-    const snapshot =
-        await new Promise(
-            function(resolve,reject){
+    return new Promise(
+        (resolve,reject) => {
 
-                onValue(
-                    ratesRef,
-                    resolve,
-                    reject,
-                    {
-                        onlyOnce:true
+            onValue(
+                ratesRef,
+                async snapshot => {
+
+                    if(
+                        snapshot.exists() &&
+                        snapshot.val()?.rates
+                    ){
+
+                        resolve();
+                        return;
+
                     }
-                );
 
-            }
-        );
+                    const rates = {};
 
+                    defaults.forEach(
+                        item => {
 
-    if(
-        snapshot.exists() &&
-        snapshot.val()?.rates
-    ){
+                            rates[item.id] = {
 
-        return;
+                                name:item.name,
 
-    }
+                                price:item.price,
 
+                                unit:item.unit
 
-    const rates = {};
+                            };
 
-    defaults.forEach(
-        function(item){
+                        }
+                    );
 
-            rates[item.id] = {
+                    try{
 
-                name:item.name,
+                        await set(
+                            ratesRef,
+                            {
+                                rates,
 
-                price:item.price,
+                                lastUpdated:
+                                    new Date().toISOString()
+                            }
+                        );
 
-                unit:item.unit
+                        resolve();
 
-            };
+                    }
+                    catch(error){
 
-        }
-    );
+                        reject(error);
 
+                    }
 
-    await set(
-        ratesRef,
-        {
-
-            rates:rates,
-
-            lastUpdated:
-                new Date().toISOString()
+                },
+                error => reject(error),
+                {
+                    onlyOnce:true
+                }
+            );
 
         }
     );
@@ -796,57 +741,45 @@ async function ensureDefaults(){
 
 
 /* =========================================
-   RENDER RATES
+   RENDER
 ========================================= */
 
 function render(data){
 
-    document.getElementById(
-        "loading"
-    ).style.display =
-        "none";
-
+    document.getElementById("loading")
+        .style.display = "none";
 
     const rates =
         data?.rates || {};
 
-
-    document.getElementById(
-        "updateDate"
-    ).textContent =
+    document.getElementById("updateDate")
+        .textContent =
         "Last updated • " +
-        dateText(
-            data?.lastUpdated
-        );
+        formatDate(data?.lastUpdated);
 
+    const container =
+        document.getElementById("ratesContainer");
 
-    const box =
-        document.getElementById(
-            "ratesContainer"
-        );
-
-
-    const keys =
+    const ids =
         Object.keys(rates);
 
+    if(!ids.length){
 
-    if(!keys.length){
-
-        box.innerHTML =
-            '<div class="panel">No rates available.</div>';
+        container.innerHTML = `
+            <div class="panel">
+                No rates available.
+            </div>
+        `;
 
         return;
-
     }
 
-
-    box.innerHTML =
-        keys.map(
-            function(id){
+    container.innerHTML =
+        ids.map(
+            id => {
 
                 const rate =
                     rates[id] || {};
-
 
                 return `
 
@@ -870,11 +803,11 @@ function render(data){
 
                     <input
                         class="price-input"
+                        id="price-${esc(id)}"
                         type="number"
                         min="0"
                         step="0.01"
-                        id="price-${esc(id)}"
-                        value="${Number(rate.price || 0).toFixed(2)}"
+                        value="${Number(rate.price || 0)}"
                     >
 
                     <button
@@ -900,14 +833,14 @@ function render(data){
 
 
 /* =========================================
-   REALTIME LISTENER
+   LIVE LISTENER
 ========================================= */
 
 onValue(
 
     ratesRef,
 
-    function(snapshot){
+    snapshot => {
 
         render(
             snapshot.val()
@@ -915,16 +848,16 @@ onValue(
 
     },
 
-    function(error){
+    error => {
 
-        document.getElementById(
-            "loading"
-        ).innerHTML =
+        document.getElementById("loading")
+            .innerHTML =
             "❌ Unable to load rates.<br><small>" +
             esc(error.message) +
             "</small>";
 
         console.error(
+            "Firebase rates error:",
             error
         );
 
@@ -934,15 +867,15 @@ onValue(
 
 
 /* =========================================
-   INITIALIZE
+   INITIALIZE DEFAULTS
 ========================================= */
 
 ensureDefaults()
     .catch(
-        function(error){
+        error => {
 
             console.error(
-                "Default rate error:",
+                "Default creation error:",
                 error
             );
 
@@ -955,22 +888,16 @@ ensureDefaults()
 ========================================= */
 
 document
-    .getElementById(
-        "ratesContainer"
-    )
+    .getElementById("ratesContainer")
     .addEventListener(
         "click",
-        async function(event){
+        async event => {
 
             const saveButton =
-                event.target.closest(
-                    ".update-rate"
-                );
+                event.target.closest(".update-rate");
 
             const deleteButton =
-                event.target.closest(
-                    ".delete-rate"
-                );
+                event.target.closest(".delete-rate");
 
 
             /* SAVE */
@@ -986,10 +913,7 @@ document
                     );
 
                 const price =
-                    parseFloat(
-                        input.value
-                    );
-
+                    Number(input.value);
 
                 if(
                     !Number.isFinite(price) ||
@@ -1001,55 +925,39 @@ document
                     );
 
                     return;
-
                 }
-
 
                 saveButton.disabled =
                     true;
 
-
                 try{
 
                     await update(
-
                         ref(
                             db,
-                            "scrapRates/rates/" +
-                            id
+                            "scrapRates/rates/" + id
                         ),
-
                         {
                             price:price
                         }
-
                     );
 
-
                     await set(
-
                         ref(
                             db,
                             "scrapRates/lastUpdated"
                         ),
-
-                        new Date()
-                            .toISOString()
-
+                        new Date().toISOString()
                     );
-
 
                     toast(
                         "✓ Rate updated"
                     );
 
-
                 }
                 catch(error){
 
-                    console.error(
-                        error
-                    );
+                    console.error(error);
 
                     toast(
                         "❌ Update failed"
@@ -1073,7 +981,6 @@ document
                 const id =
                     deleteButton.dataset.id;
 
-
                 if(
                     !confirm(
                         "Delete this material rate?"
@@ -1084,32 +991,22 @@ document
 
                 }
 
-
                 try{
 
                     await remove(
-
                         ref(
                             db,
-                            "scrapRates/rates/" +
-                            id
+                            "scrapRates/rates/" + id
                         )
-
                     );
 
-
                     await set(
-
                         ref(
                             db,
                             "scrapRates/lastUpdated"
                         ),
-
-                        new Date()
-                            .toISOString()
-
+                        new Date().toISOString()
                     );
-
 
                     toast(
                         "✓ Rate deleted"
@@ -1118,9 +1015,7 @@ document
                 }
                 catch(error){
 
-                    console.error(
-                        error
-                    );
+                    console.error(error);
 
                     toast(
                         "❌ Delete failed"
@@ -1135,129 +1030,96 @@ document
 
 
 /* =========================================
-   ADD NEW RATE
+   ADD RATE
 ========================================= */
 
 document
-    .getElementById(
-        "addBtn"
-    )
-    .onclick =
-    async function(){
+    .getElementById("addBtn")
+    .addEventListener(
+        "click",
+        async () => {
 
-        const name =
-            document
-                .getElementById(
-                    "materialName"
-                )
-                .value
-                .trim();
-
-
-        const price =
-            parseFloat(
+            const name =
                 document
-                    .getElementById(
-                        "materialPrice"
-                    )
+                    .getElementById("materialName")
                     .value
-            );
+                    .trim();
 
+            const price =
+                Number(
+                    document
+                        .getElementById("materialPrice")
+                        .value
+                );
 
-        const unit =
-            document
-                .getElementById(
+            const unit =
+                document
+                    .getElementById("materialUnit")
+                    .value
+                    .trim() ||
+                "kg";
+
+            if(
+                !name ||
+                !Number.isFinite(price) ||
+                price < 0
+            ){
+
+                toast(
+                    "Enter material and valid price"
+                );
+
+                return;
+            }
+
+            const id =
+                makeId(name);
+
+            try{
+
+                await update(
+                    ratesRef,
+                    {
+                        [`rates/${id}`]:{
+                            name:name,
+                            price:price,
+                            unit:unit
+                        },
+
+                        lastUpdated:
+                            new Date().toISOString()
+                    }
+                );
+
+                document.getElementById(
+                    "materialName"
+                ).value = "";
+
+                document.getElementById(
+                    "materialPrice"
+                ).value = "";
+
+                document.getElementById(
                     "materialUnit"
-                )
-                .value
-                .trim() ||
-            "kg";
+                ).value = "kg";
 
+                toast(
+                    "✓ Rate added"
+                );
 
-        if(
-            !name ||
-            !Number.isFinite(price) ||
-            price < 0
-        ){
+            }
+            catch(error){
 
-            toast(
-                "Enter material and valid price"
-            );
+                console.error(error);
 
-            return;
+                toast(
+                    "❌ Add failed"
+                );
 
-        }
-
-
-        const id =
-            slug(name) +
-            "-" +
-            Date.now();
-
-
-        try{
-
-            await update(
-
-                ref(
-                    db,
-                    "scrapRates"
-                ),
-
-                {
-
-                    [`rates/${id}`]:{
-
-                        name:name,
-
-                        price:price,
-
-                        unit:unit
-
-                    },
-
-                    lastUpdated:
-                        new Date()
-                            .toISOString()
-
-                }
-
-            );
-
-
-            document.getElementById(
-                "materialName"
-            ).value = "";
-
-
-            document.getElementById(
-                "materialPrice"
-            ).value = "";
-
-
-            document.getElementById(
-                "materialUnit"
-            ).value = "kg";
-
-
-            toast(
-                "✓ Rate added"
-            );
+            }
 
         }
-        catch(error){
-
-            console.error(
-                error
-            );
-
-            toast(
-                "❌ Add failed"
-            );
-
-        }
-
-    };
+    );
 
 
 /* =========================================
@@ -1265,99 +1127,81 @@ document
 ========================================= */
 
 document
-    .getElementById(
-        "updateAllBtn"
-    )
-    .onclick =
-    async function(){
+    .getElementById("updateAllBtn")
+    .addEventListener(
+        "click",
+        async () => {
 
-        const inputs =
-            [
-                ...document.querySelectorAll(
-                    ".price-input"
-                )
-            ];
+            const inputs =
+                [
+                    ...document.querySelectorAll(
+                        ".price-input"
+                    )
+                ];
 
+            const updates = {};
 
-        const updates = {};
-
-
-        for(
-            const input of inputs
-        ){
-
-            const id =
-                input.id.replace(
-                    "price-",
-                    ""
-                );
-
-
-            const price =
-                parseFloat(
-                    input.value
-                );
-
-
-            if(
-                !Number.isFinite(price) ||
-                price < 0
+            for(
+                const input of inputs
             ){
 
-                toast(
-                    "Check all prices"
-                );
+                const id =
+                    input.id.replace(
+                        "price-",
+                        ""
+                    );
 
-                return;
+                const price =
+                    Number(input.value);
+
+                if(
+                    !Number.isFinite(price) ||
+                    price < 0
+                ){
+
+                    toast(
+                        "Check all prices"
+                    );
+
+                    return;
+                }
+
+                updates[
+                    `rates/${id}/price`
+                ] =
+                    price;
 
             }
 
+            try{
 
-            updates[
-                `rates/${id}/price`
-            ] =
-                price;
+                await update(
+                    ratesRef,
+                    {
+                        ...updates,
 
-        }
+                        lastUpdated:
+                            new Date().toISOString()
+                    }
+                );
 
+                toast(
+                    "✓ All rates updated"
+                );
 
-        try{
+            }
+            catch(error){
 
-            await update(
+                console.error(error);
 
-                ratesRef,
+                toast(
+                    "❌ Update All failed"
+                );
 
-                {
-
-                    ...updates,
-
-                    lastUpdated:
-                        new Date()
-                            .toISOString()
-
-                }
-
-            );
-
-
-            toast(
-                "✓ All rates updated"
-            );
+            }
 
         }
-        catch(error){
-
-            console.error(
-                error
-            );
-
-            toast(
-                "❌ Update All failed"
-            );
-
-        }
-
-    };
+    );
 
 </script>
 
