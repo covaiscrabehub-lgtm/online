@@ -4427,8 +4427,6 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
-
 
 import {
     getFirestore,
@@ -4443,14 +4441,28 @@ from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 ===================================================== */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCAVdbE2YfcRUEizM9qhp3HMAdY2fEDUsc",
-    authDomain: "covaiscrap.firebaseapp.com",
-    databaseURL: "https://covaiscrap-default-rtdb.firebaseio.com",
-    projectId: "covaiscrap",
-    storageBucket: "covaiscrap.firebasestorage.app",
-    messagingSenderId: "1093933670685",
-    appId: "1:1093933670685:web:e305d3ed1e4f62e269c1f4",
-    measurementId: "G-MCXYBSB57M"
+
+    apiKey:
+        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
+
+    authDomain:
+        "covai-scrap-hub.firebaseapp.com",
+
+    projectId:
+        "covai-scrap-hub",
+
+    storageBucket:
+        "covai-scrap-hub.firebasestorage.app",
+
+    messagingSenderId:
+        "979133721874",
+
+    appId:
+        "1:979133721874:web:c5829bb8dbf5270c0917cb",
+
+    measurementId:
+        "G-P3PTSBHWMF"
+
 };
 
 
@@ -4458,15 +4470,12 @@ const app =
     initializeApp(firebaseConfig);
 
 
-const db = getFirestore(app);
-const realtimeDB = getDatabase(app);
+const db =
+    getFirestore(app);
 
-window.firebaseApp = app;
-window.firebaseDB = db;
-window.firebaseRealtimeDB = realtimeDB;
-window.firebaseRTDBRef = ref;
-window.firebaseRTDBSet = set;
-window.firebaseProjectId = "covaiscrap";
+
+window.firebaseDB =
+    db;
 
 window.firebaseDoc =
     doc;
@@ -4715,9 +4724,14 @@ function startFirebaseRateListeners(){
 
             if(!snapshot.exists()){
 
-                console.log(
+                console.warn(
                     "Rate document not found"
                 );
+
+                materials.forEach(function(material){
+                    firebaseRates[material.id] = 0;
+                    updateProductRate(material.id, 0);
+                });
 
                 return;
 
@@ -4731,12 +4745,23 @@ function startFirebaseRateListeners(){
             materials.forEach(
                 function(material){
 
-                    const rate =
+                    let rate =
                         Number(
                             data[
                                 material.id
-                            ] || 0
+                            ] ?? 0
                         );
+
+                    if(
+                        material.id === "plastic" &&
+                        (!Number.isFinite(rate) || rate <= 0) &&
+                        data.palstic !== undefined
+                    ){
+                        const legacyRate = Number(data.palstic);
+                        if(Number.isFinite(legacyRate)){
+                            rate = legacyRate;
+                        }
+                    }
 
 
                     firebaseRates[
