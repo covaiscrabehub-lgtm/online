@@ -4427,6 +4427,8 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
 
 import {
     getFirestore,
@@ -4441,28 +4443,14 @@ from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 ===================================================== */
 
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyApJhYmo0pHNqVD0XIyOlQDqDzACztPdHA",
-
-    authDomain:
-        "covai-scrap-hub.firebaseapp.com",
-
-    projectId:
-        "covai-scrap-hub",
-
-    storageBucket:
-        "covai-scrap-hub.firebasestorage.app",
-
-    messagingSenderId:
-        "979133721874",
-
-    appId:
-        "1:979133721874:web:c5829bb8dbf5270c0917cb",
-
-    measurementId:
-        "G-P3PTSBHWMF"
-
+    apiKey: "AIzaSyCAVdbE2YfcRUEizM9qhp3HMAdY2fEDUsc",
+    authDomain: "covaiscrap.firebaseapp.com",
+    databaseURL: "https://covaiscrap-default-rtdb.firebaseio.com",
+    projectId: "covaiscrap",
+    storageBucket: "covaiscrap.firebasestorage.app",
+    messagingSenderId: "1093933670685",
+    appId: "1:1093933670685:web:e305d3ed1e4f62e269c1f4",
+    measurementId: "G-MCXYBSB57M"
 };
 
 
@@ -4470,12 +4458,15 @@ const app =
     initializeApp(firebaseConfig);
 
 
-const db =
-    getFirestore(app);
+const db = getFirestore(app);
+const realtimeDB = getDatabase(app);
 
-
-window.firebaseDB =
-    db;
+window.firebaseApp = app;
+window.firebaseDB = db;
+window.firebaseRealtimeDB = realtimeDB;
+window.firebaseRTDBRef = ref;
+window.firebaseRTDBSet = set;
+window.firebaseProjectId = "covaiscrap";
 
 window.firebaseDoc =
     doc;
